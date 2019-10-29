@@ -1,0 +1,40 @@
+
+#nbi-1::after 
+{ 
+    content: "bloss OS"; 
+}
+#nbi-2::after 
+{ 
+    content: "documentation"; 
+}
+#nbi-3::after 
+{ 
+    content: "developer"; 
+}
+#nbi-4::after 
+{ 
+    content: "support"; 
+}
+
+@media (max-width: 700px)
+{
+    #nbi-1::after 
+    { 
+        content: "OS"; 
+    }
+
+    #nbi-2::after 
+    { 
+        content: "DN"; 
+    }
+
+    #nbi-3::after 
+    { 
+        content: "DR"; 
+    }
+
+    #nbi-4::after 
+    { 
+        content: "ST"; 
+    }
+}
