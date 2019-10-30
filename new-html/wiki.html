@@ -160,9 +160,10 @@
             display: table;
             font-size: 95%;
             margin-bottom: 1em;
-            padding: 20px;
             margin: auto;
-            text-align: right;
+            padding: 20px;
+            padding-top: 0px;
+            padding-bottom: 15px;
         }
 
         .toc-title 
@@ -175,14 +176,22 @@
         .toc-container ul,
         .toc-container ul li 
         {
-            list-style: outside none none !important;
-            text-align: justify;
+            list-style: none;
+            padding-left: 0px;
         }
 
         .toc-container a
         {
             color: red;
         }
+
+        .toc-secondary ul,
+        .toc-secondary li,
+        .toc-secondary ul li 
+        {
+            text-indent: 20px;
+        }
+
     </style>
 </head>
 
@@ -283,10 +292,10 @@
         <h3>Brief explanation about documentation project goes here (1 sentence).</h3>
     </div>
     <div class="toc-container">
-        <p class="toc-title"><font color="black">Contents</font></p>
-        <ul class="toc-list">
+        <p class="toc-title"><font color="black">Contents</font> [<a id="toggle" href="#" onclick="toggleTOC()">hide</a>]</p>
+        <ul id="toc" style="display: initial">
             <li><a href="https://www.bloss.io/documentation#ATK"><font color="black">1</font> ATK</a>
-                <ul>
+                <ul class="toc-secondary">
                     <li><a href="https://www.bloss.io/documentation#ATK_Manual_1"><font color="black">1.1</font> ATK Manual 1</a></li>
                     <li><a href="https://www.bloss.io/documentation#ATK_Manual_2"><font color="black">1.2</font> ATK Manual 2</a></li>
                 </ul>
@@ -296,6 +305,21 @@
         </ul>
     </div>
 </section>
+
+<script>
+    var toc = document.getElementById("toc")
+    var toggle = document.getElementById("toggle")
+
+    function toggleTOC()
+    {
+        toc.style.display === "initial" ? ( toc.style.setProperty("display", "none"),
+                                            toggle.innerHTML = "show"
+                                            ) 
+                                            : ( toc.style.setProperty("display", "initial"),
+                                            toggle.innerHTML = "hide"
+                                            )
+    }    
+</script>
 
 <!-- article body "article-main" -->
 <article class="article-main">
