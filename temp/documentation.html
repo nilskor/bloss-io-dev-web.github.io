@@ -12,6 +12,10 @@
 
     <!-- fixed-navbar -->
     <link rel="stylesheet" href="css/navbar-items.css">
+    <!-- fixed-navbar -->
+    <link rel="stylesheet" href="css/footer-items.css">
+    <!-- alternate templates -->
+    <link rel="stylesheet" href="css/templates.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
@@ -177,22 +181,6 @@
             }
         }
 
-        /* toc section header */
-
-        .generic-box-toc
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        /* toc section text */
-
-        .generic-box-toct
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
         /* table of contents */
         .toc-container
         {
@@ -257,6 +245,11 @@
                 top: 30px;
                 left: -30vw;
             }
+            [class*="generic-box-toct"]
+            {
+                padding-left: 2vw;
+                padding-right: 2vw;
+            }
         }
 
         /* Toc phone portability min */ 
@@ -266,11 +259,6 @@
             {
                 position: static;
             }
-        }
-                
-        /* Toc header phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
             [class*="generic-box-toc"]
             {
                 text-align: center;
@@ -278,21 +266,6 @@
                 padding-left: 2vw;
                 padding-right: 2vw;
             }
-        }
-
-        /* Toc section text phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-        }
-
-        /* Toc section text phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
             [class*="generic-box-toct"]
             {
                 font-size: 4vw;
@@ -312,7 +285,22 @@
             height: var(--navbar-height);
             background-color: #eaebeb;
             font-size: 15px;
-            text-color
+            text-decoration-color: #000000;
+            display: grid;
+            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
+            overflow: hidden;
+        }
+
+        /* footer phone portability */ 
+        @media only screen and (max-width: 500px) 
+        {
+            [class*="generic-box-toct"]
+            {
+                font-size: 4vw;
+                padding-left: 2vw;
+                padding-right: 2vw;
+                padding-bottom: 2vw;
+            }
         }
     </style>
 </head>
@@ -341,42 +329,42 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-                <a href="https://www.bloss.io/documentation/">index of manuals</a>
-            </div>
+            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+        </div>
        <div class="dropdown">
            <button class="dropbtn">
                A-G
                <i class="fa fa-caret-down"></i>
            </button>
-        <div class="dropdown-content">
-            <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-            <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-            <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-            <a href="https://www.bloss.io/documentation/GTK">GTK</a>
-            <a href="https://www.bloss.io/documentation/">TBD</a>
-            <a href="https://www.bloss.io/documentation/">TBD</a>
-        </div>
+           <div class="dropdown-content">
+               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK">GTK</a>
+               <a href="https://www.bloss.io/documentation/">TBD</a>
+               <a href="https://www.bloss.io/documentation/">TBD</a>
+           </div>
        </div>
        <div class="dropdown">
             <button class="dropbtn">
                 H-M
                 <i class="fa fa-caret-down"></i>
             </button>
-         <div class="dropdown-content">
+            <div class="dropdown-content">
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
-         </div>
-        </div>
+            </div>
+       </div>
        <div class="dropdown">
             <button class="dropbtn">
                 N-R
                 <i class="fa fa-caret-down"></i>
             </button>
-         <div class="dropdown-content">
+            <div class="dropdown-content">
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
@@ -390,14 +378,14 @@
                S-Z
                 <i class="fa fa-caret-down"></i>
             </button>
-         <div class="dropdown-content">
+            <div class="dropdown-content">
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
                 <a href="https://www.bloss.io/documentation/">TBD</a>
-         </div>
+            </div>
         </div>
         <div class="generic-box">
             <a href="">lanuage/view changer</a>
@@ -459,9 +447,31 @@
   </article>
 
  <!-- article footer "footer" -->
-  <div class="fixed-footer">
-    
-  </div>
+  <section class="fixed-footer">
+      <div class="generic-box-footer">
+          <p id="fti-5" class="footer-item" ></p>
+      </div>
+      <div class="generic-box">
+          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+            <font color="#000000"><i class="fa fa-envelope"></i></font>
+          </a>
+      </div>
+      <div class="generic-box">
+          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+            <font color="#000000"><i class="fa fa-id-card"></i></font>
+          </a>
+      </div>
+      <div class="generic-box">
+          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+            <font color="#000000"><i class="fa fa-balance-scale"></i></font>
+          </a>
+      </div>
+      <div class="generic-box">
+          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+            <font color="#000000"><i class="fa fa-shield"></i></font>
+          </a>
+      </div>
+  </section>
 
  <!-- sidebar "aside" -->
   <aside>

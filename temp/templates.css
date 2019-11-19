@@ -1,0 +1,22 @@
+
+/* toc section header */
+ .generic-box-toc
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+/* toc section text */
+.generic-box-toct
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+/* footer copyright */
+.generic-box-footer
+{
+    display: flex;
+    text-align: left;
+    padding-left: 6vw;
+}
