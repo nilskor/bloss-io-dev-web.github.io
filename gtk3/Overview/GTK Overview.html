@@ -16,364 +16,14 @@
     <link rel="stylesheet" href="/foo/css/footer-items.css">
     <!-- alternate templates -->
     <link rel="stylesheet" href="/foo/css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <style>
-
-        .generic-box
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        button, 
-        .logo, 
-        a, 
-        span
-        {
-            align-self: center;
-        }
-
-        a 
-        { 
-            text-decoration-line: none; 
-            color: white; 
-        }
-        h1 
-        {
-            font-size: 4em;
-        }
-
-        /* fixed navbar */
-        :root
-        {
-            --navbar-height: 50px;
-            --navbar-colour: #000000;
-            --theme-font: 'Noto Sans', sans-serif;
-        }
-        body
-        {
-            padding: 0;
-            margin: 0;
-            font-family: var(--theme-font);
-        }
-
-        .fixed-navbar
-        {
-            position: sticky;
-            top: 0;        
-            width: 100%;      
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-            font-size: 15px;
-            z-index: 100;
-        }
-
-        .navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            column-gap: 5%;
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-        }
-
-        /* secondary navbar */
-        .secondary-navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
-            column-gap: 5%;
-            background-color: #969aa2;
-            overflow: hidden;
-        }
-
-        .secondary-navbar-container a 
-        {
-            float: left;
-            font-size: 15px;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        .dropdown 
-        {
-            float: left;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .dropdown .dropbtn
-        {
-            font-size: 15px;
-            border: none;
-            outline: none;
-            color: white;
-            padding: 24px 16px;
-            background-color: inherit;
-            font-family: inherit;
-            margin: 0;
-        }
-
-        .secondary-navbar-container a:hover, 
-        .dropdown:hover .dropbtn 
-        {
-            background-color:#5e81ac;
-        }
-
-        .dropdown-content 
-        {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 20%;
-        }
-
-        .dropdown-content a 
-        {
-            float: none;
-            color: black;
-            padding: 17px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover
-        {
-            background-color: #dbdddd;
-        }
-
-        .dropdown:hover .dropdown-content
-        {
-            display: block;
-        }
-
-        /* secondary navbar phone portability */
-        @media only screen and (max-width: 768px) 
-        {
-            [class*="dropdown"]
-            {
-                display: none;
-            }
-
-            [class*="dropbtn"]
-            {
-                display: none;
-            }
-
-            [class*="dropdown-content"]
-            {
-                display: none;
-            }
-
-            [class*="secondary-navbar-container"]
-            {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* table of contents */
-        .toc-container
-        {
-            background: #f0f1f1 none repeat scroll 0 0;
-            border: 1px solid #aaa;
-            display: table;
-            font-size: 95%;
-            margin-bottom: 1em;
-            margin: auto;
-            padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 15px;
-            position: relative;
-            top: 30px;
-            margin-left: 13vw;
-        }
-
-        .toc-title 
-        {
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .toc-container li,
-        .toc-container ul,
-        .toc-container ul li 
-        {
-            list-style: none;
-            padding-left: 0px;
-        }
-
-        .toc-container a
-        {
-            color: #3584e4;
-        }
-
-        .toc-secondary ul,
-        .toc-secondary li,
-        .toc-secondary ul li 
-        {
-            text-indent: 20px;
-        }
-
-        /* toc tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 13vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                padding-right: 2vw;
-            }
-        }
-
-        /* toc phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 10vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                font-size: 2.15vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 2.5vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-        }
-
-        /* toc phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="toc-container"]
-            {
-                position: static;
-            }
-            [class*="generic-box-toc"]
-            {
-                text-align: center;
-                font-size: 3vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
-
-        /* horizontal ruling */
-        hr.thin
-        {
-            margin-top: 6vw;
-            border-color: #f0f1f1;
-            margin-right: 13vw;
-            margin-left: 13vw;
-        }
-
-        /* hr tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-            }
-        }
-
-        /* hr phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-                margin-left: 10vw;
-                margin-right: 10vw;
-            }
-        }
-
-        /* main article phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-main"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main2"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main3"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-space"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-                padding-bottom: 15vw;
-            }
-        }        
-
-        /* footer space phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-space"]
-            {
-                padding-bottom: 20vw;
-            }
-        }
-
-        /* fixed footer */
-        .fixed-footer
-        {
-            position: fixed;        
-            width: 100%;     
-            left: 0;
-            bottom: 0; 
-            height: var(--navbar-height);
-            background-color: #eaebeb;
-            font-size: 15px;
-            text-decoration-color: #000000;
-            display: grid;
-            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
-            overflow: hidden;
-        }
-
-        /* footer phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
+    <style>    
     </style>
 </head>
 
@@ -383,7 +33,7 @@
         <div class="navbar-container">
             <div class="generic-box">
                 <div class="logo">
-                    <img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px" ></img>
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
                 </div>
             </div>
             <div class="generic-box">
@@ -470,16 +120,19 @@
         <h1><font color="#2e3440">GTK+ Overview</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">Brief explanation about GTK+ Overview goes here (1 sentence).</font></h3>
+        <h3><font color="#2e3440">GTK+ is a library for creating graphical user interfaces. 
+            It works on many UNIX-like platforms, Windows, and OS X. 
+            GTK+ is released under the GNU Library General Public License (GNU LGPL), 
+            which allows for flexible licensing of client applications.</font></h3>
     </div>
     <div class="toc-container">
-        <p class="toc-title"><font color="#2e3440">Contents</font> <font color="#2e3440">[<a id="toggle" href="#" onclick="toggleTOC()">hide</a>]</font></p>
+        <p class="toc-title"><font color="#2e3440">Contents</font> <font color="#2e3440">[<a id="toggle" href="#" class="toc" onclick="toggleTOC()">hide</a>]</font></p>
         <ul id="toc" style="display: initial">
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview#Getting_Started"><font color="#2e3440">1</font> Getting Started with GTK+</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview#Mailing_lists"><font color="#2e3440">2</font> Mailing lists and bug reports</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview#Common_Questions"><font color="#2e3440">3</font> Common Questions</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview#Drawing_Model"><font color="#2e3440">4</font> The GTK+ Drawing Model</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview#Input_Event_Handling"><font color="#2e3440">5</font> The GTK+ Input and Event Handling Model</a></li>
+            <li><font color="#2e3440">1 </font><a class="toggle" href="#Getting_Started">Getting Started with GTK+</a></li>
+            <li><font color="#2e3440">2 </font><a class="toggle" href="#Mailing_lists">Mailing lists and bug reports</a></li>
+            <li><font color="#2e3440">3 </font><a class="toggle" href="#Common_Questions">Common Questions</a></li>
+            <li><font color="#2e3440">4 </font><a class="toggle" href="#Drawing_Model">The GTK+ Drawing Model</a></li>
+            <li><font color="#2e3440">5 </font><a class="toggle" href="#Input_Event_Handling">The GTK+ Input and Event Handling Model</a></li>
         </ul>
     </div>
   </section>
@@ -505,96 +158,132 @@
  <!-- article body "article-main" -->
   <article class="article-main">
       <div class="generic-box-main">
+          <h2>Summary</h2>
+      </div>
+      <div class="generic-box-main3">
+            <p>GTK+ has a C-based object-oriented architecture that allows for maximum flexibility. 
+                Bindings for many other languages have been written, including C++, Objective-C, 
+                Guile/Scheme, Perl, Python, TOM, Ada95, Free Pascal, and Eiffel.<br>
+                <br>
+                GTK+ depends on the following libraries:
+            </p>
+      </div>
+      <div class="list-table"><table border="0" cellspacing="15" class="list-table">
+          <colgroup><col align="left" valign="top"><col>
+          </colgroup>
+          <tbody>
+              <tr>
+                  <td><p><span class="term">GLib</span></p></td>
+                  <td><p>A general-purpose utility library, not specific to graphical user interfaces.
+                      GLib provides many useful data types, macros, type conversions,
+                      string utilities, file utilities, a main loop abstraction, and so on.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">GObject</span></p></td>
+                  <td><p>A library that provides a type system, a collection of
+                      fundamental types including an object type, a signal system.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">GIO</span></p></td>
+                  <td><p>A modern, easy-to-use VFS API including abstractions for files, 
+                      drives, volumes, stream IO, as well as network programming and DBus communication.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">cairo</span></p></td>
+                  <td><p>Cairo is a 2D graphics library with support for multiple output devices.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">Pango</span></p></td>
+                  <td><p> Pango is a library for internationalized text handling. 
+                      It centers around the PangoLayout object, representing a paragraph of text.
+                      Pango provides the engine for GtkTextView, GtkLabel, GtkEntry, and other widgets that display text.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">ATK</span></p></td>
+                  <td><p> ATK is the Accessibility Toolkit. 
+                      It provides a set of generic interfaces allowing accessibility technologies to interact with a graphical user interface. 
+                      For example, a screen reader uses ATK to discover the text in an interface and read it to blind users.  
+                      GTK+ widgets have built-in support for accessibility using the ATK framework.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">GdkPixbuf</span></p></td>
+                  <td><p> This is a small library which allows you to create GdkPixbuf ("pixel buffer") objects from image data or image files.
+                      Use a GdkPixbuf in combination with GtkImage to display images.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">GDK</span></p></td>
+                  <td><p> GDK is the abstraction layer that allows GTK+ to support multiple windowing systems. 
+                      GDK provides window system facilities on X11, Windows, and OS X.
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">GTK+</span></p></td>
+                  <td><p> The GTK+ library itself contains widgets, that is, GUI components such as GtkButton or GtkTextView.
+                      </p>
+                  </td>
+              </tr>
+         </tbody>
+      </table></div>
+      <div class="generic-box-main">
           <h2>Index</h2>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started"><font color="#2e3440">Getting Started with GTK+</font></a></h3>
+          <h3><a name="Getting_Started"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started">Getting Started with GTK+</a></h3>
       </div>
       <div class="generic-box-main3">
-            <p>Lorem ipsum dolor sit amet, 
-               consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-                Eget egestas purus viverra accumsan in nisl nisi. 
-                Pellentesque sit amet porttitor eget dolor morbi non. 
-                Sit amet justo donec enim diam vulputate ut pharetra. 
-                Leo a diam sollicitudin tempor. 
-                Diam donec adipiscing tristique risus nec feugiat in. 
-                Ornare arcu odio ut sem nulla. 
-                Diam vulputate ut pharetra sit amet aliquam id diam. 
-                Diam vel quam elementum pulvinar etiam non quam.
+            <p>GTK+ is a <a class="two" href="https://en.wikipedia.org/wiki/Widget_toolkit">widget toolkit</a>. 
+               Each user interface created by GTK+ consists of widgets. 
+               This is implemented in C using GObject, an object-oriented framework for C. 
+               Widgets are organized in a hierachy. 
+               The window widget is the main container. 
+               The user interface is then built by adding buttons, drop-down menus, input fields, and other widgets to the window. 
+               If you are creating complex user interfaces it is recommended to use 
+               <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder#GtkBuilder">GtkBuilder</a> 
+               and its GTK-specific markup description language, instead of assembling the interface manually. 
+               You can also use a visual user interface editor, like <a class="two" href="https://glade.gnome.org/">Glade</a>.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Mailing_lists"><font color="#2e3440">Mailing lists and bug reports</font></a></h3>
+          <h3><a name="Mailing_lists"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Mailing_lists">Mailing lists and bug reports</a></h3>
       </div>
       <div class="generic-box-main3">
-            <p>Lorem ipsum dolor sit amet, 
-               consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-                Eget egestas purus viverra accumsan in nisl nisi. 
-                Pellentesque sit amet porttitor eget dolor morbi non. 
-                Sit amet justo donec enim diam vulputate ut pharetra. 
-                Leo a diam sollicitudin tempor. 
-                Diam donec adipiscing tristique risus nec feugiat in. 
-                Ornare arcu odio ut sem nulla. 
-                Diam vulputate ut pharetra sit amet aliquam id diam. 
-                Diam vel quam elementum pulvinar etiam non quam.
+            <p>Getting help with GTK+.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Common_Questions"><font color="#2e3440">Common Questions</font></a></h3>
+          <h3><a name="Common_Questions"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Common_Questions">Common Questions</a></h3>
       </div>
       <div class="generic-box-main3">
-            <p>Lorem ipsum dolor sit amet, 
-               consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-                Eget egestas purus viverra accumsan in nisl nisi. 
-                Pellentesque sit amet porttitor eget dolor morbi non. 
-                Sit amet justo donec enim diam vulputate ut pharetra. 
-                Leo a diam sollicitudin tempor. 
-                Diam donec adipiscing tristique risus nec feugiat in. 
-                Ornare arcu odio ut sem nulla. 
-                Diam vulputate ut pharetra sit amet aliquam id diam. 
-                Diam vel quam elementum pulvinar etiam non quam.
+            <p>Find answers to common questions in the GTK+ manual.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Drawing_Model"><font color="#2e3440">The GTK+ Drawing Model</font></a></h3>
+          <h3><a name="Drawing_Model"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Drawing_Model">The GTK+ Drawing Model</a></h3>
       </div>
       <div class="generic-box-main3">
-            <p>Lorem ipsum dolor sit amet, 
-               consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-                Eget egestas purus viverra accumsan in nisl nisi. 
-                Pellentesque sit amet porttitor eget dolor morbi non. 
-                Sit amet justo donec enim diam vulputate ut pharetra. 
-                Leo a diam sollicitudin tempor. 
-                Diam donec adipiscing tristique risus nec feugiat in. 
-                Ornare arcu odio ut sem nulla. 
-                Diam vulputate ut pharetra sit amet aliquam id diam. 
-                Diam vel quam elementum pulvinar etiam non quam.
+            <p>The GTK+ drawing model in detail.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Input_Event_Handling"><font color="#2e3440">The GTK+ Input and Event Handling Model</font></a></h3>
+          <h3><a name="Input_Event_Handling"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Input_Event_Handling">The GTK+ Input and Event Handling Model</a></h3>
       </div>
       <div class="generic-box-space">
-          <p>Lorem ipsum dolor sit amet, 
-             consectetur adipiscing elit, 
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-             Eget egestas purus viverra accumsan in nisl nisi. 
-             Pellentesque sit amet porttitor eget dolor morbi non. 
-             Sit amet justo donec enim diam vulputate ut pharetra. 
-             Leo a diam sollicitudin tempor. 
-             Diam donec adipiscing tristique risus nec feugiat in. 
-             Ornare arcu odio ut sem nulla. 
-             Diam vulputate ut pharetra sit amet aliquam id diam. 
-             Diam vel quam elementum pulvinar etiam non quam.
+          <p>GTK+ input and event handling in detail.
             </p>
       </div>
   </article>
@@ -615,23 +304,23 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
-            <font color="#000000"><i class="fa fa-shield"></i></font>
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+            <i class="fa fa-shield"></i>
           </a>
       </div>
   </section>
