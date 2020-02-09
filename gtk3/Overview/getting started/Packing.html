@@ -16,364 +16,14 @@
     <link rel="stylesheet" href="/foo/css/footer-items.css">
     <!-- alternate templates -->
     <link rel="stylesheet" href="/foo/css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-
-        .generic-box
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        button, 
-        .logo, 
-        a, 
-        span
-        {
-            align-self: center;
-        }
-
-        a 
-        { 
-            text-decoration-line: none; 
-            color: white; 
-        }
-        h1 
-        {
-            font-size: 4em;
-        }
-
-        /* fixed navbar */
-        :root
-        {
-            --navbar-height: 50px;
-            --navbar-colour: #000000;
-            --theme-font: 'Noto Sans', sans-serif;
-        }
-        body
-        {
-            padding: 0;
-            margin: 0;
-            font-family: var(--theme-font);
-        }
-
-        .fixed-navbar
-        {
-            position: sticky;
-            top: 0;        
-            width: 100%;      
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-            font-size: 15px;
-            z-index: 100;
-        }
-
-        .navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            column-gap: 5%;
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-        }
-
-        /* secondary navbar */
-        .secondary-navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
-            column-gap: 5%;
-            background-color: #969aa2;
-            overflow: hidden;
-        }
-
-        .secondary-navbar-container a 
-        {
-            float: left;
-            font-size: 15px;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        .dropdown 
-        {
-            float: left;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .dropdown .dropbtn
-        {
-            font-size: 15px;
-            border: none;
-            outline: none;
-            color: white;
-            padding: 24px 16px;
-            background-color: inherit;
-            font-family: inherit;
-            margin: 0;
-        }
-
-        .secondary-navbar-container a:hover, 
-        .dropdown:hover .dropbtn 
-        {
-            background-color:#5e81ac;
-        }
-
-        .dropdown-content 
-        {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 20%;
-        }
-
-        .dropdown-content a 
-        {
-            float: none;
-            color: black;
-            padding: 17px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover
-        {
-            background-color: #dbdddd;
-        }
-
-        .dropdown:hover .dropdown-content
-        {
-            display: block;
-        }
-
-        /* secondary navbar phone portability */
-        @media only screen and (max-width: 768px) 
-        {
-            [class*="dropdown"]
-            {
-                display: none;
-            }
-
-            [class*="dropbtn"]
-            {
-                display: none;
-            }
-
-            [class*="dropdown-content"]
-            {
-                display: none;
-            }
-
-            [class*="secondary-navbar-container"]
-            {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* table of contents */
-        .toc-container
-        {
-            background: #f0f1f1 none repeat scroll 0 0;
-            border: 1px solid #aaa;
-            display: table;
-            font-size: 95%;
-            margin-bottom: 1em;
-            margin: auto;
-            padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 15px;
-            position: relative;
-            top: 30px;
-            margin-left: 13vw;
-        }
-
-        .toc-title 
-        {
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .toc-container li,
-        .toc-container ul,
-        .toc-container ul li 
-        {
-            list-style: none;
-            padding-left: 0px;
-        }
-
-        .toc-container a
-        {
-            color: #3584e4;
-        }
-
-        .toc-secondary ul,
-        .toc-secondary li,
-        .toc-secondary ul li 
-        {
-            text-indent: 20px;
-        }
-
-        /* toc tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 13vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                padding-right: 2vw;
-            }
-        }
-
-        /* toc phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 10vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                font-size: 2.15vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 2.5vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-        }
-
-        /* toc phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="toc-container"]
-            {
-                position: static;
-            }
-            [class*="generic-box-toc"]
-            {
-                text-align: center;
-                font-size: 3vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
-
-        /* horizontal ruling */
-        hr.thin
-        {
-            margin-top: 6vw;
-            border-color: #f0f1f1;
-            margin-right: 13vw;
-            margin-left: 13vw;
-        }
-
-        /* hr tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-            }
-        }
-
-        /* hr phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-                margin-left: 10vw;
-                margin-right: 10vw;
-            }
-        }
-
-        /* main article phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-main"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main2"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main3"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-space"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-                padding-bottom: 15vw;
-            }
-        }        
-
-        /* footer space phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-space"]
-            {
-                padding-bottom: 20vw;
-            }
-        }
-
-        /* fixed footer */
-        .fixed-footer
-        {
-            position: fixed;        
-            width: 100%;     
-            left: 0;
-            bottom: 0; 
-            height: var(--navbar-height);
-            background-color: #eaebeb;
-            font-size: 15px;
-            text-decoration-color: #000000;
-            display: grid;
-            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
-            overflow: hidden;
-        }
-
-        /* footer phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
     </style>
 </head>
 
@@ -383,14 +33,14 @@
         <div class="navbar-container">
             <div class="generic-box">
                 <div class="logo">
-                    <img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px" ></img>
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -401,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -409,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -470,7 +120,10 @@
         <h1><font color="#2e3440">Packing</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">Brief explanation about Packing goes here (1 sentence).</font></h3>
+        <h3><font color="#2e3440">When creating an application, you'll want to put more than one widget inside a window. 
+            When you want to put more than one widget into a window, 
+            it becomes important to control how each widget is positioned and sized. 
+            This is where packing comes in.</font></h3>
     </div>
   </section>
 
@@ -494,20 +147,117 @@
 
  <!-- article body "article-main" -->
   <article class="article-main">
+      <div class="generic-box-main">
+          <p>GTK+ comes with a large variety of <em class="firstterm">layout containers</em> 
+          whose purpose it is to control the layout of the child widgets that are added to them. See 
+          <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers.html"><i>Layout Containers</i></a> 
+          for an overview.<br>
+          <br>
+          The following example shows how the <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkGrid.html">GtkGrid</a> 
+          container lets you arrange several buttons:<br>
+          <br>
+          <img src="/foo/gtk3/Overview/getting%20started/grid-packing.png"></img><br>
+          </p>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Example 2. Packing buttons</span><br>
+              <br>
+              Create a new file with the following content named example-2.c.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting">#include &lt;gtk/gtk.h&gt;
+
+static void
+print_hello (GtkWidget *widget,
+             gpointer   data)
+{
+  g_print ("Hello World\n");
+}
+
+static void
+activate (GtkApplication *app,
+          gpointer        user_data)
+{
+  GtkWidget *window;
+  GtkWidget *grid;
+  GtkWidget *button;
+
+  /* create a new window, and set its title */
+  window = gtk_application_window_new (app);
+  gtk_window_set_title (GTK_WINDOW (window), "Window");
+  gtk_container_set_border_width (GTK_CONTAINER (window), 10);
+
+  /* Here we construct the container that is going pack our buttons */
+  grid = gtk_grid_new ();
+
+  /* Pack the container in the window */
+  gtk_container_add (GTK_CONTAINER (window), grid);
+
+  button = gtk_button_new_with_label ("Button 1");
+  g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
+
+  /* Place the first button in the grid cell (0, 0), and make it fill
+   * just 1 cell horizontally and vertically (ie no spanning)
+   */
+  gtk_grid_attach (GTK_GRID (grid), button, 0, 0, 1, 1);
+
+  button = gtk_button_new_with_label ("Button 2");
+  g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
+
+  /* Place the second button in the grid cell (1, 0), and make it fill
+   * just 1 cell horizontally and vertically (ie no spanning)
+   */
+  gtk_grid_attach (GTK_GRID (grid), button, 1, 0, 1, 1);
+
+  button = gtk_button_new_with_label ("Quit");
+  g_signal_connect_swapped (button, "clicked", G_CALLBACK (gtk_widget_destroy), window);
+
+  /* Place the Quit button in the grid cell (0, 1), and make it
+   * span 2 columns.
+   */
+  gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 2, 1);
+
+  /* Now that we are done packing our widgets, we show them all
+   * in one go, by calling gtk_widget_show_all() on the window.
+   * This call recursively calls gtk_widget_show() on all widgets
+   * that are contained in the window, directly or indirectly.
+   */
+  gtk_widget_show_all (window);
+
+}
+
+int
+main (int    argc,
+      char **argv)
+{
+  GtkApplication *app;
+  int status;
+
+  app = gtk_application_new ("org.gtk.example", G_APPLICATION_FLAGS_NONE);
+  g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+  status = g_application_run (G_APPLICATION (app), argc, argv);
+  g_object_unref (app);
+
+  return status;
+}
+          </pre>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              You can compile the program above with GCC using:
+          </p>
+      </div>
+      <div class="generic-box-code"><p><br>
+        <code class="line">
+            gcc `pkg-config --cflags gtk+-3.0` -o example-1 example-1.c `pkg-config --libs gtk+-3.0`
+        </code><br>
+      </p></div>
       <div class="generic-box-space">
-          <p>Lorem ipsum dolor sit amet, 
-             consectetur adipiscing elit, 
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-             Eget egestas purus viverra accumsan in nisl nisi. 
-             Pellentesque sit amet porttitor eget dolor morbi non. 
-             Sit amet justo donec enim diam vulputate ut pharetra. 
-             Leo a diam sollicitudin tempor. 
-             Diam donec adipiscing tristique risus nec feugiat in. 
-             Ornare arcu odio ut sem nulla. 
-             Diam vulputate ut pharetra sit amet aliquam id diam. 
-             Diam vel quam elementum pulvinar etiam non quam.
-            </p>
+          <p>
+              <br>
+          </p>
       </div>
   </article>
 
@@ -527,22 +277,22 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>
