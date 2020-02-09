@@ -16,364 +16,14 @@
     <link rel="stylesheet" href="/foo/css/footer-items.css">
     <!-- alternate templates -->
     <link rel="stylesheet" href="/foo/css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-
-        .generic-box
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        button, 
-        .logo, 
-        a, 
-        span
-        {
-            align-self: center;
-        }
-
-        a 
-        { 
-            text-decoration-line: none; 
-            color: white; 
-        }
-        h1 
-        {
-            font-size: 4em;
-        }
-
-        /* fixed navbar */
-        :root
-        {
-            --navbar-height: 50px;
-            --navbar-colour: #000000;
-            --theme-font: 'Noto Sans', sans-serif;
-        }
-        body
-        {
-            padding: 0;
-            margin: 0;
-            font-family: var(--theme-font);
-        }
-
-        .fixed-navbar
-        {
-            position: sticky;
-            top: 0;        
-            width: 100%;      
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-            font-size: 15px;
-            z-index: 100;
-        }
-
-        .navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            column-gap: 5%;
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-        }
-
-        /* secondary navbar */
-        .secondary-navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
-            column-gap: 5%;
-            background-color: #969aa2;
-            overflow: hidden;
-        }
-
-        .secondary-navbar-container a 
-        {
-            float: left;
-            font-size: 15px;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        .dropdown 
-        {
-            float: left;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .dropdown .dropbtn
-        {
-            font-size: 15px;
-            border: none;
-            outline: none;
-            color: white;
-            padding: 24px 16px;
-            background-color: inherit;
-            font-family: inherit;
-            margin: 0;
-        }
-
-        .secondary-navbar-container a:hover, 
-        .dropdown:hover .dropbtn 
-        {
-            background-color:#5e81ac;
-        }
-
-        .dropdown-content 
-        {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 20%;
-        }
-
-        .dropdown-content a 
-        {
-            float: none;
-            color: black;
-            padding: 17px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover
-        {
-            background-color: #dbdddd;
-        }
-
-        .dropdown:hover .dropdown-content
-        {
-            display: block;
-        }
-
-        /* secondary navbar phone portability */
-        @media only screen and (max-width: 768px) 
-        {
-            [class*="dropdown"]
-            {
-                display: none;
-            }
-
-            [class*="dropbtn"]
-            {
-                display: none;
-            }
-
-            [class*="dropdown-content"]
-            {
-                display: none;
-            }
-
-            [class*="secondary-navbar-container"]
-            {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* table of contents */
-        .toc-container
-        {
-            background: #f0f1f1 none repeat scroll 0 0;
-            border: 1px solid #aaa;
-            display: table;
-            font-size: 95%;
-            margin-bottom: 1em;
-            margin: auto;
-            padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 15px;
-            position: relative;
-            top: 30px;
-            margin-left: 13vw;
-        }
-
-        .toc-title 
-        {
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .toc-container li,
-        .toc-container ul,
-        .toc-container ul li 
-        {
-            list-style: none;
-            padding-left: 0px;
-        }
-
-        .toc-container a
-        {
-            color: #3584e4;
-        }
-
-        .toc-secondary ul,
-        .toc-secondary li,
-        .toc-secondary ul li 
-        {
-            text-indent: 20px;
-        }
-
-        /* toc tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 13vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                padding-right: 2vw;
-            }
-        }
-
-        /* toc phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 10vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                font-size: 2.15vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 2.5vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-        }
-
-        /* toc phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="toc-container"]
-            {
-                position: static;
-            }
-            [class*="generic-box-toc"]
-            {
-                text-align: center;
-                font-size: 3vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
-
-        /* horizontal ruling */
-        hr.thin
-        {
-            margin-top: 6vw;
-            border-color: #f0f1f1;
-            margin-right: 13vw;
-            margin-left: 13vw;
-        }
-
-        /* hr tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-            }
-        }
-
-        /* hr phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-                margin-left: 10vw;
-                margin-right: 10vw;
-            }
-        }
-
-        /* main article phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-main"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main2"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main3"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-space"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-                padding-bottom: 15vw;
-            }
-        }        
-
-        /* footer space phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-space"]
-            {
-                padding-bottom: 20vw;
-            }
-        }
-
-        /* fixed footer */
-        .fixed-footer
-        {
-            position: fixed;        
-            width: 100%;     
-            left: 0;
-            bottom: 0; 
-            height: var(--navbar-height);
-            background-color: #eaebeb;
-            font-size: 15px;
-            text-decoration-color: #000000;
-            display: grid;
-            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
-            overflow: hidden;
-        }
-
-        /* footer phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
     </style>
 </head>
 
@@ -383,14 +33,14 @@
         <div class="navbar-container">
             <div class="generic-box">
                 <div class="logo">
-                    <img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px" ></img>
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -401,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -409,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -470,7 +120,7 @@
         <h1><font color="#2e3440">The GTK+ Input and Event Handling</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">Brief explanation about The GTK+ Input and Event Handling goes here (1 sentence).</font></h3>
+        <h3><font color="#2e3440">GTK+ input and event handling in detail.</font></h3>
     </div>
   </section>
 
@@ -494,20 +144,328 @@
 
  <!-- article body "article-main" -->
   <article class="article-main">
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.5em; font-weight: 700;">Overview of GTK+ input and event handling</span><br>
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              This chapter describes in detail how GTK+ handles input. If you are interested in what 
+              happens to translate a key press or mouse motion of the users into a change of a GTK+ widget, 
+              you should read this chapter. This knowledge will also be useful if you decide to implement 
+              your own widgets.
+          </p>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Devices and events</span><br>
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              The most basic input devices that every computer user has interacted with are keyboards and 
+              mice; beyond these, GTK+ supports touchpads, touchscreens and more exotic input devices such 
+              as graphics tablets. Inside GTK+, every such input device is represented by a 
+              <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/GdkDevice.html#GdkDevice"><span class="type">GdkDevice</span></a> 
+              object.<br>
+              <br>
+              To simplify dealing with the variability between these input devices, GTK+ has a concept of 
+              master and slave devices. The concrete physical devices that have many different characteristics 
+              (mice may have 2 or 3 or 8 buttons, keyboards have different layouts and may or may not have 
+              a separate number block, etc) are represented as slave devices. Each slave device is 
+              associated with a virtual master device. Master devices always come in pointer/keyboard pairs 
+              - you can think of such a pair as a 'seat'.<br>
+              <br>
+              GTK+ widgets generally deal with the master devices, and thus can be used with any pointing 
+              device or keyboard.<br>
+              <br>
+              When a user interacts with an input device (e.g. moves a mouse or presses a key on the keyboard), 
+              GTK+ receives events from the windowing system. These are typically directed at a specific 
+              window - for pointer events, the window under the pointer (grabs complicate this), for keyboard 
+              events, the window with the keyboard focus.<br>
+              <br>
+              GDK translates these raw windowing system events into <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GdkEvent"><span class="type">GdkEvents</span></a>. 
+              Typical input events are:
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              <ul>
+                <li>GdkEventButton</li>
+                <li>GdkEventMotion</li>
+                <li>GdkEventCrossing</li>
+                <li>GdkEventKey</li>
+                <li>GdkEventFocus</li>
+                <li>GdkEventtouch</li>
+              </ul> 
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              Additionally, GDK/GTK synthesizes other signals to let know whether grabs (system-wide or 
+              in-app) are taking input away:
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              <ul>
+                <li><a class="two" href="https://www.bloss.io/documentation/GDK3/API_Reference/Event_Structures.html#GdkEventGrabBroken">GdkEventGrabBroken</a></li>
+                <li><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_grab_notify"><span class="type">“grab-notify”</span></a></li>
+              </ul> 
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              When GTK+ is initialized, it sets up an event handler function with <a class="two" href="https://www.bloss.io/documentation/GDK3/API_Reference/Events.html#gdk_event_handler_set"><code class="function">gdk_event_handler_set()</code></a>, 
+              which receives all of these input events (as well as others, for instance window management 
+              related events).
+          </p>
+      </div>
+ <hr class="para">
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Event propagation</span><br>
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              For widgets which have a <a class="two" href="https://www.bloss.io/documentation/GDK3/API_Reference/Windows.html#GdkWindow"><span class="type">GdkWindow</span></a> 
+              set, events are received from the windowing system and passed to <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Core_References/Main_loop.html#gtk_main_do_event"><code class="function">gtk_main_do_event()</code></a>. 
+              See its documentation for details of what it does: compression of enter/leave events, 
+              identification of the widget receiving the event, pushing the event onto a stack for <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Core_References/Main_loop.html#gtk_get_current_event"><code class="function">gtk_get_current_event()</code></a>, 
+              and propagating the event to the widget.<br>
+              <br>
+              When a GDK backend produces an input event, it is tied to a <span class="type">GdkDevice</span> 
+              and a <span class="type">GdkWindow</span>, which in turn represents a windowing system surface 
+              in the backend. If a widget has grabbed the current input device, or all input devices, the 
+              event is propagated to that <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html"><span class="type">GtkWidget</span></a>. 
+              Otherwise, it is propagated to the the <span class="type">GtkWidget</span> which calls <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_register_window"><code class="function">gtk_widget_register_window()</code></a> 
+              on the <span class="type">GdkWindow</span> receiving the event.<br>
+              <br>
+              Grabs are implemented for each input device, and globally. A grab for a specific input device 
+              (<a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Core_References/Main_loop.html#gtk_device_grab_add"><code class="function">gtk_device_grab_add()</code></a>), 
+              is sent events in preference to a global grab (<a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Core_References/Main_loop.html#gtk_grab_add"><code class="function">gtk_grab_add()</code></a>). 
+              Input grabs only have effect within the <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Windows/GtkWindowGroup.html"><span class="type">GtkWindowGroup</span></a> 
+              containing the <span class="type">GtkWidget</span> which registered the event’s <span class="type">GdkWindow</span>. 
+              If this <span class="type">GtkWidget</span> is a child of the grab widget, the event is 
+              propagated to the child — this is the basis for propagating events within modal dialogs.<br>
+              <br>
+              An event is propagated to a widget using <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Core_References/Main_loop.html#gtk_propagate_event"><code class="function">gtk_propagate_event()</code></a>. 
+              Propagation differs between event types: key events (<a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_KEY_PRESS"><code class="literal">GDK_KEY_PRESS</code></a>, 
+              <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_KEY_RELEASE"><code class="literal">GDK_KEY_RELEASE</code></a>) 
+              are delivered to the top-level <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html"><span class="type">GtkWindow</span></a>; 
+              other events are propagated down and up the widget hierarchy in three phases (see 
+              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GtkPropagationPhase"><span class="type">GtkPropagationPhase</span></a>).<br>
+              <br>
+              For key events, the top-level window’s default <span class="type">“key-press-event”</span> 
+              and <span class="type">“key-release-event”</span> signal handlers handle mnemonics and 
+              accelerators first. Other key presses are then passed to <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html#gtk_window_propagate_key_event"><code class="function">gtk_window_propagate_key_event()</code></a> 
+              which propagates the event upwards from the window’s current focus widget (<a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html#gtk_window_get_focus"><code class="function">gtk_window_get_focus()</code></a>) 
+              to the top-level.<br>
+              <br>
+              For other events, in the first phase (the “capture” phase) the event is delivered to each 
+              widget from the top-most (for example, the top-level <span class="type">GtkWindow</span> or 
+              grab widget) down to the target <span class="type">GtkWidget</span>. <a class="two" href="#Event_controllers_and_gestures">Gestures</a> 
+              that are attached with <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_CAPTURE"><code class="literal">GTK_PHASE_CAPTURE</code></a> 
+              get a chance to react to the event.<br>
+              <br>
+              After the “capture” phase, the widget that was intended to be the destination of the event 
+              will run gestures attached to it with <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_TARGET"><code class="literal">GTK_PHASE_TARGET</code></a>. 
+              This is known as the “target” phase, and only happens on that widget.<br>
+              <br>
+              Next, the <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_event"><span class="type">“event”</span></a> 
+              signal is emitted, then the appropriate signal for the event in question, for example <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_motion_notify_event"><span class="type">“motion-notify-event”</span></a>. 
+              Handling these signals was the primary way to handle input in GTK+ widgets before gestures 
+              were introduced. If the widget is realized, the <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_event_after"><span class="type">“event-after”</span></a> 
+              signal is emitted. The signals are emitted from the target widget up to the top-level, as 
+              part of the “bubble” phase.<br>
+              <br>
+              The default handlers for the event signals send the event to gestures that are attached with 
+              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_BUBBLE"><code class="literal">GTK_PHASE_BUBBLE</code></a>. 
+              Therefore, gestures in the “bubble” phase are only used if the widget does not have its own 
+              event handlers, or takes care to chain up to the default <span class="type">GtkWidget</span> 
+              handlers.<br>
+              <br>
+              Events are not delivered to a widget which is insensitive or unmapped.<br>
+              <br>
+              Any time during the propagation phase, a widget may indicate that a received event was 
+              consumed and propagation should therefore be stopped. In traditional event handlers, this is 
+              hinted by returning <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_EVENT_STOP"><code class="literal">GDK_EVENT_STOP</code></a>. 
+              If gestures are used, this may happen when the widget tells the gesture to claim the event 
+              touch sequence (or the pointer events) for its own. See the "gesture states" section below 
+              to know more of the latter.
+          </p>
+      </div>
+ <hr class="para">
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Event masks</span><br>
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              Each widget instance has a basic event mask and another per input device, which determine 
+              the types of input event it receives. Each event mask set on a widget is added to the 
+              corresponding (basic or per-device) event mask for the widget’s <span class="type">GdkWindow</span>, 
+              and all child <span class="type">GdkWindows</span>.<br>
+              <br>
+              If a widget is windowless (<a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_get_has_window"><code class="function">gtk_widget_get_has_window()</code></a> 
+              returns <code class="literal">FALSE</code>) and an application wants to receive custom events 
+              on it, it must be placed inside a <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Miscellaneous/GtkEventBox.html"><span class="type">GtkEventBox</span></a> 
+              to receive the events, and an appropriate event mask must be set on the box. When implementing 
+              a widget, use a <code class="literal">GDK_INPUT_ONLY</code> <span class="type">GdkWindow</span> 
+              to receive the events instead.<br>
+              <br>
+              Filtering events against event masks happens inside <span class="type">GdkWindow</span>, 
+              which exposes event masks to the windowing system to reduce the number of events GDK 
+              receives from it. On receiving an event, it is filtered against the <span class="type">GdkWindow</span>’s 
+              mask for the input device, if set. Otherwise, it is filtered against the <span class="type">GdkWindow</span>’s 
+              basic event mask.<br>
+              <br>
+              This means that widgets must add to the event mask for each event type they expect to 
+              receive, using <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_events"><code class="function">gtk_widget_set_events()</code></a> 
+              or <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_events"><code class="function">gtk_widget_add_events()</code></a> 
+              to preserve the existing mask. Widgets which are aware of floating devices should use <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_device_events"><code class="function">gtk_widget_set_device_events()</code></a> 
+              or <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_device_events"><code class="function">gtk_widget_add_device_events()</code></a>, 
+              and must explicitly enable the device using <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_device_enabled"><code class="function">gtk_widget_set_device_enabled()</code></a>. 
+              See the <span class="type">GdkDeviceManager</span> documentation for more information.<br>
+              <br>
+              All standard widgets set the event mask for all events they expect to receive, and it is not 
+              necessary to modify this. Masks should be set when implementing a new widget.
+          </p>
+      </div>
+ <hr class="para">
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Touch events</span><br>
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              Touch events are emitted as events of type <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_TOUCH_BEGIN"><code class="literal">GDK_TOUCH_BEGIN</code></a>, 
+              <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_TOUCH_UPDATE"><code class="literal">GDK_TOUCH_UPDATE</code></a> 
+              or <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_TOUCH_END"><code class="literal">GDK_TOUCH_END</code></a>, 
+              those events contain an “event sequence” that univocally identifies the physical touch until 
+              it is lifted from the device.<br>
+              <br>
+              On some windowing platforms, multitouch devices perform pointer emulation, this works by 
+              granting a “pointer emulating” hint to one of the currently interacting touch sequences, 
+              which will be reported on every <span class="type">GdkEventTouch</span> event from that 
+              sequence. By default, if a widget didn't request touch events by setting <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_TOUCH_MASK"><code class="literal">GDK_TOUCH_MASK</code></a> 
+              on its event mask and didn't override <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_touch_event"><span class="type">“touch-event”</span></a>, 
+              GTK+ will transform these “pointer emulating” events into semantically similar <span class="type">GdkEventButton</span> 
+              and <span class="type">GdkEventMotion</span> events. Depending on <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_TOUCH_MASK"><code class="literal">GDK_TOUCH_MASK</code></a> 
+              being in the event mask or not, non-pointer-emulating sequences could still trigger gestures 
+              or just get filtered out, regardless of the widget not handling those directly.<br>
+              <br>
+              If the widget sets <code class="literal">GDK_TOUCH_MASK</code> on its event mask and doesn't 
+              chain up on <span class="type">“touch-event”</span>, only touch events will be received, and 
+              no pointer emulation will be performed.
+          </p>
+      </div>
+ <hr class="para">
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Grabs</span><br>
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              Grabs are a method to claim all input events from a device, they happen either implicitly on 
+              pointer and touch devices, or explicitly. Implicit grabs happen on user interaction, when a 
+              <span class="type">GdkEventButtonPress</span> happens, all events from then on, until after 
+              the corresponding <span class="type">GdkEventButtonRelease</span>, will be reported to the 
+              widget that got the first event. Likewise, on touch events, every <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GdkEventSequence"><span class="type">GdkEventSequence</span></a> 
+              will deliver only events to the widget that received its <code class="literal">GDK_TOUCH_BEGIN</code> 
+              event.<br>
+              <br>
+              Explicit grabs happen programatically (both activation and deactivation), and can be either 
+              system-wide (GDK grabs) or application-wide (GTK grabs). On the windowing platforms that 
+              support it, GDK grabs will prevent any interaction with any other application/window/widget 
+              than the grabbing one, whereas GTK grabs will be effective only within the application 
+              (across all its windows), still allowing for interaction with other applications.<br>
+              <br>
+              But one important aspect of grabs is that they may potentially happen at any point somewhere 
+              else, even while the pointer/touch device is already grabbed. This makes it necessary for 
+              widgets to handle the cancellation of any ongoing interaction. Depending on whether a GTK or 
+              GDK grab is causing this, the widget will respectively receive a <span class="type">“grab-notify”</span> 
+              signal, or a <span class="type">GdkEventGrabBroken</span> event.<br>
+              <br>
+              On gestures, these signals are handled automatically, causing the gesture to cancel all 
+              tracked pointer/touch events, and signal the end of recognition.
+          </p>
+      </div>
+ <hr class="para">
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Keyboard input</span><br>
+          </p>
+      </div>
+ <hr class="para">
+      <div class="generic-box-main2">
+          <p>
+              <a name="Event_controllers_and_gestures"></a><span style= "font-size: 1.17em; font-weight: 700;">Event controllers and gestures</span><br>
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              Event controllers are standalone objects that can perform specific actions upon received 
+              <span class="type">GdkEvents</span>. These are tied to a <span class="type">GtkWidget</span>, 
+              and can be told of the event propagation phase at which they will manage the events.<br>
+              <br>
+              Gestures are a set of specific controllers that are prepared to handle pointer and/or touch 
+              events, each gestures implementation attempts to recognize specific actions out the received 
+              events, notifying of the state/progress accordingly to let the widget react to those. On 
+              multi-touch gestures, every interacting touch sequence will be tracked independently.<br>
+              <br>
+              Being gestures “simple” units, it is not uncommon to tie several together to perform higher 
+              level actions, grouped gestures handle the same event sequences simultaneously, and those 
+              sequences share a same state across all grouped gestures. Some examples of grouping may be:
+          </p>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              <ul>
+                <li>A “drag” and a “swipe” gestures may want grouping. The former will report events as 
+                    the dragging happens, the latter will tell the swipe X/Y velocities only after the gesture 
+                    has finished.</li>
+                <li>Grouping a “drag” gesture with a “pan” gesture will only effectively allow dragging in 
+                    the panning orientation, as both gestures share state.</li>
+                <li>If “press” and “long press” are wanted simultaneously, those would need grouping.</li>
+              </ul> 
+          </p>
+      </div>
+ <hr class="para">
+      <div class="generic-box-main2">
+          <p>
+              <span style= "font-size: 1.17em; font-weight: 700;">Gesture states</span><br>
+          </p>
+      </div>
       <div class="generic-box-space">
-          <p>Lorem ipsum dolor sit amet, 
-             consectetur adipiscing elit, 
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-             Eget egestas purus viverra accumsan in nisl nisi. 
-             Pellentesque sit amet porttitor eget dolor morbi non. 
-             Sit amet justo donec enim diam vulputate ut pharetra. 
-             Leo a diam sollicitudin tempor. 
-             Diam donec adipiscing tristique risus nec feugiat in. 
-             Ornare arcu odio ut sem nulla. 
-             Diam vulputate ut pharetra sit amet aliquam id diam. 
-             Diam vel quam elementum pulvinar etiam non quam.
-            </p>
+          <p>
+              Gestures have a notion of “state” for each individual touch sequence. When events from a 
+              touch sequence are first received, the touch sequence will have “none” state, this means the 
+              touch sequence is being handled by the gesture to possibly trigger actions, but the event 
+              propagation will not be stopped.<br>
+              <br>
+              When the gesture enters recognition, or at a later point in time, the widget may choose to 
+              claim the touch sequences (individually or as a group), hence stopping event propagation 
+              after the event is run through every gesture in that widget and propagation phase. Anytime 
+              this happens, the touch sequences are cancelled downwards the propagation chain, to let these 
+              know that no further events will be sent.<br>
+              <br>
+              Alternatively, or at a later point in time, the widget may choose to deny the touch sequences, 
+              thus letting those go through again in event propagation. When this happens in the capture 
+              phase, and if there are no other claiming gestures in the widget, a <code class="literal">GDK_TOUCH_BEGIN</code>/
+              <a class="two" href="https://www.bloss.io/documentation/GDK4/API_Reference/Events.html#GDK_BUTTON_PRESS"><code class="literal">GDK_BUTTON_PRESS</code></a> 
+              event will be emulated and propagated downwards, in order to preserve consistency.<br>
+              <br>
+              Grouped gestures always share the same state for a given touch sequence, so setting the state 
+              on one does transfer the state to the others. They also are mutually exclusive, within a 
+              widget there may be only one gesture group claiming a given sequence. If another gesture 
+              group claims later that same sequence, the first group will deny the sequence.
+          </p>
       </div>
   </article>
 
@@ -527,22 +485,22 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>

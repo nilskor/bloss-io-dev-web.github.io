@@ -16,364 +16,14 @@
     <link rel="stylesheet" href="/foo/css/footer-items.css">
     <!-- alternate templates -->
     <link rel="stylesheet" href="/foo/css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-
-        .generic-box
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        button, 
-        .logo, 
-        a, 
-        span
-        {
-            align-self: center;
-        }
-
-        a 
-        { 
-            text-decoration-line: none; 
-            color: white; 
-        }
-        h1 
-        {
-            font-size: 4em;
-        }
-
-        /* fixed navbar */
-        :root
-        {
-            --navbar-height: 50px;
-            --navbar-colour: #000000;
-            --theme-font: 'Noto Sans', sans-serif;
-        }
-        body
-        {
-            padding: 0;
-            margin: 0;
-            font-family: var(--theme-font);
-        }
-
-        .fixed-navbar
-        {
-            position: sticky;
-            top: 0;        
-            width: 100%;      
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-            font-size: 15px;
-            z-index: 100;
-        }
-
-        .navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            column-gap: 5%;
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-        }
-
-        /* secondary navbar */
-        .secondary-navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
-            column-gap: 5%;
-            background-color: #969aa2;
-            overflow: hidden;
-        }
-
-        .secondary-navbar-container a 
-        {
-            float: left;
-            font-size: 15px;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        .dropdown 
-        {
-            float: left;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .dropdown .dropbtn
-        {
-            font-size: 15px;
-            border: none;
-            outline: none;
-            color: white;
-            padding: 24px 16px;
-            background-color: inherit;
-            font-family: inherit;
-            margin: 0;
-        }
-
-        .secondary-navbar-container a:hover, 
-        .dropdown:hover .dropbtn 
-        {
-            background-color:#5e81ac;
-        }
-
-        .dropdown-content 
-        {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 20%;
-        }
-
-        .dropdown-content a 
-        {
-            float: none;
-            color: black;
-            padding: 17px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover
-        {
-            background-color: #dbdddd;
-        }
-
-        .dropdown:hover .dropdown-content
-        {
-            display: block;
-        }
-
-        /* secondary navbar phone portability */
-        @media only screen and (max-width: 768px) 
-        {
-            [class*="dropdown"]
-            {
-                display: none;
-            }
-
-            [class*="dropbtn"]
-            {
-                display: none;
-            }
-
-            [class*="dropdown-content"]
-            {
-                display: none;
-            }
-
-            [class*="secondary-navbar-container"]
-            {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* table of contents */
-        .toc-container
-        {
-            background: #f0f1f1 none repeat scroll 0 0;
-            border: 1px solid #aaa;
-            display: table;
-            font-size: 95%;
-            margin-bottom: 1em;
-            margin: auto;
-            padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 15px;
-            position: relative;
-            top: 30px;
-            margin-left: 13vw;
-        }
-
-        .toc-title 
-        {
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .toc-container li,
-        .toc-container ul,
-        .toc-container ul li 
-        {
-            list-style: none;
-            padding-left: 0px;
-        }
-
-        .toc-container a
-        {
-            color: #3584e4;
-        }
-
-        .toc-secondary ul,
-        .toc-secondary li,
-        .toc-secondary ul li 
-        {
-            text-indent: 20px;
-        }
-
-        /* toc tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 13vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                padding-right: 2vw;
-            }
-        }
-
-        /* toc phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 10vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                font-size: 2.15vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 2.5vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-        }
-
-        /* toc phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="toc-container"]
-            {
-                position: static;
-            }
-            [class*="generic-box-toc"]
-            {
-                text-align: center;
-                font-size: 3vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
-
-        /* horizontal ruling */
-        hr.thin
-        {
-            margin-top: 6vw;
-            border-color: #f0f1f1;
-            margin-right: 13vw;
-            margin-left: 13vw;
-        }
-
-        /* hr tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-            }
-        }
-
-        /* hr phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-                margin-left: 10vw;
-                margin-right: 10vw;
-            }
-        }
-
-        /* main article phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-main"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main2"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main3"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-space"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-                padding-bottom: 15vw;
-            }
-        }        
-
-        /* footer space phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-space"]
-            {
-                padding-bottom: 20vw;
-            }
-        }
-
-        /* fixed footer */
-        .fixed-footer
-        {
-            position: fixed;        
-            width: 100%;     
-            left: 0;
-            bottom: 0; 
-            height: var(--navbar-height);
-            background-color: #eaebeb;
-            font-size: 15px;
-            text-decoration-color: #000000;
-            display: grid;
-            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
-            overflow: hidden;
-        }
-
-        /* footer phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
     </style>
 </head>
 
@@ -383,14 +33,14 @@
         <div class="navbar-container">
             <div class="generic-box">
                 <div class="logo">
-                    <img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px" ></img>
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -401,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -409,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -470,7 +120,7 @@
         <h1><font color="#2e3440">Mailing lists and bug reports</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">Brief explanation about Mailing lists and bug reports goes here (1 sentence).</font></h3>
+        <h3><font color="#2e3440">Getting help with GTK+.</font></h3>
     </div>
   </section>
 
@@ -494,20 +144,107 @@
 
  <!-- article body "article-main" -->
   <article class="article-main">
+      <div class="generic-box-main">
+          <h2>Filing a bug report or feature request</h2>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              If you encounter a bug, misfeature, or missing feature in GTK+, please file a bug report on  
+              <a class="two" href="https://bugzilla.gnome.org">https://bugzilla.gnome.org</a>. 
+              We'd also appreciate reports of incomplete or misleading information in the GTK+ documentation; 
+              file those against the "docs" component of the "gtk+" product in Bugzilla.<br>
+              <br>
+              Don't hesitate to file a bug report, even if you think we may know about it already, or aren't sure of the details. 
+              Just give us as much information as you have, and if it's already fixed or has already been discussed, 
+              we'll add a note to that effect in the report.<br>
+              <br>
+              The bug tracker should definitely be used for feature requests, it's not only for bugs. 
+              We track all GTK+ development in Bugzilla, so it's the way to be sure the GTK+ developers won't forget about an issue.
+          </p>
+      </div>
+      <div class="generic-box-main">
+          <h2>Submitting Patches</h2>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              If you develop a bugfix or enhancement for GTK+, please file that in Bugzilla as well. 
+              Bugzilla allows you to attach files; please attach a patch generated by the 
+              <span class="command"><strong>diff</strong></span> utility, using the <code class="option">-u</code> 
+              option to make the patch more readable. All patches must be offered under the terms of the GNU LGPL license, 
+              so be sure you are authorized to give us the patch under those terms.<br>
+              <br>
+              If you want to discuss your patch before or after developing it, mail 
+              <a class="two" href="mailto:gtk-devel-list@gnome.org">gtk-devel-list@gnome.org</a>. 
+              But be sure to file the Bugzilla report as well; if the patch is only on the list and not in Bugzilla, 
+              it's likely to slip through the cracks.
+          </p>
+      </div>
+      <div class="generic-box-main">
+          <h2>Mailing lists</h2>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              There are several mailing lists dedicated to GTK+ and related libraries. 
+              Discussion of GLib, Pango, and ATK in addition to GTK+ proper is welcome on these lists. 
+              You can subscribe or view the archives of these lists on 
+              <a class="two" href="https://mail.gnome.org">http://mail.gnome.org</a>. 
+              If you aren't subscribed to the list, any message you post to the list will be held for manual moderation, 
+              which might take some days to happen.
+          </p>
+      </div>
+      <div class="list-table"><table border="0" cellspacing="15" class="list-table">
+          <colgroup><col align="left" valign="top"><col>
+          </colgroup>
+          <tbody>
+              <tr>
+                  <td><p><span class="term"><a class="two" href="mailto:gtk-list@gnome.org">gtk-list@gnome.org</a></span></p></td>
+                  <td><p>
+                      gtk-list covers general GTK+ topics; questions about using GTK+ in programs,
+                      GTK+ from a user standpoint, announcements of GTK+-related projects
+                      such as themes or GTK+ modules would all be on-topic. The bulk of the
+                      traffic consists of GTK+ programming questions.
+                  </p></td>
+              </tr>
+              <tr>
+                  <td><p><span class="term"><a class="two" href="mailto:gtk-app-devel-list@gnome.org">gtk-app-devel-list@gnome.org</a></span></p></td>
+                  <td><p>
+                      gtk-app-devel-list covers writing applications in GTK+. It's narrower
+                      in scope than gtk-list, but the two lists overlap quite a
+                      bit. gtk-app-devel-list is a good place to ask questions about GTK+
+                      programming.  
+                  </p></td>
+              </tr>
+              <tr>
+                  <td><p><span class="term"><a class="two" href="mailto:gtk-devel-list@gnome.org">gtk-devel-list@gnome.org</a></span></p></td>
+                  <td><p>
+                      gtk-devel-list is for discussion of work on GTK+ itself, it is 
+                      <span class="emphasis"><em>not</em></span> for
+                      asking questions about how to use GTK+ in applications. gtk-devel-list 
+                      is appropriate for discussion of patches, bugs, proposed features, 
+                      and so on.
+                  </p></td>
+              </tr>
+              <tr>
+                  <td><p><span class="term"><a class="two" href="mailto:gtk-i18n-list@gnome.org">gtk-i18n-list@gnome.org</a></span></p></td>
+                  <td><p>
+                      gtk-i18n-list is for discussion of internationalization in GTK+; 
+                      Pango is the main focus of the list. Questions about the details of 
+                      using Pango, and discussion of proposed Pango patches or features, are
+                      all on topic.
+                  </p></td>
+              </tr>
+              <tr>
+                  <td><p><span class="term"><a class="two" href="mailto:gtk-doc-list@gnome.org">gtk-doc-list@gnome.org</a></span></p></td>
+                  <td><p>
+                      gtk-doc-list is for discussion of the <span class="application">gtk-doc</span> 
+                      documentation system (used to document GTK+), and for work on the GTK+ 
+                      documentation.
+                  </p></td>
+              </tr>
+         </tbody>
+      </table></div>
       <div class="generic-box-space">
-          <p>Lorem ipsum dolor sit amet, 
-             consectetur adipiscing elit, 
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-             Eget egestas purus viverra accumsan in nisl nisi. 
-             Pellentesque sit amet porttitor eget dolor morbi non. 
-             Sit amet justo donec enim diam vulputate ut pharetra. 
-             Leo a diam sollicitudin tempor. 
-             Diam donec adipiscing tristique risus nec feugiat in. 
-             Ornare arcu odio ut sem nulla. 
-             Diam vulputate ut pharetra sit amet aliquam id diam. 
-             Diam vel quam elementum pulvinar etiam non quam.
-            </p>
+          <br>
       </div>
   </article>
 
@@ -527,22 +264,22 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>
