@@ -16,364 +16,14 @@
     <link rel="stylesheet" href="/foo/css/footer-items.css">
     <!-- alternate templates -->
     <link rel="stylesheet" href="/foo/css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-
-        .generic-box
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        button, 
-        .logo, 
-        a, 
-        span
-        {
-            align-self: center;
-        }
-
-        a 
-        { 
-            text-decoration-line: none; 
-            color: white; 
-        }
-        h1 
-        {
-            font-size: 4em;
-        }
-
-        /* fixed navbar */
-        :root
-        {
-            --navbar-height: 50px;
-            --navbar-colour: #000000;
-            --theme-font: 'Noto Sans', sans-serif;
-        }
-        body
-        {
-            padding: 0;
-            margin: 0;
-            font-family: var(--theme-font);
-        }
-
-        .fixed-navbar
-        {
-            position: sticky;
-            top: 0;        
-            width: 100%;      
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-            font-size: 15px;
-            z-index: 100;
-        }
-
-        .navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            column-gap: 5%;
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-        }
-
-        /* secondary navbar */
-        .secondary-navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
-            column-gap: 5%;
-            background-color: #969aa2;
-            overflow: hidden;
-        }
-
-        .secondary-navbar-container a 
-        {
-            float: left;
-            font-size: 15px;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        .dropdown 
-        {
-            float: left;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .dropdown .dropbtn
-        {
-            font-size: 15px;
-            border: none;
-            outline: none;
-            color: white;
-            padding: 24px 16px;
-            background-color: inherit;
-            font-family: inherit;
-            margin: 0;
-        }
-
-        .secondary-navbar-container a:hover, 
-        .dropdown:hover .dropbtn 
-        {
-            background-color:#5e81ac;
-        }
-
-        .dropdown-content 
-        {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 20%;
-        }
-
-        .dropdown-content a 
-        {
-            float: none;
-            color: black;
-            padding: 17px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover
-        {
-            background-color: #dbdddd;
-        }
-
-        .dropdown:hover .dropdown-content
-        {
-            display: block;
-        }
-
-        /* secondary navbar phone portability */
-        @media only screen and (max-width: 768px) 
-        {
-            [class*="dropdown"]
-            {
-                display: none;
-            }
-
-            [class*="dropbtn"]
-            {
-                display: none;
-            }
-
-            [class*="dropdown-content"]
-            {
-                display: none;
-            }
-
-            [class*="secondary-navbar-container"]
-            {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* table of contents */
-        .toc-container
-        {
-            background: #f0f1f1 none repeat scroll 0 0;
-            border: 1px solid #aaa;
-            display: table;
-            font-size: 95%;
-            margin-bottom: 1em;
-            margin: auto;
-            padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 15px;
-            position: relative;
-            top: 30px;
-            margin-left: 13vw;
-        }
-
-        .toc-title 
-        {
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .toc-container li,
-        .toc-container ul,
-        .toc-container ul li 
-        {
-            list-style: none;
-            padding-left: 0px;
-        }
-
-        .toc-container a
-        {
-            color: #3584e4;
-        }
-
-        .toc-secondary ul,
-        .toc-secondary li,
-        .toc-secondary ul li 
-        {
-            text-indent: 20px;
-        }
-
-        /* toc tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 13vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                padding-right: 2vw;
-            }
-        }
-
-        /* toc phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 10vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                font-size: 2.15vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 2.5vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-        }
-
-        /* toc phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="toc-container"]
-            {
-                position: static;
-            }
-            [class*="generic-box-toc"]
-            {
-                text-align: center;
-                font-size: 3vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
-
-        /* horizontal ruling */
-        hr.thin
-        {
-            margin-top: 6vw;
-            border-color: #f0f1f1;
-            margin-right: 13vw;
-            margin-left: 13vw;
-        }
-
-        /* hr tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-            }
-        }
-
-        /* hr phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-                margin-left: 10vw;
-                margin-right: 10vw;
-            }
-        }
-
-        /* main article phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-main"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main2"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main3"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-space"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-                padding-bottom: 15vw;
-            }
-        }        
-
-        /* footer space phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-space"]
-            {
-                padding-bottom: 20vw;
-            }
-        }
-
-        /* fixed footer */
-        .fixed-footer
-        {
-            position: fixed;        
-            width: 100%;     
-            left: 0;
-            bottom: 0; 
-            height: var(--navbar-height);
-            background-color: #eaebeb;
-            font-size: 15px;
-            text-decoration-color: #000000;
-            display: grid;
-            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
-            overflow: hidden;
-        }
-
-        /* footer phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
     </style>
 </head>
 
@@ -383,14 +33,14 @@
         <div class="navbar-container">
             <div class="generic-box">
                 <div class="logo">
-                    <img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px" ></img>
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -401,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -409,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -470,7 +120,8 @@
         <h1><font color="#2e3440">A preference dialog</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">Brief explanation about A preference dialog goes here (1 sentence).</font></h3>
+        <h3><font color="#2e3440">A typical application will have some preferences that should be remembered from one run to the next. 
+                Even for our simple example application, we may want to change the font that is used for the content.</font></h3>
     </div>
   </section>
 
@@ -494,20 +145,264 @@
 
  <!-- article body "article-main" -->
   <article class="article-main">
+      <div class="generic-box-main2">
+          <p>
+              A typical application will have a some preferences that should be remembered from one run to the next. 
+              Even for our simple example application, we may want to change the font that is used for the content.<br>
+              <br>
+              We are going to use GSettings to store our preferences. 
+              GSettings requires a schema that describes our settings:
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">schemalist</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">schema</span> <span class="n">path</span><span class="o">=</span><span class="s">&quot;/org/gtk/exampleapp/&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;org.gtk.exampleapp&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">key</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;font&quot;</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="k">default</span><span class="o">&gt;</span><span class="err">&#39;</span><span class="n">Monospace</span> <span class="mi">12</span><span class="err">&#39;</span><span class="o">&lt;/</span><span class="k">default</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">summary</span><span class="o">&gt;</span><span class="n">Font</span><span class="o">&lt;/</span><span class="n">summary</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">description</span><span class="o">&gt;</span><span class="n">The</span> <span class="n">font</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">content</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">description</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">key</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;transition&quot;</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">choices</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">choice</span> <span class="n">value</span><span class="o">=</span><span class="err">&#39;</span><span class="n">none</span><span class="err">&#39;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">choice</span> <span class="n">value</span><span class="o">=</span><span class="err">&#39;</span><span class="n">crossfade</span><span class="err">&#39;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">choice</span> <span class="n">value</span><span class="o">=</span><span class="err">&#39;</span><span class="n">slide</span><span class="o">-</span><span class="n">left</span><span class="o">-</span><span class="n">right</span><span class="err">&#39;</span><span class="o">/&gt;</span>
+      <span class="o">&lt;/</span><span class="n">choices</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="k">default</span><span class="o">&gt;</span><span class="err">&#39;</span><span class="n">none</span><span class="err">&#39;</span><span class="o">&lt;/</span><span class="k">default</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">summary</span><span class="o">&gt;</span><span class="n">Transition</span><span class="o">&lt;/</span><span class="n">summary</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">description</span><span class="o">&gt;</span><span class="n">The</span> <span class="n">transition</span> <span class="n">to</span> <span class="n">use</span> <span class="n">when</span> <span class="n">switching</span> <span class="n">tabs</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">description</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">schema</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">schemalist</span><span class="o">&gt;</span></pre>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              Before we can make use of this schema in our application, we need to compile it into the binary form that GSettings expects. 
+              GIO provides <a class="two" href="https://developer.gnome.org/gio/2.36/ch31s06.html">macros</a> 
+              to do this in autotools-based projects.<br>
+              <br>
+              Next, we need to connect our settings to the widgets that they are supposed to control. 
+              One convenient way to do this is to use GSettings bind functionality to bind settings keys to object properties, 
+              as we do here for the transition setting.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting">
+...
+
+static void
+example_app_window_init (ExampleAppWindow *win)
+{
+  ExampleAppWindowPrivate *priv;
+
+  priv = example_app_window_get_instance_private (win);
+  gtk_widget_init_template (GTK_WIDGET (win));
+  priv-&gt;settings = g_settings_new ("org.gtk.exampleapp");
+
+  g_settings_bind (priv-&gt;settings, "transition",
+                   priv-&gt;stack, "transition-type",
+                   G_SETTINGS_BIND_DEFAULT);
+}
+
+...
+        </pre>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              (<a class="two" href="https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-22/examples/application5/exampleappwin.c">full source</a>)<br>
+              <br>
+              The code to connect the font setting is a little more involved, 
+              since there is no simple object property that it corresponds to, so we are not going to go into that here.<br>
+              <br>
+              At this point, the application will already react if you change one of the settings, e.g. using the gsettings commandline tool. 
+              Of course, we expect the application to provide a preference dialog for these. 
+              So lets do that now. 
+              Our preference dialog will be a subclass of <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Windows/GtkDialog.html">GtkDialog</a>, 
+              and we'll use the same techniques that we've already seen: 
+              templates, private structs, settings bindings.<br>
+              <br>
+              Lets start with the template.  
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">interface</span><span class="o">&gt;</span>
+  <span class="o">&lt;!--</span> <span class="n">interface</span><span class="o">-</span><span class="n">requires</span> <span class="n">gtk</span><span class="o">+</span> <span class="mf">3.8</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="n">template</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;ExampleAppPrefs&quot;</span> <span class="n">parent</span><span class="o">=</span><span class="s">&quot;GtkDialog&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="o">&gt;</span><span class="n">Preferences</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;resizable&quot;</span><span class="o">&gt;</span><span class="n">False</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">child</span> <span class="n">internal</span><span class="o">-</span><span class="n">child</span><span class="o">=</span><span class="s">&quot;vbox&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkBox&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;vbox&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkGrid&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;grid&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;margin&quot;</span><span class="o">&gt;</span><span class="mi">6</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;row-spacing&quot;</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;column-spacing&quot;</span><span class="o">&gt;</span><span class="mi">6</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkLabel&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;fontlabel&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="o">&gt;</span><span class="nl">_Font</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;use-underline&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;mnemonic-widget&quot;</span><span class="o">&gt;</span><span class="n">font</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;xalign&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkFontButton&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;font&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkLabel&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;transitionlabel&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="o">&gt;</span><span class="nl">_Transition</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;use-underline&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;mnemonic-widget&quot;</span><span class="o">&gt;</span><span class="n">transition</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;xalign&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkComboBoxText&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;transition&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">items</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">item</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="o">&gt;</span><span class="n">None</span><span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">item</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;crossfade&quot;</span><span class="o">&gt;</span><span class="n">Fade</span><span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">item</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;slide-left-right&quot;</span><span class="o">&gt;</span><span class="n">Slide</span><span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+                <span class="o">&lt;/</span><span class="n">items</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+      <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">template</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">interface</span><span class="o">&gt;</span></pre>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              Next comes the dialog subclass.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="cp">#include</span> <span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;exampleapp.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;exampleappwin.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;exampleappprefs.h&quot;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">_ExampleAppPrefs</span>
+<span class="p">{</span>
+  <span class="n">GtkDialog</span> <span class="n">parent</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">_ExampleAppPrefsPrivate</span> <span class="n">ExampleAppPrefsPrivate</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">_ExampleAppPrefsPrivate</span>
+<span class="p">{</span>
+  <span class="n">GSettings</span> <span class="o">*</span><span class="n">settings</span><span class="p">;</span>
+  <span class="n">GtkWidget</span> <span class="o">*</span><span class="n">font</span><span class="p">;</span>
+  <span class="n">GtkWidget</span> <span class="o">*</span><span class="n">transition</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">G_DEFINE_TYPE_WITH_PRIVATE</span><span class="p">(</span><span class="n">ExampleAppPrefs</span><span class="p">,</span> <span class="n">example_app_prefs</span><span class="p">,</span> <span class="n">GTK_TYPE_DIALOG</span><span class="p">)</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="n">example_app_prefs_init</span> <span class="p">(</span><span class="n">ExampleAppPrefs</span> <span class="o">*</span><span class="n">prefs</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ExampleAppPrefsPrivate</span> <span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+
+  <span class="n">priv</span> <span class="o">=</span> <span class="n">example_app_prefs_get_instance_private</span> <span class="p">(</span><span class="n">prefs</span><span class="p">);</span>
+  <span class="n">gtk_widget_init_template</span> <span class="p">(</span><span class="n">GTK_WIDGET</span> <span class="p">(</span><span class="n">prefs</span><span class="p">));</span>
+  <span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span> <span class="o">=</span> <span class="n">g_settings_new</span> <span class="p">(</span><span class="s">&quot;org.gtk.exampleapp&quot;</span><span class="p">);</span>
+
+  <span class="n">g_settings_bind</span> <span class="p">(</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span><span class="p">,</span> <span class="s">&quot;font&quot;</span><span class="p">,</span>
+                   <span class="n">priv</span><span class="o">-&gt;</span><span class="n">font</span><span class="p">,</span> <span class="s">&quot;font&quot;</span><span class="p">,</span>
+                   <span class="n">G_SETTINGS_BIND_DEFAULT</span><span class="p">);</span>
+  <span class="n">g_settings_bind</span> <span class="p">(</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span><span class="p">,</span> <span class="s">&quot;transition&quot;</span><span class="p">,</span>
+                   <span class="n">priv</span><span class="o">-&gt;</span><span class="n">transition</span><span class="p">,</span> <span class="s">&quot;active-id&quot;</span><span class="p">,</span>
+                   <span class="n">G_SETTINGS_BIND_DEFAULT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="n">example_app_prefs_dispose</span> <span class="p">(</span><span class="n">GObject</span> <span class="o">*</span><span class="n">object</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ExampleAppPrefsPrivate</span> <span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+
+  <span class="n">priv</span> <span class="o">=</span> <span class="n">example_app_prefs_get_instance_private</span> <span class="p">(</span><span class="n">EXAMPLE_APP_PREFS</span> <span class="p">(</span><span class="n">object</span><span class="p">));</span>
+  <span class="n">g_clear_object</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span><span class="p">);</span>
+
+  <span class="n">G_OBJECT_CLASS</span> <span class="p">(</span><span class="n">example_app_prefs_parent_class</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">dispose</span> <span class="p">(</span><span class="n">object</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="n">example_app_prefs_class_init</span> <span class="p">(</span><span class="n">ExampleAppPrefsClass</span> <span class="o">*</span><span class="n">class</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">G_OBJECT_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">dispose</span> <span class="o">=</span> <span class="n">example_app_prefs_dispose</span><span class="p">;</span>
+
+  <span class="n">gtk_widget_class_set_template_from_resource</span> <span class="p">(</span><span class="n">GTK_WIDGET_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">),</span>
+                                               <span class="s">&quot;/org/gtk/exampleapp/prefs.ui&quot;</span><span class="p">);</span>
+  <span class="n">gtk_widget_class_bind_template_child_private</span> <span class="p">(</span><span class="n">GTK_WIDGET_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">),</span> <span class="n">ExampleAppPrefs</span><span class="p">,</span> <span class="n">font</span><span class="p">);</span>
+  <span class="n">gtk_widget_class_bind_template_child_private</span> <span class="p">(</span><span class="n">GTK_WIDGET_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">),</span> <span class="n">ExampleAppPrefs</span><span class="p">,</span> <span class="n">transition</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">ExampleAppPrefs</span> <span class="o">*</span>
+<span class="n">example_app_prefs_new</span> <span class="p">(</span><span class="n">ExampleAppWindow</span> <span class="o">*</span><span class="n">win</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">g_object_new</span> <span class="p">(</span><span class="n">EXAMPLE_APP_PREFS_TYPE</span><span class="p">,</span> <span class="s">&quot;transient-for&quot;</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="s">&quot;use-header-bar&quot;</span><span class="p">,</span> <span class="n">TRUE</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span></pre>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              Now we revisit the <code class="literal">preferences_activated()</code> function in our application class, 
+              and make it open a new preference dialog.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting">
+...
+
+static void
+preferences_activated (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       app)
+{
+  ExampleAppPrefs *prefs;
+  GtkWindow *win;
+
+  win = gtk_application_get_active_window (GTK_APPLICATION (app));
+  prefs = example_app_prefs_new (EXAMPLE_APP_WINDOW (win));
+  gtk_window_present (GTK_WINDOW (prefs));
+}
+
+...
+        </pre>
+      </div>
       <div class="generic-box-space">
-          <p>Lorem ipsum dolor sit amet, 
-             consectetur adipiscing elit, 
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-             Eget egestas purus viverra accumsan in nisl nisi. 
-             Pellentesque sit amet porttitor eget dolor morbi non. 
-             Sit amet justo donec enim diam vulputate ut pharetra. 
-             Leo a diam sollicitudin tempor. 
-             Diam donec adipiscing tristique risus nec feugiat in. 
-             Ornare arcu odio ut sem nulla. 
-             Diam vulputate ut pharetra sit amet aliquam id diam. 
-             Diam vel quam elementum pulvinar etiam non quam.
-            </p>
+          <p>
+              (<a class="two" href="https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-22/examples/application6/exampleapp.c">full source</a>)<br>
+              <br>
+              After all this work, our application can now show a preference dialog like this:<br>
+              <br>
+              <img src="/foo/gtk3/Overview/getting%20started/building%20apps/getting-started-app6.png"></img>
+          </p>
       </div>
   </article>
 
@@ -527,22 +422,22 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>

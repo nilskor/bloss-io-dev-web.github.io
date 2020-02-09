@@ -37,10 +37,10 @@
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -51,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -59,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -187,7 +187,8 @@
               </tr>
               <tr>
                   <td><p><span class="term">Other resources</span></p></td>
-                  <td>Other files, such as GtkBuilder ui files, are best loaded from resources stored in the application binary itself. 
+                  <td>Other files, such as <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html">GtkBuilder</a> 
+                      ui files, are best loaded from resources stored in the application binary itself. 
                       This eliminates the need for most of the files that would traditionally be installed in an application-specific 
                       location in <code class="filename">/usr/share</code>.</td>
               </tr>
@@ -197,13 +198,11 @@
             <p>
                 GTK+ includes application support that is built on top of <span class="type">GApplication</span>. 
                 In this tutorial we'll build a simple application by starting from scratch, adding more and more pieces over time. 
-                Along the way, we'll learn about 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/App_support/GtkApp"><span class="type">GtkApplication</span></a>
-                , templates, resources, application menus, settings, 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkHeaderBar"><span class="type">GtkHeaderBar</span></a>, 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStack"><span class="type">GtkStack</span></a>, 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry#GtkSearchBar"><span class="type">GtkSearchBar</span></a>, 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkListBox" title="GtkListBox"><span class="type">GtkListBox</span></a>
+                Along the way, we'll learn about <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/App_support/GtkApp.html"><span class="type">GtkApplication</span></a>
+                , templates, resources, application menus, settings, <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkHeaderBar.html"><span class="type">GtkHeaderBar</span></a>, 
+                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStack.html"><span class="type">GtkStack</span></a>, 
+                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkSearchBar.html"><span class="type">GtkSearchBar</span></a>, 
+                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkListBox.html" title="GtkListBox"><span class="type">GtkListBox</span></a>
                 , and more.<br>
                 <br>
                 The full, buildable sources for these examples can be found in the examples/ directory of the GTK+ source distribution, or 
@@ -216,34 +215,29 @@
           <h2>Index</h2>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Trivial_app"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Trivial_app">
+          <h3><a name="Trivial_app"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Trivial_app.html">
               A trivial application
               </a></h3>
       </div>
       <div class="generic-box-main3">
             <p>
-                When using 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/App_support/GtkApp"><span class="type">GtkApplication</span></a>
-                , the <code class="function">main()</code> function can be very simple. 
+                When using <span class="type">GtkApplication</span>, the <code class="function">main()</code> function can be very simple. 
                 We just call <code class="function">g_application_run()</code> and give it an instance of our application class.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Populating_window"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Populating_window">
+          <h3><a name="Populating_window"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Populating_window.html">
               Populating the window
               </a></h3>
       </div>
       <div class="generic-box-main3">
             <p>
-                In this step, we use a 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder"><span class="type">GtkBuilder</span></a> 
-                template to associate a 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder"><span class="type">GtkBuilder</span></a> 
+                In this step, we use a <span class="type">GtkBuilder</span> template to associate a <span class="type">GtkBuilder</span>
                 ui file with our application window class.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Opening_files"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Opening_files">
+          <h3><a name="Opening_files"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Opening_files.html">
               Opening files
               </a></h3>
       </div>
@@ -253,7 +247,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="App_menu"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/App_menu">
+          <h3><a name="App_menu"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/App_menu.html">
               An application menu
               </a></h3>
       </div>
@@ -264,7 +258,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Preference_dialog"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Preference_dialog">
+          <h3><a name="Preference_dialog"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Preference_dialog.html">
               A preference dialog
               </a></h3>
       </div>
@@ -275,7 +269,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Search_bar"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Search_bar">
+          <h3><a name="Search_bar"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Search_bar.html">
               Adding a search bar
               </a></h3>
       </div>
@@ -283,26 +277,26 @@
             <p>
                 We continue to flesh out the functionality of our application. 
                 For now, we add search. GTK+ supports this with 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkSearchEntry"><span class="type">GtkSearchEntry</span></a> and 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry#GtkSearchBar"><span class="type">GtkSearchBar</span></a>. 
+                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkSearchEntry.html"><span class="type">GtkSearchEntry</span></a> and 
+                <span class="type">GtkSearchBar</span>. 
                 The search bar is a widget that can slide in from the top to present a search entry.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Side_bar"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Side_bar">
+          <h3><a name="Side_bar"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Side_bar.html">
               Adding a side bar
               </a></h3>
       </div>
       <div class="generic-box-main3">
             <p>
                 As another piece of functionality, we are adding a sidebar, which demonstrates 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Buttons_Toggles/GtkMenuButton"><span class="type">GtkMenuButton</span></a>, 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkRevealer"><span class="type">GtkRevealer</span></a> and 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkListBox"><span class="type">GtkListBox</span></a>.
+                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Buttons_Toggles/GtkMenuButton.html"><span class="type">GtkMenuButton</span></a>, 
+                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkRevealer.html"><span class="type">GtkRevealer</span></a> and 
+                <span class="type">GtkListBox</span>.
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Properties"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Properties">
+          <h3><a name="Properties"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Properties.html">
               Properties
               </a></h3>
       </div>
@@ -315,7 +309,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a name="Header_bar"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Header_bar">
+          <h3><a name="Header_bar"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Overview/Getting_Started/Building_apps/Header_bar.html">
               Header bar
               </a></h3>
       </div>
@@ -343,22 +337,22 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>

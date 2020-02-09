@@ -16,364 +16,14 @@
     <link rel="stylesheet" href="/foo/css/footer-items.css">
     <!-- alternate templates -->
     <link rel="stylesheet" href="/foo/css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-
-        .generic-box
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        button, 
-        .logo, 
-        a, 
-        span
-        {
-            align-self: center;
-        }
-
-        a 
-        { 
-            text-decoration-line: none; 
-            color: white; 
-        }
-        h1 
-        {
-            font-size: 4em;
-        }
-
-        /* fixed navbar */
-        :root
-        {
-            --navbar-height: 50px;
-            --navbar-colour: #000000;
-            --theme-font: 'Noto Sans', sans-serif;
-        }
-        body
-        {
-            padding: 0;
-            margin: 0;
-            font-family: var(--theme-font);
-        }
-
-        .fixed-navbar
-        {
-            position: sticky;
-            top: 0;        
-            width: 100%;      
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-            font-size: 15px;
-            z-index: 100;
-        }
-
-        .navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            column-gap: 5%;
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-        }
-
-        /* secondary navbar */
-        .secondary-navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
-            column-gap: 5%;
-            background-color: #969aa2;
-            overflow: hidden;
-        }
-
-        .secondary-navbar-container a 
-        {
-            float: left;
-            font-size: 15px;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        .dropdown 
-        {
-            float: left;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .dropdown .dropbtn
-        {
-            font-size: 15px;
-            border: none;
-            outline: none;
-            color: white;
-            padding: 24px 16px;
-            background-color: inherit;
-            font-family: inherit;
-            margin: 0;
-        }
-
-        .secondary-navbar-container a:hover, 
-        .dropdown:hover .dropbtn 
-        {
-            background-color:#5e81ac;
-        }
-
-        .dropdown-content 
-        {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 20%;
-        }
-
-        .dropdown-content a 
-        {
-            float: none;
-            color: black;
-            padding: 17px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover
-        {
-            background-color: #dbdddd;
-        }
-
-        .dropdown:hover .dropdown-content
-        {
-            display: block;
-        }
-
-        /* secondary navbar phone portability */
-        @media only screen and (max-width: 768px) 
-        {
-            [class*="dropdown"]
-            {
-                display: none;
-            }
-
-            [class*="dropbtn"]
-            {
-                display: none;
-            }
-
-            [class*="dropdown-content"]
-            {
-                display: none;
-            }
-
-            [class*="secondary-navbar-container"]
-            {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* table of contents */
-        .toc-container
-        {
-            background: #f0f1f1 none repeat scroll 0 0;
-            border: 1px solid #aaa;
-            display: table;
-            font-size: 95%;
-            margin-bottom: 1em;
-            margin: auto;
-            padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 15px;
-            position: relative;
-            top: 30px;
-            margin-left: 13vw;
-        }
-
-        .toc-title 
-        {
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .toc-container li,
-        .toc-container ul,
-        .toc-container ul li 
-        {
-            list-style: none;
-            padding-left: 0px;
-        }
-
-        .toc-container a
-        {
-            color: #3584e4;
-        }
-
-        .toc-secondary ul,
-        .toc-secondary li,
-        .toc-secondary ul li 
-        {
-            text-indent: 20px;
-        }
-
-        /* toc tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 13vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                padding-right: 2vw;
-            }
-        }
-
-        /* toc phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 10vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                font-size: 2.15vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 2.5vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-        }
-
-        /* toc phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="toc-container"]
-            {
-                position: static;
-            }
-            [class*="generic-box-toc"]
-            {
-                text-align: center;
-                font-size: 3vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
-
-        /* horizontal ruling */
-        hr.thin
-        {
-            margin-top: 6vw;
-            border-color: #f0f1f1;
-            margin-right: 13vw;
-            margin-left: 13vw;
-        }
-
-        /* hr tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-            }
-        }
-
-        /* hr phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-                margin-left: 10vw;
-                margin-right: 10vw;
-            }
-        }
-
-        /* main article phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-main"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main2"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main3"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-space"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-                padding-bottom: 15vw;
-            }
-        }        
-
-        /* footer space phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-space"]
-            {
-                padding-bottom: 20vw;
-            }
-        }
-
-        /* fixed footer */
-        .fixed-footer
-        {
-            position: fixed;        
-            width: 100%;     
-            left: 0;
-            bottom: 0; 
-            height: var(--navbar-height);
-            background-color: #eaebeb;
-            font-size: 15px;
-            text-decoration-color: #000000;
-            display: grid;
-            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
-            overflow: hidden;
-        }
-
-        /* footer phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
     </style>
 </head>
 
@@ -383,14 +33,14 @@
         <div class="navbar-container">
             <div class="generic-box">
                 <div class="logo">
-                    <img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px" ></img>
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -401,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -409,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -470,7 +120,10 @@
         <h1><font color="#2e3440">Adding a search bar</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">Brief explanation about Adding a search bar goes here (1 sentence).</font></h3>
+        <h3><font color="#2e3440">We continue to flesh out the functionality of our application. 
+                For now, we add search. GTK+ supports this with <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkSearchEntry.html"><span class="type">GtkSearchEntry</span></a> 
+                and <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkSearchBar.html"><span class="type">GtkSearchBar</span></a>. 
+                The search bar is a widget that can slide in from the top to present a search entry.</font></h3>
     </div>
   </section>
 
@@ -494,20 +147,141 @@
 
  <!-- article body "article-main" -->
   <article class="article-main">
+      <div class="generic-box-main2">
+          <p>
+              We add a toggle button to the header bar, which can be used to slide out the search bar below the header bar.<br>
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">interface</span><span class="o">&gt;</span>
+  <span class="o">&lt;!--</span> <span class="n">interface</span><span class="o">-</span><span class="n">requires</span> <span class="n">gtk</span><span class="o">+</span> <span class="mf">3.8</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="n">template</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;ExampleAppWindow&quot;</span> <span class="n">parent</span><span class="o">=</span><span class="s">&quot;GtkApplicationWindow&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="o">&gt;</span><span class="n">Example</span> <span class="n">Application</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;default-width&quot;</span><span class="o">&gt;</span><span class="mi">600</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;default-height&quot;</span><span class="o">&gt;</span><span class="mi">400</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkBox&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;content_box&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;orientation&quot;</span><span class="o">&gt;</span><span class="n">vertical</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkHeaderBar&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;header&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkStackSwitcher&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;tabs&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;stack&quot;</span><span class="o">&gt;</span><span class="n">stack</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkToggleButton&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;search&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;sensitive&quot;</span><span class="o">&gt;</span><span class="n">False</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">style</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">class</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;image-button&quot;</span><span class="o">/&gt;</span>
+                <span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkImage&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;search-icon&quot;</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;icon-name&quot;</span><span class="o">&gt;</span><span class="n">edit</span><span class="o">-</span><span class="n">find</span><span class="o">-</span><span class="n">symbolic</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;icon-size&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                  <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+                <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;pack-type&quot;</span><span class="o">&gt;</span><span class="n">end</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkSearchBar&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;searchbar&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkSearchEntry&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;searchentry&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">signal</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;search-changed&quot;</span> <span class="n">handler</span><span class="o">=</span><span class="s">&quot;search_text_changed&quot;</span><span class="o">/&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkStack&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;stack&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">signal</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;notify::visible-child&quot;</span> <span class="n">handler</span><span class="o">=</span><span class="s">&quot;visible_child_changed&quot;</span><span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+          <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+      <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">template</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">interface</span><span class="o">&gt;</span></pre>
+      </div> 
+      <div class="generic-box-main3">
+          <p>
+              Implementing the search needs quite a few code changes that we are not going to completely go over here. 
+              The central piece of the search implementation is a signal handler that listens for text changes in the search entry.<br>
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting">
+...
+
+static void
+search_text_changed (GtkEntry         *entry,
+                     ExampleAppWindow *win)
+{
+  ExampleAppWindowPrivate *priv;
+  const gchar *text;
+  GtkWidget *tab;
+  GtkWidget *view;
+  GtkTextBuffer *buffer;
+  GtkTextIter start, match_start, match_end;
+
+  text = gtk_entry_get_text (entry);
+
+  if (text[0] == '\0')
+    return;
+
+  priv = example_app_window_get_instance_private (win);
+
+  tab = gtk_stack_get_visible_child (GTK_STACK (priv-&gt;stack));
+  view = gtk_bin_get_child (GTK_BIN (tab));
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+
+  /* Very simple-minded search implementation */
+  gtk_text_buffer_get_start_iter (buffer, &amp;start);
+  if (gtk_text_iter_forward_search (&amp;start, text, GTK_TEXT_SEARCH_CASE_INSENSITIVE,
+                                    &amp;match_start, &amp;match_end, NULL))
+    {
+      gtk_text_buffer_select_range (buffer, &amp;match_start, &amp;match_end);
+      gtk_text_view_scroll_to_iter (GTK_TEXT_VIEW (view), &amp;match_start,
+                                    0.0, FALSE, 0.0, 0.0);
+    }
+}
+
+static void
+example_app_window_init (ExampleAppWindow *win)
+{
+
+...
+
+  gtk_widget_class_bind_template_callback (GTK_WIDGET_CLASS (class), search_text_changed);
+
+...
+
+}
+
+...
+        </pre>
+      </div> 
       <div class="generic-box-space">
-          <p>Lorem ipsum dolor sit amet, 
-             consectetur adipiscing elit, 
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
-             Eget egestas purus viverra accumsan in nisl nisi. 
-             Pellentesque sit amet porttitor eget dolor morbi non. 
-             Sit amet justo donec enim diam vulputate ut pharetra. 
-             Leo a diam sollicitudin tempor. 
-             Diam donec adipiscing tristique risus nec feugiat in. 
-             Ornare arcu odio ut sem nulla. 
-             Diam vulputate ut pharetra sit amet aliquam id diam. 
-             Diam vel quam elementum pulvinar etiam non quam.
-            </p>
+          <p>
+              (<a class="two" href="https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-22/examples/application7/exampleappwin.c">full source</a>)<br>
+              <br>
+              With the search bar, our application now looks like this:<br>
+              <br>
+              <img src="/foo/gtk3/Overview/getting%20started/building%20apps/getting-started-app7.png"></img>
+          </p>
       </div>
   </article>
 
@@ -527,22 +301,22 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>

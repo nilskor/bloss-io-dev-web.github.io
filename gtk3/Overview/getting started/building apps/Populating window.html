@@ -37,10 +37,10 @@
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -51,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -59,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -120,11 +120,8 @@
         <h1><font color="#2e3440">Populating the window</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">In this step, we use a 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder"><span class="type">GtkBuilder</span></a> 
-                template to associate a 
-                <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder"><span class="type">GtkBuilder</span></a> 
-                ui file with our application window class.</font></h3>
+        <h3><font color="#2e3440">In this step, we use a <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html"><span class="type">GtkBuilder</span></a> 
+                template to associate a <span class="type">GtkBuilder</span> ui file with our application window class.</font></h3>
     </div>
   </section>
 
@@ -150,14 +147,10 @@
   <article class="article-main">
       <div class="generic-box-main2">
           <p>
-              Our simple ui file puts a 
-              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkHeaderBar"><span class="type">GtkHeaderBar</span></a> 
-              on top of a 
-              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStack"><span class="type">GtkStack</span></a> 
-              widget. The header bar contains a 
-              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStackSwitcher"><span class="type">GtkStackSwitcher</span></a>
-              , which is a standalone widget to show a row of 'tabs' for the pages of a 
-              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStack"><span class="type">GtkStack</span></a>.
+              Our simple ui file puts a <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkHeaderBar.html"><span class="type">GtkHeaderBar</span></a> 
+              on top of a <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStack.html"><span class="type">GtkStack</span></a> 
+              widget. The header bar contains a <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStackSwitcher.html"><span class="type">GtkStackSwitcher</span></a>
+              , which is a standalone widget to show a row of 'tabs' for the pages of a <span class="type">GtkStack</span>.
           </p>
       </div>
       <div class="generic-box-code">
@@ -196,12 +189,10 @@
       </div>
       <div class="generic-box-main2">
           <p>
-              To make use of this file in our application, we revisit our 
-              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/App_support/GtkAppWindow"><span class="type">GtkApplicationWindow</span></a> 
-              subclass, and call 
-              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget#gtk_widget_class_set_template_from_resource"><code class="function">gtk_widget_class_set_template_from_resource()</code></a> 
+              To make use of this file in our application, we revisit our <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/App_support/GtkAppWindow.html"><span class="type">GtkApplicationWindow</span></a> 
+              subclass, and call <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_class_set_template_from_resource"><code class="function">gtk_widget_class_set_template_from_resource()</code></a> 
               from the class init function to set the ui file as template for this class. We also add a call to 
-              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget#gtk_widget_init_template"><code class="function">gtk_widget_init_template()</code></a> 
+              <a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_init_template"><code class="function">gtk_widget_init_template()</code></a> 
               in the instance init function to instantiate the template for each instance of our class.
           </p>
       </div>
@@ -280,22 +271,22 @@ example_app_window_class_init (ExampleAppWindowClass *class)
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>
