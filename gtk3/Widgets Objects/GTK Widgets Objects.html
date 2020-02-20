@@ -16,364 +16,14 @@
     <link rel="stylesheet" href="/foo/css/footer-items.css">
     <!-- alternate templates -->
     <link rel="stylesheet" href="/foo/css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <!-- secondary navbar special character -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-
-        .generic-box
-        {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        button, 
-        .logo, 
-        a, 
-        span
-        {
-            align-self: center;
-        }
-
-        a 
-        { 
-            text-decoration-line: none; 
-            color: white; 
-        }
-        h1 
-        {
-            font-size: 4em;
-        }
-
-        /* fixed navbar */
-        :root
-        {
-            --navbar-height: 50px;
-            --navbar-colour: #000000;
-            --theme-font: 'Noto Sans', sans-serif;
-        }
-        body
-        {
-            padding: 0;
-            margin: 0;
-            font-family: var(--theme-font);
-        }
-
-        .fixed-navbar
-        {
-            position: sticky;
-            top: 0;        
-            width: 100%;      
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-            font-size: 15px;
-            z-index: 100;
-        }
-
-        .navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            column-gap: 5%;
-            height: var(--navbar-height);
-            background-color: var(--navbar-colour);
-        }
-
-        /* secondary navbar */
-        .secondary-navbar-container
-        {
-            display: grid;
-            grid-template-columns: 1fr 2fr 2fr 2fr 2fr 1fr;
-            column-gap: 5%;
-            background-color: #969aa2;
-            overflow: hidden;
-        }
-
-        .secondary-navbar-container a 
-        {
-            float: left;
-            font-size: 15px;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        .dropdown 
-        {
-            float: left;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .dropdown .dropbtn
-        {
-            font-size: 15px;
-            border: none;
-            outline: none;
-            color: white;
-            padding: 24px 16px;
-            background-color: inherit;
-            font-family: inherit;
-            margin: 0;
-        }
-
-        .secondary-navbar-container a:hover, 
-        .dropdown:hover .dropbtn 
-        {
-            background-color:#5e81ac;
-        }
-
-        .dropdown-content 
-        {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 20%;
-        }
-
-        .dropdown-content a 
-        {
-            float: none;
-            color: black;
-            padding: 17px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover
-        {
-            background-color: #dbdddd;
-        }
-
-        .dropdown:hover .dropdown-content
-        {
-            display: block;
-        }
-
-        /* secondary navbar phone portability */
-        @media only screen and (max-width: 768px) 
-        {
-            [class*="dropdown"]
-            {
-                display: none;
-            }
-
-            [class*="dropbtn"]
-            {
-                display: none;
-            }
-
-            [class*="dropdown-content"]
-            {
-                display: none;
-            }
-
-            [class*="secondary-navbar-container"]
-            {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* table of contents */
-        .toc-container
-        {
-            background: #f0f1f1 none repeat scroll 0 0;
-            border: 1px solid #aaa;
-            display: table;
-            font-size: 95%;
-            margin-bottom: 1em;
-            margin: auto;
-            padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 15px;
-            position: relative;
-            top: 30px;
-            margin-left: 13vw;
-        }
-
-        .toc-title 
-        {
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .toc-container li,
-        .toc-container ul,
-        .toc-container ul li 
-        {
-            list-style: none;
-            padding-left: 0px;
-        }
-
-        .toc-container a
-        {
-            color: #3584e4;
-        }
-
-        .toc-secondary ul,
-        .toc-secondary li,
-        .toc-secondary ul li 
-        {
-            text-indent: 20px;
-        }
-
-        /* toc tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 13vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                padding-right: 2vw;
-            }
-        }
-
-        /* toc phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="toc-container"]
-            {
-                position: relative;
-                margin-left: 10vw;
-            }
-            [class*="generic-box-toc"]
-            {
-                font-size: 2.15vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 2.5vw;
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-        }
-
-        /* toc phone portability min */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="toc-container"]
-            {
-                position: static;
-            }
-            [class*="generic-box-toc"]
-            {
-                text-align: center;
-                font-size: 3vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-            }
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
-
-        /* horizontal ruling */
-        hr.thin
-        {
-            margin-top: 6vw;
-            border-color: #f0f1f1;
-            margin-right: 13vw;
-            margin-left: 13vw;
-        }
-
-        /* hr tablet portability */ 
-        @media only screen and (min-width: 768px) and (max-width: 1024px)
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-            }
-        }
-
-        /* hr phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            hr.thin
-            {
-                margin-top: 10vw;
-                margin-left: 10vw;
-                margin-right: 10vw;
-            }
-        }
-
-        /* main article phone portability mid */ 
-        @media only screen and (min-width: 500px) and (max-width: 735px) 
-        {
-            [class*="generic-box-main"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main2"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-main3"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-            }
-            [class*="generic-box-space"]
-            {
-                padding-left: 10vw;
-                padding-right: 10vw;
-                padding-bottom: 15vw;
-            }
-        }        
-
-        /* footer space phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-space"]
-            {
-                padding-bottom: 20vw;
-            }
-        }
-
-        /* fixed footer */
-        .fixed-footer
-        {
-            position: fixed;        
-            width: 100%;     
-            left: 0;
-            bottom: 0; 
-            height: var(--navbar-height);
-            background-color: #eaebeb;
-            font-size: 15px;
-            text-decoration-color: #000000;
-            display: grid;
-            grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
-            overflow: hidden;
-        }
-
-        /* footer phone portability */ 
-        @media only screen and (max-width: 500px) 
-        {
-            [class*="generic-box-toct"]
-            {
-                font-size: 4vw;
-                padding-left: 2vw;
-                padding-right: 2vw;
-                padding-bottom: 2vw;
-            }
-        }
     </style>
 </head>
 
@@ -383,14 +33,14 @@
         <div class="navbar-container">
             <div class="generic-box">
                 <div class="logo">
-                    <img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px" ></img>
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
                 </div>
             </div>
             <div class="generic-box">
-                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os"></a>
-                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation"></a>
-                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer"></a>
-                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support"></a>
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
             </div>
             <div class="generic-box">
                 <a href="">search</a>
@@ -401,7 +51,7 @@
  <!-- secondary navigation bar "secondary navbar" -->
    <nav class="secondary-navbar-container">
         <div class="generic-box">
-            <a href="https://www.bloss.io/documentation/">index of manuals</a>
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
         </div>
        <div class="dropdown">
            <button class="dropbtn">
@@ -409,10 +59,10 @@
                <i class="fa fa-caret-down"></i>
            </button>
            <div class="dropdown-content">
-               <a href="https://www.bloss.io/documentation/ATK">ATK</a>
-               <a href="https://www.bloss.io/documentation/GDK">GDK</a>
-               <a href="https://www.bloss.io/documentation/GIO">GIO</a>
-               <a href="https://www.bloss.io/documentation/GTK3">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
                <a href="https://www.bloss.io/documentation/">TBD</a>
            </div>
@@ -473,31 +123,31 @@
         <h3><font color="#2e3440">Brief explanation about GTK+ Widgets and Objects goes here (1 sentence).</font></h3>
     </div>
     <div class="toc-container">
-        <p class="toc-title"><font color="#2e3440">Contents</font> <font color="#2e3440">[<a id="toggle" href="#" onclick="toggleTOC()">hide</a>]</font></p>
+        <p class="toc-title"><font color="#2e3440">Contents</font> <font color="#2e3440">[<a id="toggle" href="#" class="toc" onclick="toggleTOC()">hide</a>]</font></p>
         <ul id="toc" style="display: initial">
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Object_Hierarchy"><font color="#2e3440">1</font> Object Hierarchy</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Widget_Gallery"><font color="#2e3440">2</font> Widget Gallery</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#App_support"><font color="#2e3440">3</font> Application support</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Interface_builder"><font color="#2e3440">4</font> Interface builder</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Windows"><font color="#2e3440">5</font> Windows</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Layout_Containers"><font color="#2e3440">6</font> Layout Containers</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Display_Widgets"><font color="#2e3440">7</font> Display Widgets</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Buttons_Toggles"><font color="#2e3440">8</font> Buttons and Toggles</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Numeric_Text_Entry"><font color="#2e3440">9</font> Numeric and Text Data Entry</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Multiline_Text"><font color="#2e3440">10</font> Multiline Text Editor</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#TLI_Grid_Widgets"><font color="#2e3440">11</font> Tree, List and Icon Grid Widgets</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Menu_Combo_Tool"><font color="#2e3440">12</font> Menus, Combo Box, Toolbar</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Selector_Widget"><font color="#2e3440">13</font> Selector Widgets and Dialogs</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Ornaments"><font color="#2e3440">14</font> Ornaments</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Printing"><font color="#2e3440">16</font> Printing</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Shortcuts_Overview"><font color="#2e3440">17</font> Shortcuts Overview</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Miscellaneous"><font color="#2e3440">18</font> Miscellaneous</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Abstract_Base"><font color="#2e3440">19</font> Abstract Base Classes</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Cross_Embedding"><font color="#2e3440">20</font> Cross-process Embedding</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Recently_Used"><font color="#2e3440">21</font> Recently Used Documents</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Choosing_installed"><font color="#2e3440">22</font> Choosing from installed applications</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Gestures_handling"><font color="#2e3440">23</font> Gestures and event handling</a></li>
-            <li><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects#Deprecated"><font color="#2e3440">24</font> Deprecated</a></li>
+            <li><font color="#2e3440">1 </font><a class="toggle" href="#Object_Hierarchy">Object Hierarchy</a></li>
+            <li><font color="#2e3440">2 </font><a class="toggle" href="#Widget_Gallery">Widget Gallery</a></li>
+            <li><font color="#2e3440">3 </font><a class="toggle" href="#App_support">Application support</a></li>
+            <li><font color="#2e3440">4 </font><a class="toggle" href="#Interface_builder">Interface builder</a></li>
+            <li><font color="#2e3440">5 </font><a class="toggle" href="#Windows">Windows</a></li>
+            <li><font color="#2e3440">6 </font><a class="toggle" href="#Layout_Containers">Layout Containers</a></li>
+            <li><font color="#2e3440">7 </font><a class="toggle" href="#Display_Widgets">Display Widgets</a></li>
+            <li><font color="#2e3440">8 </font><a class="toggle" href="#Buttons_Toggles">Buttons and Toggles</a></li>
+            <li><font color="#2e3440">9 </font><a class="toggle" href="#Numeric_Text_Entry">Numeric and Text Data Entry</a></li>
+            <li><font color="#2e3440">10 </font><a class="toggle" href="#Multiline_Text">Multiline Text Editor</a></li>
+            <li><font color="#2e3440">11 </font><a class="toggle" href="#TLI_Grid_Widgets">Tree, List and Icon Grid Widgets</a></li>
+            <li><font color="#2e3440">12 </font><a class="toggle" href="#Menu_Combo_Tool">Menus, Combo Box, Toolbar</a></li>
+            <li><font color="#2e3440">13 </font><a class="toggle" href="#Selector_Widget">Selector Widgets and Dialogs</a></li>
+            <li><font color="#2e3440">14 </font><a class="toggle" href="#Ornaments">Ornaments</a></li>
+            <li><font color="#2e3440">15 </font><a class="toggle" href="#Printing">Printing</a></li>
+            <li><font color="#2e3440">16 </font><a class="toggle" href="#Shortcuts_Overview">Shortcuts Overview</a></li>
+            <li><font color="#2e3440">17 </font><a class="toggle" href="#Miscellaneous">Miscellaneous</a></li>
+            <li><font color="#2e3440">18 </font><a class="toggle" href="#Abstract_Base">Abstract Base Classes</a></li>
+            <li><font color="#2e3440">19 </font><a class="toggle" href="#Cross_Embedding">Cross-process Embedding</a></li>
+            <li><font color="#2e3440">20 </font><a class="toggle" href="#Recently_Used">Recently Used Documents</a></li>
+            <li><font color="#2e3440">21 </font><a class="toggle" href="#Choosing_installed">Choosing from installed applications</a></li>
+            <li><font color="#2e3440">22 </font><a class="toggle" href="#Gestures_handling">Gestures and event handling</a></li>
+            <li><font color="#2e3440">23 </font><a class="toggle" href="#Deprecated">Deprecated</a></li>
         </ul>
     </div>
   </section>
@@ -526,7 +176,7 @@
           <h2>Index</h2>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Object_Hierarchy"><font color="#2e3440">Object Hierarchy</font></a></h3>
+          <h3><a name="Object_Hierarchy"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Object_Hierarchy.html"><font color="#2e3440">Object Hierarchy</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -544,7 +194,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Widget_Gallery"><font color="#2e3440">Widget Gallery</font></a></h3>
+          <h3><a name="Widget_Gallery"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Widget_Gallery.html"><font color="#2e3440">Widget Gallery</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -562,7 +212,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/App_support"><font color="#2e3440">Application support</font></a></h3>
+          <h3><a name="App_support"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/App_support.html"><font color="#2e3440">Application support</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -580,7 +230,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder"><font color="#2e3440">Interface builder</font></a></h3>
+          <h3><a name="Interface_builder"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Interface_builder.html"><font color="#2e3440">Interface builder</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -598,7 +248,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Windows"><font color="#2e3440">Windows</font></a></h3>
+          <h3><a name="Windows"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Windows.html"><font color="#2e3440">Windows</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -616,7 +266,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers"><font color="#2e3440">Layout Containers</font></a></h3>
+          <h3><a name="Layout_Containers"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Layout_Containers.html"><font color="#2e3440">Layout Containers</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -634,7 +284,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Display_Widgets"><font color="#2e3440">Display Widgets</font></a></h3>
+          <h3><a name="Display_Widgets"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Display_Widgets.html"><font color="#2e3440">Display Widgets</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -652,7 +302,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Buttons_Toggles"><font color="#2e3440">Buttons and Toggles</font></a></h3>
+          <h3><a name="Buttons_Toggles"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Buttons_Toggles.html"><font color="#2e3440">Buttons and Toggles</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -688,7 +338,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Multiline_Text"><font color="#2e3440">Multiline Text Editor</font></a></h3>
+          <h3><a name="Multiline_Text"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Multiline_Text.html"><font color="#2e3440">Multiline Text Editor</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -706,7 +356,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets"><font color="#2e3440">Tree, List, and Icon Grid Widgets</font></a></h3>
+          <h3><a name="TLI_Grid_Widgets"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets.html"><font color="#2e3440">Tree, List, and Icon Grid Widgets</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -724,7 +374,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Menu_Combo_Tool"><font color="#2e3440">Menus, Combo Box, Toolbar</font></a></h3>
+          <h3><a name="Menu_Combo_Tool"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Menu_Combo_Tool.html"><font color="#2e3440">Menus, Combo Box, Toolbar</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -742,7 +392,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Selector_Widget"><font color="#2e3440">Selector Widgets and Dialogs</font></a></h3>
+          <h3><a name="Selector_Widget"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Selector_Widget.html"><font color="#2e3440">Selector Widgets and Dialogs</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -760,7 +410,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Ornaments"><font color="#2e3440">Ornaments</font></a></h3>
+          <h3><a name="Ornaments"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Ornaments.html"><font color="#2e3440">Ornaments</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -778,7 +428,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Printing"><font color="#2e3440">Printing</font></a></h3>
+          <h3><a name="Printing"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Printing.html"><font color="#2e3440">Printing</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -796,7 +446,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Shortcuts_Overview"><font color="#2e3440">Shortcuts Overview</font></a></h3>
+          <h3><a name="Shortcuts_Overview"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Shortcuts_Overview.html"><font color="#2e3440">Shortcuts Overview</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -814,7 +464,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Miscellaneous"><font color="#2e3440">Miscellaneous</font></a></h3>
+          <h3><a name="Miscellaneous"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Miscellaneous.html"><font color="#2e3440">Miscellaneous</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -832,7 +482,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base"><font color="#2e3440">Abstract Base Classes</font></a></h3>
+          <h3><a name="Abstract_Base"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Abstract_Base.html"><font color="#2e3440">Abstract Base Classes</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -850,7 +500,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Cross-Embedding"><font color="#2e3440">Cross-process Embedding</font></a></h3>
+          <h3><a name="Cross_Embedding"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Cross-Embedding.html"><font color="#2e3440">Cross-process Embedding</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -868,7 +518,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Recently_Used"><font color="#2e3440">Recently Used Documents</font></a></h3>
+          <h3><a name="Recently_Used"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Recently_Used.html"><font color="#2e3440">Recently Used Documents</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -886,7 +536,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Choosing_installed"><font color="#2e3440">Choosing from installed applications</font></a></h3>
+          <h3><a name="Choosing_installed"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Choosing_installed.html"><font color="#2e3440">Choosing from installed applications</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -904,7 +554,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Gestures_handling"><font color="#2e3440">Gestures and event handling</font></a></h3>
+          <h3><a name="Gestures_handling"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Gestures_handling.html"><font color="#2e3440">Gestures and event handling</font></a></h3>
       </div>
       <div class="generic-box-main3">
             <p>Lorem ipsum dolor sit amet, 
@@ -922,7 +572,7 @@
             </p>
       </div>
       <div class="generic-box-main2">
-          <h3><a href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Deprecated"><font color="#2e3440">Deprecated</font></a></h3>
+          <h3><a name="Deprecated"></a><a class="two" href="https://www.bloss.io/documentation/GTK3/GTK_Widgets_Objects/Deprecated.html"><font color="#2e3440">Deprecated</font></a></h3>
       </div>
       <div class="generic-box-space">
           <p>Lorem ipsum dolor sit amet, 
@@ -957,22 +607,22 @@
           <p id="fti-5" class="footer-item" ></p>
       </div>
       <div class="generic-box">
-          <a id="fti-1" class="footer-item" href="https://www.bloss.io/contact/">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
             <font color="#000000"><i class="fa fa-envelope"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os/">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
             <font color="#000000"><i class="fa fa-id-card"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-3" class="footer-item" href="https://www.bloss.io/legal/">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
             <font color="#000000"><i class="fa fa-balance-scale"></i></font>
           </a>
       </div>
       <div class="generic-box">
-          <a id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy/">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
             <font color="#000000"><i class="fa fa-shield"></i></font>
           </a>
       </div>
