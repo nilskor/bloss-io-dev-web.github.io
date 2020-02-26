@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        bloss
+    </title>
+
+    <!-- fixed-navbar -->
+    <link rel="stylesheet" href="css/navbar-items.css">
+    <!-- fixed-navbar -->
+    <link rel="stylesheet" href="css/footer-items.css">
+    <!-- alternate templates -->
+    <link rel="stylesheet" href="css/templates.css">
+    <!-- links/tables/code blocks -->
+    <link rel="stylesheet" href="/foo/css/formatting.css">
+    <!-- font-family: 'Noto Sans', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
+    <!-- secondary navbar special character -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+    </style>
+</head>
+
+<body>
+ <!-- navigation bar "navbar" -->
+   <nav class="fixed-navbar">
+        <div class="navbar-container">
+            <div class="generic-box">
+                <div class="logo">
+                    <a href="https://www.bloss.io/"><img src="/foo/assets/bloss-leaf-color.svg" alt="" width="32px" height="32px"></img></a>
+                </div>
+            </div>
+            <div class="generic-box">
+                <a id="nbi-1" class="navbar-item" href="https://www.bloss.io/bloss_os.html"></a>
+                <a id="nbi-2" class="navbar-item" href="https://www.bloss.io/documentation.html"></a>
+                <a id="nbi-3" class="navbar-item" href="https://www.bloss.io/developer.html"></a>
+                <a id="nbi-4" class="navbar-item" href="https://www.bloss.io/support.html"></a>
+            </div>
+            <div class="generic-box">
+                <a href="">search</a>
+            </div>
+        </div>
+    </nav>
+
+ <!-- secondary navigation bar "secondary navbar" -->
+   <nav class="secondary-navbar-container">
+        <div class="generic-box">
+            <a href="https://www.bloss.io/documentation.html">index of manuals</a>
+        </div>
+       <div class="dropdown">
+           <button class="dropbtn">
+               A-G
+               <i class="fa fa-caret-down"></i>
+           </button>
+           <div class="dropdown-content">
+               <a href="https://www.bloss.io/documentation/ATK.html">ATK</a>
+               <a href="https://www.bloss.io/documentation/GDK.html">GDK</a>
+               <a href="https://www.bloss.io/documentation/GIO.html">GIO</a>
+               <a href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a>
+               <a href="https://www.bloss.io/documentation/">TBD</a>
+               <a href="https://www.bloss.io/documentation/">TBD</a>
+           </div>
+       </div>
+       <div class="dropdown">
+            <button class="dropbtn">
+                H-M
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+            </div>
+       </div>
+       <div class="dropdown">
+            <button class="dropbtn">
+                N-R
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">
+               S-Z
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+                <a href="https://www.bloss.io/documentation/">TBD</a>
+            </div>
+        </div>
+        <div class="generic-box">
+            <a href="">lanuage/view changer</a>
+        </div>
+   </nav> 
+
+ <!-- article header "section-header" -->
+  <section class="section-header">
+    <div class="generic-box-toc">
+        <h1><font color="#2e3440">Documentation</font></h1>
+    </div>
+    <div class="generic-box-toct">
+        <h3><font color="#2e3440">Brief explanation about documentation project goes here (1 sentence).</font></h3>
+    </div>
+    <div class="toc-container">
+        <p class="toc-title"><font color="#2e3440">Contents</font> <font color="#2e3440">[<a id="toggle" href="#" class="toc" onclick="toggleTOC()">hide</a>]</font></p>
+        <ul id="toc" style="display: initial">
+            <li><font color="#2e3440">1 </font><a class="toggle" href="#ATK">ATK</a></li>
+                <ul class="toc-secondary">
+                    <li><font color="#2e3440">1.1 </font><a class="toggle" href="#ATK_Manual_1">ATK Manual 1</a></li>
+                    <li><font color="#2e3440">1.2 </font><a class="toggle" href="#ATK_Manual_2">ATK Manual 2</a></li>
+                </ul>
+            </li>
+            <li><font color="#2e3440">2 </font><a class="toggle" href="#GDK">GDK</a></li>
+            <li><font color="#2e3440">3 </font><a class="toggle" href="#GIO">GIO</a></li>
+            <li><font color="#2e3440">4 </font><a class="toggle" href="#GTK3">GTK+ 3</a></li>
+        </ul>
+    </div>
+  </section>
+
+ <!-- TOC toggle script -->
+  <script>
+    var toc = document.getElementById("toc")
+    var toggle = document.getElementById("toggle")
+
+    function toggleTOC()
+    {
+        toc.style.display === "initial" ? ( toc.style.setProperty("display", "none"),
+                                            toggle.innerHTML = "show"
+                                            ) 
+                                            : ( toc.style.setProperty("display", "initial"),
+                                            toggle.innerHTML = "hide"
+                                            )
+    }    
+  </script>
+
+ <hr class="thin">
+
+ <!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-main">
+          <h2>Manuals</h2>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="ATK"></a><a class="two" href="https://www.bloss.io/documentation/ATK.html">ATK</a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="GDK"></a><a class="two" href="https://www.bloss.io/documentation/GDK.html">GDK</a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="GIO"></a><a class="two" href="https://www.bloss.io/documentation/GIO.html">GIO</a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="GTK3"></a><a class="two" href="https://www.bloss.io/documentation/GTK3.html">GTK+ 3</a></h3>
+      </div>
+      <div class="generic-box-space">
+          <p>Lorem ipsum dolor sit amet, 
+             consectetur adipiscing elit, 
+             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+             Eget egestas purus viverra accumsan in nisl nisi. 
+             Pellentesque sit amet porttitor eget dolor morbi non. 
+             Sit amet justo donec enim diam vulputate ut pharetra. 
+             Leo a diam sollicitudin tempor. 
+             Diam donec adipiscing tristique risus nec feugiat in. 
+             Ornare arcu odio ut sem nulla. 
+             Diam vulputate ut pharetra sit amet aliquam id diam. 
+             Diam vel quam elementum pulvinar etiam non quam.
+            </p>
+      </div>
+  </article>
+
+ <!-- optional secondary article section "article-optional" -->
+  <article class="article-optional">
+
+  </article>
+
+ <!-- related to article "article-related" -->
+  <article class="article-related">
+
+  </article>
+
+ <!-- article footer "footer" -->
+  <section class="fixed-footer">
+      <div class="generic-box-footer">
+          <p id="fti-5" class="footer-item" ></p>
+      </div>
+      <div class="generic-box">
+          <a class="three" id="fti-1" class="footer-item" href="https://www.bloss.io/contact.html">
+            <font color="#000000"><i class="fa fa-envelope"></i></font>
+          </a>
+      </div>
+      <div class="generic-box">
+          <a class="three" id="fti-2" class="footer-item" href="https://www.bloss.io/bloss_os.html">
+            <font color="#000000"><i class="fa fa-id-card"></i></font>
+          </a>
+      </div>
+      <div class="generic-box">
+          <a class="three" id="fti-3" class="footer-item" href="https://www.bloss.io/legal.html">
+            <font color="#000000"><i class="fa fa-balance-scale"></i></font>
+          </a>
+      </div>
+      <div class="generic-box">
+          <a class="three" id="fti-4" class="footer-item" href="https://www.bloss.io/privacy_policy.html">
+            <font color="#000000"><i class="fa fa-shield"></i></font>
+          </a>
+      </div>
+  </section>
+
+ <!-- sidebar "aside" -->
+  <aside>
+
+  </aside>
+</body>
+
+</html>
