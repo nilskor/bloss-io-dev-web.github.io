@@ -46,7 +46,8 @@ function parseURL()
         if ( document.querySelector(whatToFind) != null )
         {
             document.querySelector(whatToFind).click()
-            console.log(`The search for ${window.location.hash} on this page was successful, so now we artificially click on it`)
+            //console.log(`The search for ${window.location.hash} on this page was successful, so now we artificially click on it`)
+            /*
             if ( history.length > 0 )
             {
                 for( let i = 0 ; i < window.history.length; i++ )
@@ -54,10 +55,11 @@ function parseURL()
                     console.log(`::window.history[i]: ${window.history[i]}`);
                 }
             }
+            */
         }
         else
         {
-            console.log(`Could not find ${window.location.hash} on this page, nothing will happen.`)
+            //console.log(`Could not find ${window.location.hash} on this page, nothing will happen.`)
             injectContentInto( 'injectHere', null )
         }
     }
