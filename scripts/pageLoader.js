@@ -52,6 +52,7 @@ function injectContentInto( thisElement, fromThisPage, title )
     let pageTitle = "bloss.io"
 
     fromThisPage = `https://www.bloss.tech${fromThisPage}`
+    console.log(fromThisPage)
 
     if ( title != null ) { pageTitle = title }
 
