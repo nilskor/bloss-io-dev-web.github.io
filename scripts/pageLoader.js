@@ -76,6 +76,8 @@ function injectContentInto( thisElement, fromThisPage, title )
                         receivingElement.innerHTML   = xhRequest.responseText; // the only important bit !!
                         receivingElement.style.color = theCurrentTextColor;
                         document.title = pageTitle;
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
                     },
                     PAGE_TEXT_FADE_TIMEOUT * 2
                 );
