@@ -351,12 +351,14 @@ body
  * Used to hold the menus for gtk3 documentation
  */
 /** An instance of the Slider menu container */
-#GTK3 *
+#GTK3 *,
+#GDK *
 {
     background-color : var( --navBarPanelBgColor ); /* */
     border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
 }
-#GTK3 > a
+#GTK3 > a,
+#GDK  > a
 {
     height          : var(--subNavbarHeight);
     line-height     : var(--subNavbarHeight);
