@@ -24,7 +24,7 @@
     --navBarBgColor      : rgba(0,0,0,1);
     --navBarTextColor    : rgba(255,255,255,1);
     --navBarPanelBgColor : lightgrey;
-    --subNavbarHeight    : 120px;
+    --subNavbarHeight    : 80px;
     --viewportFactor     : 45vh;
     --heroImage          : url("/assets/choc-van-yum.jpg");
     --footerHeight       : 60px;

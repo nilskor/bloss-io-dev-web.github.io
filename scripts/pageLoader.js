@@ -51,6 +51,7 @@ function injectContentInto( thisElement, fromThisPage, title )
     let xhRequest = new XMLHttpRequest()
     let pageTitle = "bloss.io"
 
+    // when loaded to GitHub Pages, this needs to be enabled.
     fromThisPage = `https://www.bloss.tech${fromThisPage}`
     //console.log(fromThisPage)
 
