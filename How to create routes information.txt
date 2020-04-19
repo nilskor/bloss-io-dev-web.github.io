@@ -1,0 +1,57 @@
+
+In the root folder (where index.html is).
+Use a terminal and the find and paste commands to:
+
+
+    find -iname "*.html" -printf '%p\n' > all-html-files-withPath.log
+
+Modify "all-html-files-withPath.log" by find & replace:
+
+Add "' onclick="injectContentInto( 'injectHere',  './"   out the front
+
+
+    find -iname "*.html" -printf "%f\n" > all-html-files-justName.log
+
+Modify "all-html-files-justName.log" to strip ".html" and whitespace from the names
+
+
+    paste -d "" all-html-files-justName.log all-html-files-withPath.log  > all-html-files.log
+
+Execute:
+            #!/bin/bash
+            for i in {1..380}
+            do
+            echo "<a href='#" >> prefix.txt
+            done
+
+    paste -d "" prefix.txt all-html-files.log  > all-html-files-2.log
+
+    find -iname "*.html" -printf "%f\n" > all-html-files-justName.log
+
+Modify "all-html-files-justName.log" to strip ".html"
+
+Execute:
+            #!/bin/bash
+            for i in {1..380}
+            do
+            echo "', '" >> suffix.txt
+            done
+
+    paste -d "" all-html-files-2.log suffix.txt > all-html-files.log
+
+    paste -d "" all-html-files.log all-html-files-justName.log > all-html-files-2.log
+
+Execute:
+            #!/bin/bash
+            echo "@@" > suffix.txt
+            for i in {1..380}
+            do
+            echo "@@" >> suffix.txt
+            done
+
+    paste -d "" all-html-files-2.log suffix.txt > all-html-files.log
+
+Modify "all-html-files.log" with find & replace:
+
+    Replace @@ and add "' );"></a>" at the end
+

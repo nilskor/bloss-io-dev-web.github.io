@@ -1,0 +1,214 @@
+
+<div class="gridContainer slicedAs_3c151 doco">
+
+    <div></div>
+    <div>
+<!-- article header "section-header" -->
+  <section class="section-header">
+    <div class="generic-box-toc">
+        <h1><font color="#2e3440">A trivial application</font></h1>
+    </div>
+    <div class="generic-box-toct">
+        <h3><font color="#2e3440">
+            When using 
+            <a class="two" href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkApp.html"><span class="type">GtkApplication</span></a>
+            , the <code class="function">main()</code> function can be very simple. 
+            We just call <code class="function">g_application_run()</code> and give it an instance of our application class.
+        </font></h3>
+    </div>
+  </section>
+
+ <!-- TOC toggle script -->
+  <script>
+    var toc = document.getElementById("toc")
+    var toggle = document.getElementById("toggle")
+
+    function toggleTOC()
+    {
+        toc.style.display === "initial" ? ( toc.style.setProperty("display", "none"),
+                                            toggle.innerHTML = "show"
+                                            ) 
+                                            : ( toc.style.setProperty("display", "initial"),
+                                            toggle.innerHTML = "hide"
+                                            )
+    }    
+  </script>
+
+ <hr class="thin">
+
+ <!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="cp">#include</span> <span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;exampleapp.h&quot;</span><span class="cp"></span>
+
+<span class="kt">int</span>
+<span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">g_application_run</span> <span class="p">(</span><span class="n">G_APPLICATION</span> <span class="p">(</span><span class="n">example_app_new</span> <span class="p">()),</span> <span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+<span class="p">}</span>
+          </pre>
+      </div> 
+      <div class="generic-box-main2">
+          <p>
+              All the application logic is in the application class, which is a subclass of <span class="type">GtkApplication</span>. 
+              Our example does not yet have any interesting functionality. 
+              All it does is open a window when it is activated without arguments, 
+              and open the files it is given, if it is started with arguments.<br>
+              <br>
+              To handle these two cases, we override the <code class="function">activate()</code> vfunc, 
+              which gets called when the application is launched without commandline arguments, 
+              and the <code class="function">open()</code> vfunc, 
+              which gets called when the application is launched with commandline arguments.<br>
+              <br>
+              To learn more about GApplication entry points, consult the GIO 
+              <a class="two" href="https://developer.gnome.org/gio/2.36/GApplication.html#GApplication.description" target="_top">documentation</a>.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="cp">#include</span> <span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;exampleapp.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;exampleappwin.h&quot;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">_ExampleApp</span>
+<span class="p">{</span>
+  <span class="n">GtkApplication</span> <span class="n">parent</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">G_DEFINE_TYPE</span><span class="p">(</span><span class="n">ExampleApp</span><span class="p">,</span> <span class="n">example_app</span><span class="p">,</span> <span class="n">GTK_TYPE_APPLICATION</span><span class="p">);</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">example_app_init</span> <span class="p">(</span><span class="n">ExampleApp</span> <span class="o">*</span><span class="n">app</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">example_app_activate</span> <span class="p">(</span><span class="n">GApplication</span> <span class="o">*</span><span class="n">app</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ExampleAppWindow</span> <span class="o">*</span><span class="n">win</span><span class="p">;</span>
+
+  <span class="n">win</span> <span class="o">=</span> <span class="n">example_app_window_new</span> <span class="p">(</span><span class="n">EXAMPLE_APP</span> <span class="p">(</span><span class="n">app</span><span class="p">));</span>
+  <span class="n">gtk_window_present</span> <span class="p">(</span><span class="n">GTK_WINDOW</span> <span class="p">(</span><span class="n">win</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">example_app_open</span> <span class="p">(</span><span class="n">GApplication</span>  <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+                  <span class="n">GFile</span>        <span class="o">**</span><span class="n">files</span><span class="p">,</span>
+                  <span class="n">gint</span>           <span class="n">n_files</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="n">gchar</span>   <span class="o">*</span><span class="n">hint</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">GList</span> <span class="o">*</span><span class="n">windows</span><span class="p">;</span>
+  <span class="n">ExampleAppWindow</span> <span class="o">*</span><span class="n">win</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+  <span class="n">windows</span> <span class="o">=</span> <span class="n">gtk_application_get_windows</span> <span class="p">(</span><span class="n">GTK_APPLICATION</span> <span class="p">(</span><span class="n">app</span><span class="p">));</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">windows</span><span class="p">)</span>
+    <span class="n">win</span> <span class="o">=</span> <span class="n">EXAMPLE_APP_WINDOW</span> <span class="p">(</span><span class="n">windows</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">win</span> <span class="o">=</span> <span class="n">example_app_window_new</span> <span class="p">(</span><span class="n">EXAMPLE_APP</span> <span class="p">(</span><span class="n">app</span><span class="p">));</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n_files</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">example_app_window_open</span> <span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+  <span class="n">gtk_window_present</span> <span class="p">(</span><span class="n">GTK_WINDOW</span> <span class="p">(</span><span class="n">win</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">example_app_class_init</span> <span class="p">(</span><span class="n">ExampleAppClass</span> <span class="o">*</span><span class="n">class</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">G_APPLICATION_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">activate</span> <span class="o">=</span> <span class="n">example_app_activate</span><span class="p">;</span>
+  <span class="n">G_APPLICATION_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">open</span> <span class="o">=</span> <span class="n">example_app_open</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">ExampleApp</span> <span class="o">*</span>
+<span class="nf">example_app_new</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">g_object_new</span> <span class="p">(</span><span class="n">EXAMPLE_APP_TYPE</span><span class="p">,</span>
+                       <span class="s">&quot;application-id&quot;</span><span class="p">,</span> <span class="s">&quot;org.gtk.exampleapp&quot;</span><span class="p">,</span>
+                       <span class="s">&quot;flags&quot;</span><span class="p">,</span> <span class="n">G_APPLICATION_HANDLES_OPEN</span><span class="p">,</span>
+                       <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span>
+          </pre>
+      </div> 
+      <div class="generic-box-main2">
+          <p>
+              Another important class that is part of the application support in GTK+ is 
+              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkAppWindow.html"><span class="type">GtkApplicationWindow</span></a>. 
+              It is typically subclassed as well. 
+              Our subclass does not do anything yet, so we will just get an empty window.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="cp">#include</span> <span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;exampleapp.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;exampleappwin.h&quot;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">_ExampleAppWindow</span>
+<span class="p">{</span>
+  <span class="n">GtkApplicationWindow</span> <span class="n">parent</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">G_DEFINE_TYPE</span><span class="p">(</span><span class="n">ExampleAppWindow</span><span class="p">,</span> <span class="n">example_app_window</span><span class="p">,</span> <span class="n">GTK_TYPE_APPLICATION_WINDOW</span><span class="p">);</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">example_app_window_init</span> <span class="p">(</span><span class="n">ExampleAppWindow</span> <span class="o">*</span><span class="n">app</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">example_app_window_class_init</span> <span class="p">(</span><span class="n">ExampleAppWindowClass</span> <span class="o">*</span><span class="n">class</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="n">ExampleAppWindow</span> <span class="o">*</span>
+<span class="nf">example_app_window_new</span> <span class="p">(</span><span class="n">ExampleApp</span> <span class="o">*</span><span class="n">app</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">g_object_new</span> <span class="p">(</span><span class="n">EXAMPLE_APP_WINDOW_TYPE</span><span class="p">,</span> <span class="s">&quot;application&quot;</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>
+<span class="nf">example_app_window_open</span> <span class="p">(</span><span class="n">ExampleAppWindow</span> <span class="o">*</span><span class="n">win</span><span class="p">,</span>
+                         <span class="n">GFile</span>            <span class="o">*</span><span class="n">file</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+          </pre>
+      </div> 
+      <div class="generic-box-main">
+          <p>
+              As part of the initial setup of our application, we also create an icon and a desktop file.<br>
+              <br>
+              <img src="/foo/gtk3/Overview/getting%20started/building%20apps/exampleapp.png"></img>
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="p">[</span><span class="n">Desktop</span> <span class="n">Entry</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">Application</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">Example</span>
+<span class="n">Icon</span><span class="o">=</span><span class="n">exampleapp</span>
+<span class="n">StartupNotify</span><span class="o">=</span><span class="nb">true</span>
+<span class="n">Exec</span><span class="o">=</span><span class="err">@</span><span class="n">bindir</span><span class="err">@</span><span class="o">/</span><span class="n">exampleapp</span>
+          </pre>
+      </div> 
+      <div class="generic-box-space">
+          <p>
+              Note that <em class="replaceable"><code>@bindir@</code></em> 
+              needs to be replaced with the actual path to the binary before this desktop file can be used.<br>
+              <br>
+              Here is what we've achieved so far:<br>
+             <br>
+             <img src="/foo/gtk3/Overview/getting%20started/building%20apps/getting-started-app1.png"></img><br>
+             <br>
+             This does not look very impressive yet, but our application is already presenting itself on the session bus, 
+             it has single-instance semantics, and it accepts files as commandline arguments.
+            </p>
+      </div>
+  </article>
+
+ 
+    </div>
+    <div></div>
+
+</div>

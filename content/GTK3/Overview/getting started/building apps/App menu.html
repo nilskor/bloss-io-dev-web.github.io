@@ -1,0 +1,152 @@
+
+<div class="gridContainer slicedAs_3c151 doco">
+
+    <div></div>
+    <div>
+<!-- article header "section-header" -->
+  <section class="section-header">
+    <div class="generic-box-toc">
+        <h1><font color="#2e3440">An application menu</font></h1>
+    </div>
+    <div class="generic-box-toct">
+        <h3><font color="#2e3440">An application menu is shown by GNOME shell at the top of the screen. 
+                It is meant to collect infrequently used actions that affect the whole application.</font></h3>
+    </div>
+  </section>
+
+ <!-- TOC toggle script -->
+  <script>
+    var toc = document.getElementById("toc")
+    var toggle = document.getElementById("toggle")
+
+    function toggleTOC()
+    {
+        toc.style.display === "initial" ? ( toc.style.setProperty("display", "none"),
+                                            toggle.innerHTML = "show"
+                                            ) 
+                                            : ( toc.style.setProperty("display", "initial"),
+                                            toggle.innerHTML = "hide"
+                                            )
+    }    
+  </script>
+
+ <hr class="thin">
+
+ <!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-main2">
+          <p>
+              An application menu is shown by GNOME shell at the top of the screen. 
+              It is meant to collect infrequently used actions that affect the whole application.<br>
+              <br>
+              Just like the window template, we specify our application menu in a ui file, and add it as a resource to our binary.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">interface</span><span class="o">&gt;</span>
+  <span class="o">&lt;!--</span> <span class="n">interface</span><span class="o">-</span><span class="n">requires</span> <span class="n">gtk</span><span class="o">+</span> <span class="mf">3.0</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="n">menu</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;appmenu&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">section</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">item</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">attribute</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;label&quot;</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="o">&gt;</span><span class="n">_Preferences</span><span class="o">&lt;/</span><span class="n">attribute</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">attribute</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;action&quot;</span><span class="o">&gt;</span><span class="n">app</span><span class="p">.</span><span class="n">preferences</span><span class="o">&lt;/</span><span class="n">attribute</span><span class="o">&gt;</span>
+      <span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">section</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">section</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">item</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">attribute</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;label&quot;</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="o">&gt;</span><span class="n">_Quit</span><span class="o">&lt;/</span><span class="n">attribute</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">attribute</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;action&quot;</span><span class="o">&gt;</span><span class="n">app</span><span class="p">.</span><span class="n">quit</span><span class="o">&lt;/</span><span class="n">attribute</span><span class="o">&gt;</span>
+      <span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">section</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">menu</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">interface</span><span class="o">&gt;</span></pre>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              To associate the app menu with the application, we have to call 
+              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkApp.html#gtk_application_set_app_menu"><code class="function">gtk_application_set_app_menu()</code></a>
+              . Since app menus work by activating <span class="type">GActions</span>, 
+              we also have to add a suitable set of actions to our application.<br>
+              <br>
+              Both of these tasks are best done in the <code class="function">startup()</code> vfunc, 
+              which is guaranteed to be called once for each primary application instance:
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting">
+...
+
+static void
+preferences_activated (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       app)
+{
+}
+
+static void
+quit_activated (GSimpleAction *action,
+                GVariant      *parameter,
+                gpointer       app)
+{
+  g_application_quit (G_APPLICATION (app));
+}
+
+static GActionEntry app_entries[] =
+{
+  { "preferences", preferences_activated, NULL, NULL, NULL },
+  { "quit", quit_activated, NULL, NULL, NULL }
+};
+
+static void
+example_app_startup (GApplication *app)
+{
+  GtkBuilder *builder;
+  GMenuModel *app_menu;
+  const gchar *quit_accels[2] = { "&lt;Ctrl&gt;Q", NULL };
+
+  G_APPLICATION_CLASS (example_app_parent_class)-&gt;startup (app);
+
+  g_action_map_add_action_entries (G_ACTION_MAP (app),
+                                   app_entries, G_N_ELEMENTS (app_entries),
+                                   app);
+  gtk_application_set_accels_for_action (GTK_APPLICATION (app),
+                                         "app.quit",
+                                         quit_accels);
+
+  builder = gtk_builder_new_from_resource ("/org/gtk/exampleapp/app-menu.ui");
+  app_menu = G_MENU_MODEL (gtk_builder_get_object (builder, "appmenu"));
+  gtk_application_set_app_menu (GTK_APPLICATION (app), app_menu);
+  g_object_unref (builder);
+}
+
+static void
+example_app_class_init (ExampleAppClass *class)
+{
+  G_APPLICATION_CLASS (class)-&gt;startup = example_app_startup;
+  ...
+}
+
+...
+        </pre>
+      </div>
+      <div class="generic-box-space">
+          <p>
+              (<a class="two" href="https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-22/examples/application4/exampleapp.c">full source</a>)<br>
+              <br>
+              Our preferences menu item does not do anything yet, but the Quit menu item is fully functional. 
+              Note that it can also be activated by the usual Ctrl-Q shortcut. The shortcut was added with 
+              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkApp.html#gtk_application_set_accels_for_action"><code class="function">gtk_application_set_accels_for_action()</code></a>.<br>
+              <br>
+              The application menu looks like this:<br>
+              <br>
+              <img src="/foo/gtk3/Overview/getting%20started/building%20apps/getting-started-app4.png"></img>
+            </p>
+      </div>
+  </article>
+
+ 
+    </div>
+    <div></div>
+
+</div>

@@ -1,0 +1,217 @@
+
+<div class="gridContainer slicedAs_3c151 doco">
+
+    <div></div>
+    <div>
+<!-- article header "section-header" -->
+  <section class="section-header">
+    <div class="generic-box-toc">
+        <h1><font color="#2e3440">Building applications</font></h1>
+    </div>
+    <div class="generic-box-toct">
+        <h3><font color="#2e3440">An application consists of a number of files.</font></h3>
+    </div>
+    <div class="toc-container">
+        <p class="toc-title"><font color="#2e3440">Contents</font><font color="#2e3440">[<a id="toggle" href="#" class="toc" onclick="toggleTOC()">hide</a>]</font></p>
+        <ul id="toc" style="display: initial">
+            <li><font color="#2e3440">1 </font><a class="toggle" href="#Trivial_app">A trivial application</a class="toggle"></li>
+            <li><font color="#2e3440">2 </font><a class="toggle" href="#Populating_window">Populating the window</a class="toggle"></li>
+            <li><font color="#2e3440">3 </font><a class="toggle" href="#Opening_files">Opening files</a class="toggle"></li>
+            <li><font color="#2e3440">4 </font><a class="toggle" href="#App_menu">An application menu</a class="toggle"></li>
+            <li><font color="#2e3440">5 </font><a class="toggle" href="#Preference_dialog">A preference dialog</a class="toggle"></li>
+            <li><font color="#2e3440">6 </font><a class="toggle" href="#Search_bar">Adding a search bar</a class="toggle"></li>
+            <li><font color="#2e3440">7 </font><a class="toggle" href="#Side_bar">Adding a side bar</a class="toggle"></li>
+            <li><font color="#2e3440">8 </font><a class="toggle" href="#Properties">Properties</a class="toggle"></li>
+            <li><font color="#2e3440">9 </font><a class="toggle" href="#Header_bar">Header bar</a class="toggle"></li>
+        </ul>
+    </div>
+  </section>
+
+ <!-- TOC toggle script -->
+  <script>
+    var toc = document.getElementById("toc")
+    var toggle = document.getElementById("toggle")
+
+    function toggleTOC()
+    {
+        toc.style.display === "initial" ? ( toc.style.setProperty("display", "none"),
+                                            toggle.innerHTML = "show"
+                                            ) 
+                                            : ( toc.style.setProperty("display", "initial"),
+                                            toggle.innerHTML = "hide"
+                                            )
+    }    
+  </script>
+
+ <hr class="thin">
+
+ <!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-main">
+          <h2>Summary</h2>
+      </div>
+      <div class="list-table"><table border="0" cellspacing="15" class="list-table">
+          <colgroup><col align="left" valign="top"><col>
+          </colgroup>
+          <tbody>
+              <tr>
+                  <td><p><span class="term">The binary</span></p></td>
+                  <td>This gets installed in <code class="filename">/usr/bin</code>.</td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">A desktop file</span></p></td>
+                  <td>The desktop file provides important information about the application to the desktop shell, 
+                      such as its name, icon, D-Bus name, commandline to launch it, etc. 
+                      It is installed in <code class="filename">/usr/share/applications</code>.</td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">An icon</span></p></td>
+                  <td>The icon gets installed in <code class="filename">/usr/share/icons/hicolor/48x48/apps</code>, 
+                  where it will be found regardless of the current theme.</td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">A settings schema</span></p></td>
+                  <td>If the application uses GSettings, it will install its schema in 
+                      <code class="filename">/usr/share/glib-2.0/schemas</code>, so that tools like dconf-editor can find it.</td>
+              </tr>
+              <tr>
+                  <td><p><span class="term">Other resources</span></p></td>
+                  <td>Other files, such as <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html">GtkBuilder</a> 
+                      ui files, are best loaded from resources stored in the application binary itself. 
+                      This eliminates the need for most of the files that would traditionally be installed in an application-specific 
+                      location in <code class="filename">/usr/share</code>.</td>
+              </tr>
+         </tbody>
+      </table></div>
+      <div class="generic-box-main3">
+            <p>
+                GTK+ includes application support that is built on top of <span class="type">GApplication</span>. 
+                In this tutorial we'll build a simple application by starting from scratch, adding more and more pieces over time. 
+                Along the way, we'll learn about <a class="two" href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkApp.html"><span class="type">GtkApplication</span></a>
+                , templates, resources, application menus, settings, <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkHeaderBar.html"><span class="type">GtkHeaderBar</span></a>, 
+                <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStack.html"><span class="type">GtkStack</span></a>, 
+                <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkSearchBar.html"><span class="type">GtkSearchBar</span></a>, 
+                <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkListBox.html" title="GtkListBox"><span class="type">GtkListBox</span></a>
+                , and more.<br>
+                <br>
+                The full, buildable sources for these examples can be found in the examples/ directory of the GTK+ source distribution, or 
+                <a class="two" href="https://git.gnome.org/browse/gtk+/tree/examples">online</a> in the GTK+ git repository. 
+                You can build each example separately by using make with the <code class="filename">Makefile.example</code> file. 
+                For more information, see the <code class="filename">README</code> included in the examples directory.
+            </p>
+      </div>
+      <div class="generic-box-main">
+          <h2>Index</h2>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Trivial_app"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Trivial_app.html">
+              A trivial application
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                When using <span class="type">GtkApplication</span>, the <code class="function">main()</code> function can be very simple. 
+                We just call <code class="function">g_application_run()</code> and give it an instance of our application class.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Populating_window"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Populating_window.html">
+              Populating the window
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                In this step, we use a <span class="type">GtkBuilder</span> template to associate a <span class="type">GtkBuilder</span>
+                ui file with our application window class.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Opening_files"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Opening_files.html">
+              Opening files
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                In this step, we make our application show the content of all the files that it is given on the commandline.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="App_menu"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/App_menu.html">
+              An application menu
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                An application menu is shown by GNOME shell at the top of the screen. 
+                It is meant to collect infrequently used actions that affect the whole application.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Preference_dialog"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Preference_dialog.html">
+              A preference dialog
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                A typical application will have some preferences that should be remembered from one run to the next. 
+                Even for our simple example application, we may want to change the font that is used for the content.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Search_bar"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Search_bar.html">
+              Adding a search bar
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                We continue to flesh out the functionality of our application. 
+                For now, we add search. GTK+ supports this with 
+                <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkSearchEntry.html"><span class="type">GtkSearchEntry</span></a> and 
+                <span class="type">GtkSearchBar</span>. 
+                The search bar is a widget that can slide in from the top to present a search entry.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Side_bar"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Side_bar.html">
+              Adding a side bar
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                As another piece of functionality, we are adding a sidebar, which demonstrates 
+                <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Buttons_Toggles/GtkMenuButton.html"><span class="type">GtkMenuButton</span></a>, 
+                <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkRevealer.html"><span class="type">GtkRevealer</span></a> and 
+                <span class="type">GtkListBox</span>.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Properties"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Properties.html">
+              Properties
+              </a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>
+                Widgets and other objects have many useful properties.<br>
+                <br>
+                Here we show some ways to use them in new and flexible ways, 
+                by wrapping them in actions with GPropertyAction or by binding them with GBinding.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="Header_bar"></a><a class="two" href="/content/GTK3/GTK_Overview/Getting_Started/Building_apps/Header_bar.html">
+              Header bar
+              </a></h3>
+      </div>
+      <div class="generic-box-space">
+          <p>
+              Our application already uses a GtkHeaderBar, but so far it still gets a 'normal' window titlebar on top of that. 
+              This is a bit redundant, and we will now tell GTK+ to use the header bar as replacement for the titlebar.
+            </p>
+      </div>
+  </article>
+
+ 
+    </div>
+    <div></div>
+
+</div>

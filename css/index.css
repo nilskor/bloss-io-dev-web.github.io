@@ -1,0 +1,451 @@
+
+/** NOTICE:
+ *
+ * Do NOT pollute or cross-contaminate styles between components on the page.
+ *
+ * Better to have all attributes / properties belonging to an element / component
+ * in one place than scattered or mixed-in or intertwined.
+ *
+ * The 'display' property cannot be animated.
+ *
+ */
+
+/** GLOBALS -------------------------------------------------------------------------------------------------
+ *
+ *  Use the root object to park any global variables. 
+ */
+/** Reminder: The 'display' property cannot be animated. */
+
+:root
+{
+      background-color   : rgba(0, 255, 255, 1.0);       /* WebIDE: only used for layout guidance      */
+    --navBarHeight       : 50px;
+    --navBarPanelTimeout : 400ms;
+    --navBarBgColor      : rgba(0,0,0,1);
+    --navBarTextColor    : rgba(255,255,255,1);
+    --navBarPanelBgColor : lightgrey;
+    --subNavbarHeight    : 120px;
+    --viewportFactor     : 45vh;
+    --heroImage          : url("/assets/choc-van-yum.jpg");
+    --footerHeight       : 60px;
+}
+
+*
+{
+    /*border          : 1px dashed lightgrey;          /* WebIDE: only used for showing invisibles ¶ */
+    /*background-color: rgba(135, 206, 255, 0.65);     /* WebIDE: only used for layout guidance      */
+    font-family: Noto, sans;
+}
+
+/** FrameWork Policy------------ START ---------------
+ *
+ * Refer to: https://jsfiddle.net/hcarleton/1jh1cybc/10/ 
+ *
+ * the following code allows setting an element that is 'positioned: absolute'
+ * to use the 'width: 100%' to be equal to the body width.
+ *
+ * MDN Note: It is often useful to set box-sizing to border-box to layout elements.
+ * This makes dealing with the sizes of elements much easier, and generally 
+ * eliminates a number of pitfalls you can stumble on while laying out your content.
+
+ * On the other hand, when using position: relative or position: absolute, use of 
+ * box-sizing: content-box allows the positioning values to be relative to the
+ * content, and independent of changes to border and padding sizes, which is
+ * sometimes desirable.
+ */
+*, *::before, *::after
+{
+    box-sizing: inherit;
+    position: relative;
+}
+html
+{
+    box-sizing: border-box;
+}
+/** FrameWork Policy------------  END  --------------- */
+
+
+/** LAYERS --------------------------------------------------------------------------------------------------
+ *
+ * All the layers are here: z-indexes
+ * Component information is allowed and likely to be here.
+ */
+
+.aNavBar          { z-index: 9; } /** Component Navigation Bar or NavBar - it has the most right of way.      */
+.navbarChildPanel { z-index: 8; } /** Component PanelSlider                                                   */
+.grandchildPanel  { z-index: 7; } /** Component PanelSlider                                                   */
+.doParallax       { z-index: 5; } /** Parallax effect applied to elements or components                       */
+
+
+/** PAGE LAYOUT FRAMEWORK ----------------------------------------------------------------------------------- */
+/** Component information is NOT allowed here. */
+
+body
+{
+    margin: 0px;
+    height: 2200px;                                     /* ONLY for Testing */
+}
+body
+{
+    /*background-color : rgba(255, 255, 230, 1);     /* WebIDE: this color only for layout guidance  */
+    /*filter           : blur( 3px );                /* WebIDE: for demonstration only               */
+}
+
+.gridContainer
+{
+    display : grid;
+    /*gap     : 5px;                                 /* WebIDE: this gap only for layout guidance     */
+    /*padding : 5px;                                 /* WebIDE: this padding only for layout guidance */
+}
+.gridContainer *
+{
+    /*text-align       : center;                   /* WebIDE: this alignment only for layout guidance  */
+    /*background-color : white;                    /* WebIDE: this color only for layout guidance      */ 
+}
+
+.gridContainer.slicedAs_3c111        { grid-template-columns: 1fr 1fr 1fr;             }
+.gridContainer.slicedAs_3c131        { grid-template-columns: 1fr 3fr 1fr;             }
+.gridContainer.slicedAs_3c151        { grid-template-columns: 1fr 5fr 1fr;             }
+.gridContainer.slicedAs_4c1111       { grid-template-columns: 1fr 1fr 1fr 1fr;         }
+.gridContainer.slicedAs_5c11111      { grid-template-columns: 1fr 1fr 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_5c21111      { grid-template-columns: 2fr 1fr 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_6c111111     { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; }
+
+.gridContainer.slicedAs_3c111x3r111   { grid-template-columns: 1fr 1fr 1fr; 
+                                        grid-template-rows   : 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_3c141x3r181   { grid-template-columns: 1fr 4fr 1fr; 
+                                        grid-template-rows   : 1fr 8fr 1fr;     }
+.gridContainer.slicedAs_3c141x3r11001 { grid-template-columns: 1fr 4fr 1fr; 
+                                        grid-template-rows   : 1fr 100fr 1fr;   }
+.gridContainer.slicedAs_4c1111x3r111  { grid-template-columns: 1fr 1fr 1fr 1fr; 
+                                        grid-template-rows   : 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_3c131x3r1453  { grid-template-columns: 1fr 3fr 1fr; 
+                                        grid-template-rows   : 1fr 45fr 3fr;    }
+.gridContainer.slicedAs_3c131x3r1453  { grid-template-columns: 1fr 3fr 1fr; 
+                                        grid-template-rows   : 1fr 45fr 3fr;    }
+ 
+
+.leftAlignedText   { text-align: left;    }
+.centreAlignedText { text-align: center;  }
+.rightAlignedText  { text-align: right;   }
+.justifiedText     { text-align: justify; }
+
+ /** ------------------------------------------------- .navbarChildPanel
+{
+}
+
+  *
+  * Using the flex model, a set of classes to align elements with.
+  * 
+  * Specified as flex Width Height with:
+  *
+  *     C - centre
+  *     L - Left
+  *     R - Right
+  *     J - justified
+  *     T - Top
+  *     M - Middle
+  *     B - Bottom
+  *     SA- Space Around
+  *
+  * eg. flexCT is centred left-to-right and positioned at the top.
+  *
+  */
+ /* justify-content is left-to-right : align-self is top-to-bottom */
+ .flexL  { display: flex; justify-content: left;   }
+ .flexC  { display: flex; justify-content: center; }
+ .flexLM { display: flex; justify-content: left;   align-items: center; }
+ .flexCM { display: flex; justify-content: center; align-self : center; }
+ .flexS  { display: flex; justify-content: space-around; }
+
+ .textBox_CT { text-align: center; top: 1%; }
+ .textBox_CM { text-align: center; top: 50%; transform: translateY(-50%); }
+
+ .displayNone { display: none; }
+
+ .flex_jc_SA_ai_C  { display: flex; justify-content: space-around; align-items: center;     }
+ .flex_jc_SA_ai_FS { display: flex; justify-content: space-around; align-items: flex-start; }
+
+/** notes on aligning content
+ *
+ * see www.flexbox.froggy for a fun description :)
+ * 
+ * justify-content           ( left-to-right )
+ * align-items / align-self  ( top-to-bottom )
+ * align-content             ( spacing       )
+ * flex-direction
+ * flex-wrap
+ * flex-flow                 ( shorthand for direction / wrap )
+ * order
+ */
+
+/** COMPONENTS ==============================================================================================
+  * @description
+  * Like Angular, this framework here attempts to separate
+  * out the components from one another, such that maintenance
+  * becomes 'easier'.
+  */
+/** Reminder: The 'display' property cannot be animated. */
+
+
+/** Common styling for some components. This is NOT
+ *  recommended as it breaks the Framework Policy guidelines.
+ *
+ *  eg. Components and all of their functionality and styling shall be separated.
+ */
+.aNavBar       > button,
+#subNavigation > button,
+#gtk3-doco     > button
+{
+    width  : 100%;
+    cursor : pointer;
+    border : none;
+}
+#subNavigation > div,
+#gtk3-doco     > div
+{
+    /* flex_jc_SA_ai_C */
+    display: flex; justify-content: space-around; align-items: center;
+}
+.aNavBar       > a,
+#subNavigation > a,
+#gtk3-doco     > a
+{
+    text-align      : center;
+    text-decoration : none;
+    border          : none;
+    outline         : none;
+}
+
+
+/** Component Navigation Bar or NavBar ===================================
+ * Stuck to the top of the page by virtue of the
+ * 'position: sticky'. Has the highest z-index,
+ * making sure it stays on top.
+ */
+/** A Container with only one unique instance */
+ .aNavBar
+{
+    position: sticky;
+    top    : 0px;
+    height : var(--navBarHeight);
+    margin-top: 0px;
+}
+.aNavBar *
+{
+    background-color : var( --navBarBgColor   );
+    color            : var( --navBarTextColor );
+}
+.aNavBar > a
+{
+    height          : var(--navBarHeight);
+    line-height     : var(--navBarHeight);
+    font            : 15px/var(--navBarHeight) Noto, sans;
+}
+
+
+/** Component NavbarChildPanel Slider ====================================
+ * 
+ * @method panelSlider
+ * @description
+ * This method has a simple task of toggling a class on and off,     
+ * onto or from the given (passed in) element (thisElementID).      
+ * Additionally, it checks any peers for the same attributes and    
+ * will first "turn them off" before toggling this current element.  
+ * Requirements:                                                         
+ * An element with class="navbarChildPanel" assigned to it.          
+ * Two CSS classes that control the behaviour, namely:               
+ * - navbarChildPanel
+ * - panelShowing                                                    
+ * 
+ * The overall effect is a sliding set of panels, whereby only one   
+ * is showing at any point in time.
+ * @param {String} thisElementID 
+ */
+/** A Container with multiple instances */
+.navbarChildPanel
+{
+    position  : fixed;
+    top       : -135px;
+    height    : var( --subNavbarHeight );
+    width     : var( --navBarWidth );
+    transition: var( --navBarPanelTimeout ) ease-in-out;
+}
+.navbarChildPanel *
+{
+    /*background-color: var( --navBarPanelBgColor ); /* */
+}
+.panelShowing
+{
+    top: var( --navBarHeight );
+}
+
+
+/** subNavigation, an instance of NavbarChildPanel Slider ================
+ * 
+ * Used to hold any sub-menus under the navigation bar
+ */
+/** An instance of the Slider menu container */
+#subNavigation *
+{
+    background-color : var( --navBarPanelBgColor ); /* */
+    border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+}
+#subNavigation > a
+{
+    height          : var(--subNavbarHeight);
+    line-height     : var(--subNavbarHeight);
+    font            : 15px/var(--subNavbarHeight) Noto, sans;
+}
+/** grid-area key/value pairs
+ * where gaSN is: grid-area Sub-Navigation
+ */
+.gaSN_top    { grid-area: snTitle; }
+.gaSN_col1   { grid-area: col1;    }
+.gaSN_col2   { grid-area: col2;    }
+.gaSN_col3   { grid-area: col3;    }
+.gaSN_col4   { grid-area: col4;    }
+.gridContainer.slicedAs_SubNav
+{
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    grid-template-rows   : 1fr 1fr;
+    grid-template-areas  :
+        'snTitle snTitle snTitle snTitle'
+         'col1    col2    col3    col4';
+}
+
+
+/** Component GrandChildPanel Slider =====================================
+ * 
+ * @method panelSlider
+ * @description
+ * This method has a simple task of toggling a class on and off,     
+ * onto or from the given (passed in) element (thisElementID).      
+ * Additionally, it checks any peers for the same attributes and    
+ * will first "turn them off" before toggling this current element.  
+ * Requirements:                                                         
+ * An element with class="grandchildPanel" assigned to it.          
+ * Two CSS classes that control the behaviour, namely:               
+ * - grandchildPanel
+ * - grandchildPanelShowing                                                    
+ * 
+ * The overall effect is a sliding set of panels, whereby only one   
+ * is showing at any point in time.
+ * @param {String} thisElementID 
+ */
+/** A Container with multiple instances */
+.grandchildPanel
+{
+     position  : fixed;
+     top       : -135px;
+     height    : var( --subNavbarHeight );
+     width     : var( --navBarWidth );
+     transition: var( --navBarPanelTimeout ) ease-in-out;
+}
+.grandchildPanelShowing
+{
+     top: calc( var( --navBarHeight ) + var( --subNavbarHeight ) );
+}
+/** gtk3-doco, an instance of GrandChildPanel Slider =====================
+ * 
+ * Used to hold the menus for gtk3 documentation
+ */
+/** An instance of the Slider menu container */
+#GTK3 *
+{
+    background-color : var( --navBarPanelBgColor ); /* */
+    border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+}
+#GTK3 > a
+{
+    height          : var(--subNavbarHeight);
+    line-height     : var(--subNavbarHeight);
+    font            : 15px/var(--subNavbarHeight) Noto, sans;
+}
+
+.doco *
+{
+    border     : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+    text-align : justify;
+}
+
+
+/** The main splash content =====================
+ * the so-called Hero image or text
+ */
+.heroImage
+{
+    left    : 0px;
+    width   : 100%;    /* see StaticAncestor code above */
+}
+.heroImage *
+{
+    border  : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+}
+/** grid-area key/value pairs
+ * where gaHI is: grid-area Hero Image
+ */
+.gaHI_top    { grid-area: header; }
+.gaHI_left   { grid-area: left;   }
+.gaHI_middle { grid-area: image;  }
+.gaHI_right  { grid-area: right;  }
+.gaHI_bottom { grid-area: footer; }
+
+.gridContainer.slicedAs_HeroImage
+{
+    grid-template-columns: 1fr 48fr 1fr;
+    grid-template-rows   : calc( 10 * ( var(--viewportFactor) / 45 ) ) var(--viewportFactor) var(--viewportFactor);
+    grid-gap: 10px;
+    grid-template-areas:
+        'header header header'
+        'left   image  right'
+        'footer footer footer';
+}
+#heroImage
+{
+    background-image: var( --heroImage );
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+/** The "text-box" for the main content =========
+ */
+.injectHere
+{
+    color: black;
+    /* flex_jc_SA_ai_FS */
+    display: flex; justify-content: space-around; align-items: flex-start;    
+}
+.injectorPageWrap
+{
+    min-height: 100%;
+    margin-bottom: -var( --footerHeight ); 
+}
+.injectorPageWrap:after
+{
+    content: none;
+    display: block;
+}
+
+
+/** The footer ==================================
+ */
+.footer, .injectorPageWrap:after
+{
+    height: var( --footerHeight ); 
+}
+.footer
+{
+    background: lightgrey;
+}
+.footer > div,
+.footer > div > a
+{
+    padding-left : 20px;
+    height       : var(--footerHeight);
+    line-height  : var(--footerHeight);
+    font         : 15px/var(--footerHeight) Noto, sans;
+    color        : black;
+}

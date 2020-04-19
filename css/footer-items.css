@@ -1,0 +1,15 @@
+
+#fti-1::after { content: "Copyright © 2019 Nilskör. All rights reserved."; }
+#fti-2::after { content: "Contact Us"; }
+#fti-3::after { content: "About";      }
+#fti-4::after { content: "Legal";      }
+#fti-5::after { content: "Privacy";    }
+
+@media (max-width: 1100px)
+{
+    #fti-1::after { content: "Copyright © 2019 Nilskör"; }
+    #fti-2::after { content: none; }
+    #fti-3::after { content: none; }
+    #fti-4::after { content: none; }
+    #fti-5::after { content: none; }
+}

@@ -1,0 +1,302 @@
+
+<div class="gridContainer slicedAs_3c151 doco">
+
+    <div></div>
+    <div>
+<!-- article header "section-header" -->
+  <section class="section-header">
+    <div class="generic-box-toc">
+        <h1><font color="#2e3440">A preference dialog</font></h1>
+    </div>
+    <div class="generic-box-toct">
+        <h3><font color="#2e3440">A typical application will have some preferences that should be remembered from one run to the next. 
+                Even for our simple example application, we may want to change the font that is used for the content.</font></h3>
+    </div>
+  </section>
+
+ <!-- TOC toggle script -->
+  <script>
+    var toc = document.getElementById("toc")
+    var toggle = document.getElementById("toggle")
+
+    function toggleTOC()
+    {
+        toc.style.display === "initial" ? ( toc.style.setProperty("display", "none"),
+                                            toggle.innerHTML = "show"
+                                            ) 
+                                            : ( toc.style.setProperty("display", "initial"),
+                                            toggle.innerHTML = "hide"
+                                            )
+    }    
+  </script>
+
+ <hr class="thin">
+
+ <!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-main2">
+          <p>
+              A typical application will have a some preferences that should be remembered from one run to the next. 
+              Even for our simple example application, we may want to change the font that is used for the content.<br>
+              <br>
+              We are going to use GSettings to store our preferences. 
+              GSettings requires a schema that describes our settings:
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">schemalist</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">schema</span> <span class="n">path</span><span class="o">=</span><span class="s">&quot;/org/gtk/exampleapp/&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;org.gtk.exampleapp&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">key</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;font&quot;</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="k">default</span><span class="o">&gt;</span><span class="err">&#39;</span><span class="n">Monospace</span> <span class="mi">12</span><span class="err">&#39;</span><span class="o">&lt;/</span><span class="k">default</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">summary</span><span class="o">&gt;</span><span class="n">Font</span><span class="o">&lt;/</span><span class="n">summary</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">description</span><span class="o">&gt;</span><span class="n">The</span> <span class="n">font</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">content</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">description</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">key</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;transition&quot;</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">choices</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">choice</span> <span class="n">value</span><span class="o">=</span><span class="err">&#39;</span><span class="n">none</span><span class="err">&#39;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">choice</span> <span class="n">value</span><span class="o">=</span><span class="err">&#39;</span><span class="n">crossfade</span><span class="err">&#39;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">choice</span> <span class="n">value</span><span class="o">=</span><span class="err">&#39;</span><span class="n">slide</span><span class="o">-</span><span class="n">left</span><span class="o">-</span><span class="n">right</span><span class="err">&#39;</span><span class="o">/&gt;</span>
+      <span class="o">&lt;/</span><span class="n">choices</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="k">default</span><span class="o">&gt;</span><span class="err">&#39;</span><span class="n">none</span><span class="err">&#39;</span><span class="o">&lt;/</span><span class="k">default</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">summary</span><span class="o">&gt;</span><span class="n">Transition</span><span class="o">&lt;/</span><span class="n">summary</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">description</span><span class="o">&gt;</span><span class="n">The</span> <span class="n">transition</span> <span class="n">to</span> <span class="n">use</span> <span class="n">when</span> <span class="n">switching</span> <span class="n">tabs</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">description</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">schema</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">schemalist</span><span class="o">&gt;</span></pre>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              Before we can make use of this schema in our application, we need to compile it into the binary form that GSettings expects. 
+              GIO provides <a class="two" href="https://developer.gnome.org/gio/2.36/ch31s06.html">macros</a> 
+              to do this in autotools-based projects.<br>
+              <br>
+              Next, we need to connect our settings to the widgets that they are supposed to control. 
+              One convenient way to do this is to use GSettings bind functionality to bind settings keys to object properties, 
+              as we do here for the transition setting.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting">
+...
+
+static void
+example_app_window_init (ExampleAppWindow *win)
+{
+  ExampleAppWindowPrivate *priv;
+
+  priv = example_app_window_get_instance_private (win);
+  gtk_widget_init_template (GTK_WIDGET (win));
+  priv-&gt;settings = g_settings_new ("org.gtk.exampleapp");
+
+  g_settings_bind (priv-&gt;settings, "transition",
+                   priv-&gt;stack, "transition-type",
+                   G_SETTINGS_BIND_DEFAULT);
+}
+
+...
+        </pre>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              (<a class="two" href="https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-22/examples/application5/exampleappwin.c">full source</a>)<br>
+              <br>
+              The code to connect the font setting is a little more involved, 
+              since there is no simple object property that it corresponds to, so we are not going to go into that here.<br>
+              <br>
+              At this point, the application will already react if you change one of the settings, e.g. using the gsettings commandline tool. 
+              Of course, we expect the application to provide a preference dialog for these. 
+              So lets do that now. 
+              Our preference dialog will be a subclass of <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkDialog.html">GtkDialog</a>, 
+              and we'll use the same techniques that we've already seen: 
+              templates, private structs, settings bindings.<br>
+              <br>
+              Lets start with the template.  
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">interface</span><span class="o">&gt;</span>
+  <span class="o">&lt;!--</span> <span class="n">interface</span><span class="o">-</span><span class="n">requires</span> <span class="n">gtk</span><span class="o">+</span> <span class="mf">3.8</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="n">template</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;ExampleAppPrefs&quot;</span> <span class="n">parent</span><span class="o">=</span><span class="s">&quot;GtkDialog&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="o">&gt;</span><span class="n">Preferences</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;resizable&quot;</span><span class="o">&gt;</span><span class="n">False</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">child</span> <span class="n">internal</span><span class="o">-</span><span class="n">child</span><span class="o">=</span><span class="s">&quot;vbox&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkBox&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;vbox&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkGrid&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;grid&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;margin&quot;</span><span class="o">&gt;</span><span class="mi">6</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;row-spacing&quot;</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;column-spacing&quot;</span><span class="o">&gt;</span><span class="mi">6</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkLabel&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;fontlabel&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="o">&gt;</span><span class="nl">_Font</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;use-underline&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;mnemonic-widget&quot;</span><span class="o">&gt;</span><span class="n">font</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;xalign&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkFontButton&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;font&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkLabel&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;transitionlabel&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;label&quot;</span><span class="o">&gt;</span><span class="nl">_Transition</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;use-underline&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;mnemonic-widget&quot;</span><span class="o">&gt;</span><span class="n">transition</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;xalign&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">child</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">object</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;GtkComboBoxText&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;transition&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;visible&quot;</span><span class="o">&gt;</span><span class="n">True</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">items</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">item</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="o">&gt;</span><span class="n">None</span><span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">item</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;crossfade&quot;</span><span class="o">&gt;</span><span class="n">Fade</span><span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="n">item</span> <span class="n">translatable</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;slide-left-right&quot;</span><span class="o">&gt;</span><span class="n">Slide</span><span class="o">&lt;/</span><span class="n">item</span><span class="o">&gt;</span>
+                <span class="o">&lt;/</span><span class="n">items</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="n">packing</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;left-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;top-attach&quot;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+              <span class="o">&lt;/</span><span class="n">packing</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+          <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+      <span class="o">&lt;/</span><span class="n">object</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">child</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">template</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">interface</span><span class="o">&gt;</span></pre>
+      </div>
+      <div class="generic-box-main2">
+          <p>
+              Next comes the dialog subclass.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting"><span class="cp">#include</span> <span class="cpf">&lt;gtk/gtk.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;exampleapp.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;exampleappwin.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;exampleappprefs.h&quot;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">_ExampleAppPrefs</span>
+<span class="p">{</span>
+  <span class="n">GtkDialog</span> <span class="n">parent</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">_ExampleAppPrefsPrivate</span> <span class="n">ExampleAppPrefsPrivate</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">_ExampleAppPrefsPrivate</span>
+<span class="p">{</span>
+  <span class="n">GSettings</span> <span class="o">*</span><span class="n">settings</span><span class="p">;</span>
+  <span class="n">GtkWidget</span> <span class="o">*</span><span class="n">font</span><span class="p">;</span>
+  <span class="n">GtkWidget</span> <span class="o">*</span><span class="n">transition</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">G_DEFINE_TYPE_WITH_PRIVATE</span><span class="p">(</span><span class="n">ExampleAppPrefs</span><span class="p">,</span> <span class="n">example_app_prefs</span><span class="p">,</span> <span class="n">GTK_TYPE_DIALOG</span><span class="p">)</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="n">example_app_prefs_init</span> <span class="p">(</span><span class="n">ExampleAppPrefs</span> <span class="o">*</span><span class="n">prefs</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ExampleAppPrefsPrivate</span> <span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+
+  <span class="n">priv</span> <span class="o">=</span> <span class="n">example_app_prefs_get_instance_private</span> <span class="p">(</span><span class="n">prefs</span><span class="p">);</span>
+  <span class="n">gtk_widget_init_template</span> <span class="p">(</span><span class="n">GTK_WIDGET</span> <span class="p">(</span><span class="n">prefs</span><span class="p">));</span>
+  <span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span> <span class="o">=</span> <span class="n">g_settings_new</span> <span class="p">(</span><span class="s">&quot;org.gtk.exampleapp&quot;</span><span class="p">);</span>
+
+  <span class="n">g_settings_bind</span> <span class="p">(</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span><span class="p">,</span> <span class="s">&quot;font&quot;</span><span class="p">,</span>
+                   <span class="n">priv</span><span class="o">-&gt;</span><span class="n">font</span><span class="p">,</span> <span class="s">&quot;font&quot;</span><span class="p">,</span>
+                   <span class="n">G_SETTINGS_BIND_DEFAULT</span><span class="p">);</span>
+  <span class="n">g_settings_bind</span> <span class="p">(</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span><span class="p">,</span> <span class="s">&quot;transition&quot;</span><span class="p">,</span>
+                   <span class="n">priv</span><span class="o">-&gt;</span><span class="n">transition</span><span class="p">,</span> <span class="s">&quot;active-id&quot;</span><span class="p">,</span>
+                   <span class="n">G_SETTINGS_BIND_DEFAULT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="n">example_app_prefs_dispose</span> <span class="p">(</span><span class="n">GObject</span> <span class="o">*</span><span class="n">object</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ExampleAppPrefsPrivate</span> <span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+
+  <span class="n">priv</span> <span class="o">=</span> <span class="n">example_app_prefs_get_instance_private</span> <span class="p">(</span><span class="n">EXAMPLE_APP_PREFS</span> <span class="p">(</span><span class="n">object</span><span class="p">));</span>
+  <span class="n">g_clear_object</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">settings</span><span class="p">);</span>
+
+  <span class="n">G_OBJECT_CLASS</span> <span class="p">(</span><span class="n">example_app_prefs_parent_class</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">dispose</span> <span class="p">(</span><span class="n">object</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="n">example_app_prefs_class_init</span> <span class="p">(</span><span class="n">ExampleAppPrefsClass</span> <span class="o">*</span><span class="n">class</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">G_OBJECT_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">dispose</span> <span class="o">=</span> <span class="n">example_app_prefs_dispose</span><span class="p">;</span>
+
+  <span class="n">gtk_widget_class_set_template_from_resource</span> <span class="p">(</span><span class="n">GTK_WIDGET_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">),</span>
+                                               <span class="s">&quot;/org/gtk/exampleapp/prefs.ui&quot;</span><span class="p">);</span>
+  <span class="n">gtk_widget_class_bind_template_child_private</span> <span class="p">(</span><span class="n">GTK_WIDGET_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">),</span> <span class="n">ExampleAppPrefs</span><span class="p">,</span> <span class="n">font</span><span class="p">);</span>
+  <span class="n">gtk_widget_class_bind_template_child_private</span> <span class="p">(</span><span class="n">GTK_WIDGET_CLASS</span> <span class="p">(</span><span class="n">class</span><span class="p">),</span> <span class="n">ExampleAppPrefs</span><span class="p">,</span> <span class="n">transition</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">ExampleAppPrefs</span> <span class="o">*</span>
+<span class="n">example_app_prefs_new</span> <span class="p">(</span><span class="n">ExampleAppWindow</span> <span class="o">*</span><span class="n">win</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">g_object_new</span> <span class="p">(</span><span class="n">EXAMPLE_APP_PREFS_TYPE</span><span class="p">,</span> <span class="s">&quot;transient-for&quot;</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="s">&quot;use-header-bar&quot;</span><span class="p">,</span> <span class="n">TRUE</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span></pre>
+      </div>
+      <div class="generic-box-main3">
+          <p>
+              Now we revisit the <code class="literal">preferences_activated()</code> function in our application class, 
+              and make it open a new preference dialog.
+          </p>
+      </div>
+      <div class="generic-box-code">
+          <pre class="programlisting">
+...
+
+static void
+preferences_activated (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       app)
+{
+  ExampleAppPrefs *prefs;
+  GtkWindow *win;
+
+  win = gtk_application_get_active_window (GTK_APPLICATION (app));
+  prefs = example_app_prefs_new (EXAMPLE_APP_WINDOW (win));
+  gtk_window_present (GTK_WINDOW (prefs));
+}
+
+...
+        </pre>
+      </div>
+      <div class="generic-box-space">
+          <p>
+              (<a class="two" href="https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-22/examples/application6/exampleapp.c">full source</a>)<br>
+              <br>
+              After all this work, our application can now show a preference dialog like this:<br>
+              <br>
+              <img src="/foo/gtk3/Overview/getting%20started/building%20apps/getting-started-app6.png"></img>
+          </p>
+      </div>
+  </article>
+
+ 
+    </div>
+    <div></div>
+
+</div>

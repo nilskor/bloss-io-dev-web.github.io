@@ -1,0 +1,81 @@
+
+<div class="gridContainer slicedAs_3c151 doco">
+
+    <div></div>
+    <div>
+<!-- article header "section-header" -->
+  <section class="section-header">
+    <div class="generic-box-toc">
+        <h1><font color="#2e3440">Application support</font></h1>
+    </div>
+    <div class="generic-box-toct">
+        <h3><font color="#2e3440">Brief explanation about Application support goes here (1 sentence).</font></h3>
+    </div>
+    <div class="toc-container">
+        <p class="toc-title"><font color="#2e3440">Contents</font> <font color="#2e3440">[<a id="toggle" href="#" class="toc" onclick="toggleTOC()">hide</a>]</font></p>
+        <ul id="toc" style="display: initial">
+            <li><font color="#2e3440">1 </font><a class="toggle" href="#GtkApp">GtkApplication</a class="toggle"></li>
+            <li><font color="#2e3440">2 </font><a class="toggle" href="#GtkAppWindow">GtkApplicationWindow</a class="toggle"></li>
+            <li><font color="#2e3440">3 </font><a class="toggle" href="#GtkActionable">GtkActionable</a class="toggle"></li>
+        </ul>
+    </div>
+  </section>
+
+ <!-- TOC toggle script -->
+  <script>
+    var toc = document.getElementById("toc")
+    var toggle = document.getElementById("toggle")
+
+    function toggleTOC()
+    {
+        toc.style.display === "initial" ? ( toc.style.setProperty("display", "none"),
+                                            toggle.innerHTML = "show"
+                                            ) 
+                                            : ( toc.style.setProperty("display", "initial"),
+                                            toggle.innerHTML = "hide"
+                                            )
+    }    
+  </script>
+
+ <hr class="thin">
+
+ <!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-main">
+          <h2>Index</h2>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="GtkApp"></a><a href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkApp.html"><font color="#2e3440">
+              GtkApplication
+              </font></a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>Application class. GtkApplication is a class that handles many important aspects of a GTK+ application 
+                in a convenient fashion, without enforcing a one-size-fits-all application model.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="GtkAppWindow"></a><a href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkAppWindow.html"><font color="#2e3440">
+              GtkApplicationWindow
+              </font></a></h3>
+      </div>
+      <div class="generic-box-main3">
+            <p>GtkWindow subclass with GtkApplication support.
+            </p>
+      </div>
+      <div class="generic-box-main2">
+          <h3><a name="GtkActionable"></a><a href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkActionable.html"><font color="#2e3440">
+              GtkActionable
+              </font></a></h3>
+      </div>
+      <div class="generic-box-space">
+          <p>An interface for widgets that can be associated with actions.
+            </p>
+      </div>
+  </article>
+
+ 
+    </div>
+    <div></div>
+
+</div>
