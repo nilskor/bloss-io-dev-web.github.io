@@ -423,7 +423,7 @@ body
 .injectorPageWrap
 {
     min-height: 100%;
-    margin-bottom: -var( --footerHeight ); 
+    margin-bottom: calc( 0 - var( --footerHeight ) ); 
 }
 .injectorPageWrap:after
 {
