@@ -24,7 +24,7 @@
     --navBarBgColor      : rgba(0,0,0,1);
     --navBarTextColor    : rgba(255,255,255,1);
     --navBarPanelBgColor : lightgrey;
-    --subNavbarHeight    : 80px;
+    --subNavbarHeight    : 100px;
     --viewportFactor     : 45vh;
     --heroImage          : url("/assets/choc-van-yum.jpg");
     --footerHeight       : 60px;
@@ -293,9 +293,9 @@ body
 }
 #subNavigation > a
 {
-    height          : var(--subNavbarHeight);
-    line-height     : var(--subNavbarHeight);
-    font            : 15px/var(--subNavbarHeight) Noto, sans;
+    height          : calc( var(--subNavbarHeight) / 2 );
+    line-height     : calc( var(--subNavbarHeight) / 2 );
+    font            : 15px/calc( var(--subNavbarHeight) / 2 ) Noto, sans;
 }
 /** grid-area key/value pairs
  * where gaSN is: grid-area Sub-Navigation
