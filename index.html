@@ -465,25 +465,15 @@
 
             'use strict';
 
-            //window.addEventListener( 'pageshow',         (event) => { console.log(`pageShow event occurred.`)   } );
-            //window.addEventListener( 'hashchange',       (event) => { console.log(`hashChange event occurred.`) } );
-            window.addEventListener( 'popstate',         (event) => { console.log(`popState event occurred.`); parseURL(); } );
-
-            window.addEventListener( 'DOMContentLoaded', (event) => { injectContentInto( 'injectHere', '/content/index.html' );
-                                                                      window.location.hash = "#index"; //console.log(`DOMContentLoaded`);
-                                                                    });
-
-            window.addEventListener( 'resize',           (event) => { logPrimaryWidth()                         } );
-            
+            window.addEventListener( 'popstate',                (event) => { parseURL();       } );
+            window.addEventListener( 'DOMContentLoaded',        (event) => { injectContentInto( 'injectHere', '/content/index.html' );
+                                                                      window.location.hash = "#index";
+                                                                           });
+            window.addEventListener( 'resize',                  (event) => { logPrimaryWidth() } );
             document.documentElement.addEventListener( 'click', (event) => { documentOnclick(event) } );
 
-            //history.pushState(null,(()=>{document.title="freddo";})(), "#page2")
-
-            //console.log(`parseURL() called ..`);
             parseURL()
-
             logPrimaryWidth()
-            
 
             /** START: parallax 'magicNumber' code ------------------------------------------- */
             let last_known_y_position = 0;
