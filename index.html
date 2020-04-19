@@ -37,7 +37,7 @@
         <!-- Screen Ratio 0.87; less than is skinnier, more than is wider -->
         <!-- hidden content that represents 'index.html', as this is a hybrid single page application -->
         <div class="displayNone">
-            <a href="#index" onclick="injectContentInto( 'injectHere',  '/content/_index.html' );"></a>
+            <a href="#index" onclick="injectContentInto( 'injectHere',  '/content/index.html' );"></a>
             <a href='#AcceleratorGroups' onclick="injectContentInto( 'injectHere',  '/content/GTK3/Core References/Accelerator Groups.html', 'Accelerator Groups' );"></a>
             <a href='#DaD' onclick="injectContentInto( 'injectHere',  '/content/GTK3/Core References/DaD.html', 'DaD' );"></a>
             <a href='#Mainloop' onclick="injectContentInto( 'injectHere',  '/content/GTK3/Core References/Main loop.html', 'Main loop' );"></a>
@@ -400,7 +400,7 @@
             <a href='#DrawingModel' onclick="injectContentInto( 'injectHere',  '/content/GTK3/Overview/Drawing Model.html', 'Drawing Model' );"></a>
             <a href='#GTKTools' onclick="injectContentInto( 'injectHere',  '/content/GTK3/Tools/GTK Tools.html', 'GTK Tools' );"></a>
             <a href='#AnnotationGlossary' onclick="injectContentInto( 'injectHere',  '/content/GTK3/Annotation Glossary/Annotation Glossary.html', 'Annotation Glossary' );"></a>
-            <a href='#_GTK3' onclick="injectContentInto( 'injectHere',  '/content/GTK3/_GTK3.html', '_GTK3' );"></a>
+            <a href='#_GTK3' onclick="injectContentInto( 'injectHere',  '/content/GTK3/GTK3.html', '_GTK3' );"></a>
             <a href='#GTKPlatformSupport' onclick="injectContentInto( 'injectHere',  '/content/GTK3/Platform Support/GTK Platform Support.html', 'GTK Platform Support' );"></a>
             <a href='#RegEx' onclick="injectContentInto( 'injectHere',  '/content/RegEx.html', 'RegEx' );"></a>
         </div>
@@ -408,7 +408,7 @@
         <!-- the navigation bar or navBar for short -->
         <div class="gridContainer slicedAs_6c111111 aNavBar">
 
-            <div class="flexS" onclick="injectContentInto( 'injectHere',  '/content/_index.html' );">
+            <div class="flexS" onclick="injectContentInto( 'injectHere',  '/content/index.html' );">
                 <div class="flexCM">
                     <img src="/assets/bloss-leaf-color.svg" width="32px" height="32px" />
                 </div>
@@ -433,7 +433,7 @@
             <div class="gaSN_col1" onclick="panelSlider( 'ATK'  , 'grandChild' )"> ATK </div>
             <div class="gaSN_col2" onclick="panelSlider( 'GDK'  , 'grandChild' )"> GDK </div>
             <div class="gaSN_col3" onclick="panelSlider( 'GIO'  , 'grandChild' )"> GIO </div>
-            <a href="#GTK3" onclick="injectContentInto( 'injectHere',  '/content/GTK3/_GTK3.html', 'GTK+3 Reference' );"> gtk3 doco </a>
+            <a href="#GTK3" onclick="injectContentInto( 'injectHere',  '/content/GTK3/GTK3.html', 'GTK+3 Reference' );"> gtk3 doco </a>
         </div>
 
         <!-- menus belonging to the sub-navbar - child-childpanel -->
@@ -441,7 +441,7 @@
         <div id="GDK"   class="grandchildPanel"> menu panel for css doco   </div>
         <div id="GIO"   class="grandchildPanel"> menu panel for bloss doco </div>
         <div id="GTK3"  class="gridContainer slicedAs_3c111 grandchildPanel">
-            <a href="#page2" onclick="injectContentInto( 'injectHere',  '/content/_page2.html' );"> link for gtk3 doco </a>
+            <a href="#page2" onclick="injectContentInto( 'injectHere',  '/content/page2.html' );"> link for gtk3 doco </a>
             <div> menu panel for gtk3 doco </div>
             <div> menu panel for gtk3 doco </div>
         </div>
@@ -469,7 +469,7 @@
             window.addEventListener( 'hashchange',       (event) => { console.log(`hashChange event occurred.`) } );
             window.addEventListener( 'popstate',         (event) => { console.log(`popState event occurred.`); parseURL(); } );
 
-            window.addEventListener( 'DOMContentLoaded', (event) => { injectContentInto( 'injectHere', '/content/_index.html' );
+            window.addEventListener( 'DOMContentLoaded', (event) => { injectContentInto( 'injectHere', '/content/index.html' );
                                                                       window.location.hash = "#index"; console.log(`DOMContentLoaded`);
                                                                     });
 
