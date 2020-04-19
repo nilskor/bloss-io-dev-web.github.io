@@ -83,7 +83,7 @@ function injectContentInto( thisElement, fromThisPage, title )
         }
     }
 
-    xhRequest.onerror = function (e) { receivingElement.innerHTML = xhRequest.statusText }
+    xhRequest.onerror = function (e) { receivingElement.innerHTML = xhRequest.statusText + ", " + xhRequest.status }
 
     xhRequest.send(null)
 
