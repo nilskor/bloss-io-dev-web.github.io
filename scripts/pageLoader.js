@@ -51,7 +51,7 @@ function injectContentInto( thisElement, fromThisPage, title )
     let xhRequest = new XMLHttpRequest()
     let pageTitle = "bloss.io"
 
-    fromThisPage = `https://www.bloss.tech${fromThisPage}`
+    fromThisPage = `https://github.com/nilskor/bloss-io-dev-web.github.io${fromThisPage}`
     console.log(fromThisPage)
 
     if ( title != null ) { pageTitle = title }
