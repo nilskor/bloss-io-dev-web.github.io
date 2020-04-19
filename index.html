@@ -470,7 +470,7 @@
             window.addEventListener( 'popstate',         (event) => { console.log(`popState event occurred.`); parseURL(); } );
 
             window.addEventListener( 'DOMContentLoaded', (event) => { injectContentInto( 'injectHere', '/content/index.html' );
-                                                                      window.location.hash = "#index"; console.log(`DOMContentLoaded`);
+                                                                      window.location.hash = "#index"; //console.log(`DOMContentLoaded`);
                                                                     });
 
             window.addEventListener( 'resize',           (event) => { logPrimaryWidth()                         } );
