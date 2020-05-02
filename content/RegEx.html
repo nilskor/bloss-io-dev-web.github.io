@@ -71,10 +71,19 @@ Options:
 
 
 
-Example: in HTML, find everything preceding a word:
+Example: in HTML, find everything preceding a word:    "<!-- article header"
 
     [A-Za-z0-9_," \W]+(?=<!-- article header)
 
-         in HTML, find everything after a word:
+         in HTML, find everything after a word:        "<!-- optional secondary"
 
     (<!-- optional secondary)[A-Za-z0-9_," \W]+
+
+
+=====================================================================================
+
+sed example:
+
+echo abcdef_filename.html_12345 | sed -r 's/.*[_](.*)[_].*/\1/'
+
+will print filename.html

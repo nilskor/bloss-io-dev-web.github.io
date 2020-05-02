@@ -52,7 +52,7 @@ function injectContentInto( thisElement, fromThisPage, title )
     let pageTitle = "bloss.io"
 
     // when loaded to GitHub Pages, this needs to be enabled.
-    fromThisPage = `https://www.bloss.tech${fromThisPage}`
+    //fromThisPage = `https://www.bloss.tech${fromThisPage}`
     //console.log(fromThisPage)
 
     if ( title != null ) { pageTitle = title }

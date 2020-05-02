@@ -91,6 +91,9 @@ body
     /*filter           : blur( 3px );                /* WebIDE: for demonstration only               */
 }
 
+.displayNone { display: none; }
+
+
 .gridContainer
 {
     display : grid;
@@ -123,61 +126,28 @@ body
                                         grid-template-rows   : 1fr 45fr 3fr;    }
 .gridContainer.slicedAs_3c131x3r1453  { grid-template-columns: 1fr 3fr 1fr; 
                                         grid-template-rows   : 1fr 45fr 3fr;    }
- 
 
-.leftAlignedText   { text-align: left;    }
-.centreAlignedText { text-align: center;  }
-.rightAlignedText  { text-align: right;   }
-.justifiedText     { text-align: justify; }
 
- /** ------------------------------------------------- .navbarChildPanel
-{
-}
+/* flexbox layout container           */
+.flexbox    { display: flex;           }
+/* textbox type - grid or flex        */
+.g-textBox  { display: grid;           }
+.f-textBox  { display: flex;           }
+/* grid/flex top-to-bottom            */
+.middle     { align-items: center;     }
+.top        { align-items: flex-start; }
+.bottom     { align-items: flex-end;   }
+.child      { height: 100%;            } /* use this when the textBox is inside a parent <div> etc. */
+/* grid-only left-to-right            */
+.gCenter    { text-align: center;      }
+.gLeft      { text-align: left;        }
+.gRight     { text-align: right;       }
+/* flex-only left-to-right            */
+.fCenter    { justify-content: center; }
+.fLeft      { justify-content: left;   }
+.fRight     { justify-content: right;  }
+.fSpaceAround { justify-content: space-around; }
 
-  *
-  * Using the flex model, a set of classes to align elements with.
-  * 
-  * Specified as flex Width Height with:
-  *
-  *     C - centre
-  *     L - Left
-  *     R - Right
-  *     J - justified
-  *     T - Top
-  *     M - Middle
-  *     B - Bottom
-  *     SA- Space Around
-  *
-  * eg. flexCT is centred left-to-right and positioned at the top.
-  *
-  */
- /* justify-content is left-to-right : align-self is top-to-bottom */
- .flexL  { display: flex; justify-content: left;   }
- .flexC  { display: flex; justify-content: center; }
- .flexLM { display: flex; justify-content: left;   align-items: center; }
- .flexCM { display: flex; justify-content: center; align-self : center; }
- .flexS  { display: flex; justify-content: space-around; }
-
- .textBox_CT { text-align: center; top: 1%; }
- .textBox_CM { text-align: center; top: 50%; transform: translateY(-50%); }
-
- .displayNone { display: none; }
-
- .flex_jc_SA_ai_C  { display: flex; justify-content: space-around; align-items: center;     }
- .flex_jc_SA_ai_FS { display: flex; justify-content: space-around; align-items: flex-start; }
-
-/** notes on aligning content
- *
- * see www.flexbox.froggy for a fun description :)
- * 
- * justify-content           ( left-to-right )
- * align-items / align-self  ( top-to-bottom )
- * align-content             ( spacing       )
- * flex-direction
- * flex-wrap
- * flex-flow                 ( shorthand for direction / wrap )
- * order
- */
 
 /** COMPONENTS ==============================================================================================
   * @description
