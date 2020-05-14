@@ -1,0 +1,139 @@
+#!/bin/bash
+
+# Will exit script if we would use an uninitialised variable:
+# either set -u or set -o nounset
+set -o nounset
+
+# Will exit script when a simple command (not a control structure) fails:
+# either set -e or set -o errexit
+set -o errexit
+
+# This setting prevents errors in a pipeline from being masked.
+set -o pipefail
+
+# Useful string splitting behaviour occurs with IFS=$'\n\t'
+# The default is to split on spaces, tabs and newlines $' \n\t'
+IFS=$'\n\t'
+
+# Set variables:
+declare -grix  TRUE=0
+declare -grix FALSE=1
+
+function echo()
+(
+    fmt=%s end=\\n IFS=" "
+
+    while [ $# -gt 1 ]
+    do
+        case "$1" in
+            [!-]*|-*[!ne]*) break ;;
+            *ne*|*en*) fmt=%b end= ;;
+            *n*) end= ;;
+            *e*) fmt=%b ;;
+        esac
+        shift
+    done
+
+    printf ":: $fmt$end" "$*"
+)
+
+String()
+(
+    showUsage()
+    (
+        declare APIs=""
+        echo -e "\n The following is a list of all the declared string functions available in this module.\n"
+        APIs="$(declare -F)"
+        APIs="${APIs//declare -f/.\/StringFunctions}"
+        for apiName in ${APIs[@]}
+        do
+            echo "$apiName"
+        done
+        echo -e "\n"
+
+    ) >&2
+    
+    isValidArg()
+    (
+        test "$(type -t "$1")" = "function"
+    )
+
+    countLines()
+    (
+
+        if [[ $# -eq 0 || $1 == "-?" || $1 == "--help" || $1 == "-h" || -z $1 ]]
+        then
+
+            echo "HELP!!!"
+
+        elif [[ -f $1  ]]
+        then
+
+            declare -i result="$(wc --lines $1 | gawk {'print $1'})"
+            if [[ $result -gt 1 ]]
+            then
+                    result=$((++result))
+            fi
+            echo -e ""
+            echo "$result"
+            echo -e ""
+
+        else
+
+            while read line
+            do
+                echo "$line"
+            done < "${1:-/dev/stdin}"
+
+        fi
+    )
+
+    if [[ $# -gt 0 ]]
+    then
+
+        if isValidArg $@
+        then
+            "$@"
+        else
+            showUsage
+        fi
+
+    else
+            showUsage
+    fi
+)
+
+String $@
+
+#===============================================
+#
+# Bash Inbuilt String Functions:
+#
+#   Length         ${#string}
+#
+#   SubString      ${string:position}
+#                  or
+#                  ${string:position:length}
+#
+#   Delete(front)  ${string#substring}                     deletes the shortest match of $substring from front of $string
+#                  or
+#   Delete(back)   ${string%substring}                     deletes the shortest match of $substring from back  of $string
+#                  or
+#   Delete(long,front)
+#                  ${string##substring}                    deletes the longest  match of $substring from front of $string
+#                  or
+#   Delete(long,back)
+#                  ${string%%substring}                    deletes the longest  match of $substring from back  of $string
+#
+#   Find+Replace   ${string/pattern/replacement}           only the first match
+#                  or
+#   Find+Replace   ${string//pattern/replacement}          replace all matches
+#                  or
+#   Find+Replace(front)
+#                  ${string/#pattern/replacement}          match and replace from the start
+#                  or
+#   Find+Replace(back)
+#                  ${string/%pattern/replacement}          match and replace from the back
+#
+#
+#===============================================

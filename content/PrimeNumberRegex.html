@@ -1,0 +1,90 @@
+<div class="gridContainer slicedAs_3c151 doco">
+
+    <div></div>
+
+    <div>
+
+        <h3>Prime Number RegEx</h3>
+
+        <p>We start again by anchoring to the beginning of the string.</p>
+
+        <pre>
+        /^1?$|<span style="padding: 0.25em; border-radius: 4px; background: #d0ddd0; margin: 0.125em">^</span>(11+?)\1+$/
+
+        <span style="padding: 0.25em; border-radius: 4px; background: #d0ddd0; margin: 0.125em;"></span><span style="padding: 0.25em; margin: 0.125em">1 1 1 1 1 1 1 1 1</span> 
+        </pre>
+
+
+        <p><code>(11+?)</code> will match two ones at the start. Because these are in parentheses, this is a <em>grouping</em>; the value of what they match is captured into the <em>backreference</em> <code>\1</code>. Note that in this case <code>\1</code> just means &#8220;the first thing in parentheses&#8221;. It doesn&#8217;t have to do with the literal <code>"1"</code>s in the string.</p>
+
+        <pre>
+        /^1?$|<span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">^</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background:#dddad0">(11+?)</span>\1+$/
+
+        <span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #dddad0">1 1</span><span style="padding: 0.25em; margin: 0.125em">1 1 1 1 1 1 1</span>
+        </pre>
+
+
+        <p>Next, <code>\1+</code> matches one or more strings identical to the first matched grouping, which in this case is <code>1 1</code>.</p>
+
+        <pre>
+        /^1?$|<span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">^</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background:#dddad0">(11+?)</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">\1+</span>$/
+
+        <span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #dddad0">1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1</span><span style="padding: 0.25em; margin: 0.125em">1</span>
+        </pre>
+
+
+        <p>Oops, but the string doesn&#8217;t end there!</p>
+
+        <pre>
+        /^1?$|<span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">^</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background:#dddad0">(11+?)</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">\1+</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">$</span>/
+
+        <span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #dddad0">1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1</span><span style="color: #ff0000; padding: 0.25em; margin:0.125em;">1</span> 
+        </pre>
+
+
+        <p>We&#8217;ll have to backtrack. This doesn&#8217;t work&#8230;</p>
+
+        <pre>
+        /^1?$|<span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">^</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background:#dddad0">(11+?)</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">\1+</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">$</span>/
+
+        <span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #dddad0">1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1</span><span style="padding: 0.25em; margin: 0.125em"><span style="color: #ff0000">1</span> 1 1</span>
+        </pre>
+
+
+        <p>Okay, we have nothing left to backtrack to. How about that <code>11+?</code>, let&#8217;s try matching three ones, and calling that <code>\1</code>:</p>
+
+        <pre>
+        /^1?$|<span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">^</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background:#dddad0">(11+?)</span>\1+$/
+
+        <span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #dddad0">1 1 1</span><span style="padding: 0.25em; margin: 0.125em">1 1 1 1 1 1</span> 
+        </pre>
+
+
+        <p>And let&#8217;s match as many of these new <code>\1</code> as we can:</p>
+
+        <pre>
+        /^1?$|<span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">^</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background:#dddad0">(11+?)</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">\1+</span>$/
+
+        <span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #dddad0">1 1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1 1</span>
+        </pre>
+
+
+        <p>The end of string is next &#8211; this matched!</p>
+
+        <pre>
+        /^1?$|<span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">^</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background:#dddad0">(11+?)</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">\1+</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0">$</span>/
+
+        <span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #dddad0">1 1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #eeeae0">1 1 1</span><span style="margin: 0.125em; padding: 0.25em; border-radius: 4px; background: #d0ddd0"></span>
+        </pre>
+
+
+        <p>So, you can see how this process is analogous to trying to divide a number by successively larger divisors, leaving no remainder. For <em>n = 9</em> it tried 2, and that failed, and then 3, which succeeded. But in the case of a prime number, this is never going to succeed.</p>
+
+        <p>This page is an extract from http://neilk.net/blog/2000/06/01/abigails-regex-to-test-for-prime-numbers/</p>
+        <p>All content is copyright © 1998–2018, Neil Kandalgaonkar</p>
+
+    </div>
+
+    <div></div>
+
+</div>
