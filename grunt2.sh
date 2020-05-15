@@ -11,7 +11,7 @@ set -o errexit
 # This setting prevents errors in a pipeline from being masked.
 set -o pipefail
 
-#set -x
+#set -vx
 
 # Useful string splitting behaviour occurs with IFS=$'\n\t'
 # The default is to split on spaces, tabs and newlines $' \n\t'
@@ -50,6 +50,7 @@ function readInput()
 {
     local result=""
     local NEWLINE=$'\n'
+    local REPLY=""
     
     while read -r line
     do
@@ -64,6 +65,7 @@ function readInput()
 
 }
 
+echo "\$? $?"
 
 if [[ -t 0 ]]
 then
@@ -81,9 +83,9 @@ then
         do
             if [[ $index == "-hd" ]]
             then
-                declare hereDoc=""
-                readInput hereDoc
-                echo -e "$hereDoc"
+                #declare hereDoc=""
+                readInput #hereDoc
+                #echo -e "$hereDoc"
 
             fi
         done
@@ -93,18 +95,18 @@ then
 else
     echo "false, some input came via redirection"
 
-    if   [[ $# -eq 0 ]]
-    then
-        usage
+    #if   [[ $# -eq 0 ]]
+    #then
+    #    usage
 
-    elif [[ $# -gt 0 ]]
-    then
+    #elif [[ $# -gt 0 ]]
+    #then
         ARGS=("$@")
-        declare hereDoc=""
-        readInput hereDoc
-        echo -e "$hereDoc"
+        #declare hereDoc=""
+        readInput #hereDoc
+        #echo -e "$hereDoc"
 
-    fi
+    #fi
 
 fi
 
