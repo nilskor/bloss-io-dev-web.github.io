@@ -80,14 +80,31 @@ function _countLines()
 {
     #echo -e "Number of elements in LINES is: ${#LINES[@]}"
     #echo -e "Command line passed to 'countLines' is: $@"
+    #echo -e "Number of elements in ARGS is: ${#ARGS[@]}"
+    #echo -e "Elements of ARGS are: ${ARGS[@]}"
+
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        #echo -e "Individual arg is: $arg, and index is $n"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    #echo -e "Number of elements in LINES is: ${#LINES[@]}"
+    #echo -e "Command line after cleaning is: $@"
+    #echo -e "Number of elements in '\$@' is $#."
 
     local _return_countLines
 
-    if [[ $# -eq 0 || -z $1 ]] && [[ ${#LINES[@]} -gt 0 ]]
+    if [[ $# -eq 1 ]] && [[ ${#LINES[@]} -gt 0 ]]
     then
         #echo "${#LINES[@]}"
-        returnResult="${#LINES[@]}"
-        eval "$1=\${returnResult}"
+        _return_countLines="${#LINES[@]}"
+        eval "$1=\${_return_countLines}"
 
     elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
     then
@@ -98,10 +115,10 @@ function _countLines()
     then
 
         declare -i result="$(wc --lines $2 | gawk {'print $1'})" # gawk print $1 shouldn't be changed ..
-        if [[ $result -gt 1 ]]
-        then
-                result=$((++result))
-        fi
+        #if [[ $result -gt 1 ]]
+        #then
+        #        result=$((++result))
+        #fi
         #echo "$result"
         returnResult="$result"
         eval "$1=\${returnResult}"
@@ -118,6 +135,7 @@ function _countLines()
         #fi
 
         #echo -e "Number of elements in LINES is: ${#LINES[@]}, ${LINES[@]}"
+        #echo "here"
         if [[ ${#LINES[@]} -gt 0 ]]
         then
             result+=${#LINES[@]}
@@ -136,9 +154,104 @@ function _countLines()
 
 function _countWords()
 {
-        local _return_countWords
-        _return_countWords="freddo frog"
+
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        #echo -e "Individual arg is: $arg, and index is $n"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    local _return_countWords
+
+    #if [[ $# -eq 0 || -z $1 ]] && [[ ${#LINES[@]} -gt 0 ]]
+    if [[ $# -eq 1 || -z $2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+    then
+
+        returnResult="${#LINES[@]}"
+        eval "$1=\${returnResult}"
+
+    elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
+    then
+
+        echo -e "\n countWords inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
+
+    elif [[ -f $2  ]]
+    then
+
+        declare -i result="$(wc --words $2 | gawk {'print $1'})" # gawk print $1 shouldn't be changed ..
+
+        #returnResult="$result"
+        #eval "$1=\${returnResult}"
+        printf -v _return_countWords %q $result
         eval "$1=\${_return_countWords}"
+
+    else
+
+        declare -i result=$(wc --words <<< "${@}")
+        result=$((result-1))
+
+        if [[ ${#LINES[@]} -gt 0 ]]
+        then
+            result+=${#LINES[@]}
+
+        fi
+
+    #    for index in "$@"
+    #    do
+    #        if [[ $index == "-hd" ]]
+    #        then
+    #            result=$((result-1))
+    #        fi
+    #    done        
+
+        printf -v _return_countWords %q $result
+        eval "$1=\${_return_countWords}"
+
+    fi
+
+}
+
+function _stringLength()
+{
+    
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        #echo -e "Individual arg is: $arg, and index is $n"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    local _return_stringLength
+
+    declare -i result=0
+
+    if [[ $# -eq 1 || -z $2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+    then
+
+        returnResult="${#LINES[0]}"
+        returnResult=$((returnResult-1))
+        eval "$1=\${returnResult}"
+
+    elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
+    then
+        echo -e "\n stringLength 'some continuous string that is quoted'\n"
+    else
+
+        result="${#2}"
+        printf -v _return_stringLength %q $result
+        eval "$1=\${_return_stringLength}"
+
+    fi
+
 }
 
 #--------------------------------------------------------
@@ -150,10 +263,12 @@ StringClass()
     showUsage()
     (
         declare APIs=""
-        echo -e "\n The following is a list of all the declared string functions available in this module.\n"
+        echo -e "\n The following is a list of all the functions available in this script module.\n"
+        
         APIs="$(declare -F)"
         APIs="${APIs//declare -f/.\/StringFunctions}"
-        for apiName in ${APIs[@]}
+        
+        for apiName in "${APIs[@]}"
         do
             echo "$apiName"
         done
@@ -178,6 +293,13 @@ StringClass()
     (
         local _result
         _countWords _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    stringLength()
+    (
+        local _result
+        _stringLength _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
@@ -226,9 +348,9 @@ then
 
         ARGS=("$@")
 
-        for index in "${ARGS[@]}"
+        for arg in "${ARGS[@]}"
         do
-            if [[ $index == "-hd" ]]
+            if [[ $arg == "-hd" ]]
             then
                 readInput # read more input into the ARGS array
             fi
@@ -239,7 +361,7 @@ then
 else               # input comes from redirection.
 
     ARGS=("$@")
-    readInput  # read more input into the ARGS array
+    readInput  # read more input into the LINES array
 
 fi
 

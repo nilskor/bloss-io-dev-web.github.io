@@ -21,15 +21,26 @@ IFS=$'\n\t'
 
 source ./grunt3.sh
 
+echo -e ""
+
 declare someCrap
 declare data='some
-dummy
-string'
+dummy extra long
+string that needs counting'
 
-_countLines someCrap "$data"
+_countWords someCrap "$data"
 
-echo -e "$someCrap, $data"
+echo -e "Word count is: $someCrap, for the string: $data \n"
 
-_countLines someCrap index.html
+_countWords someCrap index.html
 
-echo -e "$someCrap"
+echo -e "Word count for index.html is: $someCrap \n"
+
+_stringLength someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
+
+echo -e "String length for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n"
+
+_stringLength someCrap "$data"
+
+echo -e "String length of '$data' is: $someCrap \n"
+
