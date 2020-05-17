@@ -297,14 +297,17 @@ function _stringFind()
 
         thePattern="$2"
 
-        foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched"`
-
-        searchString="$foundIt"
-
-        rest=${stringToBeSearched#*$searchString}
-        #echo -e "$foundIt $(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched"` || foundIt=""
         
-        result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        if [[ ${#foundIt} -gt 0 ]]
+        then
+            searchString="$foundIt"
+            rest=${stringToBeSearched#*$searchString}
+            result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        else
+            result=0
+        fi
+
         printf -v _return_stringFind %q $result
         eval "$1=\${_return_stringFind}"
 
