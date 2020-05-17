@@ -218,17 +218,19 @@ function _countWords()
 
 function _stringLength()
 {
-    
+
+    # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
     do
         let "n+=1"
-        #echo -e "Individual arg is: $arg, and index is $n"
         if [[ $arg == "-hd" ]]
         then
             set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
         fi
     done
+
+    # main part of the function
 
     local _return_stringLength
 
@@ -243,12 +245,68 @@ function _stringLength()
 
     elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
     then
-        echo -e "\n stringLength 'some continuous string that is quoted'\n"
+        echo -e "\n stringLength someString or 'some continuous string that is quoted'\n"
     else
 
         result="${#2}"
         printf -v _return_stringLength %q $result
         eval "$1=\${_return_stringLength}"
+
+    fi
+
+}
+
+function _stringFind()
+{
+    
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+    local -i _return_stringFind=0
+
+    if [[ $# -le 1 ]]
+    then
+        echo -e "missing arguments"
+        echo -e "The command syntax is: stringFind searchPattern someStringToSearch"
+
+    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#LINES[@]} -gt 0 ]]
+    then
+        
+        if [[ $# -eq 3 ]] && [[ -f $3  ]]
+        then
+                stringToBeSearched="$(sed -rn 's/.*/&/p' $3)"
+        
+        elif [[ $# -eq 3 ]]
+        then
+                stringToBeSearched="${3} ${LINES[@]}"
+        
+        elif [[ $# -eq 2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        then
+                stringToBeSearched="${LINES[@]}"
+        fi
+
+        thePattern="$2"
+
+        foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched"`
+
+        searchString="$foundIt"
+
+        rest=${stringToBeSearched#*$searchString}
+        #echo -e "$foundIt $(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        
+        result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        printf -v _return_stringFind %q $result
+        eval "$1=\${_return_stringFind}"
 
     fi
 
@@ -300,6 +358,13 @@ StringClass()
     (
         local _result
         _stringLength _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    stringFind()
+    (
+        local _result
+        _stringFind _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 

@@ -44,3 +44,11 @@ _stringLength someCrap "$data"
 
 echo -e "String length of '$data' is: $someCrap \n"
 
+_stringFind someCrap "href=\"#index\"" index.html
+
+echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
+
+_stringFind someCrap "^[[:space:]]+<a" index.html
+
+echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
+
