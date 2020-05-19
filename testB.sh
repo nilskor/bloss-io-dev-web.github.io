@@ -23,10 +23,25 @@ source ./grunt3.sh
 
 echo -e ""
 
+declare -a test1=()
+declare -A test2=()
 declare someCrap
 declare data='some
 dummy extra long
 string that needs counting'
+
+#printf %i .1
+printf %f -1e32 &>/dev/null && echo "-1e32 is a number" || echo "-1e32 is not a number"
+echo ""
+
+declare -p test1 2>/dev/null | grep -q '^declare \-a' && echo "test1 is an indexed array" || echo "test1 is not an indexed array"
+echo ""
+declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an associative array" || echo "test2 is not an associative array"
+echo ""
+declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array"
+echo ""
+declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type"
+echo ""
 
 _countWords someCrap "$data"
 
@@ -51,4 +66,8 @@ echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
 _stringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
+
+stringToBeSearched="$(< $1)"
+
+#echo "$stringToBeSearched"
 

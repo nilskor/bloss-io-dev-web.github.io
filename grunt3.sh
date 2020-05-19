@@ -218,6 +218,7 @@ function _countWords()
 
 function _stringLength()
 {
+    # <SIGNATURE>: (0)_stringLength (1)_result (2)someStringToSearch
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -239,16 +240,24 @@ function _stringLength()
     if [[ $# -eq 1 || -z $2 ]] && [[ ${#LINES[@]} -gt 0 ]]
     then
 
-        returnResult="${#LINES[0]}"
-        returnResult=$((returnResult-1))
+        returnResult="${#LINES[@]}"
+        returnResult=$(( returnResult ))
         eval "$1=\${returnResult}"
 
     elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
     then
         echo -e "\n stringLength someString or 'some continuous string that is quoted'\n"
+
+    elif [[ $# -eq 2 ]] && [[ -f $2  ]]
+    then
+        stringToBeSearched="$(< $2)"
+        result="$(( ${#stringToBeSearched} ))"
+        printf -v _return_stringLength %q $result
+        eval "$1=\${_return_stringLength}"
+
     else
 
-        result="${#2}"
+        result="$(( ${#2} ))"
         printf -v _return_stringLength %q $result
         eval "$1=\${_return_stringLength}"
 
@@ -258,6 +267,7 @@ function _stringLength()
 
 function _stringFind()
 {
+    # <SIGNATURE>: (0)_stringFind (1)_result (2)searchPattern (3)someStringToSearch
     
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -284,7 +294,8 @@ function _stringFind()
         
         if [[ $# -eq 3 ]] && [[ -f $3  ]]
         then
-                stringToBeSearched="$(sed -rn 's/.*/&/p' $3)"
+                #stringToBeSearched="$(sed -rn 's/.*/&/p' $3)"
+                stringToBeSearched="$(< $3)"
         
         elif [[ $# -eq 3 ]]
         then
@@ -297,7 +308,7 @@ function _stringFind()
 
         thePattern="$2"
 
-        foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched"` || foundIt=""
+        foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
         
         if [[ ${#foundIt} -gt 0 ]]
         then
@@ -311,6 +322,76 @@ function _stringFind()
         printf -v _return_stringFind %q $result
         eval "$1=\${_return_stringFind}"
 
+    fi
+
+}
+
+function _findReplace()
+{
+    # <SIGNATURE>: (0)_findReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
+    
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+    #echo -e "@ is: $@, which is equal to $#. LINES is ${#LINES[@]}."
+
+    local -i _return_findReplace=0
+    local -i doAll=$FALSE
+
+    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
+    then
+        
+        if [[ $# -ge 4 ]] && [[ -f $4  ]]
+        then
+                #stringToBeSearched="$(sed -rn 's/.*/&/p' $4)"
+                stringToBeSearched="$(< $4)"
+        
+        elif [[ $# -ge 4 ]]
+        then
+                stringToBeSearched="$4"
+        
+        elif [[ $# -eq 3 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        then
+                stringToBeSearched="${LINES[@]}"
+        fi
+
+        if [[ ! -z ${5:-} ]] && [[ ${5:-} == "-a" ]]
+        then
+            doAll=$TRUE
+        fi
+
+        thePattern="${2:-}"
+        newString="${3:-}"
+
+        if [[ $doAll == $FALSE ]]
+        then
+            echo -e "${stringToBeSearched/${thePattern}/${newString}}"
+        else
+            echo -e "${stringToBeSearched//${thePattern}/${newString}}"
+        fi
+
+    elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" ]]
+    then
+        echo -e " \n The command syntax is: findReplace oldString newString someStringToSearch\n"
+        echo -e " someStringToSearch may be: <someString> or <someFile> or <Here-document> or <Here-string>"
+        echo -e " Giving more than 4 parameter means the extras will be ignored, except if"
+        echo -e " you provide -a on the end, then a 'Replace All' will occur."
+        echo -e " If successful, the updated string will be returned.\n"
+        echo -e " For Pattern Matching visit https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching \n"
+
+    else
+        echo -e "\n Error - missing arguments."
+        eval "_findReplace _result --help"
     fi
 
 }
@@ -334,6 +415,7 @@ StringClass()
             echo "$apiName"
         done
         echo -e "\n All Here Document, Here-doc or Heredoc style input must end with a plain 'EOF' eg. EOF"
+        echo -e " Heredoc style input can be forced with the '-hd' switch as a parameter, terminated with EOF"
         echo ""
 
     ) >&2
@@ -370,6 +452,16 @@ StringClass()
         _stringFind _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
+
+    findReplace()
+    (
+        local _result
+        _findReplace _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    #isNumber(){ printf %f "$1" &>/dev/null && echo "true" || echo "false" }
+    #isArray() { declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type" }
 
     #--------------------------------
     # Parameter check for StringClass
