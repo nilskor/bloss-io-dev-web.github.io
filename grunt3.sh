@@ -205,14 +205,6 @@ function _countWords()
 
         fi
 
-    #    for index in "$@"
-    #    do
-    #        if [[ $index == "-hd" ]]
-    #        then
-    #            result=$((result-1))
-    #        fi
-    #    done        
-
         printf -v _return_countWords %q $result
         eval "$1=\${_return_countWords}"
 
@@ -436,12 +428,12 @@ function _subString()
 
     # main part of the function
 
-
     local _return_subString=0
+    local -i noLength=$FALSE
 
     if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
     then
-        echo -e "\n @ is: $@, which is equal to $#. LINES is ${#LINES[@]}.\n"
+        #echo -e "\n @ is: $@, which is equal to $#. LINES is ${#LINES[@]}.\n"
 
         if [[ $# -eq 3 ]] && [[ ${#LINES[@]} -gt 0 ]]
         then
@@ -457,17 +449,29 @@ function _subString()
         
         fi
 
+        if [[ $# -eq 4 ]] && [[ ${4:-} == "-nl" ]]
+        then
+            noLength=$TRUE
+        fi
+
         local -i theOffset=${3:-0}
         local theLength="${4:-}"
 
-        _return_subString="${stringToBeSearched:${theOffset}:${theLength}}"
+        if [[ $noLength == $FALSE ]]
+        then
+            _return_subString="${stringToBeSearched:${theOffset}:${theLength}}"
+        else
+            _return_subString="${stringToBeSearched:${theOffset}}"
+        fi
 
-        echo -e "$_return_subString"
+        #echo -e "$_return_subString"
+        eval "$1=\${_return_subString}"
 
     elif [[ $# -eq 1 || ${2:-} == "-?" || ${2:-} == "--help" || ${2:-} == "-h" ]]
     then
-        echo -e "\n Extract and return a subString from within a larger piece of text.\n"
-        echo -e " ${GREEN}subString someStringToSearch offset length${NC}\n"
+        echo -e "\n Extract and return a subString from within a larger piece of text or file. \n"
+        echo -e " ${GREEN}subString someStringToSearch   offset length${NC}"
+        echo -e " ${GREEN}subString someFileToSearch.txt offset length${NC}\n"
         echo -e " offset & length need to be whole +/- numbers eg. integers"
         echo -e " offset means: the position X number characters from the start of 'someStringToSearch'. \n"
         echo -e " It's ok to substitute '-nl' as a length to indicate 'no length', in which case,"

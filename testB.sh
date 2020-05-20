@@ -67,8 +67,11 @@ _stringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
 
-_findReplace someCrap html FROG testFile.html -aw
-echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
-#_findReplace someCrap FROG html testFile.html -aw
-#echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
+#_findReplace someCrap html FROG testFile.html -aw
+#echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
+_findReplace someCrap FROG html testFile.html -aw
+echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
 
+_subString someCrap "FreddoFrogIsYummyChocolate" 12 5
+
+echo -e "From the string 'FreddoFrogIsYummyChocolate', offset 12, length 5 gives: $someCrap \n"
