@@ -21,6 +21,10 @@ IFS=$'\n\t'
 declare -ri  TRUE=0          # g - global scope; r - read-only; i - integer; x - exportable
 declare -ri FALSE=1
 
+declare RED='\033[1;31m'     # actually a light Red to be exact :)
+declare GREEN='\033[0;32m'
+declare NC='\033[0m'         # No Color
+
 declare -a  ARGS=()          # a - indexed array
 declare -a LINES=()
 
@@ -345,8 +349,9 @@ function _findReplace()
 
     #echo -e "@ is: $@, which is equal to $#. LINES is ${#LINES[@]}."
 
-    local -i _return_findReplace=0
+    local _return_findReplace=""
     local -i doAll=$FALSE
+    local -i writeFile=$FALSE
 
     if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
     then
@@ -368,6 +373,14 @@ function _findReplace()
         if [[ ! -z ${5:-} ]] && [[ ${5:-} == "-a" ]]
         then
             doAll=$TRUE
+
+        elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-w" ]] && [[ -f $4  ]]
+        then
+            writeFile=$TRUE
+
+        elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-aw" ]] && [[ -f $4  ]]
+        then
+            doAll=$TRUE && writeFile=$TRUE
         fi
 
         thePattern="${2:-}"
@@ -375,17 +388,27 @@ function _findReplace()
 
         if [[ $doAll == $FALSE ]]
         then
-            echo -e "${stringToBeSearched/${thePattern}/${newString}}"
+            _return_findReplace="${stringToBeSearched/${thePattern}/${newString}}"
         else
-            echo -e "${stringToBeSearched//${thePattern}/${newString}}"
+            _return_findReplace="${stringToBeSearched//${thePattern}/${newString}}"
         fi
+
+        if [[ $writeFile == $TRUE ]]
+        then
+            echo "$_return_findReplace">$4
+        fi
+
+        eval "$1=\${_return_findReplace}"
+
 
     elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" ]]
     then
         echo -e " \n The command syntax is: findReplace oldString newString someStringToSearch\n"
         echo -e " someStringToSearch may be: <someString> or <someFile> or <Here-document> or <Here-string>"
-        echo -e " Giving more than 4 parameter means the extras will be ignored, except if"
-        echo -e " you provide -a on the end, then a 'Replace All' will occur."
+        echo -e " Giving more than 4 parameter means the extras will be ignored, except! :"
+        echo -e " - if you provide -a on the end, then a 'Replace All' will occur."
+        echo -e " - if you provide -w on the end and your searched string was a file, the file will be updated."
+        echo -e " - or in combination, a -aw for 'Replace All' and write the update to file.\n"
         echo -e " If successful, the updated string will be returned.\n"
         echo -e " For Pattern Matching visit https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching \n"
 
@@ -394,6 +417,77 @@ function _findReplace()
         eval "_findReplace _result --help"
     fi
 
+}
+
+function _subString()
+{
+    # <SIGNATURE>: (0)_subString (1)_result (2)someStringToSearch (3)offset (4)length
+    
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+
+    local _return_subString=0
+
+    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
+    then
+        echo -e "\n @ is: $@, which is equal to $#. LINES is ${#LINES[@]}.\n"
+
+        if [[ $# -eq 3 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        then
+                stringToBeSearched="${LINES[@]}"
+        
+        elif [[ $# -ge 4 ]] && [[ -f ${2:-}  ]]
+        then
+                stringToBeSearched="$(< ${2:-})"
+        
+        elif [[ $# -ge 4 ]]
+        then
+                stringToBeSearched="${2:-}"
+        
+        fi
+
+        local -i theOffset=${3:-0}
+        local theLength="${4:-}"
+
+        _return_subString="${stringToBeSearched:${theOffset}:${theLength}}"
+
+        echo -e "$_return_subString"
+
+    elif [[ $# -eq 1 || ${2:-} == "-?" || ${2:-} == "--help" || ${2:-} == "-h" ]]
+    then
+        echo -e "\n Extract and return a subString from within a larger piece of text.\n"
+        echo -e " ${GREEN}subString someStringToSearch offset length${NC}\n"
+        echo -e " offset & length need to be whole +/- numbers eg. integers"
+        echo -e " offset means: the position X number characters from the start of 'someStringToSearch'. \n"
+        echo -e " It's ok to substitute '-nl' as a length to indicate 'no length', in which case,"
+        echo -e " the rest of 'someStringToSearch' is returned, starting from offset. \n"
+        echo -e " ${GREEN}subString FreddoFrogIsYummyChocolate 12 5    will return 'Yummy'"
+        echo -e " subString FreddoFrogIsYummyChocolate 12 -nl  will return 'YummyChocolate'"
+        echo -e " subString FreddoFrogIsYummyChocolate 12 -4   will return 'YummyChoco'${NC} \n"
+        echo -e " A negative length means: come from the back of 'someStringToSearch', unlike"
+        echo -e " a positive length, which means come forward from the offset position. \n"
+        echo -e " See https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion \n" 
+        echo -e " Giving more than 3 parameter means the extras will be ignored. \n"
+        echo -e " -hd and Heredocs/Herestrings are valid as input eg. :\n"
+        echo -e " -   ${GREEN}subString -hd 346 -7${NC}  or  ${GREEN}subString 421 5 -hd${NC}  or  "
+        echo -e " -   ${GREEN}subString 76 2 <<EOF${NC}  or  ${GREEN}subString 88 12 <<<someString${NC} \n"
+
+    else
+        echo -e "\n ${RED}Error - missing arguments.${NC}"
+        eval "_subString _result --help"
+    fi
+ 
 }
 
 #--------------------------------------------------------
@@ -459,6 +553,14 @@ StringClass()
         _findReplace _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
+
+    subString()
+    (
+        local _result
+        _subString _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
 
     #isNumber(){ printf %f "$1" &>/dev/null && echo "true" || echo "false" }
     #isArray() { declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type" }

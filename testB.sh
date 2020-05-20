@@ -67,7 +67,8 @@ _stringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
 
-stringToBeSearched="$(< $1)"
-
-#echo "$stringToBeSearched"
+_findReplace someCrap html FROG testFile.html -aw
+echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
+#_findReplace someCrap FROG html testFile.html -aw
+#echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
 
