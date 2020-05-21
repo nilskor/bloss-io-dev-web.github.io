@@ -322,6 +322,70 @@ function _stringFind()
 
 }
 
+function _stringFind2()
+{
+    # <SIGNATURE>: (0)_stringFind (1)_resultIndex (2)_resultString (3)searchPattern (4)someStringToSearch
+    
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+    local -i _return_stringFind_Index=0
+    local _return_stringFind_String=""
+
+    if [[ $# -le 3 ]]
+    then
+        echo -e "missing arguments"
+        echo -e "The command syntax is: stringFind searchPattern someStringToSearch"
+
+    elif [[ $# -eq 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
+    then
+        
+        if [[ $# -eq 4 ]] && [[ -f $4  ]]
+        then
+                #stringToBeSearched="$(sed -rn 's/.*/&/p' $3)"
+                stringToBeSearched="$(< $4)"
+        
+        elif [[ $# -eq 4 ]]
+        then
+                stringToBeSearched="${4} ${LINES[@]}"
+        
+        elif [[ $# -eq 3 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        then
+                stringToBeSearched="${LINES[@]}"
+        fi
+
+        thePattern="$3"
+
+        foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
+        
+        if [[ ${#foundIt} -gt 0 ]]
+        then
+            searchString="$foundIt"
+            _return_stringFind_String="$foundIt"
+            rest=${stringToBeSearched#*$searchString}
+            result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        else
+            result=0
+        fi
+
+        printf -v _return_stringFind_Index %q $result
+        eval "$1=\${_return_stringFind_Index}"
+        eval "$2=\${_return_stringFind_String}"
+
+    fi
+
+}
+
 function _findReplace()
 {
     # <SIGNATURE>: (0)_findReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
@@ -546,9 +610,10 @@ StringClass()
 
     stringFind()
     (
-        local _result
-        _stringFind _result "$@"
-        [ ! -z "${_result:-}" ] && echo -e "$_result"
+        local _resultIndex
+        local _resultString
+        _stringFind2 _resultIndex _resultString "$@"
+        [ ! -z "${_resultIndex:-}" ] && echo -e "$_resultIndex\n$_resultString\nEOL"
     )
 
     findReplace()

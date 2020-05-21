@@ -282,8 +282,11 @@ function _stringFind()
 
     if [[ $# -le 1 ]]
     then
-        echo -e "missing arguments"
-        echo -e "The command syntax is: stringFind searchPattern someStringToSearch"
+        echo -e "\n missing arguments"
+        echo -e " The command syntax is: stringFind searchPattern someStringToSearch"
+        echo -e " Regular Expressions are allowed in 'searchPattern'"
+        echo -e " stringFind returns a number greater than 0 if successful."
+        echo -e " stringFind assumes the first character occupies position #1\n"
 
     elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#LINES[@]} -gt 0 ]]
     then
@@ -380,6 +383,7 @@ function _findReplace()
 
         if [[ $doAll == $FALSE ]]
         then
+            #echo -e "$stringToBeSearched; $thePattern; $newString;"
             _return_findReplace="${stringToBeSearched/${thePattern}/${newString}}"
         else
             _return_findReplace="${stringToBeSearched//${thePattern}/${newString}}"
@@ -494,6 +498,52 @@ function _subString()
  
 }
 
+function _trim()
+{
+
+    local var="$2"
+    #local _return_trim
+
+    # remove leading whitespace characters
+    var="${var#"${var%%[![:space:]]*}"}"
+    
+    # remove trailing whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"   
+    
+    printf -v _return_trim '%s' "$var"
+    eval "$1=\${_return_trim}"
+
+}
+
+function _Ltrim()
+{
+
+    local var="$2"
+    #local _return_trim
+
+    # remove leading whitespace characters
+    var="${var#"${var%%[![:space:]]*}"}"
+    
+    printf -v _return_trim '%s' "$var"
+    eval "$1=\${_return_trim}"
+
+}
+
+function _Rtrim()
+{
+
+    local var="$2"
+    #local _return_trim
+
+    # remove trailing whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"   
+    
+    printf -v _return_trim '%s' "$var"
+    eval "$1=\${_return_trim}"
+
+}
+
+
 #--------------------------------------------------------
 # The Strings pseudo-class of string functions
 #--------------------------------------------------------
@@ -551,6 +601,9 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
+    regexFind()
+    (:;)
+
     findReplace()
     (
         local _result
@@ -558,10 +611,37 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
+    regexFindReplace()
+    (:;)
+
     subString()
     (
         local _result
         _subString _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    regexSubstr()
+    (:;)
+
+    trim()
+    (
+        local _result
+        _trim _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    Ltrim()
+    (
+        local _result
+        _Ltrim _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    Rtrim()
+    (
+        local _result
+        _Rtrim _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
