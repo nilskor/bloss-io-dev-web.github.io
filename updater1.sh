@@ -25,7 +25,7 @@ declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
 declare NC='\033[0m'         # No Color
 
-declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/"   
+declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"   
 
 source ./StringFunctions
 
@@ -74,7 +74,7 @@ function step1()            # "Step #1 - find all the html files"
 function step2()            # "Step #2 - process the array of files"
 {
 
-    echo -e "Step #2 - process the array of files"
+    echo -e "Step #2 - process the collection of files"
     
     local -a AllHtmlFiles=()
     
@@ -82,6 +82,7 @@ function step2()            # "Step #2 - process the array of files"
                                     # the array variable, effectively passed 'ByVal'. The downside is 
                                     # that the name has already been fixed when it was passed.
 
+    echo -e "Step #3 - look through each html file"   
     for file in "${AllHtmlFiles[@]}"
     do
         step3 "$file"
@@ -92,9 +93,23 @@ function step2()            # "Step #2 - process the array of files"
 function step3()            # "Step #3 - work with each html file"
 {
 
-    echo -e "Step #3 - work with each html file"
+    local -A _theStringFindResults=()
+    local -A ArrayOfStrings=()
 
-    echo -e "$@"
+    _stringFind2 _theStringFindResults "$oldLinkPattern" "$*"
+
+    eval "$_theStringFindResults"   # unwravel the return result into 'ArrayOfStrings', 
+                                    # which is the output of stringFind.
+
+    if [[ ${#ArrayOfStrings[@]} -gt 0 ]]
+    then
+        echo -e "${#ArrayOfStrings[@]}"
+        for string in ${!ArrayOfStrings[@]}
+        do
+            echo -e "$string, ${ArrayOfStrings[$string]}"
+        done |
+        sort -n -k1
+    fi
 
 }
 

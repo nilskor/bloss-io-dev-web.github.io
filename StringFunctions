@@ -54,6 +54,7 @@ function echo()
     done
 
     printf "$fmt$end" "$*"
+    setIFS
 }
 
 function usage()
@@ -63,6 +64,9 @@ function usage()
     echo -e "All Here Document, Here-doc or Heredoc style input must end with a plain 'EOF' eg. EOF"
     echo -e ""
 )
+
+function   setIFS(){ IFS=$'\n\t'; }
+function unsetIFS(){ IFS= ;       }
 
 #----------------------------------------------------------
 # Read Here-Docs either directly or forced with '-hd'
@@ -320,6 +324,101 @@ function _stringFind()
 
         printf -v _return_stringFind %q $result
         eval "$1=\${_return_stringFind}"
+
+    fi
+
+}
+
+function _stringFind2()
+{
+    # <SIGNATURE>: (0)_stringFind (1)_resultArray (2)searchPattern (3)someStringToSearch
+    
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    local -A ArrayOfStrings=()
+
+    # main part of the function
+
+    if [[ $# -le 2 ]]
+    then
+        echo -e "\n missing arguments.\n"
+        echo -e " The command syntax is: stringFind searchPattern someStringToSearch"
+        echo -e " The return result is an Associative array eg. declare -A someVariable"
+        echo -e " The return result creates a hard-coded variable name - 'ArrayOfStrings'."
+
+    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#LINES[@]} -gt 0 ]]
+    then
+        
+        if [[ $# -eq 3 ]] && [[ -f $3  ]]
+        then
+                stringToBeSearched="$(< "$3")"
+        
+        elif [[ $# -eq 3 ]]
+        then
+                stringToBeSearched="${3} ${LINES[@]}"
+        
+        elif [[ $# -eq 2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        then
+                stringToBeSearched="${LINES[@]}"
+        fi
+
+        thePattern="$2"
+
+        #foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
+        foundIt=`grep -E -i -o "$thePattern" <<< "$stringToBeSearched"` || foundIt=""
+
+        if [[ ${#foundIt} -gt 0 ]]
+        then
+            foundIt=($foundIt)
+            #declare -p ArrayOfStrings
+            for item in ${foundIt[@]}
+            do
+                #echo -e "$item"
+                #:
+                searchString="$item"
+                _return_stringFind_String="$foundIt"
+                rest=${stringToBeSearched#*$searchString}
+                result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+                ArrayOfStrings[$result]="$item"
+
+            done
+        fi
+        #echo -e "Length of ArrayOfStrings[] is: ${#ArrayOfStrings[@]}"
+        if [[ ${#ArrayOfStrings[@]} -gt 0 ]]
+        then
+            for item in ${!ArrayOfStrings[@]}
+            do
+                #echo "$item, ${ArrayOfStrings[$item]}"
+                :
+            done
+        fi
+
+        eval "$1=\$(declare -p ArrayOfStrings)"
+
+        #anyRepeats
+        
+        #if [[ ${#foundIt} -gt 0 ]]
+        #then
+        #    searchString="$foundIt"
+        #    _return_stringFind_String="$foundIt"
+        #    rest=${stringToBeSearched#*$searchString}
+        #    result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        #else
+        #    result=0
+        #fi
+
+        #printf -v _return_stringFind_Index %q $result
+        #eval "$1=\${_return_stringFind_Index}"
+        #eval "$2=\${_return_stringFind_String}"_resultArray
 
     fi
 
@@ -596,9 +695,9 @@ StringClass()
 
     stringFind()
     (
-        local _result
-        _stringFind _result "$@"
-        [ ! -z "${_result:-}" ] && echo -e "$_result"
+        local -A _resultArray=()
+        _stringFind2 _resultArray "$@"
+        [ ! -z "${_resultArray:-()}" ] && echo -e "${#_resultArray[@]}\n"
     )
 
     regexFind()

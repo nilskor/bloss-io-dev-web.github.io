@@ -19,6 +19,9 @@ IFS=$'\n\t'
 #declare -grix  TRUE=0
 #declare -grix FALSE=1
 
+function   setIFS(){ IFS=$'\n\t'; }
+function unsetIFS(){ IFS= ;       }
+
 function echo()
 (
     fmt=%s end=\\n IFS=" "
@@ -47,3 +50,19 @@ function someFunction1()
     eval "$1=\${result}"
 }
 
+names="Netgear
+Hon Hai Precision Ind. Co.
+Apple"
+
+unsetIFS
+
+IFS=$'\n'      # Change IFS to new line
+
+names=($names) # split to array $names
+
+setIFS
+
+for (( i=0; i<${#names[@]}; i++ ))
+do
+    echo "$i: ${names[$i]}"
+done
