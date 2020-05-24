@@ -13,6 +13,8 @@ set -o pipefail
 
 #set -vx
 
+source ./StringFunctions
+
 # Useful string splitting behaviour occurs with IFS=$'\n\t'
 # The default is to split on spaces, tabs and newlines $' \n\t'
 #IFS=$'\n\t'
@@ -25,9 +27,17 @@ declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
 declare NC='\033[0m'         # No Color
 
-declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"   
+declare theIndexFile="GTK3test.html"
+declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"
+declare hrefPattern="[-0-9A-Za-z_\ \W]+(.html)"                     # The global set of 'pages' in this hybrid SPA are in index.html 
+                                                                    # as links, and those links have #References made up of the 
+                                                                    # file-names (creating uniqueness). Searching for the file-names
+                                                                    # is written here as a RegEx.
 
-source ./StringFunctions
+declare -i step3_Echoed=$FALSE
+declare -i step4_Echoed=$FALSE
+
+declare theWholeIndexFile=""
 
 function   setIFS(){ IFS=$'\n\t'; }
 function unsetIFS(){ IFS= ;       }
@@ -39,6 +49,8 @@ function main()
     local -a _step1Result=()
 
     setIFS
+
+    theWholeIndexFile="$(< $theIndexFile)"
 
     step1 _step1Result
 
@@ -82,7 +94,6 @@ function step2()            # "Step #2 - process the array of files"
                                     # the array variable, effectively passed 'ByVal'. The downside is 
                                     # that the name has already been fixed when it was passed.
 
-    echo -e "Step #3 - look through each html file"   
     for file in "${AllHtmlFiles[@]}"
     do
         step3 "$file"
@@ -93,22 +104,49 @@ function step2()            # "Step #2 - process the array of files"
 function step3()            # "Step #3 - work with each html file"
 {
 
+    if [[ $step3_Echoed -eq $FALSE ]]
+    then
+        echo -e "Step #3 - look through each html file"
+        step3_Echoed=$TRUE
+    fi
+
     local -A _theStringFindResults=()
-    local -A ArrayOfStrings=()
+    local -A ArrayOfStrings=()      # this must be declared as 'ArrayOfStrings' to use the return result.
 
     _stringFind2 _theStringFindResults "$oldLinkPattern" "$*"
 
-    eval "$_theStringFindResults"   # unwravel the return result into 'ArrayOfStrings', 
+    eval "$_theStringFindResults"   # unravel the return result into 'ArrayOfStrings', 
                                     # which is the output of stringFind.
 
     if [[ ${#ArrayOfStrings[@]} -gt 0 ]]
     then
-        echo -e "${#ArrayOfStrings[@]}"
-        for string in ${!ArrayOfStrings[@]}
+        for string in ${!ArrayOfStrings[@]}         # for each line of <h3><a href="/content/GTK/someFile.html">
         do
-            echo -e "$string, ${ArrayOfStrings[$string]}"
-        done |
-        sort -n -k1
+            step4 "${ArrayOfStrings[$string]}"      # send each line to step 4 for processing
+        done
+        #sort -n -k1
+    fi
+
+}
+
+function step4()
+{
+
+    if [[ $step4_Echoed -eq $FALSE ]]
+    then
+        echo -e "Step #4 - create the unique file name index lookup"
+        step4_Echoed=$TRUE
+    fi
+
+    foundName=`grep -E -i -o "$hrefPattern" <<< "$@"` || foundIt=""
+
+    if [[ -n $foundName ]]
+    then
+        foundName=${foundName//_}     # remove underscores           # collapse the file name down to a #Reference
+        foundName=${foundName// }     # remove spaces
+        foundName=${foundName//-}     # remove hyphens
+        foundName=${foundName//.html} # remove '.html'
+        echo -e "$foundName"
     fi
 
 }
