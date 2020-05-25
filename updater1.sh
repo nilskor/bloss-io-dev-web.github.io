@@ -27,7 +27,7 @@ declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
 declare NC='\033[0m'         # No Color
 
-declare theIndexFile="GTK3test.html"
+declare theIndexFile="index.html"
 declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"
 declare hrefPattern="[-0-9A-Za-z_\ \W]+(.html)"                     # The global set of 'pages' in this hybrid SPA are in index.html 
                                                                     # as links, and those links have #References made up of the 
@@ -35,7 +35,8 @@ declare hrefPattern="[-0-9A-Za-z_\ \W]+(.html)"                     # The global
                                                                     # is written here as a RegEx.
 
 declare -i step3_Echoed=$FALSE
-declare -i step4_Echoed=$FALSE
+declare -i step3a_Echoed=$FALSE
+declare -i step3b_Echoed=$FALSE
 
 declare theWholeIndexFile=""
 
@@ -71,7 +72,7 @@ function step1()            # "Step #1 - find all the html files"
 
         AllHtmlFiles+=($file)
 
-    done < <(find -iname "*.html")
+    done < <(find -iname "GTK3test.html")
 
     setIFS
     
@@ -120,22 +121,27 @@ function step3()            # "Step #3 - work with each html file"
 
     if [[ ${#ArrayOfStrings[@]} -gt 0 ]]
     then
+
         for string in ${!ArrayOfStrings[@]}         # for each line of <h3><a href="/content/GTK/someFile.html">
-        do
-            step4 "${ArrayOfStrings[$string]}"      # send each line to step 4 for processing
+        do                                          # send each line to step 3a for processing
+
+            result_3a="$(step3a "${ArrayOfStrings[$string]}")"
+                                                    # using the output from 3a/b, now replace the line
+            echo -e "$result_3a\n:"
+        
         done
-        #sort -n -k1
+        
     fi
 
 }
 
-function step4()
+function step3a()            # "Step #3a - create the unique file name index lookup"
 {
 
-    if [[ $step4_Echoed -eq $FALSE ]]
+    if [[ $step3a_Echoed -eq $FALSE ]]
     then
-        echo -e "Step #4 - create the unique file name index lookup"
-        step4_Echoed=$TRUE
+        echo -e "\nStep #3a - create the unique file name index lookup"
+        step3a_Echoed=$TRUE
     fi
 
     foundName=`grep -E -i -o "$hrefPattern" <<< "$@"` || foundIt=""
@@ -146,9 +152,24 @@ function step4()
         foundName=${foundName// }     # remove spaces
         foundName=${foundName//-}     # remove hyphens
         foundName=${foundName//.html} # remove '.html'
-        echo -e "$foundName"
+        
+        echo -e "$(step3b "$foundName")"    # return the result_3b back to step 3
     fi
 
+}
+
+function step3b()            # "Step #3b - find the index lookup inside $theIndexFile and so on .."
+{
+
+    if [[ $step3b_Echoed -eq $FALSE ]]
+    then
+        echo -e "Step #3b - find '#$@' inside $theIndexFile and so on ..\n:"
+        step3b_Echoed=$TRUE
+    fi
+
+    foundLine=`grep -E "#$@" <<< "$theWholeIndexFile"` || foundLine=""
+
+    echo -e "$foundLine"    # return the results from step3b back to 3a
 }
 
 main

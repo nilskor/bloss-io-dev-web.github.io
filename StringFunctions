@@ -86,11 +86,11 @@ function readInput()
 
 function _countLines()
 {
-    #echo -e "Number of elements in LINES is: ${#LINES[@]}"
-    #echo -e "Command line passed to 'countLines' is: $@"
-    #echo -e "Number of elements in ARGS is: ${#ARGS[@]}"
-    #echo -e "Elements of ARGS are: ${ARGS[@]}"
+    # <SIGNATURE>: (0)_countLines (1)_result (2)someStringToSearch
+    # <RETURN>   : (0)<T>Integer
+    # <OPTIONS>  : (0) -hd
 
+    # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
     do
@@ -102,11 +102,7 @@ function _countLines()
         fi
     done
 
-    #echo -e "Number of elements in LINES is: ${#LINES[@]}"
-    #echo -e "Command line after cleaning is: $@"
-    #echo -e "Number of elements in '\$@' is $#."
-
-    local _return_countLines
+    local -i _return_countLines
 
     if [[ $# -eq 1 ]] && [[ ${#LINES[@]} -gt 0 ]]
     then
@@ -162,7 +158,11 @@ function _countLines()
 
 function _countWords()
 {
+    # <SIGNATURE>: (0)_countWords (1)_result (2)someStringToSearch
+    # <RETURN>   : (0)<T>Integer
+    # <OPTIONS>  : (0) -hd
 
+    # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
     do
@@ -174,7 +174,7 @@ function _countWords()
         fi
     done
 
-    local _return_countWords
+    local -i _return_countWords
 
     #if [[ $# -eq 0 || -z $1 ]] && [[ ${#LINES[@]} -gt 0 ]]
     if [[ $# -eq 1 || -z $2 ]] && [[ ${#LINES[@]} -gt 0 ]]
@@ -219,6 +219,8 @@ function _countWords()
 function _stringLength()
 {
     # <SIGNATURE>: (0)_stringLength (1)_result (2)someStringToSearch
+    # <RETURN>   : (0)<T>Integer
+    # <OPTIONS>  : (0) -hd
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -233,7 +235,7 @@ function _stringLength()
 
     # main part of the function
 
-    local _return_stringLength
+    local -i _return_stringLength
 
     declare -i result=0
 
@@ -268,7 +270,9 @@ function _stringLength()
 function _stringFind()
 {
     # <SIGNATURE>: (0)_stringFind (1)_result (2)searchPattern (3)someStringToSearch
-    
+    # <RETURN>   : (0)<T>Integer
+    # <OPTIONS>  : (0) -hd
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -283,6 +287,7 @@ function _stringFind()
     # main part of the function
 
     local -i _return_stringFind=0
+    local -i result=0
 
     if [[ $# -le 1 ]]
     then
@@ -332,7 +337,9 @@ function _stringFind()
 function _stringFind2()
 {
     # <SIGNATURE>: (0)_stringFind (1)_resultArray (2)searchPattern (3)someStringToSearch
-    
+    # <RETURN>   : (0)<T>AADS - Associative Array Definition String; always named 'ArrayOfStrings'
+    # <OPTIONS>  : (0) -hd
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -427,6 +434,8 @@ function _stringFind2()
 function _findReplace()
 {
     # <SIGNATURE>: (0)_findReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd (1) -a or -w or -aw
     
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -517,7 +526,9 @@ function _findReplace()
 function _subString()
 {
     # <SIGNATURE>: (0)_subString (1)_result (2)someStringToSearch (3)offset (4)length
-    
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -599,6 +610,22 @@ function _subString()
 
 function _trim()
 {
+    # <SIGNATURE>: (0)_trim (1)_result (2)someStringToTrim
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd
+        
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
 
     local var="$2"
     #local _return_trim
@@ -616,6 +643,22 @@ function _trim()
 
 function _Ltrim()
 {
+    # <SIGNATURE>: (0)_Ltrim (1)_result (2)someStringToTrim
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd
+        
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
 
     local var="$2"
     #local _return_trim
@@ -630,6 +673,22 @@ function _Ltrim()
 
 function _Rtrim()
 {
+    # <SIGNATURE>: (0)_Rtrim (1)_result (2)someStringToTrim
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd
+        
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
 
     local var="$2"
     #local _return_trim
