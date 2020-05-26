@@ -19,7 +19,11 @@ IFS=$'\n\t'
 #declare -ri  TRUE=0
 #declare -ri FALSE=1
 
-source ./grunt3.sh
+#echo -e "::: TestB :::Length of [LINES] is: ${#LINES[@]}, :::Contents of [LINES] is: ${LINES[@]}"
+source ./StringFunctions
+#echo -e "::: TestB-1 :::Length of [LINES] is: ${#LINES[@]}, :::Contents of [LINES] is: ${LINES[@]}"
+
+#set -vx
 
 echo -e ""
 
@@ -30,18 +34,31 @@ declare data='some
 dummy extra long
 string that needs counting'
 
+#echo -e "::: TestB-2 :::Length of [LINES] is: ${#LINES[@]}, :::Contents of [LINES] is: ${LINES[@]}"
+
 #printf %i .1
 printf %f -1e32 &>/dev/null && echo "-1e32 is a number" || echo "-1e32 is not a number"
 echo ""
 
 declare -p test1 2>/dev/null | grep -q '^declare \-a' && echo "test1 is an indexed array" || echo "test1 is not an indexed array"
 echo ""
+
 declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an associative array" || echo "test2 is not an associative array"
 echo ""
+
 declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array"
 echo ""
+
 declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type"
 echo ""
+
+_countLines someCrap "$data"
+
+echo -e "Line count is: $someCrap, for the string: $data \n"
+
+_countLines someCrap index.html
+
+echo -e "Line count for index.html is: $someCrap \n"
 
 _countWords someCrap "$data"
 
@@ -75,3 +92,12 @@ echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
 _subString someCrap "FreddoFrogIsYummyChocolate" 12 5
 
 echo -e "From the string 'FreddoFrogIsYummyChocolate', offset 12, length 5 gives: $someCrap \n"
+
+_findReplace someCrap [[:space:]][[:space:]] " " 'FreddoFrog      IsYummyChocolate' -a
+
+echo -e "$someCrap"
+
+declare sedTest="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate"
+declare sedPattern="(  )+"
+echo ""
+sed -r "s/$sedPattern/ /g" <<< "$sedTest"

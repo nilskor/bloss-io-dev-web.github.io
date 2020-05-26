@@ -27,8 +27,10 @@ declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
 declare NC='\033[0m'         # No Color
 
+declare theseFiles="GTK3test.html"
 declare theIndexFile="index.html"
-declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"
+#declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"
+declare oldLinkPattern="<a[ ]name=.+.href=./content/GTK3/.+</a>"
 declare hrefPattern="[-0-9A-Za-z_\ \W]+(.html)"                     # The global set of 'pages' in this hybrid SPA are in index.html 
                                                                     # as links, and those links have #References made up of the 
                                                                     # file-names (creating uniqueness). Searching for the file-names
@@ -72,7 +74,7 @@ function step1()            # "Step #1 - find all the html files"
 
         AllHtmlFiles+=($file)
 
-    done < <(find -iname "GTK3test.html")
+    done < <(find -iname "$theseFiles")
 
     setIFS
     
@@ -127,7 +129,8 @@ function step3()            # "Step #3 - work with each html file"
 
             result_3a="$(step3a "${ArrayOfStrings[$string]}")"
                                                     # using the output from 3a/b, now replace the line
-            echo -e "$result_3a\n:"
+            _trim _trimmedResult $result_3a
+            echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult\n:"
         
         done
         
@@ -140,7 +143,7 @@ function step3a()            # "Step #3a - create the unique file name index loo
 
     if [[ $step3a_Echoed -eq $FALSE ]]
     then
-        echo -e "\nStep #3a - create the unique file name index lookup"
+        #echo -e "\nStep #3a - create the unique file name index lookup"
         step3a_Echoed=$TRUE
     fi
 
@@ -163,7 +166,7 @@ function step3b()            # "Step #3b - find the index lookup inside $theInde
 
     if [[ $step3b_Echoed -eq $FALSE ]]
     then
-        echo -e "Step #3b - find '#$@' inside $theIndexFile and so on ..\n:"
+        #echo -e "Step #3b - find '#$@' inside $theIndexFile and so on ..\n:"
         step3b_Echoed=$TRUE
     fi
 

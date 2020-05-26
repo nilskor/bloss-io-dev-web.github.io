@@ -25,8 +25,8 @@ declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
 declare NC='\033[0m'         # No Color
 
-declare -a  ARGS=()          # a - indexed array
-declare -a LINES=()
+declare -a  theArgs=()          # a - indexed array
+declare -a htmlLines=()
 
 
 #----------------------------------------------------------
@@ -65,8 +65,8 @@ function usage()
     echo -e ""
 )
 
-function   setIFS(){ IFS=$'\n\t'; }
-function unsetIFS(){ IFS= ;       }
+function    setIFS(){ IFS=$'\n\t'; }
+function  unsetIFS(){ IFS= ;       }
 
 #----------------------------------------------------------
 # Read Here-Docs either directly or forced with '-hd'
@@ -74,13 +74,14 @@ function unsetIFS(){ IFS= ;       }
 #
 function readInput()
 {
+    setIFS
     while read -r line
     do
         if [[ $line == "EOF" ]]
         then
             break
         fi
-        LINES+=($line$'\n')    # Push  # new-line is :   $'\n'
+        htmlLines+=($line$'\n')    # Push  # new-line is :   $'\n'
     done
 }
 
@@ -104,10 +105,10 @@ function _countLines()
 
     local -i _return_countLines
 
-    if [[ $# -eq 1 ]] && [[ ${#LINES[@]} -gt 0 ]]
+    if [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
     then
-        #echo "${#LINES[@]}"
-        _return_countLines="${#LINES[@]}"
+        #echo "${#htmlLines[@]}"
+        _return_countLines="${#htmlLines[@]}"
         eval "$1=\${_return_countLines}"
 
     elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
@@ -129,20 +130,20 @@ function _countLines()
 
     else
 
-        #echo -e "Just about to count lines .. $@"
-        #declare -i result="$(wc --lines <<< $@)"
-        declare -i result=$(wc --lines <<< "${@}")
-        #echo -e "Just did the count and found $result lines in $@."
+        #echo -e "Just about to count lines .. $2"
+        #declare -i result="$(wc --lines <<< $2)"
+        declare -i result=$(wc --lines <<< "${2}")
+        #echo -e "Just did the count and found $result lines in $2."
         #if [[ $result -gt 1 ]]
         #then
         #        result=$((++result))
         #fi
 
-        #echo -e "Number of elements in LINES is: ${#LINES[@]}, ${LINES[@]}"
+        #echo -e "Number of elements in htmlLines is: ${#htmlLines[@]}, ${htmlLines[@]}"
         #echo "here"
-        if [[ ${#LINES[@]} -gt 0 ]]
+        if [[ ${#htmlLines[@]} -gt 0 ]]
         then
-            result+=${#LINES[@]}
+            result+=${#htmlLines[@]}
 
         fi
 
@@ -175,12 +176,13 @@ function _countWords()
     done
 
     local -i _return_countWords
+    local -i result=0
 
-    #if [[ $# -eq 0 || -z $1 ]] && [[ ${#LINES[@]} -gt 0 ]]
-    if [[ $# -eq 1 || -z $2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+    #if [[ $# -eq 0 || -z $1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
+    if [[ $# -eq 1 || -z $2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
     then
 
-        returnResult="${#LINES[@]}"
+        returnResult="${#htmlLines[@]}"
         eval "$1=\${returnResult}"
 
     elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
@@ -191,21 +193,18 @@ function _countWords()
     elif [[ -f $2  ]]
     then
 
-        declare -i result="$(wc --words $2 | gawk {'print $1'})" # gawk print $1 shouldn't be changed ..
+        result="$(wc --words $2 | gawk {'print $1'})" # gawk print $1 shouldn't be changed ..
 
-        #returnResult="$result"
-        #eval "$1=\${returnResult}"
         printf -v _return_countWords %q $result
         eval "$1=\${_return_countWords}"
 
     else
 
-        declare -i result=$(wc --words <<< "${@}")
-        result=$((result-1))
+        result=$(wc --words <<< "${2}")
 
-        if [[ ${#LINES[@]} -gt 0 ]]
+        if [[ ${#htmlLines[@]} -gt 0 ]]
         then
-            result+=${#LINES[@]}
+            result+=${#htmlLines[@]}
 
         fi
 
@@ -239,10 +238,10 @@ function _stringLength()
 
     declare -i result=0
 
-    if [[ $# -eq 1 || -z $2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+    if [[ $# -eq 1 || -z $2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
     then
 
-        returnResult="${#LINES[@]}"
+        returnResult="${#htmlLines[@]}"
         returnResult=$(( returnResult ))
         eval "$1=\${returnResult}"
 
@@ -297,7 +296,7 @@ function _stringFind()
         echo -e " stringFind returns a number greater than 0 if successful."
         echo -e " stringFind assumes the first character occupies position #1\n"
 
-    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#LINES[@]} -gt 0 ]]
+    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
     then
         
         if [[ $# -eq 3 ]] && [[ -f $3  ]]
@@ -307,11 +306,11 @@ function _stringFind()
         
         elif [[ $# -eq 3 ]]
         then
-                stringToBeSearched="${3} ${LINES[@]}"
+                stringToBeSearched="${3} ${htmlLines[@]}"
         
-        elif [[ $# -eq 2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        elif [[ $# -eq 2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
         then
-                stringToBeSearched="${LINES[@]}"
+                stringToBeSearched="${htmlLines[@]}"
         fi
 
         thePattern="$2"
@@ -362,7 +361,7 @@ function _stringFind2()
         echo -e " The return result is an Associative array eg. declare -A someVariable"
         echo -e " The return result creates a hard-coded variable name - 'ArrayOfStrings'."
 
-    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#LINES[@]} -gt 0 ]]
+    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
     then
         
         if [[ $# -eq 3 ]] && [[ -f $3  ]]
@@ -371,11 +370,11 @@ function _stringFind2()
         
         elif [[ $# -eq 3 ]]
         then
-                stringToBeSearched="${3} ${LINES[@]}"
+                stringToBeSearched="${3} ${htmlLines[@]}"
         
-        elif [[ $# -eq 2 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        elif [[ $# -eq 2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
         then
-                stringToBeSearched="${LINES[@]}"
+                stringToBeSearched="${htmlLines[@]}"
         fi
 
         thePattern="$2"
@@ -450,13 +449,13 @@ function _findReplace()
 
     # main part of the function
 
-    #echo -e "@ is: $@, which is equal to $#. LINES is ${#LINES[@]}."
+    #echo -e "@ is: $@, which is equal to $#. htmlLines is ${#htmlLines[@]}."
 
     local _return_findReplace=""
     local -i doAll=$FALSE
     local -i writeFile=$FALSE
 
-    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
+    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
     then
         
         if [[ $# -ge 4 ]] && [[ -f $4  ]]
@@ -468,9 +467,9 @@ function _findReplace()
         then
                 stringToBeSearched="$4"
         
-        elif [[ $# -eq 3 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        elif [[ $# -eq 3 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
         then
-                stringToBeSearched="${LINES[@]}"
+                stringToBeSearched="${htmlLines[@]}"
         fi
 
         if [[ ! -z ${5:-} ]] && [[ ${5:-} == "-a" ]]
@@ -545,13 +544,13 @@ function _subString()
     local _return_subString=0
     local -i noLength=$FALSE
 
-    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
+    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
     then
-        #echo -e "\n @ is: $@, which is equal to $#. LINES is ${#LINES[@]}.\n"
+        #echo -e "\n @ is: $@, which is equal to $#. htmlLines is ${#htmlLines[@]}.\n"
 
-        if [[ $# -eq 3 ]] && [[ ${#LINES[@]} -gt 0 ]]
+        if [[ $# -eq 3 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
         then
-                stringToBeSearched="${LINES[@]}"
+                stringToBeSearched="${htmlLines[@]}"
         
         elif [[ $# -ge 4 ]] && [[ -f ${2:-}  ]]
         then
@@ -754,6 +753,13 @@ StringClass()
 
     stringFind()
     (
+        local _result
+        _stringFind _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    stringFind2()
+    (
         local -A _resultArray=()
         _stringFind2 _resultArray "$@"
         [ ! -z "${_resultArray:-()}" ] && echo -e "${#_resultArray[@]}\n"
@@ -850,13 +856,13 @@ then
             exit
         fi
 
-        ARGS=("$@")
+        theArgs=("$@")
 
-        for arg in "${ARGS[@]}"
+        for arg in "${theArgs[@]}"
         do
             if [[ $arg == "-hd" ]]
             then
-                readInput # read more input into the ARGS array
+                readInput # read more input into the htmlLines array
             fi
         done
 
@@ -864,8 +870,8 @@ then
 
 else               # input comes from redirection.
 
-    ARGS=("$@")
-    readInput  # read more input into the LINES array
+    theArgs=("$@")
+    readInput  # read more input into the htmlLines array
 
 fi
 
@@ -873,11 +879,11 @@ fi
 # Then, send all known command line data into StringClass()
 #----------------------------------------------------------
 #
-if [[ ${#ARGS[@]} -gt 0 ]]
+if [[ ${#theArgs[@]} -gt 0 ]]
 then
 
-    #echo -e "${ARGS[@]}"
-    StringClass "${ARGS[@]}"
+    #echo -e "${theArgs[@]}"
+    StringClass "${theArgs[@]}"
 
 fi
 
