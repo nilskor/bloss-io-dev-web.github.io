@@ -315,7 +315,7 @@ function _stringFind()
 
         thePattern="$2"
 
-        foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
+        foundIt=`grep -P -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
         
         if [[ ${#foundIt} -gt 0 ]]
         then
@@ -379,8 +379,8 @@ function _stringFind2()
 
         thePattern="$2"
 
-        #foundIt=`grep -E -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
-        foundIt=`grep -E -i -o "$thePattern" <<< "$stringToBeSearched"` || foundIt=""
+        #foundIt=`grep -P -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
+        foundIt=`grep -P -i -o "$thePattern" <<< "$stringToBeSearched"` || foundIt=""
 
         if [[ ${#foundIt} -gt 0 ]]
         then
@@ -513,12 +513,111 @@ function _findReplace()
         echo -e " - if you provide -w on the end and your searched string was a file, the file will be updated."
         echo -e " - or in combination, a -aw for 'Replace All' and write the update to file.\n"
         echo -e " If successful, the updated string will be returned.\n"
+        echo -e " The oldString may be a pattern, but not regular expressions."
+        echo -e " To use regular expressions, use regexFindReplace instead."
         echo -e " For Pattern Matching visit https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching \n"
 
     else
         echo -e "\n Error - missing arguments."
         eval "_findReplace _result --help"
     fi
+
+}
+
+function _regexFindReplace()
+{
+    # <SIGNATURE>: (0)_regexFindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd (1) -a or -w or -aw
+    
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+    local _return_findReplace=""
+    local -i doAll=$FALSE
+    local -i writeFile=$FALSE
+
+    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
+    then
+        
+        # START - determine what the searched string will be
+        if [[ $# -ge 4 ]] && [[ -f $4  ]]
+        then
+                #stringToBeSearched="$(sed -rn 's/.*/&/p' $4)"
+                stringToBeSearched="$(< $4)"
+        
+        elif [[ $# -ge 4 ]]
+        then
+                stringToBeSearched="$4"
+        
+        elif [[ $# -eq 3 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
+        then
+                stringToBeSearched="${htmlLines[@]}"
+        fi
+        # END of searchedString
+
+        # START - set the booleans for the optionals
+        if [[ ! -z ${5:-} ]] && [[ ${5:-} == "-a" ]]
+        then
+            doAll=$TRUE
+
+        elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-w" ]] && [[ -f $4  ]]
+        then
+            writeFile=$TRUE
+
+        elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-aw" ]] && [[ -f $4  ]]
+        then
+            doAll=$TRUE && writeFile=$TRUE
+        fi
+        # END setting the booleans
+
+        thePattern="${2:-}"
+        newString="${3:-}"
+
+        if [[ $doAll == $FALSE ]]
+        then
+            _return_findReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_findReplace=""  # once
+        else
+            _return_findReplace=`sed -r s/"$thePattern"/"$newString"/g <<< "$stringToBeSearched"` || _return_findReplace=""  # all
+        fi
+
+        if [[  $(_stringFind "${ArrayOfStrings[@]}") ]]
+
+        if [[ $writeFile == $TRUE ]]
+        then
+            echo "$_return_findReplace">$4
+        fi
+
+        eval "$1=\${_return_findReplace}"
+
+    # START - echo out the Help section
+    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
+    then
+        echo -e " \n The command syntax is: findReplace oldString newString someStringToSearch\n"
+        echo -e " someStringToSearch may be: <someString> or <someFile> or <Here-document> or <Here-string>"
+        echo -e " Giving more than 4 parameter means the extras will be ignored, except! :"
+        echo -e " - if you provide -a on the end, then a 'Replace All' will occur."
+        echo -e " - if you provide -w on the end and your searched string was a file, the file will be updated."
+        echo -e " - or in combination, a -aw for 'Replace All' and write the update to file.\n"
+        echo -e " If successful, the updated string will be returned.\n"
+        echo -e " regexFindReplace is 'sed' compliant with its regular expressions, using"
+        echo -e " extended regular expressions. \n"
+
+    else
+        echo -e "\n Error - missing arguments."
+        eval "_findReplace _result --help"
+    fi
+    # END of help section
 
 }
 

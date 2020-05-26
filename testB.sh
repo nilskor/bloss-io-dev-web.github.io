@@ -84,10 +84,10 @@ _stringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
 
-#_findReplace someCrap html FROG testFile.html -aw
-#echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
-_findReplace someCrap FROG html testFile.html -aw
-echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
+_findReplace someCrap html FROG testFile.html -aw
+echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
+#_findReplace someCrap FROG html testFile.html -aw
+#echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
 
 _subString someCrap "FreddoFrogIsYummyChocolate" 12 5
 
@@ -101,3 +101,27 @@ declare sedTest="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocola
 declare sedPattern="(  )+"
 echo ""
 sed -r "s/$sedPattern/ /g" <<< "$sedTest"
+
+stringToBeSearched="$sedTest"
+thePattern="$sedPattern"
+newString=" "
+_return_findReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_findReplace=""  # once
+echo ""
+echo -e "'_return_findReplace': $_return_findReplace \n"
+
+refText='<a name="Migrating_GTK" class="two" href="/content/GTK3/Migrating_GTK.html">Migrating from Previous Versions of GTK+</a>'
+
+_stringFind2 someCrap '(?<=\>)(.+)(?=\<)' "$refText"
+declare -A ArrayOfStrings=()
+echo -e "Before unravelling: $someCrap \n"
+eval "$someCrap"
+echo -e "refText: \"${ArrayOfStrings[@]}\" ; contains ${#ArrayOfStrings[@]} element(s).\n"
+
+_stringLength someLength "${ArrayOfStrings[@]}"
+_subString someCrap "${ArrayOfStrings[@]}" 1 "( $someLength - 2 )"
+
+echo -e "$someCrap \n"
+
+StringClass subString "${ArrayOfStrings[@]}" 1 $(( $(StringClass stringLength "${ArrayOfStrings[@]}") - 2 ))
+echo ""
+
