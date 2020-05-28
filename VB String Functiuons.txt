@@ -1,0 +1,29 @@
+Asc, AscW 	    Returns an Integer value representing the character code corresponding to a character.
+Chr, ChrW 	    Returns the character associated with the specified character code.
+Filter 	        Returns a zero-based array containing a subset of a String array based on specified filter criteria.
+Format 	        Returns a string formatted according to instructions contained in a format String expression.
+FormatCurrency 	Returns an expression formatted as a currency value using the currency symbol defined in the system control panel.
+FormatDateTime 	Returns a string expression representing a date/time value.
+FormatNumber 	Returns an expression formatted as a number.
+FormatPercent 	Returns an expression formatted as a percentage (that is, multiplied by 100) with a trailing % character.
+InStr 	        Returns an integer specifying the start position of the first occurrence of one string within another.
+InStrRev 	    Returns the position of the first occurrence of one string within another, starting from the right side of the string.
+Join 	        Returns a string created by joining a number of substrings contained in an array.
+LCase 	        Returns a string or character converted to lowercase.
+Left 	        Returns a string containing a specified number of characters from the left side of a string.
+Len 	        Returns an integer that contains the number of characters in a string.
+LSet 	        Returns a left-aligned string containing the specified string adjusted to the specified length.
+LTrim 	        Returns a string containing a copy of a specified string with no leading spaces.
+Mid 	        Returns a string containing a specified number of characters from a string.
+Replace 	    Returns a string in which a specified substring has been replaced with another substring a specified number of times.
+Right 	        Returns a string containing a specified number of characters from the right side of a string.
+RSet 	        Returns a right-aligned string containing the specified string adjusted to the specified length.
+RTrim 	        Returns a string containing a copy of a specified string with no trailing spaces.
+Space 	        Returns a string consisting of the specified number of spaces.
+Split 	        Returns a zero-based, one-dimensional array containing a specified number of substrings.
+StrComp 	    Returns -1, 0, or 1, based on the result of a string comparison.
+StrConv 	    Returns a string converted as specified.
+StrDup 	        Returns a string or object consisting of the specified character repeated the specified number of times.
+StrReverse 	    Returns a string in which the character order of a specified string is reversed.
+Trim 	        Returns a string containing a copy of a specified string with no leading or trailing spaces.
+UCase           Returns a string or character containing the specified string converted to uppercase.

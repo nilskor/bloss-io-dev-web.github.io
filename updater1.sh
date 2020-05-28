@@ -131,10 +131,10 @@ function step3()            # "Step #3 - work with each html file"
                                                     # using the output from 3a/b, now replace the line
             _trim _trimmedResult $result_3a
             
-            _regexFindReplace _trimmedResult2 "(  )+" " " "$_trimmedResult" -a
-            _regexFindReplace _trimmedResult3 "(  )+" " " "$_trimmedResult2" -a
+            _regexFindReplace _trimmedResult2 "(  )+" " " "$_trimmedResult" -ar
+            #_regexFindReplace _trimmedResult3 "(  )+" " " "$_trimmedResult2" -a
 
-            echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult3\n:"
+            echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult2\n:"
 
             
         

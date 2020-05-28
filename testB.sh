@@ -93,9 +93,20 @@ _subString someCrap "FreddoFrogIsYummyChocolate" 12 5
 
 echo -e "From the string 'FreddoFrogIsYummyChocolate', offset 12, length 5 gives: $someCrap \n"
 
+echo "FreddoFrog      IsYummyChocolate     # the original string"
 _findReplace someCrap [[:space:]][[:space:]] " " 'FreddoFrog      IsYummyChocolate' -a
+echo -e "$someCrap        # the string modified with _findReplace '  ' and -a"
+echo ""
 
-echo -e "$someCrap"
+echo "FreddoFrog      IsYummyChocolate     # the original string"
+_regexFindReplace someCrap "\s{2,}" " " 'FreddoFrog      IsYummyChocolate' -a
+echo -e "$someCrap          # the string modified with _regexFindReplace '\s{2,}' and -a"
+echo ""
+
+echo "FreddoFrog      IsYummyChocolate     # the original string"
+_regexFindReplace someCrap "(  )+" " " 'FreddoFrog      IsYummyChocolate' -a
+echo -e "$someCrap          # the string modified with _regexFindReplace '(  )+' and -a"
+echo ""
 
 declare sedTest="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate"
 declare sedPattern="(  )+"
@@ -125,3 +136,14 @@ echo -e "$someCrap \n"
 StringClass subString "${ArrayOfStrings[@]}" 1 $(( $(StringClass stringLength "${ArrayOfStrings[@]}") - 2 ))
 echo ""
 
+_rTrim someCrap "Freddo         Frog                   "
+echo -e "${#someCrap}"
+echo ""
+
+_wsTrim someCrap "Freddo         Frog                   ."
+echo -e "${someCrap}"
+echo ""
+
+_wsTrim someCrap "Freddo         Frog                   ." "-s"
+echo -e "${someCrap}"
+echo ""

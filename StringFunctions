@@ -90,6 +90,7 @@ function _countLines()
     # <SIGNATURE>: (0)_countLines (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
+    # <BACKEND>  : bash, wc, gawk
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -162,6 +163,7 @@ function _countWords()
     # <SIGNATURE>: (0)_countWords (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
+    # <BACKEND>  : bash, wc, gawk
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -220,6 +222,7 @@ function _stringLength()
     # <SIGNATURE>: (0)_stringLength (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
+    # <BACKEND>  : bash
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -271,6 +274,7 @@ function _stringFind()
     # <SIGNATURE>: (0)_stringFind (1)_result (2)searchPattern (3)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
+    # <BACKEND>  : bash, grep -P, head
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -338,6 +342,7 @@ function _stringFind2()
     # <SIGNATURE>: (0)_stringFind (1)_resultArray (2)searchPattern (3)someStringToSearch
     # <RETURN>   : (0)<T>AADS - Associative Array Definition String; always named 'ArrayOfStrings'
     # <OPTIONS>  : (0) -hd
+    # <BACKEND>  : bash, grep -P
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -435,7 +440,8 @@ function _findReplace()
     # <SIGNATURE>: (0)_findReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd (1) -a or -w or -aw
-    
+    # <BACKEND>  : bash
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -526,10 +532,11 @@ function _findReplace()
 
 function _regexFindReplace()
 {
-    # <SIGNATURE>: (0)_regexFindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
+    # <SIGNATURE>: (0)_regexFindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch (5?)
     # <RETURN>   : (0)<T>String
-    # <OPTIONS>  : (0) -hd (1) -a or -w or -aw
-    
+    # <OPTIONS>  : (0) -hd (1) -a or -w or -aw.
+    # <BACKEND>  : bash, StringClass, sed -r
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -543,7 +550,7 @@ function _regexFindReplace()
 
     # main part of the function
 
-    local _return_findReplace=""
+    local _return_regexFindReplace=""
     local -i doAll=$FALSE
     local -i writeFile=$FALSE
 
@@ -567,18 +574,25 @@ function _regexFindReplace()
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${5:-} ]] && [[ ${5:-} == "-a" ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc stringFind '([-]w*[a]{1,}w*\b)' ${5:-}) -gt 0 ]]
         then
             doAll=$TRUE
+        fi
 
-        elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-w" ]] && [[ -f $4  ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc stringFind '([-]a*[w]{1,}a*\b)' ${5:-}) -gt 0 ]] && [[ -f $4  ]]
         then
             writeFile=$TRUE
-
-        elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-aw" ]] && [[ -f $4  ]]
-        then
-            doAll=$TRUE && writeFile=$TRUE
         fi
+        # END setting the booleans
+
+        #elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-w" ]] && [[ -f $4  ]]
+        #then
+        #    writeFile=$TRUE
+        #
+        #elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-aw" ]] && [[ -f $4  ]]
+        #then
+        #    doAll=$TRUE && writeFile=$TRUE
+        #fi
         # END setting the booleans
 
         thePattern="${2:-}"
@@ -586,19 +600,17 @@ function _regexFindReplace()
 
         if [[ $doAll == $FALSE ]]
         then
-            _return_findReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_findReplace=""  # once
+            _return_regexFindReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # once
         else
-            _return_findReplace=`sed -r s/"$thePattern"/"$newString"/g <<< "$stringToBeSearched"` || _return_findReplace=""  # all
+            _return_regexFindReplace=`sed -r s/"$thePattern"/"$newString"/g <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # all
         fi
-
-        if [[  $(_stringFind "${ArrayOfStrings[@]}") ]]
 
         if [[ $writeFile == $TRUE ]]
         then
-            echo "$_return_findReplace">$4
+            echo "$_return_regexFindReplace">$4
         fi
 
-        eval "$1=\${_return_findReplace}"
+        eval "$1=\${_return_regexFindReplace}"
 
     # START - echo out the Help section
     elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
@@ -615,7 +627,7 @@ function _regexFindReplace()
 
     else
         echo -e "\n Error - missing arguments."
-        eval "_findReplace _result --help"
+        eval "_regexFindReplace _result --help"
     fi
     # END of help section
 
@@ -625,7 +637,8 @@ function _subString()
 {
     # <SIGNATURE>: (0)_subString (1)_result (2)someStringToSearch (3)offset (4)length
     # <RETURN>   : (0)<T>String
-    # <OPTIONS>  : (0) -hd
+    # <OPTIONS>  : (0) -hd (1) -nl
+    # <BACKEND>  : bash
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -711,7 +724,8 @@ function _trim()
     # <SIGNATURE>: (0)_trim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd
-        
+    # <BACKEND>  : bash
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -739,12 +753,13 @@ function _trim()
 
 }
 
-function _Ltrim()
+function _lTrim()
 {
     # <SIGNATURE>: (0)_Ltrim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd
-        
+    # <BACKEND>  : bash
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -769,12 +784,13 @@ function _Ltrim()
 
 }
 
-function _Rtrim()
+function _rTrim()
 {
     # <SIGNATURE>: (0)_Rtrim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd
-        
+    # <BACKEND>  : bash
+
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
@@ -789,13 +805,95 @@ function _Rtrim()
     # main part of the function
 
     local var="$2"
-    #local _return_trim
+    local _return_trim
 
     # remove trailing whitespace characters
     var="${var%"${var##*[![:space:]]}"}"   
     
     printf -v _return_trim '%s' "$var"
     eval "$1=\${_return_trim}"
+
+}
+
+function _wsTrim()
+{
+    # <SIGNATURE>: (0)_wsTrim (1)_result (2)someString (3?)
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd (1) -s
+    # <BACKEND>  : StringClass
+
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+    local _return_wsTrim=""
+    local _duplicateWSPattern="\s{2,}"
+    local -i doSingle=$FALSE
+
+    if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
+    then
+
+        # START - determine what the searched string will be
+        if [[ $# -ge 2 ]] && [[ -f $2  ]]
+        then
+                stringToBeSearched="$(< $2)"
+        
+        elif [[ $# -ge 2 ]]
+        then
+                stringToBeSearched="$2"
+        
+        elif [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
+        then
+                stringToBeSearched="${htmlLines[@]}"
+        fi
+        # END of searchedString
+echo -e "${3:-}"
+        # START - set the booleans for the optionals
+        if [[ ! -z ${3:-} ]] && [[ $(_sc stringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 ]]
+        then
+            doSingle=$TRUE
+        fi
+        # END setting the booleans
+
+        _return_wsTrim="$stringToBeSearched"
+
+        if [[ $doSingle == $FALSE ]]
+        then
+            _regexFindReplace _return_wsTrim "$_duplicateWSPattern" " " "$stringToBeSearched" "-a" || _return_regexFindReplace=""  # all
+        else
+            _regexFindReplace _return_wsTrim "$_duplicateWSPattern" " " "$stringToBeSearched"      || _return_regexFindReplace=""  # first/single
+        fi        
+    
+        eval "$1=\${_return_wsTrim}"
+
+
+    # START - echo out the Help section
+    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
+    then
+        echo -e " \n The command syntax is: wsTrim someString\n"
+        echo -e " someString may be: <someString> or <someFile> or <Here-document> or <Here-string>"
+        echo -e " The default behaviour is to replace all occurrences."
+        echo -e " Giving more than 2 parameter means the extras will be ignored, except! :"
+        echo -e " - if you provide -s on the end, then only the first matching instance will occur."
+        echo -e " If successful, the updated string will be returned.\n"
+        echo -e " wsTrim is 'sed' compliant with its regular expressions, using"
+        echo -e " extended regular expressions. \n"
+
+    else
+        echo -e "\n Error - missing arguments."
+        eval "_wsTrim _result --help"
+    fi
+    # END of help section
+
 
 }
 
@@ -850,7 +948,21 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
+    len() # Pseudonym / Alias for stringLength
+    (
+        local _result
+        _stringLength _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
     stringFind()
+    (
+        local _result
+        _stringFind _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    inStr() # Pseudonym / Alias for stringFind
     (
         local _result
         _stringFind _result "$@"
@@ -875,9 +987,20 @@ StringClass()
     )
 
     regexFindReplace()
-    (:;)
+    (
+        local _result
+        _regexFindReplace _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
 
     subString()
+    (
+        local _result
+        _subString _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    mid() # Pseudonym / Alias for subString
     (
         local _result
         _subString _result "$@"
@@ -894,20 +1017,26 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    Ltrim()
+    lTrim()
     (
         local _result
-        _Ltrim _result "$@"
+        _lTrim _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    Rtrim()
+    rTrim()
     (
         local _result
-        _Rtrim _result "$@"
+        _rTrim _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
+    wsTrim()
+    (
+        local _result
+        _wsTrim _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
 
     #isNumber(){ printf %f "$1" &>/dev/null && echo "true" || echo "false" }
     #isArray() { declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type" }
@@ -930,6 +1059,15 @@ StringClass()
         showUsage
     fi
 )
+
+#--------------------------------------------------------
+# Pseudonyms / Aliases for StringClass
+#--------------------------------------------------------
+#
+SC()(StringClass "$@")
+sc()(StringClass "$@")
+_SC()(StringClass "$@")
+_sc()(StringClass "$@")
 
 #--------------------------------------------------------
 # Process the "real" command line that called this script
@@ -985,39 +1123,3 @@ then
     StringClass "${theArgs[@]}"
 
 fi
-
-
-
-
-#===============================================
-#
-# Bash Inbuilt String Functions:
-#
-#   Length         ${#string}
-#
-#   SubString      ${string:position}
-#                  or
-#                  ${string:position:length}
-#
-#   Delete(front)  ${string#substring}                     deletes the shortest match of $substring from front of $string
-#                  or
-#   Delete(back)   ${string%substring}                     deletes the shortest match of $substring from back  of $string
-#                  or
-#   Delete(long,front)
-#                  ${string##substring}                    deletes the longest  match of $substring from front of $string
-#                  or
-#   Delete(long,back)
-#                  ${string%%substring}                    deletes the longest  match of $substring from back  of $string
-#
-#   Find+Replace   ${string/pattern/replacement}           only the first match
-#                  or
-#   Find+Replace   ${string//pattern/replacement}          replace all matches
-#                  or
-#   Find+Replace(front)
-#                  ${string/#pattern/replacement}          match and replace from the start
-#                  or
-#   Find+Replace(back)
-#                  ${string/%pattern/replacement}          match and replace from the back
-#
-#
-#===============================================
