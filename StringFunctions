@@ -678,11 +678,14 @@ function _subString()               # bash
             noLength=$TRUE
         fi
 
-        local -i theOffset=${3:-0}
+        local -i theOffset=${3:-1}
         local theLength="${4:-}"
+
+        theOffset="$(( theOffset - 1 ))"
 
         if [[ $noLength == $FALSE ]]
         then
+            #theLength=$(( theLength + 1 ))
             _return_subString="${stringToBeSearched:${theOffset}:${theLength}}"
         else
             _return_subString="${stringToBeSearched:${theOffset}}"
@@ -925,9 +928,16 @@ StringClass()
         echo -e " Conversely, the corresponding function names without leading _underscores can be called"
         echo -e " from the command-line and will echo their output.\n"
         echo -e " StringClass is the main function and has shorter pseudonyms for brevity, and they are:"
-        echo -e " \tSC sc _SC _sc"
-        echo -e " This is only relevant when embedding one function call inside another eg.\n"
-        echo -e " "
+        echo -e " \tSC sc _SC _sc \n"
+        echo -e " This is really only relevant when embedding one function call inside another eg.\n"
+        echo -e '     source ./StringFunctions'
+        echo -e '     declare chocolate="Caramel Koala"'
+        echo -e '     StringClass stringLength "$chocolate"'
+        echo -e '     SC subString "$chocolate" 1 $(( $(_sc len "$chocolate") - 2 ))"'
+        echo -e "\n This example prints:\n\n \t13 \n \tCaramel Koa" 
+        echo -e "\n Note: StringFunctions counts collections starting at 1, not 0. The average person has 10"
+        echo -e " fingers on their hands, and if asked to count them, they will normally start at 1."
+        echo -e " If you have a string of characters > 0, then position 1 is occupied by the first character."
         echo ""
 
     ) >&2

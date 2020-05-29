@@ -95,4 +95,5 @@ perl -pe "s/$pattern/$newStuff/g" <<< "$test1"
 
 source ./StringFunctions
 declare chocolate="Caramel Koala"
-StringClass subString "$chocolate" 0 $(( $(StringClass stringLength "$chocolate") - 2 ))
+StringClass stringLength "$chocolate"
+SC subString "$chocolate" 1 $(( $(_sc len "$chocolate") - 2 ))
