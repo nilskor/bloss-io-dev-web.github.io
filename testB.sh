@@ -86,11 +86,11 @@ echo -e "\n --------------------------------------------------------------------
 echo -e "              Find tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-_stringFind someCrap "href=\"#index\"" index.html
+_regexStringFind someCrap "href=\"#index\"" index.html
 
 echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
 
-_stringFind someCrap "^[[:space:]]+<a" index.html
+_regexStringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
 
@@ -137,12 +137,12 @@ echo -e "$someCrap               # the string modified with _regexFindReplace '(
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
-echo -e "              stringFind2 and subString tests                                                             "
+echo -e "              regexStringFind2 and subString tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
 refText='<a name="Migrating_GTK" class="two" href="/content/GTK3/Migrating_GTK.html">Migrating from Previous Versions of GTK+</a>'
 
-_stringFind2 someCrap '(?<=\>)(.+)(?=\<)' "$refText"
+_regexStringFind2 someCrap '(?<=\>)(.+)(?=\<)' "$refText"
 declare -A ArrayOfStrings=()
 echo -e "Before unravelling: $someCrap \n"
 eval "$someCrap"
@@ -158,24 +158,28 @@ echo ""
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Trim tests                                                             "
-echo -e " ---------------------------------------------------------------------------------- \n"
+echo -e " ----------------------------------------------------------------------------------\n"
+echo -e " rTrim:"
+echo -e "=======\n"
 
-
-echo -e "'Freddo         Frog                   '    # original text \n"
+echo -e "'Freddo         Frog                   '      # original text \n"
 
 _rTrim someCrap "Freddo         Frog                   "
 echo -e "${#someCrap} is the length of the rTrim'd text \n\n"
 
-echo -e "Freddo         Frog                   .     # original text \n"
+echo -e " wsTrim:"
+echo -e "=======\n"
+
+echo -e "Freddo         Frog                   .       # original text \n"
 _wsTrim someCrap "Freddo         Frog                   ."
-echo -e "${someCrap}                       # default, using wsTrim \n"
+echo -e "${someCrap}                                  # default, using wsTrim \n"
 
 _wsTrim someCrap "Freddo         Frog                   ." "-s"
-echo -e "${someCrap}    # -s (single) \n\n"
+echo -e "${someCrap}               # -s (single) \n\n"
 
 echo -e "Freddo         . Frog                   .     # original text \n"
 _wsTrim someCrap "Freddo         . Frog                   ." "-f"
-echo -e "${someCrap}    # -f (first) \n"
+echo -e "${someCrap}             # -f (first) \n"
 
 _wsTrim someCrap "Freddo         . Frog                   ."
-echo -e "${someCrap}                        # default - do all \n"
+echo -e "${someCrap}                                 # default - do all \n"

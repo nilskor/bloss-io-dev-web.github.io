@@ -261,9 +261,9 @@ function _stringLength()
 
 }
 
-function _stringFind()
+function _regexStringFind()
 {
-    # <SIGNATURE>: (0)_stringFind (1)_result (2)searchPattern (3)someStringToSearch
+    # <SIGNATURE>: (0)_regexStringFind (1)_result (2)searchPattern (3)someStringToSearch
     
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -278,12 +278,12 @@ function _stringFind()
 
     # main part of the function
 
-    local -i _return_stringFind=0
+    local -i _return_regexStringFind=0
 
     if [[ $# -le 1 ]]
     then
         echo -e "missing arguments"
-        echo -e "The command syntax is: stringFind searchPattern someStringToSearch"
+        echo -e "The command syntax is: regexStringFind searchPattern someStringToSearch"
 
     elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#LINES[@]} -gt 0 ]]
     then
@@ -315,16 +315,16 @@ function _stringFind()
             result=0
         fi
 
-        printf -v _return_stringFind %q $result
-        eval "$1=\${_return_stringFind}"
+        printf -v _return_regexStringFind %q $result
+        eval "$1=\${_return_regexStringFind}"
 
     fi
 
 }
 
-function _stringFind2()
+function _regexStringFind2()
 {
-    # <SIGNATURE>: (0)_stringFind (1)_resultIndex (2)_resultString (3)searchPattern (4)someStringToSearch
+    # <SIGNATURE>: (0)_regexStringFind2 (1)_resultIndex (2)_resultString (3)searchPattern (4)someStringToSearch
     
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -339,13 +339,13 @@ function _stringFind2()
 
     # main part of the function
 
-    local -i _return_stringFind_Index=0
-    local _return_stringFind_String=""
+    local -i _return_regexStringFind_Index=0
+    local _return_regexStringFind_String=""
 
     if [[ $# -le 3 ]]
     then
         echo -e "missing arguments"
-        echo -e "The command syntax is: stringFind searchPattern someStringToSearch"
+        echo -e "The command syntax is: regexStringFind2 searchPattern someStringToSearch"
 
     elif [[ $# -eq 4 ]] || [[ $# -eq 3 && ${#LINES[@]} -gt 0 ]]
     then
@@ -371,16 +371,16 @@ function _stringFind2()
         if [[ ${#foundIt} -gt 0 ]]
         then
             searchString="$foundIt"
-            _return_stringFind_String="$foundIt"
+            _return_regexStringFind_String="$foundIt"
             rest=${stringToBeSearched#*$searchString}
             result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
         else
             result=0
         fi
 
-        printf -v _return_stringFind_Index %q $result
-        eval "$1=\${_return_stringFind_Index}"
-        eval "$2=\${_return_stringFind_String}"
+        printf -v _return_regexStringFind_Index %q $result
+        eval "$1=\${_return_regexStringFind_Index}"
+        eval "$2=\${_return_regexStringFind_String}"
 
     fi
 
@@ -608,11 +608,11 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    stringFind()
+    regexStringFind()
     (
         local _resultIndex
         local _resultString
-        _stringFind2 _resultIndex _resultString "$@"
+        _regexStringFind _resultIndex _resultString "$@"
         [ ! -z "${_resultIndex:-}" ] && echo -e "$_resultIndex\n$_resultString\nEOL"
     )
 

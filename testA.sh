@@ -37,7 +37,7 @@ function echo()
         shift
     done
 
-    printf ":: $fmt$end" "$*"
+    printf "$fmt$end" "$*"
     setIFS
 )
 
@@ -68,3 +68,31 @@ do
     echo "$i: ${names[$i]}"
 done
 
+echo -e "\n FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate     # the original string \n"
+perl -pe 's/(  )+/ /g' <<< 'FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate'
+echo ""
+
+# Grep replacement:
+test1="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummy Chocolate"
+echo -e "$test1"
+pattern="(?<=y)\b\s.*colate"
+perl -nle " if ( /($pattern)/ ) { print \"\$1\\n\" } " <<< "$test1"
+
+# Sed replacement:
+test1="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummy Chocolate"
+echo -e "$test1"
+pattern="(  )+"
+newStuff=' '
+perl -ple "s/$pattern/$newStuff/g" <<< "$test1"
+echo ""
+
+# Sed replacement:
+test1="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummy Chocolate"
+echo -e "$test1"
+pattern="(  )+"
+newStuff=' '
+perl -pe "s/$pattern/$newStuff/g" <<< "$test1"
+
+source ./StringFunctions
+declare chocolate="Caramel Koala"
+StringClass subString "$chocolate" 0 $(( $(StringClass stringLength "$chocolate") - 2 ))

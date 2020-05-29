@@ -116,10 +116,10 @@ function step3()            # "Step #3 - work with each html file"
     local -A _theStringFindResults=()
     local -A ArrayOfStrings=()      # this must be declared as 'ArrayOfStrings' to use the return result.
 
-    _stringFind2 _theStringFindResults "$oldLinkPattern" "$*"   # where $* is the incoming file
+    _regexStringFind2 _theStringFindResults "$oldLinkPattern" "$*"   # where $* is the incoming file
 
     eval "$_theStringFindResults"   # unravel the return result into 'ArrayOfStrings', 
-                                    # which is the output of stringFind.
+                                    # which is the output of regexStringFind2.
 
     if [[ ${#ArrayOfStrings[@]} -gt 0 ]]
     then
@@ -130,13 +130,11 @@ function step3()            # "Step #3 - work with each html file"
             result_3a="$(step3a "${ArrayOfStrings[$string]}")"
                                                     # using the output from 3a/b, now replace the line
             _trim _trimmedResult $result_3a
-            
-            _regexFindReplace _trimmedResult2 "(  )+" " " "$_trimmedResult" -ar
-            #_regexFindReplace _trimmedResult3 "(  )+" " " "$_trimmedResult2" -a
+            _wsTrim _trimmedResult "$_trimmedResult"
 
-            echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult2\n:"
-
+            echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult\n:"
             
+            echo -e "$(_sc inStr '' $_trimmedResult)"
         
         done
         

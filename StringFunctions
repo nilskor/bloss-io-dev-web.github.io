@@ -72,7 +72,7 @@ function  unsetIFS(){ IFS= ;       }
 # Read Here-Docs either directly or forced with '-hd'
 #----------------------------------------------------------
 #
-function readInput()
+function readInput()                # bash
 {
     setIFS
     while read -r line
@@ -85,7 +85,7 @@ function readInput()
     done
 }
 
-function _countLines()
+function _countLines()              # bash wc gawk
 {
     # <SIGNATURE>: (0)_countLines (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
@@ -158,7 +158,7 @@ function _countLines()
 
 }
 
-function _countWords()
+function _countWords()              # bash wc gawk
 {
     # <SIGNATURE>: (0)_countWords (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
@@ -217,7 +217,7 @@ function _countWords()
 
 }
 
-function _stringLength()
+function _stringLength()            # bash
 {
     # <SIGNATURE>: (0)_stringLength (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
@@ -269,9 +269,9 @@ function _stringLength()
 
 }
 
-function _stringFind()
+function _regexStringFind()         # bash grep -P head
 {
-    # <SIGNATURE>: (0)_stringFind (1)_result (2)searchPattern (3)someStringToSearch
+    # <SIGNATURE>: (0)_regexStringFind (1)_result (2)searchPattern (3)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash, grep -P, head
@@ -289,16 +289,16 @@ function _stringFind()
 
     # main part of the function
 
-    local -i _return_stringFind=0
+    local -i _return_regexStringFind=0
     local -i result=0
 
     if [[ $# -le 1 ]]
     then
         echo -e "\n missing arguments"
-        echo -e " The command syntax is: stringFind searchPattern someStringToSearch"
+        echo -e " The command syntax is: regexStringFind searchPattern someStringToSearch"
         echo -e " Regular Expressions are allowed in 'searchPattern'"
-        echo -e " stringFind returns a number greater than 0 if successful."
-        echo -e " stringFind assumes the first character occupies position #1\n"
+        echo -e " regexStringFind returns a number greater than 0 if successful."
+        echo -e " regexStringFind assumes the first character occupies position #1\n"
 
     elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
     then
@@ -330,16 +330,16 @@ function _stringFind()
             result=0
         fi
 
-        printf -v _return_stringFind %q $result
-        eval "$1=\${_return_stringFind}"
+        printf -v _return_regexStringFind %q $result
+        eval "$1=\${_return_regexStringFind}"
 
     fi
 
 }
 
-function _stringFind2()
+function _regexStringFind2()        # bash grep -P
 {
-    # <SIGNATURE>: (0)_stringFind (1)_resultArray (2)searchPattern (3)someStringToSearch
+    # <SIGNATURE>: (0)_regexStringFind2 (1)_resultArray (2)searchPattern (3)someStringToSearch
     # <RETURN>   : (0)<T>AADS - Associative Array Definition String; always named 'ArrayOfStrings'
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash, grep -P
@@ -362,7 +362,7 @@ function _stringFind2()
     if [[ $# -le 2 ]]
     then
         echo -e "\n missing arguments.\n"
-        echo -e " The command syntax is: stringFind searchPattern someStringToSearch"
+        echo -e " The command syntax is: regexStringFind2 searchPattern someStringToSearch"
         echo -e " The return result is an Associative array eg. declare -A someVariable"
         echo -e " The return result creates a hard-coded variable name - 'ArrayOfStrings'."
 
@@ -396,7 +396,7 @@ function _stringFind2()
                 #echo -e "$item"
                 #:
                 searchString="$item"
-                _return_stringFind_String="$foundIt"
+                _return_regexStringFind_String="$foundIt"
                 rest=${stringToBeSearched#*$searchString}
                 result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
                 ArrayOfStrings[$result]="$item"
@@ -420,22 +420,22 @@ function _stringFind2()
         #if [[ ${#foundIt} -gt 0 ]]
         #then
         #    searchString="$foundIt"
-        #    _return_stringFind_String="$foundIt"
+        #    _return_regexStringFind_String="$foundIt"
         #    rest=${stringToBeSearched#*$searchString}
         #    result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
         #else
         #    result=0
         #fi
 
-        #printf -v _return_stringFind_Index %q $result
-        #eval "$1=\${_return_stringFind_Index}"
-        #eval "$2=\${_return_stringFind_String}"_resultArray
+        #printf -v _return_regexStringFind_Index %q $result
+        #eval "$1=\${_return_regexStringFind_Index}"
+        #eval "$2=\${_return_regexStringFind_String}"_resultArray
 
     fi
 
 }
 
-function _findReplace()
+function _findReplace()             # bash
 {
     # <SIGNATURE>: (0)_findReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
     # <RETURN>   : (0)<T>String
@@ -530,12 +530,12 @@ function _findReplace()
 
 }
 
-function _regexFindReplace()
+function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 {
     # <SIGNATURE>: (0)_regexFindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch (5?)
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd (1) -a or -w or -aw.
-    # <BACKEND>  : bash, StringClass, sed -r
+    # <BACKEND>  : bash, StringClass, perl -pe
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -574,12 +574,12 @@ function _regexFindReplace()
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${5:-} ]] && [[ $(_sc stringFind '([-]w*[a]{1,}w*\b)' ${5:-}) -gt 0 ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc regexStringFind '([-]w*[a]{1,}w*\b)' ${5:-}) -gt 0 ]]
         then
             doAll=$TRUE
         fi
 
-        if [[ ! -z ${5:-} ]] && [[ $(_sc stringFind '([-]a*[w]{1,}a*\b)' ${5:-}) -gt 0 ]] && [[ -f $4  ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc regexStringFind '([-]a*[w]{1,}a*\b)' ${5:-}) -gt 0 ]] && [[ -f $4  ]]
         then
             writeFile=$TRUE
         fi
@@ -600,9 +600,9 @@ function _regexFindReplace()
 
         if [[ $doAll == $FALSE ]]
         then
-            _return_regexFindReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # once
+            _return_regexFindReplace=`perl -pe s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # once
         else
-            _return_regexFindReplace=`sed -r s/"$thePattern"/"$newString"/g <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # all
+            _return_regexFindReplace=`perl -pe s/"$thePattern"/"$newString"/g <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # all
         fi
 
         if [[ $writeFile == $TRUE ]]
@@ -622,8 +622,7 @@ function _regexFindReplace()
         echo -e " - if you provide -w on the end and your searched string was a file, the file will be updated."
         echo -e " - or in combination, a -aw for 'Replace All' and write the update to file.\n"
         echo -e " If successful, the updated string will be returned.\n"
-        echo -e " regexFindReplace is 'sed' compliant with its regular expressions, using"
-        echo -e " extended regular expressions. \n"
+        echo -e " regexFindReplace is PCRE compliant with its regular expressions. \n"
 
     else
         echo -e "\n Error - missing arguments."
@@ -633,7 +632,7 @@ function _regexFindReplace()
 
 }
 
-function _subString()
+function _subString()               # bash
 {
     # <SIGNATURE>: (0)_subString (1)_result (2)someStringToSearch (3)offset (4)length
     # <RETURN>   : (0)<T>String
@@ -719,7 +718,7 @@ function _subString()
  
 }
 
-function _trim()
+function _trim()                    # bash
 {
     # <SIGNATURE>: (0)_trim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
@@ -753,7 +752,7 @@ function _trim()
 
 }
 
-function _lTrim()
+function _lTrim()                   # bash
 {
     # <SIGNATURE>: (0)_Ltrim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
@@ -784,7 +783,7 @@ function _lTrim()
 
 }
 
-function _rTrim()
+function _rTrim()                   # bash
 {
     # <SIGNATURE>: (0)_Rtrim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
@@ -815,7 +814,7 @@ function _rTrim()
 
 }
 
-function _wsTrim()
+function _wsTrim()                  # StringClass (perl -pe)
 {
     # <SIGNATURE>: (0)_wsTrim (1)_result (2)someString (3?)
     # <RETURN>   : (0)<T>String
@@ -859,7 +858,7 @@ function _wsTrim()
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc stringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 || $(_sc stringFind '([-][f]{1,}\b)' ${3:-}) -gt 0 ]]
+        if [[ ! -z ${3:-} ]] && [[ $(_sc regexStringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 || $(_sc regexStringFind '([-][f]{1,}\b)' ${3:-}) -gt 0 ]]
         then
             doSingle=$TRUE
         fi
@@ -888,8 +887,7 @@ function _wsTrim()
         echo -e " Giving more than 2 parameter means the extras will be ignored, except! :"
         echo -e " - if you provide -s on the end, then only the first matching instance will occur."
         echo -e " If successful, the updated string will be returned.\n"
-        echo -e " wsTrim is 'sed' compliant with its regular expressions, using"
-        echo -e " extended regular expressions. \n"
+        echo -e " wsTrim is PCRE compliant with its regular expressions. \n"
 
     else
         echo -e "\n Error - missing arguments."
@@ -920,7 +918,16 @@ StringClass()
             echo "$apiName"
         done
         echo -e "\n All Here Document, Here-doc or Heredoc style input must end with a plain 'EOF' eg. EOF"
-        echo -e " Heredoc style input can be forced with the '-hd' switch as a parameter, terminated with EOF"
+        echo -e " Heredoc style input can be forced with the '-hd' switch as a parameter, terminated with EOF\n"
+        echo -e " Functions with leading _underscores are the true APIs. They can be called directly from"
+        echo -e " other scripts when 'sourced'. Note! the APIs expect to be passed a variable that will"
+        echo -e " become the return result. The APIs do NOT echo their output.\n"
+        echo -e " Conversely, the corresponding function names without leading _underscores can be called"
+        echo -e " from the command-line and will echo their output.\n"
+        echo -e " StringClass is the main function and has shorter pseudonyms for brevity, and they are:"
+        echo -e " \tSC sc _SC _sc"
+        echo -e " This is only relevant when embedding one function call inside another eg.\n"
+        echo -e " "
         echo ""
 
     ) >&2
@@ -958,24 +965,24 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    stringFind()
+    regexStringFind()
     (
         local _result
-        _stringFind _result "$@"
+        _regexStringFind _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    inStr() # Pseudonym / Alias for stringFind
+    inStr() # Pseudonym / Alias for regexStringFind
     (
         local _result
-        _stringFind _result "$@"
+        _regexStringFind _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    stringFind2()
+    regexStringFind2()
     (
         local -A _resultArray=()
-        _stringFind2 _resultArray "$@"
+        _regexStringFind2 _resultArray "$@"
         [ ! -z "${_resultArray:-()}" ] && echo -e "${#_resultArray[@]}\n"
     )
 
