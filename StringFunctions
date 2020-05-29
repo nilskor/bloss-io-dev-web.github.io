@@ -836,7 +836,8 @@ function _wsTrim()
     # main part of the function
 
     local _return_wsTrim=""
-    local _duplicateWSPattern="\s{2,}"
+    local _duplicateWSPattern='\s{2,}'            # these are single quoted,
+    local _fullStops='\b\s+[.]'                  # to stop bash from interpreting
     local -i doSingle=$FALSE
 
     if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
@@ -856,9 +857,9 @@ function _wsTrim()
                 stringToBeSearched="${htmlLines[@]}"
         fi
         # END of searchedString
-echo -e "${3:-}"
+
         # START - set the booleans for the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc stringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 ]]
+        if [[ ! -z ${3:-} ]] && [[ $(_sc stringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 || $(_sc stringFind '([-][f]{1,}\b)' ${3:-}) -gt 0 ]]
         then
             doSingle=$TRUE
         fi
@@ -868,9 +869,11 @@ echo -e "${3:-}"
 
         if [[ $doSingle == $FALSE ]]
         then
-            _regexFindReplace _return_wsTrim "$_duplicateWSPattern" " " "$stringToBeSearched" "-a" || _return_regexFindReplace=""  # all
+            _regexFindReplace _return_Temp   "$_duplicateWSPattern" ' ' "$stringToBeSearched" "-a"  # all
+            _regexFindReplace _return_wsTrim  $_fullStops           '.' "$_return_Temp"       "-a"  # all
+
         else
-            _regexFindReplace _return_wsTrim "$_duplicateWSPattern" " " "$stringToBeSearched"      || _return_regexFindReplace=""  # first/single
+            _regexFindReplace _return_wsTrim "$_duplicateWSPattern" " " "$stringToBeSearched"       # first/single
         fi        
     
         eval "$1=\${_return_wsTrim}"

@@ -19,9 +19,7 @@ IFS=$'\n\t'
 #declare -ri  TRUE=0
 #declare -ri FALSE=1
 
-#echo -e "::: TestB :::Length of [LINES] is: ${#LINES[@]}, :::Contents of [LINES] is: ${LINES[@]}"
 source ./StringFunctions
-#echo -e "::: TestB-1 :::Length of [LINES] is: ${#LINES[@]}, :::Contents of [LINES] is: ${LINES[@]}"
 
 #set -vx
 
@@ -34,23 +32,30 @@ declare data='some
 dummy extra long
 string that needs counting'
 
-#echo -e "::: TestB-2 :::Length of [LINES] is: ${#LINES[@]}, :::Contents of [LINES] is: ${LINES[@]}"
 
-#printf %i .1
+echo -e "\n ----------------------------------------------------------------------------------"
+echo -e "              isNumber test (not yet implemented)                                                             "
+echo -e " ---------------------------------------------------------------------------------- \n"
+
 printf %f -1e32 &>/dev/null && echo "-1e32 is a number" || echo "-1e32 is not a number"
-echo ""
 
-declare -p test1 2>/dev/null | grep -q '^declare \-a' && echo "test1 is an indexed array" || echo "test1 is not an indexed array"
-echo ""
 
-declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an associative array" || echo "test2 is not an associative array"
-echo ""
+echo -e "\n ----------------------------------------------------------------------------------"
+echo -e "              Array Type tests                                                             "
+echo -e " ---------------------------------------------------------------------------------- \n"
 
-declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array"
-echo ""
+declare -p test1 2>/dev/null | grep -q '^declare \-a' && echo "test1 is an indexed array" || echo "test1 is not an indexed array \n"
 
-declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type"
-echo ""
+declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an associative array" || echo "test2 is not an associative array \n"
+
+declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array \n"
+
+declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type \n"
+
+
+echo -e "\n ----------------------------------------------------------------------------------"
+echo -e "              Counting tests                                                             "
+echo -e " ---------------------------------------------------------------------------------- \n"
 
 _countLines someCrap "$data"
 
@@ -76,6 +81,11 @@ _stringLength someCrap "$data"
 
 echo -e "String length of '$data' is: $someCrap \n"
 
+
+echo -e "\n ----------------------------------------------------------------------------------"
+echo -e "              Find tests                                                             "
+echo -e " ---------------------------------------------------------------------------------- \n"
+
 _stringFind someCrap "href=\"#index\"" index.html
 
 echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
@@ -83,6 +93,11 @@ echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
 _stringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
+
+
+echo -e "\n ----------------------------------------------------------------------------------"
+echo -e "              Find and Replace tests                                                             "
+echo -e " ---------------------------------------------------------------------------------- \n"
 
 _findReplace someCrap html FROG testFile.html -aw
 echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
@@ -95,30 +110,35 @@ echo -e "From the string 'FreddoFrogIsYummyChocolate', offset 12, length 5 gives
 
 echo "FreddoFrog      IsYummyChocolate     # the original string"
 _findReplace someCrap [[:space:]][[:space:]] " " 'FreddoFrog      IsYummyChocolate' -a
-echo -e "$someCrap        # the string modified with _findReplace '  ' and -a"
-echo ""
+echo -e "$someCrap        # the string modified with _findReplace '  ' and -a \n"
 
 echo "FreddoFrog      IsYummyChocolate     # the original string"
 _regexFindReplace someCrap "\s{2,}" " " 'FreddoFrog      IsYummyChocolate' -a
-echo -e "$someCrap          # the string modified with _regexFindReplace '\s{2,}' and -a"
-echo ""
+echo -e "$someCrap          # the string modified with _regexFindReplace '\s{2,}' and -a \n"
 
 echo "FreddoFrog      IsYummyChocolate     # the original string"
 _regexFindReplace someCrap "(  )+" " " 'FreddoFrog      IsYummyChocolate' -a
-echo -e "$someCrap          # the string modified with _regexFindReplace '(  )+' and -a"
-echo ""
+echo -e "$someCrap          # the string modified with _regexFindReplace '(  )+' and -a \n"
 
-declare sedTest="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate"
-declare sedPattern="(  )+"
-echo ""
-sed -r "s/$sedPattern/ /g" <<< "$sedTest"
+echo "FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate     # the original string"
+_regexFindReplace someCrap '(  )+' ' ' 'FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate' -a
+echo -e "$someCrap               # the string modified with _regexFindReplace '(  )+' and -a \n"
 
-stringToBeSearched="$sedTest"
-thePattern="$sedPattern"
-newString=" "
-_return_findReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_findReplace=""  # once
-echo ""
-echo -e "'_return_findReplace': $_return_findReplace \n"
+
+#declare sedTest="FreddoFrog      IsYummyChocolate FreddoFrog      IsYummyChocolate"
+#declare sedPattern="(  )+"
+#sed -r "s/$sedPattern/ /g" <<< "$sedTest"
+
+#stringToBeSearched="$sedTest"
+#thePattern="$sedPattern"
+#newString=" "
+#_return_findReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_findReplace=""  # once
+#echo -e "\n'_return_findReplace': $_return_findReplace \n"
+
+
+echo -e "\n ----------------------------------------------------------------------------------"
+echo -e "              stringFind2 and subString tests                                                             "
+echo -e " ---------------------------------------------------------------------------------- \n"
 
 refText='<a name="Migrating_GTK" class="two" href="/content/GTK3/Migrating_GTK.html">Migrating from Previous Versions of GTK+</a>'
 
@@ -136,14 +156,26 @@ echo -e "$someCrap \n"
 StringClass subString "${ArrayOfStrings[@]}" 1 $(( $(StringClass stringLength "${ArrayOfStrings[@]}") - 2 ))
 echo ""
 
-_rTrim someCrap "Freddo         Frog                   "
-echo -e "${#someCrap}"
-echo ""
+echo -e "\n ----------------------------------------------------------------------------------"
+echo -e "              Trim tests                                                             "
+echo -e " ---------------------------------------------------------------------------------- \n"
 
+
+echo -e "'Freddo         Frog                   '    # original text \n"
+
+_rTrim someCrap "Freddo         Frog                   "
+echo -e "${#someCrap} is the length of the rTrim'd text \n\n"
+
+echo -e "Freddo         Frog                   .     # original text \n"
 _wsTrim someCrap "Freddo         Frog                   ."
-echo -e "${someCrap}"
-echo ""
+echo -e "${someCrap}                       # default, using wsTrim \n"
 
 _wsTrim someCrap "Freddo         Frog                   ." "-s"
-echo -e "${someCrap}"
-echo ""
+echo -e "${someCrap}    # -s (single) \n\n"
+
+echo -e "Freddo         . Frog                   .     # original text \n"
+_wsTrim someCrap "Freddo         . Frog                   ." "-f"
+echo -e "${someCrap}    # -f (first) \n"
+
+_wsTrim someCrap "Freddo         . Frog                   ."
+echo -e "${someCrap}                        # default - do all \n"
