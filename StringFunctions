@@ -217,7 +217,7 @@ function _countWords()              # bash wc gawk
 
 }
 
-function _stringLength()            # bash
+function _stringLength()            # bash                      # alias len
 {
     # <SIGNATURE>: (0)_stringLength (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
@@ -269,12 +269,13 @@ function _stringLength()            # bash
 
 }
 
-function _regexStringFind()         # bash grep -P head
+function _regexStringFind()         # bash grep -P head         # alias inStr
 {
-    # <SIGNATURE>: (0)_regexStringFind (1)_result (2)searchPattern (3)someStringToSearch
+    # <SIGNATURE>: (0)_regexStringFind (1)_result (2)searchPattern (3)someStringToSearch (4?)options
     # <RETURN>   : (0)<T>Integer
-    # <OPTIONS>  : (0) -hd
+    # <OPTIONS>  : (0) -hd (1) -s
     # <BACKEND>  : bash, grep -P, head
+    # <TEMPLATE> : _regexStringFind _theResult "searchPattern" "someStringToSearch"
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -291,6 +292,8 @@ function _regexStringFind()         # bash grep -P head
 
     local -i _return_regexStringFind=0
     local -i result=0
+    local stringToBeSearched=""
+    local -i stringNotPosition=$FALSE
 
     if [[ $# -le 1 ]]
     then
@@ -299,16 +302,18 @@ function _regexStringFind()         # bash grep -P head
         echo -e " Regular Expressions are allowed in 'searchPattern'"
         echo -e " regexStringFind returns a number greater than 0 if successful."
         echo -e " regexStringFind assumes the first character occupies position #1\n"
+        echo -e " If the switch '-s' is added as the last parameter, then the string is"
+        echo -e " returned, rather than the position.\n"
 
-    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
+    elif [[ $# -ge 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
     then
         
-        if [[ $# -eq 3 ]] && [[ -f $3  ]]
+        if [[ $# -ge 3 ]] && [[ -f $3  ]]
         then
                 #stringToBeSearched="$(sed -rn 's/.*/&/p' $3)"
                 stringToBeSearched="$(< $3)"
         
-        elif [[ $# -eq 3 ]]
+        elif [[ $# -ge 3 ]]
         then
                 stringToBeSearched="${3} ${htmlLines[@]}"
         
@@ -317,10 +322,18 @@ function _regexStringFind()         # bash grep -P head
                 stringToBeSearched="${htmlLines[@]}"
         fi
 
+        # START - set the booleans for the optionals
+        if [[ ! -z ${4:-} ]] && [[ $(_sc regexStringFind '([-][s]{1,}\b)' ${4:-}) -gt 0 ]]
+        then
+            stringNotPosition=$TRUE
+        fi
+        # END setting the booleans
+
+
         thePattern="$2"
 
         foundIt=`grep -P -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
-        
+    
         if [[ ${#foundIt} -gt 0 ]]
         then
             searchString="$foundIt"
@@ -330,8 +343,13 @@ function _regexStringFind()         # bash grep -P head
             result=0
         fi
 
-        printf -v _return_regexStringFind %q $result
-        eval "$1=\${_return_regexStringFind}"
+        if [[ $stringNotPosition -eq $FALSE ]]
+        then
+            printf -v _return_regexStringFind %q $result
+            eval "$1=\${_return_regexStringFind}"
+        else
+            eval "$1=\${foundIt}"
+        fi
 
     fi
 
@@ -532,7 +550,7 @@ function _findReplace()             # bash
 
 function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 {
-    # <SIGNATURE>: (0)_regexFindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch (5?)
+    # <SIGNATURE>: (0)_regexFindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch (5?)options
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd (1) -a or -w or -aw.
     # <BACKEND>  : bash, StringClass, perl -pe
@@ -553,6 +571,7 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
     local _return_regexFindReplace=""
     local -i doAll=$FALSE
     local -i writeFile=$FALSE
+    local stringToBeSearched=""
 
     if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
     then
@@ -632,7 +651,7 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
 }
 
-function _subString()               # bash
+function _subString()               # bash                      # alias mid
 {
     # <SIGNATURE>: (0)_subString (1)_result (2)someStringToSearch (3)offset (4)length
     # <RETURN>   : (0)<T>String
@@ -935,9 +954,8 @@ StringClass()
         echo -e '     StringClass stringLength "$chocolate"'
         echo -e '     SC subString "$chocolate" 1 $(( $(_sc len "$chocolate") - 2 ))"'
         echo -e "\n This example prints:\n\n \t13 \n \tCaramel Koa" 
-        echo -e "\n Note: StringFunctions counts collections starting at 1, not 0. The average person has 10"
-        echo -e " fingers on their hands, and if asked to count them, they will normally start at 1."
-        echo -e " If you have a string of characters > 0, then position 1 is occupied by the first character."
+        echo -e "\n Note: StringFunctions counts collections starting at 1, not 0. If you have a string of"
+        echo -e " characters > 0, then position 1 is occupied by the first character."
         echo ""
 
     ) >&2

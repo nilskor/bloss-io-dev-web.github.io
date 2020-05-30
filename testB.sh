@@ -94,6 +94,15 @@ _regexStringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
 
+_regexStringFind someCrap "href=\"#index\"" index.html '-s'
+
+echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
+
+someLink='<a name="GTK_Tools" class="two" href="/content/GTK3/GTK_Tools.html">GTK+ Tools</a>'
+echo -e "someLink: $someLink"
+_regexStringFind someCrap '(?<=\>)(.+)(?=\<)' "$someLink" '-s'
+echo -e "Trying to find '(?<=\>)(.+)(?=\<)' in '\$someLink' returned: $someCrap \n"
+
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Find and Replace tests                                                             "
@@ -103,10 +112,6 @@ _findReplace someCrap html FROG testFile.html -aw
 echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
 #_findReplace someCrap FROG html testFile.html -aw
 #echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
-
-_subString someCrap "FreddoFrogIsYummyChocolate" 12 5
-
-echo -e "From the string 'FreddoFrogIsYummyChocolate', offset 12, length 5 gives: $someCrap \n"
 
 echo "FreddoFrog      IsYummyChocolate     # the original string"
 _findReplace someCrap [[:space:]][[:space:]] " " 'FreddoFrog      IsYummyChocolate' -a
@@ -155,6 +160,10 @@ echo -e "$someCrap \n"
 
 StringClass subString "${ArrayOfStrings[@]}" 1 $(( $(StringClass stringLength "${ArrayOfStrings[@]}") - 2 ))
 echo ""
+
+_subString someCrap "FreddoFrogIsYummyChocolate" 13 5
+echo -e "From the string 'FreddoFrogIsYummyChocolate', position 13, length 5 gives: $someCrap \n"
+
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Trim tests                                                             "

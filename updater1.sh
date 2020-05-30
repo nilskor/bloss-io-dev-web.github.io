@@ -113,29 +113,53 @@ function step3()            # "Step #3 - work with each html file"
         step3_Echoed=$TRUE
     fi
 
-    local -A _theStringFindResults=()
-    local -A ArrayOfStrings=()      # this must be declared as 'ArrayOfStrings' to use the return result.
+    local _theStringFindResults=""
+    #local -A ArrayOfStrings=()      # this must be declared as 'ArrayOfStrings' to use the return result.
+    local -A arrayOfOldLinks=()
 
-    _regexStringFind2 _theStringFindResults "$oldLinkPattern" "$*"   # where $* is the incoming file
+    _regexStringFind2 _theStringFindResults "$oldLinkPattern" "$*"          # where $* is the incoming file
+    _findReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"    # rename the ArrayOfStrings
+    eval "$_theStringFindResults"                                           # unravel the return result into 'ArrayOfStrings', 
+                                                                            # which is the output of regexStringFind2.
+    
 
-    eval "$_theStringFindResults"   # unravel the return result into 'ArrayOfStrings', 
-                                    # which is the output of regexStringFind2.
-
-    if [[ ${#ArrayOfStrings[@]} -gt 0 ]]
+    if [[ ${#arrayOfOldLinks[@]} -gt 0 ]]
     then
 
-        for string in ${!ArrayOfStrings[@]}         # for each line of <h3><a href="/content/GTK/someFile.html">
-        do                                          # send each line to step 3a for processing
+        for string in ${!arrayOfOldLinks[@]}         # for each line of <h3><a href="/content/GTK/someFile.html">
+        do                                           # send each line to step 3a for processing
 
-            result_3a="$(step3a "${ArrayOfStrings[$string]}")"
+            #result_3a="$(step3a "${ArrayOfStrings[$string]}")"
                                                     # using the output from 3a/b, now replace the line
-            _trim _trimmedResult $result_3a
-            _wsTrim _trimmedResult "$_trimmedResult"
+            #_trim _trimmedResult $result_3a
+            #_wsTrim _trimmedResult "$_trimmedResult"
 
-            echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult\n:"
+            #echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult\n:"
             
-            echo -e "$(_sc inStr '' $_trimmedResult)"
-        
+            local _ret_FullString=""
+            local _ret_IndexLookup=""
+            local _newLinkWithBookmark=""
+            local _oldLinkText=""
+            local _result5=""
+            local -A arrayOldLinkText=()
+            
+            step3a _ret_FullString _ret_IndexLookup "${arrayOfOldLinks[$string]}"
+            #[ ! -z "${_ret_FullString:-}" ] && [ ! -z "${_ret_IndexLookup:-}" ] && echo -e "\n $_ret_FullString, $_ret_IndexLookup \n"
+            
+            _trim _trimmed_FullString $_ret_FullString
+            _wsTrim _new_Link "$_trimmed_FullString"
+            
+            _findReplace _newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_new_Link
+            
+            _regexStringFind _oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
+
+            #_regexStringFind2 _oldLinkText '(?<=\>)(.+)(?=\<)' ${arrayOfOldLinks[$string]}
+            #_findReplace _oldLinkText 'ArrayOfStrings' 'arrayOldLinkText' "$_oldLinkText"
+            #eval "$_oldLinkText"
+            #_subString _result5 "${arrayOldLinkText[@]}" 1 $(_sc len "${arrayOldLinkText[@]}")
+
+            echo -e ":\n  old: ${arrayOfOldLinks[$string]}\n  new: $_new_Link\n bkmk: $_newLinkWithBookmark\n text: $_oldLinkText\n:"
+                    
         done
         
     fi
@@ -151,7 +175,7 @@ function step3a()            # "Step #3a - create the unique file name index loo
         step3a_Echoed=$TRUE
     fi
 
-    foundName=`grep -E -i -o "$hrefPattern" <<< "$@"` || foundIt=""
+    foundName=`grep -E -i -o "$hrefPattern" <<< "$3"` || foundIt=""
 
     if [[ -n $foundName ]]
     then
@@ -160,7 +184,9 @@ function step3a()            # "Step #3a - create the unique file name index loo
         foundName=${foundName//-}     # remove hyphens
         foundName=${foundName//.html} # remove '.html'
         
-        echo -e "$(step3b "$foundName")"    # return the result_3b back to step 3
+        #echo -e "$(step3b "$foundName")"    # return the result_3b back to step 3
+        _result3b="$(step3b "$foundName")"
+        eval "$1=\${_result3b}; $2=\${foundName}"  # return the result_3b back to step 3, as well as the index lookup
     fi
 
 }
