@@ -114,51 +114,41 @@ function step3()            # "Step #3 - work with each html file"
     fi
 
     local _theStringFindResults=""
-    #local -A ArrayOfStrings=()      # this must be declared as 'ArrayOfStrings' to use the return result.
     local -A arrayOfOldLinks=()
+                                                                            # where $@ is the incoming file
+    _regexStringFind2 _theStringFindResults "$oldLinkPattern" "$@"          # then rename the ArrayOfStrings
+                                                                            
+    _findReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
 
-    _regexStringFind2 _theStringFindResults "$oldLinkPattern" "$*"          # where $* is the incoming file
-    _findReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"    # rename the ArrayOfStrings
-    eval "$_theStringFindResults"                                           # unravel the return result into 'ArrayOfStrings', 
-                                                                            # which is the output of regexStringFind2.
-    
+    eval "$_theStringFindResults"                                       # unravel the return result into 'arrayOfOldLinks', 
 
     if [[ ${#arrayOfOldLinks[@]} -gt 0 ]]
     then
 
         for string in ${!arrayOfOldLinks[@]}         # for each line of <h3><a href="/content/GTK/someFile.html">
         do                                           # send each line to step 3a for processing
-
-            #result_3a="$(step3a "${ArrayOfStrings[$string]}")"
-                                                    # using the output from 3a/b, now replace the line
-            #_trim _trimmedResult $result_3a
-            #_wsTrim _trimmedResult "$_trimmedResult"
-
-            #echo -e ":\n old: ${ArrayOfStrings[$string]}\n new: $_trimmedResult\n:"
             
             local _ret_FullString=""
             local _ret_IndexLookup=""
-            local _newLinkWithBookmark=""
-            local _oldLinkText=""
-            local _result5=""
-            local -A arrayOldLinkText=()
+            local _ret_newLinkWithBookmark=""
+            local _ret_oldLinkText=""
             
             step3a _ret_FullString _ret_IndexLookup "${arrayOfOldLinks[$string]}"
-            #[ ! -z "${_ret_FullString:-}" ] && [ ! -z "${_ret_IndexLookup:-}" ] && echo -e "\n $_ret_FullString, $_ret_IndexLookup \n"
             
-            _trim _trimmed_FullString $_ret_FullString
-            _wsTrim _new_Link "$_trimmed_FullString"
+            _trim _ret_trimmedFullString $_ret_FullString
+            _wsTrim _ret_newLink "$_ret_trimmedFullString"
             
-            _findReplace _newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_new_Link
+            _findReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
             
-            _regexStringFind _oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
+            _regexStringFind _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
 
-            #_regexStringFind2 _oldLinkText '(?<=\>)(.+)(?=\<)' ${arrayOfOldLinks[$string]}
-            #_findReplace _oldLinkText 'ArrayOfStrings' 'arrayOldLinkText' "$_oldLinkText"
-            #eval "$_oldLinkText"
-            #_subString _result5 "${arrayOldLinkText[@]}" 1 $(_sc len "${arrayOldLinkText[@]}")
+            _ret_newLink=""
+            _findReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithBookmark"
 
-            echo -e ":\n  old: ${arrayOfOldLinks[$string]}\n  new: $_new_Link\n bkmk: $_newLinkWithBookmark\n text: $_oldLinkText\n:"
+            _findReplace _temp1 "${arrayOfOldLinks[$string]}" "$_ret_newLink" "$@" '-w'
+
+            #echo -e "$_ret_newLink"
+            #echo -e ":\n  old: ${arrayOfOldLinks[$string]}\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"
                     
         done
         
