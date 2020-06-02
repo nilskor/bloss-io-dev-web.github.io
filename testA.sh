@@ -92,8 +92,67 @@ echo -e "$test1"
 pattern="(  )+"
 newStuff=' '
 perl -pe "s/$pattern/$newStuff/g" <<< "$test1"
+echo ""
 
 source ./StringFunctions
 declare chocolate="Caramel Koala"
-StringClass stringLength "$chocolate"
-SC subString "$chocolate" 1 $(( $(_sc len "$chocolate") - 2 ))
+StringClass StringLength "$chocolate"
+SC SubString "$chocolate" 1 $(( $(_sc Len "$chocolate") - 2 ))
+
+# A 'split' function could simply do two substring calls ..
+declare chocolate="CaramelKoala"
+declare -i split=8
+SC SubString "$chocolate" 1 $(( split - 1 ))
+SC SubString "$chocolate" $split '-nl'
+
+# An 'insert' function could simply do a 'split' call
+declare newString="Raspberry"
+result=$(SC SubString "$chocolate" 1 $(( split - 1 )))"$newString"$(SC SubString "$chocolate" $split '-nl')
+echo -e "\n$result \n"
+
+# od --width=32 -t x1 -v -Ad serviceClient.sh > rubbish
+
+CmdSubst()
+{
+    _cmdToRun=$1
+    shift
+    eval "$_cmdToRun="'$("$@"; statusOfLastTask=$?; echo .; exit "$statusOfLastTask")
+                       _statusOfLastTask=$?
+                     '"$_cmdToRun=\${$_cmdToRun%?}"
+    return "$_statusOfLastTask"
+}
+
+ReadFile()
+{
+    local _fileName=""
+    CmdSubst _fileName cat "$2"
+    eval "$1=\${_fileName}"
+}
+
+names=".Netgear
+Hon Hai Precision Ind. Co.
+Apple
+."
+
+CmdSubst _result2 echo -e "$names"
+echo -e "'${_result2}'"
+
+echo -e "'$names'"
+
+CmdSubst _result2 cat scratchpad.txt
+echo -e "${#_result2}"
+
+_result3=$(cat scratchpad.txt)
+echo -e "${#_result3}"
+
+_result3="$(< scratchpad.txt)"
+echo -e "${#_result3}"
+
+ReadFile _result3 scratchpad.txt
+echo -e "${#_result3}, $_result3"
+
+StringClass StringLength "abcde"
+StringClass CountBytes "abcde"
+StringClass CountChars "abcde"
+StringClass CountBytes scratchpad.txt --explain
+StringClass StringLength scratchpad.txt

@@ -116,9 +116,9 @@ function step3()            # "Step #3 - work with each html file"
     local _theStringFindResults=""
     local -A arrayOfOldLinks=()
                                                                             # where $@ is the incoming file
-    _regexStringFind2 _theStringFindResults "$oldLinkPattern" "$@"          # then rename the ArrayOfStrings
+    _StringFind2 _theStringFindResults "$oldLinkPattern" "$@"          # then rename the ArrayOfStrings
                                                                             
-    _findReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
+    _FindReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
 
     eval "$_theStringFindResults"                                       # unravel the return result into 'arrayOfOldLinks', 
 
@@ -135,17 +135,17 @@ function step3()            # "Step #3 - work with each html file"
             
             step3a _ret_FullString _ret_IndexLookup "${arrayOfOldLinks[$string]}"
             
-            _trim _ret_trimmedFullString $_ret_FullString
+            _Trim _ret_trimmedFullString $_ret_FullString
             _wsTrim _ret_newLink "$_ret_trimmedFullString"
             
-            _findReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
+            _FindReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
             
-            _regexStringFind _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
+            _StringFind _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
 
             _ret_newLink=""
-            _findReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithBookmark"
+            _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithBookmark"
 
-            _findReplace _temp1 "${arrayOfOldLinks[$string]}" "$_ret_newLink" "$@" '-w'
+            _FindReplace _temp1 "${arrayOfOldLinks[$string]}" "$_ret_newLink" "$@" '-w'
 
             #echo -e "$_ret_newLink"
             #echo -e ":\n  old: ${arrayOfOldLinks[$string]}\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"

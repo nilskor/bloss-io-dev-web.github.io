@@ -29,15 +29,15 @@ declare -a test1=()
 declare -A test2=()
 declare someCrap
 declare data='some
-dummy extra long
-string that needs counting'
+dummy extrå long
+string that needs cöunting'
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              isNumber test (not yet implemented)                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-printf %f -1e32 &>/dev/null && echo "-1e32 is a number" || echo "-1e32 is not a number"
+printf %f -1e32 &>/dev/null && echo "-1e32 is a number" || echo "-1e32 is not a number \n"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
@@ -50,34 +50,54 @@ declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an assoc
 
 declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array \n"
 
-declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type \n"
+declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type \n\n"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Counting tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-_countLines someCrap "$data"
+_CountBytes someCrap "$data"
+
+echo -e "Byte count is: $someCrap, for the string: $data \n"
+
+_CountBytes someCrap index.html
+
+echo -e "Byte count for index.html is: $someCrap \n"
+
+_CountChars someCrap "$data"
+
+echo -e "Char count is: $someCrap, for the string: $data \n"
+
+_CountChars someCrap index.html
+
+echo -e "Char count for index.html is: $someCrap \n"
+
+_CountLines someCrap "$data"
 
 echo -e "Line count is: $someCrap, for the string: $data \n"
 
-_countLines someCrap index.html
+_CountLines someCrap index.html
 
 echo -e "Line count for index.html is: $someCrap \n"
 
-_countWords someCrap "$data"
+_CountWords someCrap "$data"
 
 echo -e "Word count is: $someCrap, for the string: $data \n"
 
-_countWords someCrap index.html
+_CountWords someCrap index.html
 
 echo -e "Word count for index.html is: $someCrap \n"
 
-_stringLength someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
+_StringLength someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
 
 echo -e "String length for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n"
 
-_stringLength someCrap "$data"
+_CountChars someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
+
+echo -e "Char count for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n"
+
+_StringLength someCrap "$data"
 
 echo -e "String length of '$data' is: $someCrap \n"
 
@@ -86,21 +106,21 @@ echo -e "\n --------------------------------------------------------------------
 echo -e "              Find tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-_regexStringFind someCrap "href=\"#index\"" index.html
+_StringFind someCrap "href=\"#index\"" index.html
 
 echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
 
-_regexStringFind someCrap "^[[:space:]]+<a" index.html
+_StringFind someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
 
-_regexStringFind someCrap "href=\"#index\"" index.html '-s'
+_StringFind someCrap "href=\"#index\"" index.html '-s'
 
 echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
 
 someLink='<a name="GTK_Tools" class="two" href="/content/GTK3/GTK_Tools.html">GTK+ Tools</a>'
 echo -e "someLink: $someLink"
-_regexStringFind someCrap '(?<=\>)(.+)(?=\<)' "$someLink" '-s'
+_StringFind someCrap '(?<=\>)(.+)(?=\<)' "$someLink" '-s'
 echo -e "Trying to find '(?<=\>)(.+)(?=\<)' in '\$someLink' returned: $someCrap \n"
 
 
@@ -108,14 +128,14 @@ echo -e "\n --------------------------------------------------------------------
 echo -e "              Find and Replace tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-_findReplace someCrap html FROG testFile.html -aw
+_FindReplace someCrap html FROG testFile.html -aw
 echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
-#_findReplace someCrap FROG html testFile.html -aw
+#_FindReplace someCrap FROG html testFile.html -aw
 #echo -e "In the file 'testFile.html', we replaced 'FROG' with 'html'. \n"
 
 echo "FreddoFrog      IsYummyChocolate     # the original string"
-_findReplace someCrap [[:space:]][[:space:]] " " 'FreddoFrog      IsYummyChocolate' -a
-echo -e "$someCrap        # the string modified with _findReplace '  ' and -a \n"
+_FindReplace someCrap [[:space:]][[:space:]] " " 'FreddoFrog      IsYummyChocolate' -a
+echo -e "$someCrap        # the string modified with _FindReplace '  ' and -a \n"
 
 echo "FreddoFrog      IsYummyChocolate     # the original string"
 _regexFindReplace someCrap "\s{2,}" " " 'FreddoFrog      IsYummyChocolate' -a
@@ -137,44 +157,44 @@ echo -e "$someCrap               # the string modified with _regexFindReplace '(
 #stringToBeSearched="$sedTest"
 #thePattern="$sedPattern"
 #newString=" "
-#_return_findReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_findReplace=""  # once
-#echo -e "\n'_return_findReplace': $_return_findReplace \n"
+#_ret_findReplace=`sed -r s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _ret_findReplace=""  # once
+#echo -e "\n'_ret_findReplace': $_ret_findReplace \n"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
-echo -e "              regexStringFind2 and subString tests                                                             "
+echo -e "              StringFind2 and SubString tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
 refText='<a name="Migrating_GTK" class="two" href="/content/GTK3/Migrating_GTK.html">Migrating from Previous Versions of GTK+</a>'
 
-_regexStringFind2 someCrap '(?<=\>)(.+)(?=\<)' "$refText"
+_StringFind2 someCrap '(?<=\>)(.+)(?=\<)' "$refText"
 declare -A ArrayOfStrings=()
 echo -e "Before unravelling: $someCrap \n"
 eval "$someCrap"
 echo -e "refText: \"${ArrayOfStrings[@]}\" ; contains ${#ArrayOfStrings[@]} element(s).\n"
 
-_stringLength someLength "${ArrayOfStrings[@]}"
-_subString someCrap "${ArrayOfStrings[@]}" 1 "( $someLength - 2 )"
+_StringLength someLength "${ArrayOfStrings[@]}"
+_SubString someCrap "${ArrayOfStrings[@]}" 1 "( $someLength - 2 )"
 
 echo -e "$someCrap \n"
 
-StringClass subString "${ArrayOfStrings[@]}" 1 $(( $(StringClass stringLength "${ArrayOfStrings[@]}") - 2 ))
+StringClass SubString "${ArrayOfStrings[@]}" 1 $(( $(StringClass StringLength "${ArrayOfStrings[@]}") - 2 ))
 echo ""
 
-_subString someCrap "FreddoFrogIsYummyChocolate" 13 5
+_SubString someCrap "FreddoFrogIsYummyChocolate" 13 5
 echo -e "From the string 'FreddoFrogIsYummyChocolate', position 13, length 5 gives: $someCrap \n"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Trim tests                                                             "
 echo -e " ----------------------------------------------------------------------------------\n"
-echo -e " rTrim:"
+echo -e " RTrim:"
 echo -e "=======\n"
 
 echo -e "'Freddo         Frog                   '      # original text \n"
 
-_rTrim someCrap "Freddo         Frog                   "
-echo -e "${#someCrap} is the length of the rTrim'd text \n\n"
+_RTrim someCrap "Freddo         Frog                   "
+echo -e "${#someCrap} is the length of the RTrim'd text \n\n"
 
 echo -e " wsTrim:"
 echo -e "=======\n"

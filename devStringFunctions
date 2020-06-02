@@ -18,12 +18,12 @@ set -o pipefail
 IFS=$'\n\t'
 
 # Set variables:
-declare -ri  TRUE=0          # g - global scope; r - read-only; i - integer; x - exportable
+declare -ri  TRUE=0             # g - global scope; r - read-only; i - integer; x - exportable
 declare -ri FALSE=1
 
-declare RED='\033[1;31m'     # actually a light Red to be exact :)
+declare RED='\033[1;31m'        # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
-declare NC='\033[0m'         # No Color
+declare NC='\033[0m'            # No Color
 
 declare -a  theArgs=()          # a - indexed array
 declare -a htmlLines=()
@@ -85,167 +85,14 @@ function readInput()                # bash
     done
 }
 
-function _CountBytes()              # bash wc gawk
+function _countLines()              # bash wc gawk
 {
-    # <SIGNATURE>: (0)_CountBytes (1)_result (2)someString (3?)options
-    # <RETURN>   : (0)<T>Integer
-    # <OPTIONS>  : (0) -hd (1) --explain
-    # <BACKEND>  : bash, wc, gawk
-    # <TEMPLATE> : _CountBytes _theResult "someString"
-
-    # START: pre-processor to remove '-hd' from the argument list.
-    local -i n=0
-    for arg in $@
-    do
-        let "n+=1"
-        if [[ $arg == "-hd" ]]
-        then
-            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
-        fi
-    done
-    # END
-
-    local -i _ret_CountBytes=0      # arg1 - _result becomes _ret_CountBytes
-    local stringToBeSearched=""
-
-    # START: main part of the function
-    if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
-    then
-
-        # START - determine what the searched string will be
-        if [[ $# -ge 2 ]] && [[ -f $2  ]]
-        then
-                stringToBeSearched="$(< $2)"
-        
-        elif [[ $# -ge 2 ]]
-        then
-                stringToBeSearched="$2"
-        
-        elif [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
-        then
-                stringToBeSearched="${htmlLines[@]}"
-        fi
-        # END of searchedString
-
-        # START - do the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc StringFind '(--explain)' ${3:-}) -gt 0 ]]
-        then
-            echo -e ":: START EXPLANATION ::====================================================\n"
-            od --width=16 -t x1z -v -Ad <<<"$stringToBeSearched"
-            echo -e "\n:: END   EXPLANATION ::===================================================="
-        fi
-        # END doing the optionals
-        
-        #main logic
-        _ret_CountBytes=$(wc --bytes <<< "${stringToBeSearched}")
-        eval "$1=\${_ret_CountBytes}"
-
-    # END: of the main part
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
-    then
-
-        echo -e "\n ${GREEN}CountBytes${NC} inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
-        echo -e " If the count of bytes seems off by 1, try using ${GREEN}--explain${NC} as the last parameter. \n"
-        echo -e "\t eg.  CountBytes inputFileName --explain \n"
-        
-    else
-
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_CountBytes _result --help"
-
-    fi
-    # END of help section
-    
-}
-
-function _CountChars()              # bash wc gawk
-{
-    # <SIGNATURE>: (0)_CountChars (1)_result (2)someString (3?)options
-    # <RETURN>   : (0)<T>Integer
-    # <OPTIONS>  : (0) -hd (1) --explain
-    # <BACKEND>  : bash, wc, gawk
-    # <TEMPLATE> : _CountChars _theResult "someString"
-
-    # START: pre-processor to remove '-hd' from the argument list.
-    local -i n=0
-    for arg in $@
-    do
-        let "n+=1"
-        if [[ $arg == "-hd" ]]
-        then
-            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
-        fi
-    done
-    # END
-
-    local -i _ret_CountChars=0      # arg1 - _result becomes _ret_CountChars
-    local stringToBeSearched=""
-
-    # START: main part of the function
-    if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
-    then
-
-        # START - determine what the searched string will be
-        if [[ $# -ge 2 ]] && [[ -f $2  ]]
-        then
-                stringToBeSearched="$(< $2)"
-        
-        elif [[ $# -ge 2 ]]
-        then
-                stringToBeSearched="$2"
-        
-        elif [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
-        then
-                stringToBeSearched="${htmlLines[@]}"
-        fi
-        # END of searchedString
-        
-        # START - do the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc StringFind '(--explain)' ${3:-}) -gt 0 ]]
-        then
-            echo -e ":: START EXPLANATION ::====================================================\n"
-            od --width=16 -t x1z -v -Ad <<<"$stringToBeSearched"
-            echo -e "\n:: END   EXPLANATION ::===================================================="
-        fi
-        # END doing the optionals
-
-        #main logic
-
-        _ret_CountChars=$(wc --chars <<< "${stringToBeSearched}")
-        #_ret_CountChars=$(( _ret_CountChars - 1 ))
-        eval "$1=\${_ret_CountChars}"
-
-    # END: of the main part
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
-    then
-
-        echo -e "\n CountChars inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
-        echo -e " If the count of characters seems off by 1, try using --explain as the last parameter. \n"
-        echo -e "\t eg.  CountChars inputFileName --explain \n"
-        
-    else
-
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_CountChars _result --help"
-
-    fi
-    # END of help section
-    
-}
-
-function _CountLines()              # bash wc gawk
-{
-    # <SIGNATURE>: (0)_CountLines (1)_result (2)someString
+    # <SIGNATURE>: (0)_countLines (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash, wc, gawk
-    # <TEMPLATE> : _CountLines _theResult "someString"
 
-    # START: pre-processor to remove '-hd' from the argument list.
+    # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
     do
@@ -255,197 +102,126 @@ function _CountLines()              # bash wc gawk
             set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
         fi
     done
-    # END
 
-    local -i _ret_CountLines=0      # arg1 - _result becomes _ret_CountLines
-    local stringToBeSearched=""
+    local -i _return_countLines
 
-    # START: main part of the function
-    if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
+    if [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
+    then
+        #echo "${#htmlLines[@]}"
+        _return_countLines="${#htmlLines[@]}"
+        eval "$1=\${_return_countLines}"
+
+    elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
     then
 
-        # START - determine what the searched string will be
-        if [[ $# -ge 2 ]] && [[ -f $2  ]]
-        then
-                stringToBeSearched="$(< $2)"
-        
-        elif [[ $# -ge 2 ]]
-        then
-                stringToBeSearched="$2"
-        
-        elif [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
-        then
-                stringToBeSearched="${htmlLines[@]}"
-        fi
-        # END of searchedString
-        
-        #main logic
-        
-        _ret_CountLines=$(wc --lines <<< "${stringToBeSearched}")
-        eval "$1=\${_ret_CountLines}"
+        echo -e "\n countLines inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
 
-    # END: of the main part
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
+    elif [[ -f $2  ]]
     then
 
-        echo -e "\n CountLines inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
-        
+        declare -i result="$(wc --lines $2 | gawk {'print $1'})" # gawk print $1 shouldn't be changed ..
+        #if [[ $result -gt 1 ]]
+        #then
+        #        result=$((++result))
+        #fi
+        #echo "$result"
+        returnResult="$result"
+        eval "$1=\${returnResult}"
+
     else
 
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_CountLines _result --help"
+        #echo -e "Just about to count lines .. $2"
+        #declare -i result="$(wc --lines <<< $2)"
+        declare -i result=$(wc --lines <<< "${2}")
+        #echo -e "Just did the count and found $result lines in $2."
+        #if [[ $result -gt 1 ]]
+        #then
+        #        result=$((++result))
+        #fi
+
+        #echo -e "Number of elements in htmlLines is: ${#htmlLines[@]}, ${htmlLines[@]}"
+        #echo "here"
+        if [[ ${#htmlLines[@]} -gt 0 ]]
+        then
+            result+=${#htmlLines[@]}
+
+        fi
+
+        #echo "$result"
+
+        printf -v _return_countLines %q $result
+        #_return_countLines="freddo frog"
+        eval "$1=\${_return_countLines}"
 
     fi
-    # END of help section
-    
+
 }
 
-function _CountWords()              # bash wc gawk
+function _countWords()              # bash wc gawk
 {
-    # <SIGNATURE>: (0)_CountWords (1)_result (2)someString
+    # <SIGNATURE>: (0)_countWords (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash, wc, gawk
-    # <TEMPLATE> : _CountWords _theResult "someString"
 
-    # START: pre-processor to remove '-hd' from the argument list.
+    # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
     for arg in $@
     do
         let "n+=1"
+        #echo -e "Individual arg is: $arg, and index is $n"
         if [[ $arg == "-hd" ]]
         then
             set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
         fi
     done
-    # END
 
-    local -i _ret_CountWords=0      # arg1 - _result becomes _ret_CountWords
-    local stringToBeSearched=""
+    local -i _return_countWords
+    local -i result=0
 
-    # START: main part of the function
-    if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
+    #if [[ $# -eq 0 || -z $1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
+    if [[ $# -eq 1 || -z $2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
     then
 
-        # START - determine what the searched string will be
-        if [[ $# -ge 2 ]] && [[ -f $2  ]]
-        then
-                stringToBeSearched="$(< $2)"
-        
-        elif [[ $# -ge 2 ]]
-        then
-                stringToBeSearched="$2"
-        
-        elif [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
-        then
-                stringToBeSearched="${htmlLines[@]}"
-        fi
-        # END of searchedString
-        
-        #main logic
-        
-        _ret_CountWords=$(wc --words <<< "${stringToBeSearched}")
-        eval "$1=\${_ret_CountWords}"
+        returnResult="${#htmlLines[@]}"
+        eval "$1=\${returnResult}"
 
-    # END: of the main part
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
+    elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
     then
 
-        echo -e "\n CountWords inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
-        
+        echo -e "\n countWords inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
+
+    elif [[ -f $2  ]]
+    then
+
+        result="$(wc --words $2 | gawk {'print $1'})" # gawk print $1 shouldn't be changed ..
+
+        printf -v _return_countWords %q $result
+        eval "$1=\${_return_countWords}"
+
     else
 
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_CountWords _result --help"
+        result=$(wc --words <<< "${2}")
+
+        if [[ ${#htmlLines[@]} -gt 0 ]]
+        then
+            result+=${#htmlLines[@]}
+
+        fi
+
+        printf -v _return_countWords %q $result
+        eval "$1=\${_return_countWords}"
 
     fi
-    # END of help section
-    
+
 }
 
-function _StringLength()            # bash wc gawk
+function _stringLength()            # bash                      # alias len
 {
-    # <SIGNATURE>: (0)_StringLength (1)_result (2)someString
+    # <SIGNATURE>: (0)_stringLength (1)_result (2)someStringToSearch
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
-    # <BACKEND>  : bash, wc, gawk
-    # <TEMPLATE> : _StringLength _theResult "someString"
-
-    # START: pre-processor to remove '-hd' from the argument list.
-    local -i n=0
-    for arg in $@
-    do
-        let "n+=1"
-        if [[ $arg == "-hd" ]]
-        then
-            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
-        fi
-    done
-    # END
-
-    local -i _ret_StringLength=0      # arg1 - _result becomes _ret_StringLength
-    local stringToBeSearched=""
-
-    # START: main part of the function
-    if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
-    then
-
-        # START - determine what the searched string will be
-        if [[ $# -ge 2 ]] && [[ -f $2  ]]
-        then
-                stringToBeSearched="$(< $2)"
-        
-        elif [[ $# -ge 2 ]]
-        then
-                stringToBeSearched="$2"
-        
-        elif [[ $# -eq 1 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
-        then
-                stringToBeSearched="${htmlLines[@]}"
-        fi
-        # END of searchedString
-        
-        #main logic
-        
-        _ret_StringLength=${#stringToBeSearched}
-        eval "$1=\${_ret_StringLength}"
-
-    # END: of the main part
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
-    then
-
-        echo -e "\n ${GREEN}StringLength${NC} inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
-        echo -e " ${GREEN}StringLength${NC} will count what can be echoed to stdout (eg. ${GREEN}what's visible on screen${NC}). This"
-        echo -e " means it will typically ${GREEN}ignore the trailing 'Line Feed'${NC} or 'new line' character that is"
-        echo -e " often there. Conversely, the CountBytes / CountChars functions ${GREEN}DO${NC} count the 'LF' character."
-        echo -e " Note: it is a function of Bash as the shell that removes the final trailing new line character.\n"
-        echo -e " eg.  StringLength 'abcdefghijklmnopqrstuvwxyz' gives an answer of 26. \n"
-        echo -e "      CountBytes   'abcdefghijklmnopqrstuvwxyz' gives an answer of 27. \n"
-        echo -e "      CountChars   'abcdefghijklmnopqrstuvwxyz' gives an answer of 27. \n"
-
-    else
-
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_StringLength _result --help"
-
-    fi
-    # END of help section
-    
-}
-
-function _StringFind()              # bash grep -P head         # alias InStr
-{
-    # <SIGNATURE>: (0)_StringFind (1)_result (2)searchPattern (3)someStringToSearch (4?)options
-    # <RETURN>   : (0)<T>Integer
-    # <OPTIONS>  : (0) -hd (1) -s
-    # <BACKEND>  : bash, grep -P, head
-    # <TEMPLATE> : _StringFind _theResult "searchPattern" "someStringToSearch"
+    # <BACKEND>  : bash
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -460,18 +236,80 @@ function _StringFind()              # bash grep -P head         # alias InStr
 
     # main part of the function
 
-    local -i _ret_regexStringFind=0
+    local -i _return_stringLength
+
+    declare -i result=0
+
+    if [[ $# -eq 1 || -z $2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
+    then
+
+        returnResult="${#htmlLines[@]}"
+        returnResult=$(( returnResult ))
+        eval "$1=\${returnResult}"
+
+    elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" || -z $2 ]]
+    then
+        echo -e "\n stringLength someString or 'some continuous string that is quoted'\n"
+
+    elif [[ $# -eq 2 ]] && [[ -f $2  ]]
+    then
+        stringToBeSearched="$(< $2)"
+        result="$(( ${#stringToBeSearched} ))"
+        printf -v _return_stringLength %q $result
+        eval "$1=\${_return_stringLength}"
+
+    else
+
+        result="$(( ${#2} ))"
+        printf -v _return_stringLength %q $result
+        eval "$1=\${_return_stringLength}"
+
+    fi
+
+}
+
+function _regexStringFind()         # bash grep -P head         # alias inStr
+{
+    # <SIGNATURE>: (0)_regexStringFind (1)_result (2)searchPattern (3)someStringToSearch (4?)options
+    # <RETURN>   : (0)<T>Integer
+    # <OPTIONS>  : (0) -hd (1) -s
+    # <BACKEND>  : bash, grep -P, head
+    # <TEMPLATE> : _regexStringFind _theResult "searchPattern" "someStringToSearch"
+
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+    local -i _return_regexStringFind=0
     local -i result=0
     local stringToBeSearched=""
     local -i stringNotPosition=$FALSE
 
-    # START: main part of the function
-    if [[ $# -ge 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
+    if [[ $# -le 1 ]]
+    then
+        echo -e "\n missing arguments"
+        echo -e " The command syntax is: regexStringFind searchPattern someStringToSearch"
+        echo -e " Regular Expressions are allowed in 'searchPattern'"
+        echo -e " regexStringFind returns a number greater than 0 if successful."
+        echo -e " regexStringFind assumes the first character occupies position #1\n"
+        echo -e " If the switch '-s' is added as the last parameter, then the string is"
+        echo -e " returned, rather than the position.\n"
+
+    elif [[ $# -ge 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
     then
         
-        # START - determine what the searched string will be
         if [[ $# -ge 3 ]] && [[ -f $3  ]]
         then
+                #stringToBeSearched="$(sed -rn 's/.*/&/p' $3)"
                 stringToBeSearched="$(< $3)"
         
         elif [[ $# -ge 3 ]]
@@ -482,14 +320,14 @@ function _StringFind()              # bash grep -P head         # alias InStr
         then
                 stringToBeSearched="${htmlLines[@]}"
         fi
-        # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${4:-} ]] && [[ $(_sc StringFind '([-][s]{1,}\b)' ${4:-}) -gt 0 ]]
+        if [[ ! -z ${4:-} ]] && [[ $(_sc regexStringFind '([-][s]{1,}\b)' ${4:-}) -gt 0 ]]
         then
             stringNotPosition=$TRUE
         fi
         # END setting the booleans
+
 
         thePattern="$2"
 
@@ -506,42 +344,22 @@ function _StringFind()              # bash grep -P head         # alias InStr
 
         if [[ $stringNotPosition -eq $FALSE ]]
         then
-            printf -v _ret_regexStringFind %q $result
-            eval "$1=\${_ret_regexStringFind}"
+            printf -v _return_regexStringFind %q $result
+            eval "$1=\${_return_regexStringFind}"
         else
             eval "$1=\${foundIt}"
         fi
-    
-    # END: of the main part
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
-    then
-
-        echo -e "\n The command syntax is: StringFind searchPattern someStringToSearch \n"
-        echo -e " POSIX Extended Regular Expressions are allowed in 'searchPattern'"
-        echo -e " StringFind returns a number greater than 0 if successful."
-        echo -e " StringFind assumes the first character occupies position #1\n"
-        echo -e " If the switch '-s' is added as the last parameter, then the string is"
-        echo -e " returned, rather than the position.\n"
-        
-    else
-
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_StringFind _result --help"
 
     fi
-    # END of help section
 
 }
 
-function _StringFind2()             # bash grep -P
+function _regexStringFind2()        # bash grep -P
 {
-    # <SIGNATURE>: (0)_StringFind2 (1)_resultArray (2)searchPattern (3)someStringToSearch
+    # <SIGNATURE>: (0)_regexStringFind2 (1)_resultArray (2)searchPattern (3)someStringToSearch
     # <RETURN>   : (0)<T>AADS - Associative Array Definition String; always named 'ArrayOfStrings'
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash, grep -P
-    # <TEMPLATE> : _StringFind2 _theResult "searchPattern" "someStringToSearch"
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -556,11 +374,18 @@ function _StringFind2()             # bash grep -P
 
     local -A ArrayOfStrings=()
 
-    # START: main part of the function
-    if [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
+    # main part of the function
+
+    if [[ $# -le 2 ]]
+    then
+        echo -e "\n missing arguments.\n"
+        echo -e " The command syntax is: regexStringFind2 searchPattern someStringToSearch"
+        echo -e " The return result is an Associative array eg. declare -A someVariable"
+        echo -e " The return result creates a hard-coded variable name - 'ArrayOfStrings'."
+
+    elif [[ $# -eq 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
     then
         
-        # START - determine what the searched string will be
         if [[ $# -eq 3 ]] && [[ -f $3  ]]
         then
                 stringToBeSearched="$(< "$3")"
@@ -573,58 +398,66 @@ function _StringFind2()             # bash grep -P
         then
                 stringToBeSearched="${htmlLines[@]}"
         fi
-        # END of searchedString
-
-        #main logic
 
         thePattern="$2"
 
+        #foundIt=`grep -P -i -o -m 1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
         foundIt=`grep -P -i -o "$thePattern" <<< "$stringToBeSearched"` || foundIt=""
 
         if [[ ${#foundIt} -gt 0 ]]
         then
-
             foundIt=($foundIt)
-
+            #declare -p ArrayOfStrings
             for item in ${foundIt[@]}
             do
+                #echo -e "$item"
+                #:
                 searchString="$item"
+                _return_regexStringFind_String="$foundIt"
                 rest=${stringToBeSearched#*$searchString}
                 result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
                 ArrayOfStrings[$result]="$item"
 
             done
         fi
+        #echo -e "Length of ArrayOfStrings[] is: ${#ArrayOfStrings[@]}"
+        if [[ ${#ArrayOfStrings[@]} -gt 0 ]]
+        then
+            for item in ${!ArrayOfStrings[@]}
+            do
+                #echo "$item, ${ArrayOfStrings[$item]}"
+                :
+            done
+        fi
 
         eval "$1=\$(declare -p ArrayOfStrings)"
 
-    # END: of the main part
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
-    then
-
-        echo -e "\n The command syntax is: StringFind2 searchPattern someStringToSearch"
-        echo -e " The return result is an Associative array eg. declare -A someVariable"
-        echo -e " The return result creates a hard-coded variable name - 'ArrayOfStrings'."
+        #anyRepeats
         
-    else
+        #if [[ ${#foundIt} -gt 0 ]]
+        #then
+        #    searchString="$foundIt"
+        #    _return_regexStringFind_String="$foundIt"
+        #    rest=${stringToBeSearched#*$searchString}
+        #    result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+        #else
+        #    result=0
+        #fi
 
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_StringFind2 _result --help"
+        #printf -v _return_regexStringFind_Index %q $result
+        #eval "$1=\${_return_regexStringFind_Index}"
+        #eval "$2=\${_return_regexStringFind_String}"_resultArray
 
     fi
-    # END of help section
 
 }
 
-function _FindReplace()             # bash
+function _findReplace()             # bash
 {
-    # <SIGNATURE>: (0)_FindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
+    # <SIGNATURE>: (0)_findReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd (1) -a or -w or -aw
     # <BACKEND>  : bash
-    # <TEMPLATE> : _FindReplace _theResult "oldString/pattern" "newString" "someStringToSearch"
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -639,7 +472,9 @@ function _FindReplace()             # bash
 
     # main part of the function
 
-    local _ret_findReplace=""
+    #echo -e "@ is: $@, which is equal to $#. htmlLines is ${#htmlLines[@]}."
+
+    local _return_findReplace=""
     local -i doAll=$FALSE
     local -i writeFile=$FALSE
 
@@ -679,22 +514,22 @@ function _FindReplace()             # bash
         if [[ $doAll == $FALSE ]]
         then
             #echo -e "$stringToBeSearched; $thePattern; $newString;"
-            _ret_findReplace="${stringToBeSearched/${thePattern}/${newString}}"
+            _return_findReplace="${stringToBeSearched/${thePattern}/${newString}}"
         else
-            _ret_findReplace="${stringToBeSearched//${thePattern}/${newString}}"
+            _return_findReplace="${stringToBeSearched//${thePattern}/${newString}}"
         fi
 
         if [[ $writeFile == $TRUE ]]
         then
-            echo "$_ret_findReplace">$4
+            echo "$_return_findReplace">$4
         fi
 
-        eval "$1=\${_ret_findReplace}"
+        eval "$1=\${_return_findReplace}"
 
 
     elif [[ $# -eq 1 || $2 == "-?" || $2 == "--help" || $2 == "-h" ]]
     then
-        echo -e " \n The command syntax is: FindReplace oldString newString someStringToSearch\n"
+        echo -e " \n The command syntax is: findReplace oldString newString someStringToSearch\n"
         echo -e " someStringToSearch may be: <someString> or <someFile> or <Here-document> or <Here-string>"
         echo -e " Giving more than 4 parameter means the extras will be ignored, except! :"
         echo -e " - if you provide -a on the end, then a 'Replace All' will occur."
@@ -707,7 +542,7 @@ function _FindReplace()             # bash
 
     else
         echo -e "\n Error - missing arguments."
-        eval "_FindReplace _result --help"
+        eval "_findReplace _result --help"
     fi
 
 }
@@ -718,7 +553,6 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd (1) -a or -w or -aw.
     # <BACKEND>  : bash, StringClass, perl -pe
-    # <TEMPLATE> : _regexFindReplace _theResult "oldString/pattern" "newString" "someStringToSearch"
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -733,7 +567,7 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
     # main part of the function
 
-    local _ret_regexFindReplace=""
+    local _return_regexFindReplace=""
     local -i doAll=$FALSE
     local -i writeFile=$FALSE
     local stringToBeSearched=""
@@ -758,15 +592,25 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${5:-} ]] && [[ $(_sc StringFind '([-]w*[a]{1,}w*\b)' ${5:-}) -gt 0 ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc regexStringFind '([-]w*[a]{1,}w*\b)' ${5:-}) -gt 0 ]]
         then
             doAll=$TRUE
         fi
 
-        if [[ ! -z ${5:-} ]] && [[ $(_sc StringFind '([-]a*[w]{1,}a*\b)' ${5:-}) -gt 0 ]] && [[ -f $4  ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc regexStringFind '([-]a*[w]{1,}a*\b)' ${5:-}) -gt 0 ]] && [[ -f $4  ]]
         then
             writeFile=$TRUE
         fi
+        # END setting the booleans
+
+        #elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-w" ]] && [[ -f $4  ]]
+        #then
+        #    writeFile=$TRUE
+        #
+        #elif [[ ! -z ${5:-} ]] && [[ ${5:-} == "-aw" ]] && [[ -f $4  ]]
+        #then
+        #    doAll=$TRUE && writeFile=$TRUE
+        #fi
         # END setting the booleans
 
         thePattern="${2:-}"
@@ -774,22 +618,22 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
         if [[ $doAll == $FALSE ]]
         then
-            _ret_regexFindReplace=`perl -pe s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _ret_regexFindReplace=""  # once
+            _return_regexFindReplace=`perl -pe s/"$thePattern"/"$newString"/ <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # once
         else
-            _ret_regexFindReplace=`perl -pe s/"$thePattern"/"$newString"/g <<< "$stringToBeSearched"` || _ret_regexFindReplace=""  # all
+            _return_regexFindReplace=`perl -pe s/"$thePattern"/"$newString"/g <<< "$stringToBeSearched"` || _return_regexFindReplace=""  # all
         fi
 
         if [[ $writeFile == $TRUE ]]
         then
-            echo "$_ret_regexFindReplace">$4
+            echo "$_return_regexFindReplace">$4
         fi
 
-        eval "$1=\${_ret_regexFindReplace}"
+        eval "$1=\${_return_regexFindReplace}"
 
     # START - echo out the Help section
     elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
     then
-        echo -e " \n The command syntax is: FindReplace oldString newString someStringToSearch\n"
+        echo -e " \n The command syntax is: findReplace oldString newString someStringToSearch\n"
         echo -e " someStringToSearch may be: <someString> or <someFile> or <Here-document> or <Here-string>"
         echo -e " Giving more than 4 parameter means the extras will be ignored, except! :"
         echo -e " - if you provide -a on the end, then a 'Replace All' will occur."
@@ -806,13 +650,12 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
 }
 
-function _SubString()               # bash                      # alias mid
+function _subString()               # bash                      # alias mid
 {
-    # <SIGNATURE>: (0)_SubString (1)_result (2)someStringToSearch (3)offset (4)length
+    # <SIGNATURE>: (0)_subString (1)_result (2)someStringToSearch (3)offset (4)length
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd (1) -nl
     # <BACKEND>  : bash
-    # <TEMPLATE> : _SubString _theResult "someStringToSearch" offset length
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -827,7 +670,7 @@ function _SubString()               # bash                      # alias mid
 
     # main part of the function
 
-    local _ret_subString=0
+    local _return_subString=0
     local -i noLength=$FALSE
 
     if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
@@ -859,47 +702,46 @@ function _SubString()               # bash                      # alias mid
 
         if [[ $noLength == $FALSE ]]
         then
-            _ret_subString="${stringToBeSearched:${theOffset}:${theLength}}"
+            _return_subString="${stringToBeSearched:${theOffset}:${theLength}}"
         else
-            _ret_subString="${stringToBeSearched:${theOffset}}"
+            _return_subString="${stringToBeSearched:${theOffset}}"
         fi
 
-        eval "$1=\${_ret_subString}"
+        eval "$1=\${_return_subString}"
 
     elif [[ $# -eq 1 || ${2:-} == "-?" || ${2:-} == "--help" || ${2:-} == "-h" ]]
     then
-        echo -e "\n Extract and return a SubString from within a larger piece of text or file. \n"
-        echo -e " ${GREEN}SubString someStringToSearch   offset length${NC}"
-        echo -e " ${GREEN}SubString someFileToSearch.txt offset length${NC}\n"
+        echo -e "\n Extract and return a subString from within a larger piece of text or file. \n"
+        echo -e " ${GREEN}subString someStringToSearch   offset length${NC}"
+        echo -e " ${GREEN}subString someFileToSearch.txt offset length${NC}\n"
         echo -e " offset & length need to be whole +/- numbers eg. integers"
         echo -e " offset means: the position X number characters from the start of 'someStringToSearch'. \n"
         echo -e " It's ok to substitute '-nl' as a length to indicate 'no length', in which case,"
         echo -e " the rest of 'someStringToSearch' is returned, starting from offset. \n"
-        echo -e " ${GREEN}SubString FreddoFrogIsYummyChocolate 12 5    will return 'Yummy'"
-        echo -e " SubString FreddoFrogIsYummyChocolate 12 -nl  will return 'YummyChocolate'"
-        echo -e " SubString FreddoFrogIsYummyChocolate 12 -4   will return 'YummyChoco'${NC} \n"
+        echo -e " ${GREEN}subString FreddoFrogIsYummyChocolate 12 5    will return 'Yummy'"
+        echo -e " subString FreddoFrogIsYummyChocolate 12 -nl  will return 'YummyChocolate'"
+        echo -e " subString FreddoFrogIsYummyChocolate 12 -4   will return 'YummyChoco'${NC} \n"
         echo -e " A negative length means: come from the back of 'someStringToSearch', unlike"
         echo -e " a positive length, which means come forward from the offset position. \n"
         echo -e " See https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion \n" 
         echo -e " Giving more than 3 parameter means the extras will be ignored. \n"
         echo -e " -hd and Heredocs/Herestrings are valid as input eg. :\n"
-        echo -e " -   ${GREEN}SubString -hd 346 -7${NC}  or  ${GREEN}SubString 421 5 -hd${NC}  or  "
-        echo -e " -   ${GREEN}SubString 76 2 <<EOF${NC}  or  ${GREEN}SubString 88 12 <<<someString${NC} \n"
+        echo -e " -   ${GREEN}subString -hd 346 -7${NC}  or  ${GREEN}subString 421 5 -hd${NC}  or  "
+        echo -e " -   ${GREEN}subString 76 2 <<EOF${NC}  or  ${GREEN}subString 88 12 <<<someString${NC} \n"
 
     else
         echo -e "\n ${RED}Error - missing arguments.${NC}"
-        eval "_SubString _result --help"
+        eval "_subString _result --help"
     fi
  
 }
 
-function _Trim()                    # bash
+function _trim()                    # bash
 {
-    # <SIGNATURE>: (0)_Trim (1)_result (2)someStringToTrim
+    # <SIGNATURE>: (0)_trim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash
-    # <TEMPLATE> : _Trim _theResult "someStringToTrimBothFrontAndBack"
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -915,7 +757,7 @@ function _Trim()                    # bash
     # main part of the function
 
     local var="$2"
-    #local _ret_trim
+    #local _return_trim
 
     # remove leading whitespace characters
     var="${var#"${var%%[![:space:]]*}"}"
@@ -923,12 +765,12 @@ function _Trim()                    # bash
     # remove trailing whitespace characters
     var="${var%"${var##*[![:space:]]}"}"   
     
-    printf -v _ret_trim '%s' "$var"
-    eval "$1=\${_ret_trim}"
+    printf -v _return_trim '%s' "$var"
+    eval "$1=\${_return_trim}"
 
 }
 
-function _LTrim()                   # bash
+function _lTrim()                   # bash
 {
     # <SIGNATURE>: (0)_Ltrim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
@@ -949,17 +791,17 @@ function _LTrim()                   # bash
     # main part of the function
 
     local var="$2"
-    #local _ret_trim
+    #local _return_trim
 
     # remove leading whitespace characters
     var="${var#"${var%%[![:space:]]*}"}"
     
-    printf -v _ret_trim '%s' "$var"
-    eval "$1=\${_ret_trim}"
+    printf -v _return_trim '%s' "$var"
+    eval "$1=\${_return_trim}"
 
 }
 
-function _RTrim()                   # bash
+function _rTrim()                   # bash
 {
     # <SIGNATURE>: (0)_Rtrim (1)_result (2)someStringToTrim
     # <RETURN>   : (0)<T>String
@@ -980,13 +822,13 @@ function _RTrim()                   # bash
     # main part of the function
 
     local var="$2"
-    local _ret_trim
+    local _return_trim
 
     # remove trailing whitespace characters
     var="${var%"${var##*[![:space:]]}"}"   
     
-    printf -v _ret_trim '%s' "$var"
-    eval "$1=\${_ret_trim}"
+    printf -v _return_trim '%s' "$var"
+    eval "$1=\${_return_trim}"
 
 }
 
@@ -1010,7 +852,7 @@ function _wsTrim()                  # StringClass (perl -pe)
 
     # main part of the function
 
-    local _ret_wsTrim=""
+    local _return_wsTrim=""
     local _duplicateWSPattern='\s{2,}'            # these are single quoted,
     local _fullStops='\b\s+[.]'                  # to stop bash from interpreting
     local -i doSingle=$FALSE
@@ -1034,24 +876,24 @@ function _wsTrim()                  # StringClass (perl -pe)
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc StringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 || $(_sc StringFind '([-][f]{1,}\b)' ${3:-}) -gt 0 ]]
+        if [[ ! -z ${3:-} ]] && [[ $(_sc regexStringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 || $(_sc regexStringFind '([-][f]{1,}\b)' ${3:-}) -gt 0 ]]
         then
             doSingle=$TRUE
         fi
         # END setting the booleans
 
-        _ret_wsTrim="$stringToBeSearched"
+        _return_wsTrim="$stringToBeSearched"
 
         if [[ $doSingle == $FALSE ]]
         then
-            _regexFindReplace _ret_Temp   "$_duplicateWSPattern" ' ' "$stringToBeSearched" "-a"  # all
-            _regexFindReplace _ret_wsTrim  $_fullStops           '.' "$_ret_Temp"       "-a"  # all
+            _regexFindReplace _return_Temp   "$_duplicateWSPattern" ' ' "$stringToBeSearched" "-a"  # all
+            _regexFindReplace _return_wsTrim  $_fullStops           '.' "$_return_Temp"       "-a"  # all
 
         else
-            _regexFindReplace _ret_wsTrim "$_duplicateWSPattern" " " "$stringToBeSearched"       # first/single
+            _regexFindReplace _return_wsTrim "$_duplicateWSPattern" " " "$stringToBeSearched"       # first/single
         fi        
     
-        eval "$1=\${_ret_wsTrim}"
+        eval "$1=\${_return_wsTrim}"
 
 
     # START - echo out the Help section
@@ -1105,8 +947,8 @@ StringClass()
         echo -e " This is really only relevant when embedding one function call inside another eg.\n"
         echo -e '     source ./StringFunctions'
         echo -e '     declare chocolate="Caramel Koala"'
-        echo -e '     StringClass StringLength "$chocolate"'
-        echo -e '     SC SubString "$chocolate" 1 $(( $(_sc Len "$chocolate") - 2 ))"'
+        echo -e '     StringClass stringLength "$chocolate"'
+        echo -e '     SC subString "$chocolate" 1 $(( $(_sc len "$chocolate") - 2 ))"'
         echo -e "\n This example prints:\n\n \t13 \n \tCaramel Koa" 
         echo -e "\n Note: StringFunctions counts collections starting at 1, not 0. If you have a string of"
         echo -e " characters > 0, then position 1 is occupied by the first character."
@@ -1119,73 +961,62 @@ StringClass()
         test "$(type -t "$1")" = "function"
     )
 
-    CountBytes()
+    countLines()
     (
         local _result
-        _CountBytes _result "$@"
+        _countLines _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    CountChars()
+    countWords()
     (
         local _result
-        _CountChars _result "$@"
+        _countWords _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    CountLines()
+    stringLength()
     (
         local _result
-        _CountLines _result "$@"
+        _stringLength _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    CountWords()
+    len() # Pseudonym / Alias for stringLength
     (
         local _result
-        _CountWords _result "$@"
+        _stringLength _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    StringLength()
+    regexStringFind()
     (
         local _result
-        _StringLength _result "$@"
+        _regexStringFind _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    Len() # Pseudonym / Alias for StringLength
+    inStr() # Pseudonym / Alias for regexStringFind
     (
         local _result
-        _StringLength _result "$@"
+        _regexStringFind _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    StringFind()
-    (
-        local _result
-        _StringFind _result "$@"
-        [ ! -z "${_result:-}" ] && echo -e "$_result"
-    )
-
-    InStr() # Pseudonym / Alias for StringFind
-    (
-        local _result
-        _StringFind _result "$@"
-        [ ! -z "${_result:-}" ] && echo -e "$_result"
-    )
-
-    StringFind2()
+    regexStringFind2()
     (
         local -A _resultArray=()
-        _StringFind2 _resultArray "$@"
-        [ ! -z "${_resultArray:-()}" ] && echo -e "${#_resultArray[@]}"
+        _regexStringFind2 _resultArray "$@"
+        [ ! -z "${_resultArray:-()}" ] && echo -e "${#_resultArray[@]}\n"
     )
 
-    FindReplace()
+    regexFind()
+    (:;)
+
+    findReplace()
     (
         local _result
-        _FindReplace _result "$@"
+        _findReplace _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
@@ -1196,17 +1027,17 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    SubString()
+    subString()
     (
         local _result
-        _SubString _result "$@"
+        _subString _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    mid() # Pseudonym / Alias for SubString
+    mid() # Pseudonym / Alias for subString
     (
         local _result
-        _SubString _result "$@"
+        _subString _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
@@ -1216,21 +1047,21 @@ StringClass()
     trim()
     (
         local _result
-        _Trim _result "$@"
+        _trim _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    LTrim()
+    lTrim()
     (
         local _result
-        _LTrim _result "$@"
+        _lTrim _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    RTrim()
+    rTrim()
     (
         local _result
-        _RTrim _result "$@"
+        _rTrim _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
@@ -1279,11 +1110,19 @@ _sc()(StringClass "$@")
 if [[ -t 0 ]]      # input comes only from the string on the command line - no redirection.
 then
 
+    #if   [[ $# -eq 0 ]]
+    #then
+    #    #usage
+    #    #StringClass showUsage
+    #    echo
+    #
+    #elif [[ $# -gt 0 ]]
     if [[ $# -gt 0 ]]
     then
 
         if [[ ${1:0:1} == "-" ]] && [[ ${1:1:1} =~ [[:graph:]] ]]
         then
+            #echo "found invalid option"
             StringClass showUsage
             exit
         fi
@@ -1314,78 +1153,7 @@ fi
 if [[ ${#theArgs[@]} -gt 0 ]]
 then
 
+    #echo -e "${theArgs[@]}"
     StringClass "${theArgs[@]}"
 
 fi
-
-#----------------------------------------------------------
-# Function Template for 4 args with an optional 5th
-#----------------------------------------------------------
-function FunctionTemplate()
-{
-    # <SIGNATURE>: (0)_regexFindReplace (1)_result (2)oldString/pattern (3)newString (4)someStringToSearch (5?)options
-    # <RETURN>   : (0)<T>String
-    # <OPTIONS>  : (0) -hd (1) -a or -w or -aw.
-    # <BACKEND>  : bash, StringClass, perl -pe
-
-    # START: pre-processor to remove '-hd' from the argument list.
-    local -i n=0
-    for arg in $@
-    do
-        let "n+=1"
-        if [[ $arg == "-hd" ]]
-        then
-            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
-        fi
-    done
-    # END
-
-    #declare local variables
-
-    # START: main part of the function
-    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
-    then
-
-        # START - determine what the searched string will be
-        if [[ $# -ge 4 ]] && [[ -f $4  ]]
-        then
-                stringToBeSearched="$(< $4)"
-        
-        elif [[ $# -ge 4 ]]
-        then
-                stringToBeSearched="$4"
-        
-        elif [[ $# -eq 3 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
-        then
-                stringToBeSearched="${htmlLines[@]}"
-        fi
-        # END of searchedString
-        
-        # START - set the booleans for the optionals
-        if [[ ! -z ${5:-} ]] && [[ $(_sc StringFind '([-][a]{1,}\b)' ${5:-}) -gt 0 ]]
-        then
-            doAll=$TRUE
-        fi
-        # END setting the booleans
-        
-        #main logic
-        eval "$1=\${_ret_ThisFunctionName}"
-    
-    # END: of the main part
-
-    # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
-    then
-
-        echo -e "Main help section for this function."
-        
-    else
-
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_ThisFunctionName _result --help"
-
-    fi
-    # END of help section
-
-}
