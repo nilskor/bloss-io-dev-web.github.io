@@ -96,7 +96,7 @@ echo ""
 
 source ./StringFunctions
 declare chocolate="Caramel Koala"
-StringClass StringLength "$chocolate"
+StringClass Length "$chocolate"
 SC SubString "$chocolate" 1 $(( $(_sc Len "$chocolate") - 2 ))
 
 # A 'split' function could simply do two substring calls ..
@@ -151,8 +151,8 @@ echo -e "${#_result3}"
 ReadFile _result3 scratchpad.txt
 echo -e "${#_result3}, $_result3"
 
-StringClass StringLength "abcde"
+StringClass Length "abcde"
 StringClass CountBytes "abcde"
 StringClass CountChars "abcde"
 StringClass CountBytes scratchpad.txt --explain
-StringClass StringLength scratchpad.txt
+StringClass Length scratchpad.txt

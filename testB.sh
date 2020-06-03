@@ -44,13 +44,13 @@ echo -e "\n --------------------------------------------------------------------
 echo -e "              Array Type tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-declare -p test1 2>/dev/null | grep -q '^declare \-a' && echo "test1 is an indexed array" || echo "test1 is not an indexed array \n"
+declare -p test1 2>/dev/null | grep -q '^declare \-a' && echo "test1 is an indexed array" || echo "test1 is not an indexed array"
 
-declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an associative array" || echo "test2 is not an associative array \n"
+declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an associative array" || echo "test2 is not an associative array"
 
-declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array \n"
+declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array"
 
-declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type \n\n"
+declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
@@ -89,39 +89,45 @@ _CountWords someCrap index.html
 
 echo -e "Word count for index.html is: $someCrap \n"
 
-_StringLength someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
+_Length someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
 
 echo -e "String length for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n"
 
 _CountChars someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
 
-echo -e "Char count for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n"
+echo -e "Char count for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n\nCharCount with --explain: (note the trailing LF Line Feed - Char '0x0a')\n"
 
-_StringLength someCrap "$data"
+_CountChars someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs" '--explain'
 
-echo -e "String length of '$data' is: $someCrap \n"
+_Length someCrap "$data"
+
+echo -e "\n\nString length of '$data' is: $someCrap \n"
+
+_Length someCrap index.html
+
+echo -e "String length of 'index.html' is: $someCrap \n"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Find tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-_StringFind someCrap "href=\"#index\"" index.html
+_Find someCrap "href=\"#index\"" index.html
 
 echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
 
-_StringFind someCrap "^[[:space:]]+<a" index.html
+_Find someCrap "^[[:space:]]+<a" index.html
 
 echo -e "Trying to find '^[[:space:]]+<a' in 'index.html' returned: $someCrap \n"
 
-_StringFind someCrap "href=\"#index\"" index.html '-s'
+_Find someCrap "href=\"#index\"" index.html '-s'
 
 echo -e "Trying to find href=\"#index\" in 'index.html' returned: $someCrap \n"
 
 someLink='<a name="GTK_Tools" class="two" href="/content/GTK3/GTK_Tools.html">GTK+ Tools</a>'
 echo -e "someLink: $someLink"
-_StringFind someCrap '(?<=\>)(.+)(?=\<)' "$someLink" '-s'
-echo -e "Trying to find '(?<=\>)(.+)(?=\<)' in '\$someLink' returned: $someCrap \n"
+_Find someCrap '(?<=\>)(.+)(?=\<)' "$someLink" '-s'
+echo -e "\nTrying to find '(?<=\>)(.+)(?=\<)' in '\$someLink' returned: $someCrap \n"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
@@ -136,6 +142,14 @@ echo -e "In the file 'testFile.html', we replaced 'html' with 'FROG'. \n"
 echo "FreddoFrog      IsYummyChocolate     # the original string"
 _FindReplace someCrap [[:space:]][[:space:]] " " 'FreddoFrog      IsYummyChocolate' -a
 echo -e "$someCrap        # the string modified with _FindReplace '  ' and -a \n"
+
+echo "FreddoFrog      IsYummyChocolate     # the original string"
+_FindReplace someCrap 'FreddoFrog' 'CaramelKoala' 'FreddoFrog      IsYummyChocolate'
+echo -e "$someCrap   # the string modified with _FindReplace '  ' \n"
+
+echo "FreddoFrog      IsYummyChocolate     # the original string"
+_FindReplace someCrap 'Chocolate' 'CocoaButter' 'FreddoFrog      IsYummyChocolate'
+echo -e "$someCrap   # the string modified with _FindReplace '  ' \n"
 
 echo "FreddoFrog      IsYummyChocolate     # the original string"
 _regexFindReplace someCrap "\s{2,}" " " 'FreddoFrog      IsYummyChocolate' -a
@@ -162,27 +176,37 @@ echo -e "$someCrap               # the string modified with _regexFindReplace '(
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
-echo -e "              StringFind2 and SubString tests                                                             "
+echo -e "              FindAll and SubString tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
 refText='<a name="Migrating_GTK" class="two" href="/content/GTK3/Migrating_GTK.html">Migrating from Previous Versions of GTK+</a>'
+echo -e " Original text:\n\n $refText\n"
 
-_StringFind2 someCrap '(?<=\>)(.+)(?=\<)' "$refText"
+_FindAll someCrap '(?<=\>)(.+)(?=\<)' "$refText"
 declare -A ArrayOfStrings=()
-echo -e "Before unravelling: $someCrap \n"
+echo -e " Before unravelling: $someCrap \n"
 eval "$someCrap"
-echo -e "refText: \"${ArrayOfStrings[@]}\" ; contains ${#ArrayOfStrings[@]} element(s).\n"
+echo -e " refText: \"${ArrayOfStrings[@]}\" ; contains ${#ArrayOfStrings[@]} element(s).\n"
 
-_StringLength someLength "${ArrayOfStrings[@]}"
+_Length someLength "${ArrayOfStrings[@]}"
 _SubString someCrap "${ArrayOfStrings[@]}" 1 "( $someLength - 2 )"
 
-echo -e "$someCrap \n"
+echo -e " $someCrap \n"
 
-StringClass SubString "${ArrayOfStrings[@]}" 1 $(( $(StringClass StringLength "${ArrayOfStrings[@]}") - 2 ))
+StringClass SubString "${ArrayOfStrings[@]}" 1 $(( $(StringClass Length "${ArrayOfStrings[@]}") - 2 ))
 echo ""
 
 _SubString someCrap "FreddoFrogIsYummyChocolate" 13 5
-echo -e "From the string 'FreddoFrogIsYummyChocolate', position 13, length 5 gives: $someCrap \n"
+echo -e " From the string 'FreddoFrogIsYummyChocolate', position 13, length 5 gives: $someCrap \n"
+
+                                                                          #char 64 is the LF
+choccy='FreddoFrog IsYummyChocolate FreddoFrog IsYummyChocolate. Freddo
+    Frog IsYummyChocolate FreddoFrog IsYummyChocolate.'
+_FindAll someCrap 'Yummy' "$choccy"
+eval "$someCrap"
+echo -e " FindAll 'Yummy' in 'FreddoFrog IsYummyChocolate FreddoFrog IsYummyChocolate.' \n"
+#echo -e "Array: \"${ArrayOfStrings[@]}\" ; contains ${#ArrayOfStrings[@]} element(s).\n"
+echo -e " $someCrap"
 
 
 echo -e "\n ----------------------------------------------------------------------------------"

@@ -128,7 +128,7 @@ function _CountBytes()              # bash wc gawk
         # END of searchedString
 
         # START - do the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc StringFind '(--explain)' ${3:-}) -gt 0 ]]
+        if [[ ! -z ${3:-} ]] && [[ $(_sc Find '(--explain)' ${3:-}) -gt 0 ]]
         then
             echo -e ":: START EXPLANATION ::====================================================\n"
             od --width=16 -t x1z -v -Ad <<<"$stringToBeSearched"
@@ -203,7 +203,7 @@ function _CountChars()              # bash wc gawk
         # END of searchedString
         
         # START - do the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc StringFind '(--explain)' ${3:-}) -gt 0 ]]
+        if [[ ! -z ${3:-} ]] && [[ $(_sc Find '(--explain)' ${3:-}) -gt 0 ]]
         then
             echo -e ":: START EXPLANATION ::====================================================\n"
             od --width=16 -t x1z -v -Ad <<<"$stringToBeSearched"
@@ -367,13 +367,13 @@ function _CountWords()              # bash wc gawk
     
 }
 
-function _StringLength()            # bash wc gawk
+function _Length()                  # bash wc gawk
 {
-    # <SIGNATURE>: (0)_StringLength (1)_result (2)someString
+    # <SIGNATURE>: (0)_Length (1)_result (2)someString
     # <RETURN>   : (0)<T>Integer
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash, wc, gawk
-    # <TEMPLATE> : _StringLength _theResult "someString"
+    # <TEMPLATE> : _Length _theResult "someString"
 
     # START: pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -419,12 +419,12 @@ function _StringLength()            # bash wc gawk
     elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
     then
 
-        echo -e "\n ${GREEN}StringLength${NC} inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
-        echo -e " ${GREEN}StringLength${NC} will count what can be echoed to stdout (eg. ${GREEN}what's visible on screen${NC}). This"
+        echo -e "\n ${GREEN}Length${NC} inputFileName <or> \"some string\" <or> <<Here-document ending with EOF\n"
+        echo -e " ${GREEN}Length${NC} will count what can be echoed to stdout (eg. ${GREEN}what's visible on screen${NC}). This"
         echo -e " means it will typically ${GREEN}ignore the trailing 'Line Feed'${NC} or 'new line' character that is"
         echo -e " often there. Conversely, the CountBytes / CountChars functions ${GREEN}DO${NC} count the 'LF' character."
         echo -e " Note: it is a function of Bash as the shell that removes the final trailing new line character.\n"
-        echo -e " eg.  StringLength 'abcdefghijklmnopqrstuvwxyz' gives an answer of 26. \n"
+        echo -e " eg.  Length 'abcdefghijklmnopqrstuvwxyz' gives an answer of 26. \n"
         echo -e "      CountBytes   'abcdefghijklmnopqrstuvwxyz' gives an answer of 27. \n"
         echo -e "      CountChars   'abcdefghijklmnopqrstuvwxyz' gives an answer of 27. \n"
 
@@ -432,20 +432,20 @@ function _StringLength()            # bash wc gawk
 
         local _result
         echo -e "\n Error - missing arguments."
-        eval "_StringLength _result --help"
+        eval "_Length _result --help"
 
     fi
     # END of help section
     
 }
 
-function _StringFind()              # bash grep -P head         # alias InStr
+function _Find()                    # bash grep -P head         # alias InStr
 {
-    # <SIGNATURE>: (0)_StringFind (1)_result (2)searchPattern (3)someStringToSearch (4?)options
-    # <RETURN>   : (0)<T>Integer
+    # <SIGNATURE>: (0)_Find (1)_result (2)searchPattern (3)someStringToSearch (4?)options
+    # <RETURN>   : (0)<T>Integer or (0)<T>String
     # <OPTIONS>  : (0) -hd (1) -s
     # <BACKEND>  : bash, grep -P, head
-    # <TEMPLATE> : _StringFind _theResult "searchPattern" "someStringToSearch"
+    # <TEMPLATE> : _Find _theResult "searchPattern" "someStringToSearch"
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -485,7 +485,7 @@ function _StringFind()              # bash grep -P head         # alias InStr
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${4:-} ]] && [[ $(_sc StringFind '([-][s]{1,}\b)' ${4:-}) -gt 0 ]]
+        if [[ ! -z ${4:-} ]] && [[ $(_sc Find '([-][s]{1,}\b)' ${4:-}) -gt 0 ]]
         then
             stringNotPosition=$TRUE
         fi
@@ -499,7 +499,7 @@ function _StringFind()              # bash grep -P head         # alias InStr
         then
             searchString="$foundIt"
             rest=${stringToBeSearched#*$searchString}
-            result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
+            result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} +1 ))"
         else
             result=0
         fi
@@ -517,10 +517,10 @@ function _StringFind()              # bash grep -P head         # alias InStr
     elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
     then
 
-        echo -e "\n The command syntax is: StringFind searchPattern someStringToSearch \n"
+        echo -e "\n The command syntax is: Find searchPattern someStringToSearch \n"
         echo -e " POSIX Extended Regular Expressions are allowed in 'searchPattern'"
-        echo -e " StringFind returns a number greater than 0 if successful."
-        echo -e " StringFind assumes the first character occupies position #1\n"
+        echo -e " Find returns a number greater than 0 if successful."
+        echo -e " Find assumes the first character occupies position #1\n"
         echo -e " If the switch '-s' is added as the last parameter, then the string is"
         echo -e " returned, rather than the position.\n"
         
@@ -528,20 +528,20 @@ function _StringFind()              # bash grep -P head         # alias InStr
 
         local _result
         echo -e "\n Error - missing arguments."
-        eval "_StringFind _result --help"
+        eval "_Find _result --help"
 
     fi
     # END of help section
 
 }
 
-function _StringFind2()             # bash grep -P
+function _FindAll()                 # bash grep -P
 {
-    # <SIGNATURE>: (0)_StringFind2 (1)_resultArray (2)searchPattern (3)someStringToSearch
+    # <SIGNATURE>: (0)_FindAll (1)_resultArray (2)searchPattern (3)someStringToSearch
     # <RETURN>   : (0)<T>AADS - Associative Array Definition String; always named 'ArrayOfStrings'
     # <OPTIONS>  : (0) -hd
     # <BACKEND>  : bash, grep -P
-    # <TEMPLATE> : _StringFind2 _theResult "searchPattern" "someStringToSearch"
+    # <TEMPLATE> : _FindAll _theResult "searchPattern" "someStringToSearch"
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -567,7 +567,7 @@ function _StringFind2()             # bash grep -P
         
         elif [[ $# -eq 3 ]]
         then
-                stringToBeSearched="${3} ${htmlLines[@]}"
+                stringToBeSearched="$3"
         
         elif [[ $# -eq 2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
         then
@@ -580,19 +580,30 @@ function _StringFind2()             # bash grep -P
         thePattern="$2"
 
         foundIt=`grep -P -i -o "$thePattern" <<< "$stringToBeSearched"` || foundIt=""
-
+    
         if [[ ${#foundIt} -gt 0 ]]
         then
 
             foundIt=($foundIt)
-
+            nextChunk="$stringToBeSearched"
+            iPos=0
+            iPrevPos=1
+            iPrevLen=0
             for item in ${foundIt[@]}
             do
-                searchString="$item"
-                rest=${stringToBeSearched#*$searchString}
-                result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
-                ArrayOfStrings[$result]="$item"
-
+                #searchString="$item"
+                #rest=${stringToBeSearched#*$searchString}
+                #result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} +1 ))"
+                #ArrayOfStrings[$result]="$item"
+                iPos=$(_sc Find "$item" "$nextChunk")
+                iLen=$(_sc Len "$item")
+                nextChunk=${nextChunk#*$item}
+                #echo $iPos $iLen "$nextChunk"
+                iCalc=$(( $iPos + $iPrevPos + $iPrevLen - 1 ))
+                #echo $iCalc
+                ArrayOfStrings[$iCalc]="$item"
+                iPrevPos=$iCalc
+                iPrevLen=$iLen
             done
         fi
 
@@ -603,7 +614,7 @@ function _StringFind2()             # bash grep -P
     elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
     then
 
-        echo -e "\n The command syntax is: StringFind2 searchPattern someStringToSearch"
+        echo -e "\n The command syntax is: FindAll searchPattern someStringToSearch"
         echo -e " The return result is an Associative array eg. declare -A someVariable"
         echo -e " The return result creates a hard-coded variable name - 'ArrayOfStrings'."
         
@@ -611,7 +622,7 @@ function _StringFind2()             # bash grep -P
 
         local _result
         echo -e "\n Error - missing arguments."
-        eval "_StringFind2 _result --help"
+        eval "_FindAll _result --help"
 
     fi
     # END of help section
@@ -758,12 +769,12 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${5:-} ]] && [[ $(_sc StringFind '([-]w*[a]{1,}w*\b)' ${5:-}) -gt 0 ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc Find '([-]w*[a]{1,}w*\b)' ${5:-}) -gt 0 ]]
         then
             doAll=$TRUE
         fi
 
-        if [[ ! -z ${5:-} ]] && [[ $(_sc StringFind '([-]a*[w]{1,}a*\b)' ${5:-}) -gt 0 ]] && [[ -f $4  ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc Find '([-]a*[w]{1,}a*\b)' ${5:-}) -gt 0 ]] && [[ -f $4  ]]
         then
             writeFile=$TRUE
         fi
@@ -806,7 +817,7 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
 }
 
-function _SubString()               # bash                      # alias mid
+function _SubString()               # bash                      # alias Mid
 {
     # <SIGNATURE>: (0)_SubString (1)_result (2)someStringToSearch (3)offset (4)length
     # <RETURN>   : (0)<T>String
@@ -1034,7 +1045,7 @@ function _wsTrim()                  # StringClass (perl -pe)
         # END of searchedString
 
         # START - set the booleans for the optionals
-        if [[ ! -z ${3:-} ]] && [[ $(_sc StringFind '([-][s]{1,}\b)' ${3:-}) -gt 0 || $(_sc StringFind '([-][f]{1,}\b)' ${3:-}) -gt 0 ]]
+        if [[ ! -z ${3:-} ]] && [[ $(_sc Find '([-][s]{1,}\b)' ${3:-}) -gt 0 || $(_sc Find '([-][f]{1,}\b)' ${3:-}) -gt 0 ]]
         then
             doSingle=$TRUE
         fi
@@ -1105,7 +1116,7 @@ StringClass()
         echo -e " This is really only relevant when embedding one function call inside another eg.\n"
         echo -e '     source ./StringFunctions'
         echo -e '     declare chocolate="Caramel Koala"'
-        echo -e '     StringClass StringLength "$chocolate"'
+        echo -e '     StringClass Length "$chocolate"'
         echo -e '     SC SubString "$chocolate" 1 $(( $(_sc Len "$chocolate") - 2 ))"'
         echo -e "\n This example prints:\n\n \t13 \n \tCaramel Koa" 
         echo -e "\n Note: StringFunctions counts collections starting at 1, not 0. If you have a string of"
@@ -1147,39 +1158,39 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    StringLength()
+    Length()
     (
         local _result
-        _StringLength _result "$@"
+        _Length _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    Len() # Pseudonym / Alias for StringLength
+    Len() # Pseudonym / Alias for Length
     (
         local _result
-        _StringLength _result "$@"
+        _Length _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    StringFind()
+    Find()
     (
         local _result
-        _StringFind _result "$@"
+        _Find _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    InStr() # Pseudonym / Alias for StringFind
+    InStr() # Pseudonym / Alias for Find
     (
         local _result
-        _StringFind _result "$@"
+        _Find _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    StringFind2()
+    FindAll()
     (
         local -A _resultArray=()
-        _StringFind2 _resultArray "$@"
-        [ ! -z "${_resultArray:-()}" ] && echo -e "${#_resultArray[@]}"
+        _FindAll _resultArray "$@"
+        [ ! -z "${_resultArray:-()}" ] && echo -e "${#_resultArray[@]} AADS. ${_resultArray}"
     )
 
     FindReplace()
@@ -1203,17 +1214,14 @@ StringClass()
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    mid() # Pseudonym / Alias for SubString
+    Mid() # Pseudonym / Alias for SubString
     (
         local _result
         _SubString _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 
-    regexSubstr()
-    (:;)
-
-    trim()
+    Trim()
     (
         local _result
         _Trim _result "$@"
@@ -1362,7 +1370,7 @@ function FunctionTemplate()
         # END of searchedString
         
         # START - set the booleans for the optionals
-        if [[ ! -z ${5:-} ]] && [[ $(_sc StringFind '([-][a]{1,}\b)' ${5:-}) -gt 0 ]]
+        if [[ ! -z ${5:-} ]] && [[ $(_sc Find '([-][a]{1,}\b)' ${5:-}) -gt 0 ]]
         then
             doAll=$TRUE
         fi

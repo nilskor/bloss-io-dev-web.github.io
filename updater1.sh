@@ -115,9 +115,10 @@ function step3()            # "Step #3 - work with each html file"
 
     local _theStringFindResults=""
     local -A arrayOfOldLinks=()
-                                                                            # where $@ is the incoming file
-    _StringFind2 _theStringFindResults "$oldLinkPattern" "$@"          # then rename the ArrayOfStrings
                                                                             
+    _FindAll _theStringFindResults "$oldLinkPattern" "$@"                   # where $@ is the incoming file.
+                                                                            # then rename the ArrayOfStrings..
+
     _FindReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
 
     eval "$_theStringFindResults"                                       # unravel the return result into 'arrayOfOldLinks', 
@@ -140,7 +141,7 @@ function step3()            # "Step #3 - work with each html file"
             
             _FindReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
             
-            _StringFind _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
+            _Find _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
 
             _ret_newLink=""
             _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithBookmark"
