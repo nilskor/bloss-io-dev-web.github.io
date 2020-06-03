@@ -18,8 +18,8 @@ set -o pipefail
 IFS=$'\n\t'
 
 # Set variables:
-declare -ri  TRUE=0          # g - global scope; r - read-only; i - integer; x - exportable
-declare -ri FALSE=1
+declare -ri  TRUE=1          # g - global scope; r - read-only; i - integer; x - exportable
+declare -ri FALSE=0
 
 declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
@@ -57,6 +57,16 @@ function echo()
     setIFS
 }
 
+function CmdSubst()
+{
+    _cmdToRun=$1
+    shift
+    eval "$_cmdToRun="'$("$@"; statusOfLastTask=$?; echo .; exit "$statusOfLastTask")
+                       _statusOfLastTask=$?
+                     '"$_cmdToRun=\${$_cmdToRun%?}"
+    return "$_statusOfLastTask"
+}
+
 function usage()
 (
     echo -e ""
@@ -77,12 +87,44 @@ function readInput()                # bash
     setIFS
     while read -r line
     do
-        if [[ $line == "EOF" ]]
+        if [[ "$line" == "EOF" ]]
         then
             break
         fi
         htmlLines+=($line$'\n')    # Push  # new-line is :   $'\n'
     done
+}
+
+function _IsNumber()
+{
+    local __ret_IsNumber_qaz_
+    printf %f $2 &>/dev/null && __ret_IsNumber_qaz_=$TRUE || __ret_IsNumber_qaz_=$FALSE
+    eval "$1=\${__ret_IsNumber_qaz_}"
+}
+
+function _CreateUUID()
+{
+    local __ret_CreateUUID_zxc_=$(cat /proc/sys/kernel/random/uuid)
+    eval "$1=\${__ret_CreateUUID_zxc_}"
+}
+
+function _RandomString()
+{
+    local __ret_RandomString_dCY_="failed"
+    local -i _getByteCount=256
+    local -i _charDefault=16
+
+    if [[ $# -eq 2 ]] && [[ ${#2} -gt 0 ]] && [[ $(_sc IsNumber $2) -eq $FALSE ]]
+    then
+        set -- $1 $_charDefault
+    fi
+
+    _getByteCount=$(( ${2:-$_charDefault} * 8 ))
+
+    __ret_RandomString_dCY_=$(LC_ALL=C; dd if=/dev/urandom bs=$_getByteCount count=1 status=none 2> /dev/null | tr -dc 'a-zA-Z0-9' | head -c ${2:-$_charDefault})
+    
+    eval "$1=\${__ret_RandomString_dCY_}"
+
 }
 
 function _CountBytes()              # bash wc gawk
@@ -463,7 +505,7 @@ function _Find()                    # bash grep -P head         # alias InStr
     local -i _ret_regexStringFind=0
     local -i result=0
     local stringToBeSearched=""
-    local -i stringNotPosition=$FALSE
+    local -i getStringInsteadOfPosition=$FALSE
 
     # START: main part of the function
     if [[ $# -ge 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
@@ -487,7 +529,7 @@ function _Find()                    # bash grep -P head         # alias InStr
         # START - set the booleans for the optionals
         if [[ ! -z ${4:-} ]] && [[ $(_sc Find '([-][s]{1,}\b)' ${4:-}) -gt 0 ]]
         then
-            stringNotPosition=$TRUE
+            getStringInsteadOfPosition=$TRUE
         fi
         # END setting the booleans
 
@@ -504,7 +546,7 @@ function _Find()                    # bash grep -P head         # alias InStr
             result=0
         fi
 
-        if [[ $stringNotPosition -eq $FALSE ]]
+        if [[ $getStringInsteadOfPosition -eq $FALSE ]]
         then
             printf -v _ret_regexStringFind %q $result
             eval "$1=\${_ret_regexStringFind}"
@@ -817,6 +859,98 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
 }
 
+function _Insert()                  # bash
+{
+    # <SIGNATURE>: (0)_Insert (1)_result (2)additionalText (3)someString (4)offset (5?)length
+    # <RETURN>   : (0)<T>String
+    # <OPTIONS>  : (0) -hd (1) length
+    # <BACKEND>  : bash
+    # <TEMPLATE> : _Insert _theResult 'someNewText' "originalString" offset ?length
+
+    # small pre-processor to remove '-hd' from the argument list.
+    local -i n=0
+    for arg in $@
+    do
+        let "n+=1"
+        if [[ $arg == "-hd" ]]
+        then
+            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+    done
+
+    # main part of the function
+
+    local _ret_newString=0
+
+    if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
+    then
+
+        # START - determine what the searched string will be
+        if [[ $# -eq 3 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
+        then
+                originalString="${htmlLines[@]}"
+        
+        elif [[ $# -ge 4 ]] && [[ -f ${3:-}  ]]
+        then
+                originalString="$(< ${3:-})"
+        
+        elif [[ $# -ge 4 ]]
+        then
+                originalString="${3:-}"
+        
+        fi
+        # END of searchedString
+
+        # START - set the booleans for the optionals
+        if [[ $# -eq 4 ]] && [[ ${4:-} == "-nl" ]]
+        then
+            noLength=$TRUE
+        fi
+        # END setting the booleans
+
+        #main logic
+
+        local -i theOffset=${3:-1}
+        local theLength="${4:-}"
+
+        theOffset="$(( theOffset - 1 ))"
+
+        if [[ $noLength == $FALSE ]]
+        then
+            _ret_newString="${originalString:${theOffset}:${theLength}}"
+        else
+            _ret_newString="${originalString:${theOffset}}"
+        fi
+
+        eval "$1=\${_ret_newString}"
+
+    elif [[ $# -eq 1 || ${2:-} == "-?" || ${2:-} == "--help" || ${2:-} == "-h" ]]
+    then
+        echo -e "\n Extract and return a SubString from within a larger piece of text or file. \n"
+        echo -e " ${GREEN}SubString someStringToSearch   offset length${NC}"
+        echo -e " ${GREEN}SubString someFileToSearch.txt offset length${NC}\n"
+        echo -e " offset & length need to be whole +/- numbers eg. integers"
+        echo -e " offset means: the position X number characters from the start of 'someStringToSearch'. \n"
+        echo -e " It's ok to substitute '-nl' as a length to indicate 'no length', in which case,"
+        echo -e " the rest of 'someStringToSearch' is returned, starting from offset. \n"
+        echo -e " ${GREEN}SubString FreddoFrogIsYummyChocolate 12 5    will return 'Yummy'"
+        echo -e " SubString FreddoFrogIsYummyChocolate 12 -nl  will return 'YummyChocolate'"
+        echo -e " SubString FreddoFrogIsYummyChocolate 12 -4   will return 'YummyChoco'${NC} \n"
+        echo -e " A negative length means: come from the back of 'someStringToSearch', unlike"
+        echo -e " a positive length, which means come forward from the offset position. \n"
+        echo -e " See https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion \n" 
+        echo -e " Giving more than 3 parameter means the extras will be ignored. \n"
+        echo -e " -hd and Heredocs/Herestrings are valid as input eg. :\n"
+        echo -e " -   ${GREEN}SubString -hd 346 -7${NC}  or  ${GREEN}SubString 421 5 -hd${NC}  or  "
+        echo -e " -   ${GREEN}SubString 76 2 <<EOF${NC}  or  ${GREEN}SubString 88 12 <<<someString${NC} \n"
+
+    else
+        echo -e "\n ${RED}Error - missing arguments.${NC}"
+        eval "_SubString _result --help"
+    fi
+ 
+}
+
 function _SubString()               # bash                      # alias Mid
 {
     # <SIGNATURE>: (0)_SubString (1)_result (2)someStringToSearch (3)offset (4)length
@@ -844,6 +978,7 @@ function _SubString()               # bash                      # alias Mid
     if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
     then
 
+        # START - determine what the searched string will be
         if [[ $# -eq 3 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
         then
                 stringToBeSearched="${htmlLines[@]}"
@@ -857,11 +992,16 @@ function _SubString()               # bash                      # alias Mid
                 stringToBeSearched="${2:-}"
         
         fi
+        # END of searchedString
 
+        # START - set the booleans for the optionals
         if [[ $# -eq 4 ]] && [[ ${4:-} == "-nl" ]]
         then
             noLength=$TRUE
         fi
+        # END setting the booleans
+
+        #main logic
 
         local -i theOffset=${3:-1}
         local theLength="${4:-}"
@@ -1128,6 +1268,29 @@ StringClass()
     isValidArg()
     (
         test "$(type -t "$1")" = "function"
+    )
+
+    IsNumber()
+    (
+        local __res_IsNumber_uij_
+        _IsNumber __res_IsNumber_uij_ "$@"
+        [ ! -z "${__res_IsNumber_uij_:=-1}" ] && echo -e $__res_IsNumber_uij_
+    )
+
+    CreateUUID()
+    (
+        local __res_CreateUUID_fga_
+        _CreateUUID __res_CreateUUID_fga_ "$@"
+        [ ! -z "${__res_CreateUUID_fga_:=-1}" ] && echo -e $__res_CreateUUID_fga_
+
+    )
+
+    RandomString()
+    (
+        local __res_RandomString_auv_
+        _RandomString __res_RandomString_auv_ "$@"
+        [ ! -z "${__res_RandomString_auv_:=-}" ] && echo -e $__res_RandomString_auv_
+
     )
 
     CountBytes()
