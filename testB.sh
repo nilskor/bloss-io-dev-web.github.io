@@ -235,7 +235,17 @@ _wsTrim someCrap "Freddo         . Frog                   ." "-f"
 echo -e "${someCrap}             # -f (first) \n"
 
 _wsTrim someCrap "Freddo         . Frog                   ."
-echo -e "${someCrap}                                 # default - do all \n"
+echo -e "$someCrap                                 # default - do all \n"
 
-# --
+# -- other examples for a gist ..
+
 ./StringFunctions FindReplace '-' '_' "$(./StringFunctions CreateUUID 2)" -a
+echo ""
+
+./StringFunctions Insert abcdef $(./StringFunctions RandomString 128) 30 4
+echo ""
+
+refText='<a name="Migrating_GTK" class="two" href="/content/GTK3/Migrating_GTK.html">Migrating from Previous Versions of GTK+</a>'
+_Insert someCrap 'href="some.link" ' "$refText" 4
+echo -e "$someCrap \n"
+

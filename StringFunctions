@@ -1,5 +1,33 @@
 #!/bin/bash
 
+#-----------------------------------------------------------------------------------#
+#                                                                                   #
+# MIT License                                                                       #
+#                                                                                   #
+# Copyright (c) 2020 Nilskör (bloss OS)                                             #
+#                                                                                   #
+# Contact/information: info@nilskor.com                                             #
+#                                                                                   #
+# Permission is hereby granted, free of charge, to any person obtaining a copy      #
+# of this software and associated documentation files (the "Software"), to deal     #
+# in the Software without restriction, including without limitation the rights      #
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell         #
+# copies of the Software, and to permit persons to whom the Software is             #
+# furnished to do so, subject to the following conditions:                          #
+#                                                                                   #
+# The above copyright notice and this permission notice shall be included in all    #
+# copies or substantial portions of the Software.                                   #
+#                                                                                   #
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR        #
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,          #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE       #
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER            #
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,     #
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE     #
+# SOFTWARE.                                                                         #
+#                                                                                   #
+#-----------------------------------------------------------------------------------#
+
 # Will exit script if we would use an uninitialised variable:
 # either set -u or set -o nounset
 set -o nounset
@@ -931,11 +959,13 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
 function _Insert()                  # bash
 {
-    # <SIGNATURE>: (0)_Insert (1)_result (2)additionalText (3)originalString (4)offset (?5)length
+    # <SIGNATURE>: (0)_Insert (1)_result (2)additionalText (3)originalString (4)offset (?5)length (?6)options
     # <RETURN>   : (0)<T>String
-    # <OPTIONS>  : (0) -hd (1) length
+    # <OPTIONS>  : (0) -hd (1) length (2) -w
     # <BACKEND>  : bash
     # <TEMPLATE> : _Insert _theResult 'someNewText' "originalString" offset ?length
+
+    local -i writeFile=$FALSE
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
@@ -946,6 +976,10 @@ function _Insert()                  # bash
         if [[ $arg == "-hd" ]]
         then
             set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
+        fi
+        if [[ $arg == "-w" ]]
+        then
+            writeFile=$TRUE
         fi
     done
 
@@ -973,15 +1007,25 @@ function _Insert()                  # bash
         fi
         # END of searchedString
 
+        local theLength='-nl'
+        
+        # START - set the booleans for the optionals
+        if [[ ! -z ${5:-} ]] && [[ $(_sc IsNumber ${5:-}) -eq $TRUE ]]
+        then
+            theLength=${5:-'-nl'}
+
+        fi
+        # END setting the booleans
+
         if  [[ -n $2 ]] && [[ ${#2} -gt 0 ]]
         then
-            __additionalText="$2"
+            __additionalText="$(_sc SubString "$2" 1 $theLength)"
         fi
 
         #main logic
 
         local -i theOffset=${4:-0}
-        local theLength=${5:-0}
+        #local theLength=${5:-0}
 
         local __partA=$(_sc SubString "$__originalString" 1 $(( theOffset - 1 )))
         printf %s "$__partA" &>/dev/null __partA=$(_sc SubString "$__originalString" 1 $(( theOffset - 1 ))) || __partA=""
@@ -989,37 +1033,30 @@ function _Insert()                  # bash
         local __partB=$(_sc SubString "$__originalString" $theOffset '-nl')
         printf %s "$__partB" &>/dev/null __partB=$(_sc SubString "$__originalString" $theOffset '-nl') || __partB=""
         
-        #_ret_modifiedString=$(_sc SubString "$__originalString" 1 $((theOffset-1)))"$__additionalText"$(_sc SubString "$__originalString" $((theOffset)) '-nl')
-        _ret_modifiedString="$__partA$__additionalText$__partB"
+        __ret_modifiedString_ca56dd5f_="$__partA$__additionalText$__partB"
 
-        echo -e "$_ret_modifiedString"
+        if [[ $writeFile == $TRUE ]]
+        then
+            echo "$__ret_modifiedString_ca56dd5f_">$3
+        fi
 
 
-        #eval "$1=\${_ret_newString}"
+        eval "$1=\${__ret_modifiedString_ca56dd5f_}"
 
     elif [[ $# -eq 1 || ${2:-} == "-?" || ${2:-} == "--help" || ${2:-} == "-h" ]]
     then
-        echo -e "\n Extract and return a SubString from within a larger piece of text or file. \n"
-        echo -e " ${GREEN}SubString someStringToSearch   offset length${NC}"
-        echo -e " ${GREEN}SubString someFileToSearch.txt offset length${NC}\n"
-        echo -e " offset & length need to be whole +/- numbers eg. integers"
-        echo -e " offset means: the position X number characters from the start of 'someStringToSearch'. \n"
-        echo -e " It's ok to substitute '-nl' as a length to indicate 'no length', in which case,"
-        echo -e " the rest of 'someStringToSearch' is returned, starting from offset. \n"
-        echo -e " ${GREEN}SubString FreddoFrogIsYummyChocolate 12 5    will return 'Yummy'"
-        echo -e " SubString FreddoFrogIsYummyChocolate 12 -nl  will return 'YummyChocolate'"
-        echo -e " SubString FreddoFrogIsYummyChocolate 12 -4   will return 'YummyChoco'${NC} \n"
-        echo -e " A negative length means: come from the back of 'someStringToSearch', unlike"
-        echo -e " a positive length, which means come forward from the offset position. \n"
-        echo -e " See https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion \n" 
-        echo -e " Giving more than 3 parameter means the extras will be ignored. \n"
-        echo -e " -hd and Heredocs/Herestrings are valid as input eg. :\n"
-        echo -e " -   ${GREEN}SubString -hd 346 -7${NC}  or  ${GREEN}SubString 421 5 -hd${NC}  or  "
-        echo -e " -   ${GREEN}SubString 76 2 <<EOF${NC}  or  ${GREEN}SubString 88 12 <<<someString${NC} \n"
+        echo -e "\n Insert new text into an existing string and return the modified result. \n"
+        echo -e " ${GREEN}Insert newText someString offset ?length${NC}"
+        echo -e " ${GREEN}Insert newText someFile.txt offset ?length${NC}\n"
+        echo -e " offset & [optional] length need to be whole +/- numbers eg. integers"
+        echo -e " offset means: the position X number characters from the start of 'someString'. \n"
+        echo -e " The optional length parameter means 'how much of the newText' should"
+        echo -e " be inserted into the original string. \n"
+        echo -e " -hd and Heredocs/Herestrings are valid as input. \n"
 
     else
         echo -e "\n ${RED}Error - missing arguments.${NC}"
-        eval "_SubString _result --help"
+        eval "_Insert _result --help"
     fi
  
 }
