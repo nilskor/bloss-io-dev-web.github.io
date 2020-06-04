@@ -59,7 +59,7 @@ function echo()
 
 function CmdSubst()
 {
-    _cmdToRun=$1
+    local _cmdToRun=$1
     shift
     eval "$_cmdToRun="'$("$@"; statusOfLastTask=$?; echo .; exit "$statusOfLastTask")
                        _statusOfLastTask=$?
@@ -104,25 +104,95 @@ function _IsNumber()
 
 function _CreateUUID()
 {
-    local __ret_CreateUUID_zxc_=$(cat /proc/sys/kernel/random/uuid)
+    local -i _loopDefault=1
+    local __ret_CreateUUID_zxc_
+
+    if [[ $# -eq 2 ]] && [[ ${#2} -gt 0 ]] && [[ $(_sc IsNumber $2) -eq $TRUE ]]
+    then
+        _loopDefault=$2
+        
+    fi
+
+    _loopDefault=$(( $_loopDefault + 1 ))
+
+    for (( i = 1; i < $_loopDefault; i++ ))
+    do
+        printf -v c1962010_2404_4115_89e7_75f7f8d2d74e "%q\\n" $(cat /proc/sys/kernel/random/uuid)
+        __ret_CreateUUID_zxc_+=$c1962010_2404_4115_89e7_75f7f8d2d74e
+
+    done
+
+    if [[ $_loopDefault -le 1 ]]
+    then
+        __ret_CreateUUID_zxc_=""
+
+    fi
+
+    __ret_CreateUUID_zxc_="${__ret_CreateUUID_zxc_%?}"      # remove the extra LF using ${FOO % ?} where % is the suffix and ? is a single char
+
     eval "$1=\${__ret_CreateUUID_zxc_}"
+
 }
+
+declare -i _RandomString_loopCounter_QLzcMO6ya_=0
+declare -i _RandomString_byteMultiplier_V1KWz7_=8
 
 function _RandomString()
 {
-    local __ret_RandomString_dCY_="failed"
+    local __ret_RandomString_dCY_
     local -i _getByteCount=256
     local -i _charDefault=16
+    local -i _createMore=1
 
-    if [[ $# -eq 2 ]] && [[ ${#2} -gt 0 ]] && [[ $(_sc IsNumber $2) -eq $FALSE ]]
+    if [[ $# -ge 2 ]] && [[ ${#2} -gt 0 ]] && [[ $(_sc IsNumber $2) -eq $FALSE ]]
     then
         set -- $1 $_charDefault
+
+    fi
+    if [[ $# -eq 3 ]] && [[ ${#3} -gt 0 ]] && [[ $(_sc IsNumber $3) -eq $TRUE ]]
+    then
+        _createMore=$3
+
     fi
 
-    _getByteCount=$(( ${2:-$_charDefault} * 8 ))
+    _createMore=$(( $_createMore + 1 ))
+    _getByteCount=$(( ${2:-$_charDefault} * $_RandomString_byteMultiplier_V1KWz7_ ))
 
-    __ret_RandomString_dCY_=$(LC_ALL=C; dd if=/dev/urandom bs=$_getByteCount count=1 status=none 2> /dev/null | tr -dc 'a-zA-Z0-9' | head -c ${2:-$_charDefault})
-    
+    for (( i = 1; i < $_createMore; i++ ))
+    do
+        local __cmd_Output_aa50210e_=$(LC_ALL=C; dd if=/dev/urandom bs=$_getByteCount count=1 status=none 2> /dev/null | tr -dc 'a-zA-Z0-9' | head -c ${2:-$_charDefault})
+
+        # sometimes the string length is not what was requested, so we go around again.
+        # a little dangerous perhaps, but the incidence of failures are about 1 in 30,
+        # so unlikely we'll get stuck in a loop. To make that less likely, lets loop
+        # count and if we're still stuck in here after 5 goes, increase the multiplier.
+        if [[ $(_sc Len "$__cmd_Output_aa50210e_") -lt ${2:-$_charDefault} ]]
+        then
+            #let "n+=1"
+            (( _RandomString_loopCounter_QLzcMO6ya_ = _RandomString_loopCounter_QLzcMO6ya_ + 1 ))
+
+            if [[ $_RandomString_loopCounter_QLzcMO6ya_ -gt 5 ]]
+            then
+                (( _RandomString_byteMultiplier_V1KWz7_ = _RandomString_byteMultiplier_V1KWz7_ * _RandomString_byteMultiplier_V1KWz7_ ))
+            fi
+            
+            __cmd_Output_aa50210e_=$(_sc RandomString ${2:-$_charDefault})
+
+        fi
+
+        printf -v cc815571_59fa_488a_b7cc_1199501a7f3b "%q\\n" "$__cmd_Output_aa50210e_"
+        __ret_RandomString_dCY_+=$cc815571_59fa_488a_b7cc_1199501a7f3b
+
+    done
+
+    if [[ $_createMore -le 1 ]]
+    then
+        __ret_RandomString_dCY_=""
+
+    fi
+
+    __ret_RandomString_dCY_="${__ret_RandomString_dCY_%?}"
+
     eval "$1=\${__ret_RandomString_dCY_}"
 
 }
@@ -861,7 +931,7 @@ function _regexFindReplace()        # bash perl -pe  StringClass (grep -P)
 
 function _Insert()                  # bash
 {
-    # <SIGNATURE>: (0)_Insert (1)_result (2)additionalText (3)someString (4)offset (5?)length
+    # <SIGNATURE>: (0)_Insert (1)_result (2)additionalText (3)originalString (4)offset (?5)length
     # <RETURN>   : (0)<T>String
     # <OPTIONS>  : (0) -hd (1) length
     # <BACKEND>  : bash
@@ -869,6 +939,7 @@ function _Insert()                  # bash
 
     # small pre-processor to remove '-hd' from the argument list.
     local -i n=0
+    local arg
     for arg in $@
     do
         let "n+=1"
@@ -880,49 +951,51 @@ function _Insert()                  # bash
 
     # main part of the function
 
-    local _ret_newString=0
+    local __ret_modifiedString_ca56dd5f_
+    local __originalString
 
     if [[ $# -ge 4 ]] || [[ $# -eq 3 && ${#htmlLines[@]} -gt 0 ]]
     then
 
-        # START - determine what the searched string will be
+        # START - determine what the original string is
         if [[ $# -eq 3 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
         then
-                originalString="${htmlLines[@]}"
+                __originalString="${htmlLines[@]}"
         
         elif [[ $# -ge 4 ]] && [[ -f ${3:-}  ]]
         then
-                originalString="$(< ${3:-})"
+                __originalString="$(< ${3:-})"
         
         elif [[ $# -ge 4 ]]
         then
-                originalString="${3:-}"
+                __originalString="${3:-}"
         
         fi
         # END of searchedString
 
-        # START - set the booleans for the optionals
-        if [[ $# -eq 4 ]] && [[ ${4:-} == "-nl" ]]
+        if  [[ -n $2 ]] && [[ ${#2} -gt 0 ]]
         then
-            noLength=$TRUE
+            __additionalText="$2"
         fi
-        # END setting the booleans
 
         #main logic
 
-        local -i theOffset=${3:-1}
-        local theLength="${4:-}"
+        local -i theOffset=${4:-0}
+        local theLength=${5:-0}
 
-        theOffset="$(( theOffset - 1 ))"
+        local __partA=$(_sc SubString "$__originalString" 1 $(( theOffset - 1 )))
+        printf %s "$__partA" &>/dev/null __partA=$(_sc SubString "$__originalString" 1 $(( theOffset - 1 ))) || __partA=""
 
-        if [[ $noLength == $FALSE ]]
-        then
-            _ret_newString="${originalString:${theOffset}:${theLength}}"
-        else
-            _ret_newString="${originalString:${theOffset}}"
-        fi
+        local __partB=$(_sc SubString "$__originalString" $theOffset '-nl')
+        printf %s "$__partB" &>/dev/null __partB=$(_sc SubString "$__originalString" $theOffset '-nl') || __partB=""
+        
+        #_ret_modifiedString=$(_sc SubString "$__originalString" 1 $((theOffset-1)))"$__additionalText"$(_sc SubString "$__originalString" $((theOffset)) '-nl')
+        _ret_modifiedString="$__partA$__additionalText$__partB"
 
-        eval "$1=\${_ret_newString}"
+        echo -e "$_ret_modifiedString"
+
+
+        #eval "$1=\${_ret_newString}"
 
     elif [[ $# -eq 1 || ${2:-} == "-?" || ${2:-} == "--help" || ${2:-} == "-h" ]]
     then
@@ -1281,7 +1354,7 @@ StringClass()
     (
         local __res_CreateUUID_fga_
         _CreateUUID __res_CreateUUID_fga_ "$@"
-        [ ! -z "${__res_CreateUUID_fga_:=-1}" ] && echo -e $__res_CreateUUID_fga_
+        [ ! -z "${__res_CreateUUID_fga_:-}" ] && echo -e "$__res_CreateUUID_fga_"
 
     )
 
@@ -1289,7 +1362,7 @@ StringClass()
     (
         local __res_RandomString_auv_
         _RandomString __res_RandomString_auv_ "$@"
-        [ ! -z "${__res_RandomString_auv_:=-}" ] && echo -e $__res_RandomString_auv_
+        [ ! -z "${__res_RandomString_auv_:-}" ] && echo -e "$__res_RandomString_auv_"
 
     )
 
@@ -1374,6 +1447,13 @@ StringClass()
     (
         local _result
         _SubString _result "$@"
+        [ ! -z "${_result:-}" ] && echo -e "$_result"
+    )
+
+    Insert()
+    (
+        local _result
+        _Insert _result "$@"
         [ ! -z "${_result:-}" ] && echo -e "$_result"
     )
 

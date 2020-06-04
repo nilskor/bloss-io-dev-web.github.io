@@ -236,3 +236,6 @@ echo -e "${someCrap}             # -f (first) \n"
 
 _wsTrim someCrap "Freddo         . Frog                   ."
 echo -e "${someCrap}                                 # default - do all \n"
+
+# --
+./StringFunctions FindReplace '-' '_' "$(./StringFunctions CreateUUID 2)" -a
