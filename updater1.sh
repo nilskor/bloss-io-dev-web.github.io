@@ -61,7 +61,7 @@ function main()
 
 }
 
-function step1()            # "Step #1 - find all the html files"
+function step1()             # "Step #1 - find all the html files"
 {
     echo -e "Step #1 - find all the html files"
 
@@ -86,7 +86,7 @@ function step1()            # "Step #1 - find all the html files"
 
 }
 
-function step2()            # "Step #2 - process the array of files"
+function step2()             # "Step #2 - process the array of files"
 {
 
     echo -e "Step #2 - process the collection of files"
@@ -99,12 +99,14 @@ function step2()            # "Step #2 - process the array of files"
 
     for file in "${AllHtmlFiles[@]}"
     do
-        step3 "$file"
+        echo -e "the Do loop"
+        #step3 "$file"
+        step4 "$file"
     done
 
 }
 
-function step3()            # "Step #3 - work with each html file"
+function step3()             # "Step #3 - work with each html file"
 {
 
     if [[ $step3_Echoed -eq $FALSE ]]
@@ -133,6 +135,7 @@ function step3()            # "Step #3 - work with each html file"
             local _ret_IndexLookup=""
             local _ret_newLinkWithBookmark=""
             local _ret_oldLinkText=""
+            local _temp1
             
             step3a _ret_FullString _ret_IndexLookup "${arrayOfOldLinks[$string]}"
             
@@ -140,15 +143,16 @@ function step3()            # "Step #3 - work with each html file"
             _wsTrim _ret_newLink "$_ret_trimmedFullString"
             
             #_FindReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
-            _Insert _temp0 "id='bkmk$_ret_IndexLookup' " "$_ret_newLink" 4
+            _Insert _ret_newLinkWithID "id='bkmk$_ret_IndexLookup' " "$_ret_newLink" 4
             
             _Find _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
 
             _ret_newLink=""
-            _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithBookmark"
+            _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithID"
 
             #echo -e '_FindReplace _temp1' "\n::${arrayOfOldLinks[$string]}" "\n::$_temp0" "\n::$@" '\n:: -w\n'
-            _FindReplace _temp1 "${arrayOfOldLinks[$string]}" "$_temp0" "$@" '-w'
+
+            _FindReplace _temp1 "${arrayOfOldLinks[$string]}" "$_ret_newLink" "$@" '-w'
 
             #echo -e "$_ret_newLink"
             #echo -e ":\n  old: ${arrayOfOldLinks[$string]}\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"
@@ -196,6 +200,38 @@ function step3b()            # "Step #3b - find the index lookup inside $theInde
     foundLine=`grep -E "#$@" <<< "$theWholeIndexFile"` || foundLine=""
 
     echo -e "$foundLine"    # return the results from step3b back to 3a
+}
+
+function step4()             # "Step #4 - update the bookmarks"
+{
+    echo -e "Step #4 - update the bookmarks in this file: $@"
+
+    local _arrayOfBookmarks=""
+    local -A arrayOfOldBookmarks=()
+    local _newBookmark
+    local _temp0
+
+    _FindAll _arrayOfBookmarks '#bkmk.*(?=\")' "$@"
+
+    _FindReplace _arrayOfBookmarks 'ArrayOfStrings' 'arrayOfOldBookmarks' "$_arrayOfBookmarks"
+
+    eval "$_arrayOfBookmarks"
+
+    if [[ ${#arrayOfOldBookmarks[@]} -gt 0 ]]
+    then
+
+        for string in ${!arrayOfOldBookmarks[@]}
+        do
+            echo -e "${arrayOfOldBookmarks[$string]}"
+            _FindReplace _newBookmark '_' '' "${arrayOfOldBookmarks[$string]}" -a
+            echo -e "$_newBookmark"
+            _FindReplace _temp0 "${arrayOfOldBookmarks[$string]}" "$_newBookmark" "$@" '-aw'
+            #echo -e "$_temp0"
+
+        done
+
+    fi
+
 }
 
 main
