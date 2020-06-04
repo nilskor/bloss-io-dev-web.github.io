@@ -123,14 +123,14 @@ function readInput()                # bash
     done
 }
 
-function _IsNumber()
+function _IsNumber()                # bash printf
 {
     local __ret_IsNumber_qaz_
     printf %f $2 &>/dev/null && __ret_IsNumber_qaz_=$TRUE || __ret_IsNumber_qaz_=$FALSE
     eval "$1=\${__ret_IsNumber_qaz_}"
 }
 
-function _CreateUUID()
+function _CreateUUID()              # bash StringClass cat /proc/sys/kernel/random/uuid
 {
     local -i _loopDefault=1
     local __ret_CreateUUID_zxc_
@@ -165,7 +165,7 @@ function _CreateUUID()
 declare -i _RandomString_loopCounter_QLzcMO6ya_=0
 declare -i _RandomString_byteMultiplier_V1KWz7_=8
 
-function _RandomString()
+function _RandomString()            # bash StringClass dd /dev/urandom tr head
 {
     local __ret_RandomString_dCY_
     local -i _getByteCount=256

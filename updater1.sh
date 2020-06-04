@@ -139,14 +139,16 @@ function step3()            # "Step #3 - work with each html file"
             _Trim _ret_trimmedFullString $_ret_FullString
             _wsTrim _ret_newLink "$_ret_trimmedFullString"
             
-            _FindReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
+            #_FindReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
+            _Insert _temp0 "id='bkmk$_ret_IndexLookup' " "$_ret_newLink" 4
             
             _Find _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "${arrayOfOldLinks[$string]}" '-s'
 
             _ret_newLink=""
             _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithBookmark"
 
-            _FindReplace _temp1 "${arrayOfOldLinks[$string]}" "$_ret_newLink" "$@" '-w'
+            #echo -e '_FindReplace _temp1' "\n::${arrayOfOldLinks[$string]}" "\n::$_temp0" "\n::$@" '\n:: -w\n'
+            _FindReplace _temp1 "${arrayOfOldLinks[$string]}" "$_temp0" "$@" '-w'
 
             #echo -e "$_ret_newLink"
             #echo -e ":\n  old: ${arrayOfOldLinks[$string]}\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"
