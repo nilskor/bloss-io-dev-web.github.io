@@ -27,7 +27,7 @@ declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
 declare NC='\033[0m'         # No Color
 
-declare theseFiles="GTK3test.html"
+declare theseFiles="*.html"
 declare theIndexFile="index.html"
 #declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"
 declare oldLinkPattern="<a[ ]name=.+.href=./content/GTK3/.+</a>"
@@ -99,7 +99,7 @@ function step2()             # "Step #2 - process the array of files"
 
     for file in "${AllHtmlFiles[@]}"
     do
-        echo -e "the Do loop"
+        #echo -e "the Do loop"
         #step3 "$file"
         step4 "$file"
     done
@@ -150,9 +150,9 @@ function step3()             # "Step #3 - work with each html file"
             _ret_newLink=""
             _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithID"
 
-            #echo -e '_FindReplace _temp1' "\n::${arrayOfOldLinks[$string]}" "\n::$_temp0" "\n::$@" '\n:: -w\n'
+            echo -e '\n _FindReplace' "\n::${arrayOfOldLinks[$string]}" "\n::$_ret_newLink" "\n::$@\n"
 
-            _FindReplace _temp1 "${arrayOfOldLinks[$string]}" "$_ret_newLink" "$@" '-w'
+            _FindReplace _temp1 "${arrayOfOldLinks[$string]}" "$_ret_newLink" "$@" #'-w'
 
             #echo -e "$_ret_newLink"
             #echo -e ":\n  old: ${arrayOfOldLinks[$string]}\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"
@@ -204,14 +204,14 @@ function step3b()            # "Step #3b - find the index lookup inside $theInde
 
 function step4()             # "Step #4 - update the bookmarks"
 {
-    echo -e "Step #4 - update the bookmarks in this file: $@"
+    #echo -e "Step #4 - update the bookmarks in this file: $@"
 
     local _arrayOfBookmarks=""
     local -A arrayOfOldBookmarks=()
     local _newBookmark
     local _temp0
 
-    _FindAll _arrayOfBookmarks '#bkmk.*(?=\")' "$@"
+    _FindAll _arrayOfBookmarks '^\s{1,}<li>.*class="toggle".*' "$@" # (?<=href).*([_]{1,}).*(?=\")  # (?<=href=\").*(?=\")
 
     _FindReplace _arrayOfBookmarks 'ArrayOfStrings' 'arrayOfOldBookmarks' "$_arrayOfBookmarks"
 
@@ -219,13 +219,13 @@ function step4()             # "Step #4 - update the bookmarks"
 
     if [[ ${#arrayOfOldBookmarks[@]} -gt 0 ]]
     then
-
+        echo -e "Step #4 - checking the bookmarks in this file: $@"
         for string in ${!arrayOfOldBookmarks[@]}
         do
-            echo -e "${arrayOfOldBookmarks[$string]}"
+            echo -e "\n${arrayOfOldBookmarks[$string]}"
             _FindReplace _newBookmark '_' '' "${arrayOfOldBookmarks[$string]}" -a
-            echo -e "$_newBookmark"
-            _FindReplace _temp0 "${arrayOfOldBookmarks[$string]}" "$_newBookmark" "$@" '-aw'
+            echo -e "$_newBookmark\n"
+            _FindReplace _temp0 "${arrayOfOldBookmarks[$string]}" "$_newBookmark" "$@" #'-aw'
             #echo -e "$_temp0"
 
         done

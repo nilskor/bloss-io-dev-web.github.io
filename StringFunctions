@@ -731,6 +731,7 @@ function _FindAll()                 # bash grep -P
             iPrevLen=0
             for item in ${foundIt[@]}
             do
+                #echo -e "::item: $item\n"
                 #searchString="$item"
                 #rest=${stringToBeSearched#*$searchString}
                 #result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} +1 ))"
@@ -738,9 +739,9 @@ function _FindAll()                 # bash grep -P
                 iPos=$(_sc Find "$item" "$nextChunk")
                 iLen=$(_sc Len "$item")
                 nextChunk=${nextChunk#*$item}
-                #echo $iPos $iLen "$nextChunk"
+                #echo -e "\n $iPos $iLen $nextChunk \n"
                 iCalc=$(( $iPos + $iPrevPos + $iPrevLen - 1 ))
-                #echo $iCalc
+                #echo -e $iCalc "\n"
                 ArrayOfStrings[$iCalc]="$item"
                 iPrevPos=$iCalc
                 iPrevLen=$iLen
