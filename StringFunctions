@@ -51,6 +51,8 @@ declare -ri FALSE=0
 
 declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
+declare BLUE='\033[1;34m'
+declare BLACK='\033[1;30m'
 declare NC='\033[0m'         # No Color
 
 declare -a  theArgs=()          # a - indexed array
@@ -1176,7 +1178,7 @@ function _Trim()                    # bash
 
     # main part of the function
 
-    local var="$2"
+    local var="${2:-}"
     #local _ret_trim
 
     # remove leading whitespace characters
@@ -1678,3 +1680,31 @@ function FunctionTemplate()
     # END of help section
 
 }
+
+# Regex :
+#
+#  ^       # match start of line/string
+#
+#  $       # match end of line/string
+#
+#  .       # match any single character once
+#
+#  *       # repeat previous match zero or more times
+#
+#  +       # repeat previous match one  or more times
+#
+#  ?       # match a single character optionally if it's there eg. http vs https?
+#
+#  (?<=)   # a look-behind
+#
+#  (?=)    # a look-ahead
+#
+#  (?:     # begin non-capturing group
+#
+#  (?!     # begin negative lookahead
+#
+#  ()      # creates a 'capture group'
+#
+#  []      # defines character classes
+#
+#  [^]     # negates characters
