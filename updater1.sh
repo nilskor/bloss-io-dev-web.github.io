@@ -27,10 +27,19 @@ declare RED='\033[1;31m'     # actually a light Red to be exact :)
 declare GREEN='\033[0;32m'
 declare NC='\033[0m'         # No Color
 
-declare theseFiles="*.html"
+declare theseFiles="Abstract Base.html"
 declare theIndexFile="index.html"
-#declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"
-declare oldLinkPattern="<a[ ]name=.+.href=./content/GTK3/.+</a>"
+
+# <h3><a href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget"><font color="#2e3440">
+#     GtkWidget
+#     </font></a></h3>
+# The above can only be found with:
+#
+# grep -Pazo '(?s)<h3><a.*?</a></h3>' ./content/GTK3/Widgets\ Objects/Abstract\ Base/Abstract\ Base.html
+
+#declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"      
+#declare oldLinkPattern='<a[ ]name=.+.href=./content/GTK3/.+</a>'
+declare oldLinkPattern='<a[ ]href="/content/GTK3/.*</a>'
 declare hrefPattern="[-0-9A-Za-z_\ \W]+(.html)"                     # The global set of 'pages' in this hybrid SPA are in index.html 
                                                                     # as links, and those links have #References made up of the 
                                                                     # file-names (creating uniqueness). Searching for the file-names
@@ -41,6 +50,8 @@ declare -i step3a_Echoed=$FALSE
 declare -i step3b_Echoed=$FALSE
 
 declare theWholeIndexFile=""
+
+declare -ir DO_NOT_WRITE=$TRUE
 
 function   setIFS(){ IFS=$'\n\t'; }
 function unsetIFS(){ IFS= ;       }
@@ -102,8 +113,8 @@ function step2()             # "Step #2 - process the array of files"
         if [[ "$file" != "./index.html" ]]
         then
             #echo -e "the Do loop"
-            step3 "$file"
             step4 "$file"
+            step3 "$file"
 
         fi
     done
@@ -128,8 +139,17 @@ function step3()             # "Step #3 - work with each html file"
     _FindReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
     eval "$_theStringFindResults"                                       # unravel the return result into 'arrayOfOldLinks', 
 
+    local toWriteOrNot=''
+    if [[ $DO_NOT_WRITE -eq $FALSE ]]
+    then
+        toWriteOrNot='-w'
+    fi
+
     if [[ ${#arrayOfOldLinks[@]} -gt 0 ]]
     then
+        echo -e "\n==================================================================================================="
+        echo -e " Step #3 - checking the injectable links in this file: $@  (${#arrayOfOldLinks[@]})"
+        echo -e "==================================================================================================="
 
         for index in ${!arrayOfOldLinks[@]}         # for each line of <h3><a href="/content/GTK/someFile.html">
         do                                           # send each line to step 3a for processing
@@ -146,6 +166,7 @@ function step3()             # "Step #3 - work with each html file"
             _wsTrim _ret_newLink "$_ret_trimmedFullString"
             
             #_old_dont_use_#_FindReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
+
             _Insert _ret_newLinkWithID "id='bkmk$_ret_IndexLookup' " "$_ret_newLink" 4
             
             _Find _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "$_oldLink" '-s'
@@ -153,15 +174,23 @@ function step3()             # "Step #3 - work with each html file"
             _ret_newLink=""
             _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithID"
 
-            echo -e '\n _FindReplace' "\n::$_oldLink" "\n::$_ret_newLink" "\n::$@\n"
+            if [[ ${#_ret_newLink} -gt ${#_oldLink} ]]
+            then
+                echo -e "\n ${CYAN}_FindReplace${NC}" "\n::$_oldLink" "\n::${LCYAN}$_ret_newLink${NC}"
 
-            _FindReplace _temp1 "$_oldLink" "$_ret_newLink" "$@" '-w'
+                _FindReplace _temp1 "$_oldLink" "$_ret_newLink" "$@" $toWriteOrNot
+
+            else
+                echo -e "\n New link is shorter than the old link"
+            fi
 
             #echo -e "$_ret_newLink"
             #echo -e ":\n  old: $_oldLink\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"
                     
         done
-        
+
+    else
+        echo -e "\n ${RED}Step 3, found nothing, next file ..${NC}\n" 
     fi
 
 }
@@ -175,7 +204,15 @@ function step3a()            # "Step #3a - create the unique file name index loo
         step3a_Echoed=$TRUE
     fi
 
-    foundName=`grep -E -i -o "$hrefPattern" <<< "$3"` || foundIt=""
+    #foundName=`grep -E -i -o "$hrefPattern" <<< "$3"` || foundIt=""
+    local _ret_PossibleLookupName=""
+    local foundName=""
+
+    _Find _ret_PossibleLookupName '((?<=/)|(?<=#))([A-Za-z0-9_]*)(?="><)' "$3" '-s'
+
+    foundName="$_ret_PossibleLookupName"
+
+    #echo -e "\n $foundName"
 
     if [[ -n $foundName ]]
     then
@@ -214,84 +251,75 @@ function step4()             # "Step #4 - update the bookmarks"
     local _newBookmark
     local _temp0
 
-    # remnants    # (?<=href).*([_]{1,}).*(?=\")     # (?<=href=\").*(?=\")
+    # The following are successful regexes:
     #
-    # The following is a successful pass thru of all html files to remove underscores in the ToC bookmark links
+    # removes underscores in the ToC bookmark links:
     #_FindAll _arrayOfBookmarks '^\s{1,}<li>.*class="toggle".*href=".*[_]{1,}.*">' "$@"
     #
-    # The following is a successful pass thru of all html files to add bkmk to the bookmarks
+    # adds bkmk to the bookmarks
     #_FindAll _arrayOfBookmarks '^\s{1,}<li>.*class="toggle".*href="#(?!bkmk).*">' "$@"
     #
-    # The following is a successful pass thru of all html files to replace </a class="toggle"> with </a>
+    # replace </a class="toggle"> with </a>
     #_FindAll _arrayOfBookmarks '^\s{1,}<li>.*class="toggle".*</a\sclass="toggle">' "$@"
     #
+    # find name="" and replace with id=""
+    # _FindAll _arrayOfBookmarks '(?<=<h.><a\s).*name="[[:alnum:]_{1,}]*"' "$@"
 
-    _FindAll _arrayOfBookmarks '(?<=<h.><a\s).*name="[[:alnum:]_{1,}]*"' "$@"   # '(?<=<h.><a\s).*name="[[:alnum:]_{1,}]*"'
+    _FindAll _arrayOfBookmarks '(?<=<li><a href="#).*(?="><)' "$@"
 
     _FindReplace _arrayOfBookmarks 'ArrayOfStrings' 'arrayOfOldBookmarks' "$_arrayOfBookmarks"
     eval "$_arrayOfBookmarks"
     # arrayOfOldBookmarks[]
+
+    local toWriteOrNot=''
+    if [[ $DO_NOT_WRITE -eq $FALSE ]]
+    then
+        toWriteOrNot='-aw'
+    fi
 
     if [[ ${#arrayOfOldBookmarks[@]} -gt 0 ]]
     then
         echo -e "\n==================================================================================================="
         echo -e " Step #4 - checking the bookmarks in this file: $@"
         echo -e "==================================================================================================="
-        for string in ${!arrayOfOldBookmarks[@]}
+        for index in ${!arrayOfOldBookmarks[@]}
         do
+            local _oldBKMK="${arrayOfOldBookmarks[$index]}"
             #-----------------------------------------------------------------------------------------
-            #echo -e "\n${arrayOfOldBookmarks[$string]}"
-            #step4a    "${arrayOfOldBookmarks[$string]}" "$@"
-            _FindReplace _newBookmark 'name="'   'id="bkmk' "${arrayOfOldBookmarks[$string]}" -a
-            _FindReplace _newBookmark 'bkmkbkmk' 'bkmk'     "$_newBookmark" -a
-            _FindReplace _newBookmark '_'        ''         "$_newBookmark" -a
-            echo -e "\nUpdate: ${RED}${arrayOfOldBookmarks[$string]}${NC} to ${GREEN}$_newBookmark${NC}\n"
-            _FindReplace _temp0 "${arrayOfOldBookmarks[$string]}" "$_newBookmark" "$@" '-aw'
+            echo -e "\n$_oldBKMK"
+            #_FindReplace _newBookmark 'name="'   'id="bkmk' "$_oldBKMK" -a
+            #_FindReplace _newBookmark 'bkmkbkmk' 'bkmk'     "$_newBookmark" -a
+            #_FindReplace _newBookmark '_'        ''         "$_newBookmark" -a
+            #_FindReplace _newBookmark '_'        ''         "$_oldBKMK" -a
+            #if [[ ! ${#_oldBKMK} -eq ${#_newBookmark} ]]
+            #then
+            #    echo -e "\n Update: ${CYAN}$_oldBKMK${NC} to ${PINK}$_newBookmark${NC}\n"
+            #    _FindReplace _temp0 "$_oldBKMK" "$_newBookmark" "$@" $toWriteOrNot
+            #else
+            #    echo -e "${DGREY} :: skipping $_oldBKMK${NC}"
+            #fi
             #echo -e "$_temp0"
             #-----------------------------------------------------------------------------------------
-            local _theBKMK=${arrayOfOldBookmarks[$string]}
-            local _oldName=$(_sc SubString $_theBKMK 7 $(( $(_sc Len $_theBKMK) - 7  )))
-            local _newName=$(_sc FindReplace '_' '' $_oldName '-a')
-            if [[ ! ${#_oldName} -eq ${#_newName} ]]
-            then
-                echo -e " :: $_oldName ${GREEN}needs updating to ${NC}${BLUE}$_newName${NC}"
-                _FindReplace _temp0 "$_oldName" "$_newName" "$@" '-aw'
-
-            else
-                echo -e "${BLACK} :: skipping $_oldName${NC}"
-            fi
+            #local _theBKMK=$_oldBKMK
+            #local _oldName=$(_sc SubString $_theBKMK 7 $(( $(_sc Len $_theBKMK) - 7  )))
+            #local _newName=$(_sc FindReplace '_' '' $_oldName '-a')
+            #if [[ ! ${#_oldName} -eq ${#_newName} ]]
+            #then
+            #    echo -e " :: $_oldName ${GREEN}needs updating to ${NC}${BLUE}$_newName${NC}"
+            #    _FindReplace _temp0 "$_oldName" "$_newName" "$@" $toWriteOrNot
+            #    
+            #else
+            #    echo -e "${BLACK} :: skipping $_oldName${NC}"
+            #fi
             #-----------------------------------------------------------------------------------------
             
         done
 
+    else
+        echo -e "\n ${PINK}Step 4, found nothing in $@ ${NC}\n" 
+
     fi
 
-}
-
-function step4a()
-{
-    echo -e "\n Step 4a ..\n"
-    #return 0
-    local _arrayOfBookmarks=""
-    local -A arrayOfOldBookmarks=()
-
-    _FindAll _arrayOfBookmarks "$1" "$2"
-
-    _FindReplace _arrayOfBookmarks 'ArrayOfStrings' 'arrayOfOldBookmarks' "$_arrayOfBookmarks"
-    eval "$_arrayOfBookmarks"
-    # arrayOfOldBookmarks[]
-
-    if [[ ${#arrayOfOldBookmarks[@]} -gt 0 ]]
-    then
-        for string in ${!arrayOfOldBookmarks[@]}
-        do
-            local _theBKMK=${arrayOfOldBookmarks[$string]}
-            local _oldName=$(_sc SubString $_theBKMK 7 $(( $(_sc Len $_theBKMK) - 7  )))
-            local _newName=$(_sc FindReplace '_' '' $_oldName '-a')
-            echo -e " :: $_oldName needs updating to $_newName"
-        
-        done
-    fi
 }
 
 main

@@ -43,17 +43,71 @@ function echo()
 
 source ./StringFunctions
 
-function callee()
+# https://stackoverflow.com/a/10583562/7791211 - use of eval to return arrays (pass ByVal)
+# https://stackoverflow.com/a/49971213/7791211 - use local -n to return arrays (pass ByRef)
+
+#_sc Find '<a .*?</a>' ./scratchpad.txt -sm
+
+declare data='some
+dummy extrå long
+string that needs cöunting'
+
+declare foundIt
+declare doCaseInsensitive='-i'
+declare thePattern='<a .*?</a>'
+
+#grep -Pazo $doCaseInsensitive "(?s)$thePattern" ./scratchpad.txt
+
+#echo -e "\n\n::------------------::\n"
+
+exec 3>&2
+exec 2> /dev/null
+foundIt=$(grep -Pazo -m1 $doCaseInsensitive "(?s)$thePattern" ./scratchpad.txt | head -zn 1) || foundIt=""
+exec 2>&3
+
+#echo -e "$foundIt"
+
+function test1()
 {
-    echo "$@"
-    local -i a=2
+    local complexResult1
+
+    exec 3>&2
+    exec 2> /dev/null
+
+    complexResult1=$(grep -Pazo -m1 $doCaseInsensitive "(?s)$thePattern" ./scratchpad.txt | head -zn 1) || foundIt=""
+    
+    exec 2>&3
+    
+    eval "$1=\${complexResult1}"
+
 }
 
-function caller()
-(
-    b="$@"
-    callee a "$b"
-    echo "$a"
-)
+declare fred # returned as an eval statement
 
-caller 'fred'
+test1 fred   # returned as an eval statement
+
+echo -e "$fred"
+echo -e "$(_sc Len "$fred")"
+
+if [[ ${#fred} -gt 0 ]]
+then
+
+    foundIt=($foundIt)
+    nextChunk="$stringToBeSearched"
+    iPos=0
+    iPrevPos=1
+    iPrevLen=0
+
+    for item in ${foundIt[@]}
+    do
+        iPos=$(_sc Find "$item" "$nextChunk")
+        iLen=$(_sc Len "$item")
+        nextChunk=${nextChunk#*$item}
+        iCalc=$(( $iPos + $iPrevPos + $iPrevLen - 1 ))
+        ArrayOfStrings[$iCalc]="$item"
+        iPrevPos=$iCalc
+        iPrevLen=$iLen
+    
+    done
+
+fi

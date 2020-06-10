@@ -340,7 +340,10 @@ body
     border     : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
     text-align : justify;
 }
-
+.doco h1
+{
+    text-align: left;
+}
 
 /** The main splash content =====================
  * the so-called Hero image or text

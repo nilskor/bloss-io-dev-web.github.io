@@ -12,9 +12,9 @@
         <h3><font color="#2e3440">Many widgets, like buttons, do all their drawing themselves. 
               You just tell them the label you want to see, and they figure out what font to use, 
               draw the button outline and focus rectangle, etc. 
-              Sometimes, it is necessary to do some custom drawing. In that case, a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Miscellaneous.html#GtkDrawingArea">GtkDrawingArea</a> 
+              Sometimes, it is necessary to do some custom drawing. In that case, a <a class="two" href="/content/GTK3/Widgets Objects/Miscellaneous.html#GtkDrawingArea">GtkDrawingArea</a> 
               might be the right widget to use. 
-              It offers a canvas on which you can draw by connecting to the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#draw_signal">“draw”</a> signal.</font></h3>
+              It offers a canvas on which you can draw by connecting to the <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#draw_signal">“draw”</a> signal.</font></h3>
     </div>
   </section>
 
@@ -42,7 +42,7 @@
           <p>
               The contents of a widget often need to be partially or fully redrawn, 
               e.g. when another window is moved and uncovers part of the widget, or when the window containing it is resized. 
-              It is also possible to explicitly cause part or all of the widget to be redrawn, by calling <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_queue_draw"><code class="function">gtk_widget_queue_draw()</code></a> 
+              It is also possible to explicitly cause part or all of the widget to be redrawn, by calling <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_queue_draw"><code class="function">gtk_widget_queue_draw()</code></a> 
               or its variants. GTK+ takes care of most of the details by providing a ready-to-use cairo context to the ::draw signal handler.<br>
               <br>
               The following example shows a ::draw signal handler. 

@@ -173,7 +173,7 @@ g_object_ref_sink (foo);</pre>
                   <td><p style="visibility: hidden;"><span style= "font-size: 1.12em; font-weight: 700;">1.5.</span></p></td>
                   <td><p>
                          When you want to get rid of the widget, you must call 
-                         <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_destroy"><code class="function">gtk_widget_destroy()</code></a> 
+                         <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_destroy"><code class="function">gtk_widget_destroy()</code></a> 
                          to break any external connections to the widget before dropping your reference:
                       </p>
                   </td>
@@ -505,7 +505,7 @@ g_object_unref (foo);</pre>
                          How do I load an image or animation from a file?<br>
                          <br>
                          To load an image file straight into a display widget, use 
-                         <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Display_Widgets/GtkImage.html#gtk_image_new_from_file"><code class="function">gtk_image_new_from_file()</code></a> <a class="toc" href="#ftn.id-1.2.5.3.3.1.12.2.1.2" class="footnote" name="id-1.2.5.3.3.1.12.2.1.2"><sup class="footnote">[1]</sup></a>. 
+                         <a class="two" href="/content/GTK3/Widgets Objects/Display_Widgets/GtkImage.html#gtk_image_new_from_file"><code class="function">gtk_image_new_from_file()</code></a> <a class="toc" href="#ftn.id-1.2.5.3.3.1.12.2.1.2" class="footnote" name="id-1.2.5.3.3.1.12.2.1.2"><sup class="footnote">[1]</sup></a>. 
                          To load an image for another purpose, use <a class="two" href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-File-Loading.html#gdk-pixbuf-new-from-file"><code class="function">gdk_pixbuf_new_from_file()</code></a>. 
                          To load an animation, use <a class="two" href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-Animations.html#gdk-pixbuf-animation-new-from-file"><code class="function">gdk_pixbuf_animation_new_from_file()</code></a>. 
                          <code class="function">gdk_pixbuf_animation_new_from_file()</code>
@@ -643,7 +643,7 @@ g_object_unref (foo);</pre>
                          capabilities.<br>
                          Note that the presence of an RGBA visual is no guarantee that the window will 
                          actually appear transparent on screen. On X11, this requires a compositing 
-                         manager to be running. See <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_is_composited"><code class="function">gtk_widget_is_composited()</code></a> 
+                         manager to be running. See <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_is_composited"><code class="function">gtk_widget_is_composited()</code></a> 
                          for a way to find out if the alpha channel will be respected.
                       </p>
                   </td>
@@ -664,8 +664,8 @@ g_object_unref (foo);</pre>
                   <td><p>
                          ...for lists and trees?<br>
                          <br>
-                         See <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/TL_Widget_Overview.html">tree widget overview</a> 
-                         — you should use the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeView.html"><span class="type">GtkTreeView</span></a> 
+                         See <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/TL_Widget_Overview.html">tree widget overview</a> 
+                         — you should use the <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeView.html"><span class="type">GtkTreeView</span></a> 
                          widget. (A list is just a tree with no branches, so the tree widget is used for 
                          lists as well).
                       </p>
@@ -676,12 +676,12 @@ g_object_unref (foo);</pre>
                   <td><p>
                          ...for multi-line text display or editing?<br>
                          <br>
-                         See <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/Text_Overview.html">text widget overview</a> 
-                         — you should use the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextView.html"><span class="type">GtkTextView</span></a> 
+                         See <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/Text_Overview.html">text widget overview</a> 
+                         — you should use the <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextView.html"><span class="type">GtkTextView</span></a> 
                          widget.<br>
-                         If you only have a small amount of text, <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Display_Widgets/GtkLabel.html"><span class="type">GtkLabel</span></a> 
-                         may also be appropriate of course. It can be made selectable with <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Display_Widgets/GtkLabel.html#gtk_label_set_selectable"><code class="function">gtk_label_set_selectable()</code></a>
-                         . For a single-line text entry, see <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkEntry.html"><span class="type">GtkEntry</span></a>.
+                         If you only have a small amount of text, <a class="two" href="/content/GTK3/Widgets Objects/Display_Widgets/GtkLabel.html"><span class="type">GtkLabel</span></a> 
+                         may also be appropriate of course. It can be made selectable with <a class="two" href="/content/GTK3/Widgets Objects/Display_Widgets/GtkLabel.html#gtk_label_set_selectable"><code class="function">gtk_label_set_selectable()</code></a>
+                         . For a single-line text entry, see <a class="two" href="/content/GTK3/Widgets Objects/Numeric_Text_Entry/GtkEntry.html"><span class="type">GtkEntry</span></a>.
                       </p>
                   </td>
               </tr>
@@ -690,9 +690,9 @@ g_object_unref (foo);</pre>
                   <td><p>
                          ...to display an image or animation?<br>
                          <br>
-                         <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Display_Widgets/GtkImage.html"><span class="type">GtkImage</span></a> 
+                         <a class="two" href="/content/GTK3/Widgets Objects/Display_Widgets/GtkImage.html"><span class="type">GtkImage</span></a> 
                          can display images in just about any format GTK+ understands. You can also use 
-                         <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Miscellaneous/GtkDrawingArea.html"><span class="type">GtkDrawingArea</span></a> 
+                         <a class="two" href="/content/GTK3/Widgets Objects/Miscellaneous/GtkDrawingArea.html"><span class="type">GtkDrawingArea</span></a> 
                          if you need to do something more complex, such as draw text or graphics over 
                          the top of the image.
                       </p>
@@ -704,10 +704,10 @@ g_object_unref (foo);</pre>
                          ...for presenting a set of mutually-exclusive choices, where Windows would use 
                          a combo box?<br>
                          <br>
-                         With GTK+, a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Menu_Combo_Tool/GtkComboBox.html"><span class="type">GtkComboBox</span></a> 
+                         With GTK+, a <a class="two" href="/content/GTK3/Widgets Objects/Menu_Combo_Tool/GtkComboBox.html"><span class="type">GtkComboBox</span></a> 
                          is the recommended widget to use for this use case. This widget looks like either 
                          a combo box or the current option menu, depending on the current theme. If you 
-                         need an editable text entry, use the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Menu_Combo_Tool/GtkComboBox.html#GtkComboBox_has_entry"><span class="type">“has-entry”</span></a> 
+                         need an editable text entry, use the <a class="two" href="/content/GTK3/Widgets Objects/Menu_Combo_Tool/GtkComboBox.html#GtkComboBox_has_entry"><span class="type">“has-entry”</span></a> 
                          property.
                       </p>
                   </td>
@@ -728,12 +728,12 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I change the color of a widget?<br>
                          <br>
-                         See <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_override_color"><code class="function">gtk_widget_override_color()</code></a> 
-                         and <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_override_background_color"><code class="function">gtk_widget_override_background_color()</code></a>. 
+                         See <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_override_color"><code class="function">gtk_widget_override_color()</code></a> 
+                         and <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_override_background_color"><code class="function">gtk_widget_override_background_color()</code></a>. 
                          You can also change the appearance of a widget by installing a custom style 
                          provider, see <a class="two" href="/content/GTK3/Theming_GTK/GtkStyleContext.html#gtk_style_context_add_provider"><code class="function">gtk_style_context_add_provider()</code></a>.<br>
                          To change the background color for widgets such as <span class="type">GtkLabel</span> 
-                         that have no background, place them in a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Miscellaneous/GtkEventBox.html"><span class="type">GtkEventBox</span></a> 
+                         that have no background, place them in a <a class="two" href="/content/GTK3/Widgets Objects/Miscellaneous/GtkEventBox.html"><span class="type">GtkEventBox</span></a> 
                          and set the background of the event box.
                       </p>
                   </td>
@@ -744,7 +744,7 @@ g_object_unref (foo);</pre>
                          How do I change the font of a widget?<br>
                          <br>
                          This has several possible answers, depending on what exactly you want to achieve. 
-                         One option is <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_override_font"><code class="function">gtk_widget_override_font()</code></a>.
+                         One option is <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_override_font"><code class="function">gtk_widget_override_font()</code></a>.
                       </p>
                   </td>
               </tr>
@@ -764,7 +764,7 @@ g_object_unref (foo);</pre>
                   <td><p style="visibility: hidden;"><span style= "font-size: 1.12em; font-weight: 700;">3.2.</span></p></td>
                   <td><p>
                          If you want to make the text of a label larger, you can use 
-                         <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Display_Widgets/GtkLabel.html#gtk_label_set_markup"><code class="function">gtk_label_set_markup()</code></a>:
+                         <a class="two" href="/content/GTK3/Widgets Objects/Display_Widgets/GtkLabel.html#gtk_label_set_markup"><code class="function">gtk_label_set_markup()</code></a>:
                       </p>
                   </td>
               </tr>
@@ -818,7 +818,7 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I disable/ghost/desensitize a widget?<br>
                          <br>
-                         See <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_sensitive"><code class="function">gtk_widget_set_sensitive()</code></a>.
+                         See <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_sensitive"><code class="function">gtk_widget_set_sensitive()</code></a>.
                       </p>
                   </td>
               </tr>
@@ -838,9 +838,9 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I get the contents of the entire text widget as a string?<br>
                          <br>
-                         See <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextBuffer.html#gtk_text_buffer_get_bounds"><code class="function">gtk_text_buffer_get_bounds()</code></a> 
-                         and <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextBuffer.html#gtk_text_buffer_get_text"><code class="function">gtk_text_buffer_get_text()</code></a> 
-                         or <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextIter.html#gtk_text_iter_get_text"><code class="function">gtk_text_iter_get_text()</code></a>.
+                         See <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextBuffer.html#gtk_text_buffer_get_bounds"><code class="function">gtk_text_buffer_get_bounds()</code></a> 
+                         and <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextBuffer.html#gtk_text_buffer_get_text"><code class="function">gtk_text_buffer_get_text()</code></a> 
+                         or <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextIter.html#gtk_text_iter_get_text"><code class="function">gtk_text_iter_get_text()</code></a>.
                       </p>
                   </td>
               </tr>
@@ -866,7 +866,7 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I make a text widget display its complete contents in a specific font?<br>
                          <br>
-                         If you use <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextBuffer.html#gtk_text_buffer_insert_with_tags"><code class="function">gtk_text_buffer_insert_with_tags()</code></a> 
+                         If you use <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextBuffer.html#gtk_text_buffer_insert_with_tags"><code class="function">gtk_text_buffer_insert_with_tags()</code></a> 
                          with appropriate tags to select the font, the inserted text will have the 
                          desired appearance, but text typed in by the user before or after the tagged 
                          block will appear in the default style.<br>
@@ -880,11 +880,11 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I make a text view scroll to the end of the buffer automatically?<br>
                          <br>
-                         A good way to keep a text buffer scrolled to the end is to place a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextMark.html">mark</a> 
+                         A good way to keep a text buffer scrolled to the end is to place a <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextMark.html">mark</a> 
                          at the end of the buffer, and give it right gravity. The gravity has the effect 
                          that text inserted at the mark gets inserted <span class="emphasis"><em>before</em></span>, 
                          keeping the mark at the end.<br>
-                         To ensure that the end of the buffer remains visible, use <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextView.html#gtk_text_view_scroll_to_mark"><code class="function">gtk_text_view_scroll_to_mark()</code></a> 
+                         To ensure that the end of the buffer remains visible, use <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextView.html#gtk_text_view_scroll_to_mark"><code class="function">gtk_text_view_scroll_to_mark()</code></a> 
                          to scroll to the mark after inserting new text.<br>
                          The gtk-demo application contains an example of this technique.
                       </p>
@@ -906,9 +906,9 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I associate some data with a row in the tree?<br>
                          <br>
-                         Remember that the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeModel.html"><span class="type">GtkTreeModel</span></a> 
+                         Remember that the <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeModel.html"><span class="type">GtkTreeModel</span></a> 
                          columns don't necessarily have to be displayed. So you can put non-user-visible 
-                         data in your model just like any other data, and retrieve it with <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeModel.html#gtk_tree_model_get"><code class="function">gtk_tree_model_get()</code></a>. 
+                         data in your model just like any other data, and retrieve it with <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeModel.html#gtk_tree_model_get"><code class="function">gtk_tree_model_get()</code></a>. 
                          See the tree widget overview.
                       </p>
                   </td>
@@ -918,12 +918,12 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I put an image and some text in the same column?<br>
                          <br>
-                         You can pack more than one <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkCellRenderer.html"><span class="type">GtkCellRenderer</span></a> 
-                         into a single <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html"><span class="type">GtkTreeViewColumn</span></a> 
-                         using <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk_tree_view_column_pack_start"><code class="function">gtk_tree_view_column_pack_start()</code></a> 
-                         or <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk_tree_view_column_pack_end"><code class="function">gtk_tree_view_column_pack_end()</code></a>. 
-                         So pack both a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkCellRendererPixbuf.html"><span class="type">GtkCellRendererPixbuf</span></a> 
-                         and a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkCellRendererText.html"><span class="type">GtkCellRendererText</span></a> 
+                         You can pack more than one <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkCellRenderer.html"><span class="type">GtkCellRenderer</span></a> 
+                         into a single <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html"><span class="type">GtkTreeViewColumn</span></a> 
+                         using <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk_tree_view_column_pack_start"><code class="function">gtk_tree_view_column_pack_start()</code></a> 
+                         or <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk_tree_view_column_pack_end"><code class="function">gtk_tree_view_column_pack_end()</code></a>. 
+                         So pack both a <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkCellRendererPixbuf.html"><span class="type">GtkCellRendererPixbuf</span></a> 
+                         and a <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkCellRendererText.html"><span class="type">GtkCellRendererText</span></a> 
                          into the column.
                       </p>
                   </td>
@@ -931,17 +931,17 @@ g_object_unref (foo);</pre>
               <tr>
                   <td><p><span style= "font-size: 1.12em; font-weight: 700;">5.3.</span></p></td>
                   <td><p>
-                         I can set data easily on my <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeStore.html"><span class="type">GtkTreeStore</span></a>
-                         /<a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkListStore.html"><span class="type">GtkListStore</span></a> 
-                         models using <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkListStore.html#gtk_list_store_set"><code class="function">gtk_list_store_set()</code></a> 
-                         and <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeStore.html#gtk_tree_store_set"><code class="function">gtk_tree_store_set()</code></a>
+                         I can set data easily on my <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeStore.html"><span class="type">GtkTreeStore</span></a>
+                         /<a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkListStore.html"><span class="type">GtkListStore</span></a> 
+                         models using <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkListStore.html#gtk_list_store_set"><code class="function">gtk_list_store_set()</code></a> 
+                         and <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeStore.html#gtk_tree_store_set"><code class="function">gtk_tree_store_set()</code></a>
                          , but can't read it back?<br>
                          <br>
                          Both the <span class="type">GtkTreeStore</span> 
                          and the <span class="type">GtkListStore</span></a> 
                          implement the <span class="type">GtkTreeModel</span> 
                          interface. Consequentially, you can use any function this interface implements. 
-                         The easiest way to read a set of data back is to use <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeModel.html#gtk_tree_model_get"><code class="function">gtk_tree_model_get()</code></a>.
+                         The easiest way to read a set of data back is to use <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeModel.html#gtk_tree_model_get"><code class="function">gtk_tree_model_get()</code></a>.
                       </p>
                   </td>
               </tr>
@@ -950,8 +950,8 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I change the way that numbers are formatted by <span class="type">GtkTreeView</span>?<br>
                          <br>
-                         Use <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeView.html#gtk_tree_view_insert_column_with_data_func"><code class="function">gtk_tree_view_insert_column_with_data_func()</code></a> 
-                         or <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk_tree_view_column_set_cell_data_func"><code class="function">gtk_tree_view_column_set_cell_data_func()</code></a> 
+                         Use <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeView.html#gtk_tree_view_insert_column_with_data_func"><code class="function">gtk_tree_view_insert_column_with_data_func()</code></a> 
+                         or <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk_tree_view_column_set_cell_data_func"><code class="function">gtk_tree_view_column_set_cell_data_func()</code></a> 
                          and do the conversion from number to string yourself (with, say, 
                          <code class="function">g_strdup_printf()</code>).<br>
                          The following example demonstrates this:
@@ -1036,8 +1036,8 @@ g_object_unref (foo);</pre>
                          How do I hide the expander arrows in my tree view?<br>
                          <br>
                          Set the expander-column property of the tree view to a hidden column. See 
-                         <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeView.html#gtk_tree_view_set_expander_column"><code class="function">gtk_tree_view_set_expander_column()</code></a> 
-                         and <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk-tree-view-column-set-visible"><code class="function">gtk_tree_view_column_set_visible()</code></a>.
+                         <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeView.html#gtk_tree_view_set_expander_column"><code class="function">gtk_tree_view_set_expander_column()</code></a> 
+                         and <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeViewColumn.html#gtk-tree-view-column-set-visible"><code class="function">gtk_tree_view_column_set_visible()</code></a>.
                       </p>
                   </td>
               </tr>
@@ -1057,11 +1057,11 @@ g_object_unref (foo);</pre>
                   <td><p>
                          How do I use cairo to draw in GTK+ applications?<br>
                          <br>
-                         The <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_draw"><span class="type">“draw”</span></a> 
+                         The <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#GtkWidget_draw"><span class="type">“draw”</span></a> 
                          signal gets a ready-to-use cairo context as a parameter that you should use.<br>
                          All drawing in GTK+ is normally done in a draw handler, and GTK+ creates a 
                          temporary pixmap for double-buffering the drawing. It is possible to turn off 
-                         double-buffering, with <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_double_buffered"><code class="function">gtk_widget_set_double_buffered()</code></a>
+                         double-buffering, with <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_double_buffered"><code class="function">gtk_widget_set_double_buffered()</code></a>
                          , but this is not ideal, since it can cause some flickering.
                       </p>
                   </td>
@@ -1096,9 +1096,9 @@ g_object_unref (foo);</pre>
       <div class="generic-box-space">
           <p>
               <div id="ftn.id-1.2.5.3.3.1.12.2.1.2" class="footnote"><p><a class="toc" href="#id-1.2.5.3.3.1.12.2.1.2" class="para"><sup class="para">[1] </sup></a> 
-              If the file load fails, <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Display_Widgets/GtkImage.html#gtk_image_new_from_file"><code class="function">gtk_image_new_from_file()</code></a> 
+              If the file load fails, <a class="two" href="/content/GTK3/Widgets Objects/Display_Widgets/GtkImage.html#gtk_image_new_from_file"><code class="function">gtk_image_new_from_file()</code></a> 
               will display no image graphic — to detect a failed load yourself, use <a class="two" href="/content/GDK_Pixbuf/API_Reference/File_Loading.html#gdk_pixbuf_new_from_file"><code class="function">gdk_pixbuf_new_from_file()</code></a> 
-              directly, then <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Display_Widgets/GtkImage.html#gtk_image_new_from_pixbuf"><code class="function">gtk_image_new_from_pixbuf()</code></a>.
+              directly, then <a class="two" href="/content/GTK3/Widgets Objects/Display_Widgets/GtkImage.html#gtk_image_new_from_pixbuf"><code class="function">gtk_image_new_from_pixbuf()</code></a>.
           </p>
       </div>
   </article>

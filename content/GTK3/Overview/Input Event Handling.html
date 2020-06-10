@@ -100,7 +100,7 @@
           <p>
               <ul>
                 <li><a class="two" href="/content/GDK3/API_Reference/Event_Structures.html#GdkEventGrabBroken">GdkEventGrabBroken</a></li>
-                <li><a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_grab_notify"><span class="type">“grab-notify”</span></a></li>
+                <li><a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#GtkWidget_grab_notify"><span class="type">“grab-notify”</span></a></li>
               </ul> 
           </p>
       </div>
@@ -128,14 +128,14 @@
               When a GDK backend produces an input event, it is tied to a <span class="type">GdkDevice</span> 
               and a <span class="type">GdkWindow</span>, which in turn represents a windowing system surface 
               in the backend. If a widget has grabbed the current input device, or all input devices, the 
-              event is propagated to that <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html"><span class="type">GtkWidget</span></a>. 
-              Otherwise, it is propagated to the the <span class="type">GtkWidget</span> which calls <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_register_window"><code class="function">gtk_widget_register_window()</code></a> 
+              event is propagated to that <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html"><span class="type">GtkWidget</span></a>. 
+              Otherwise, it is propagated to the the <span class="type">GtkWidget</span> which calls <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_register_window"><code class="function">gtk_widget_register_window()</code></a> 
               on the <span class="type">GdkWindow</span> receiving the event.<br>
               <br>
               Grabs are implemented for each input device, and globally. A grab for a specific input device 
               (<a class="two" href="/content/GTK3/GTK_Core_References/Main_loop.html#gtk_device_grab_add"><code class="function">gtk_device_grab_add()</code></a>), 
               is sent events in preference to a global grab (<a class="two" href="/content/GTK3/GTK_Core_References/Main_loop.html#gtk_grab_add"><code class="function">gtk_grab_add()</code></a>). 
-              Input grabs only have effect within the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindowGroup.html"><span class="type">GtkWindowGroup</span></a> 
+              Input grabs only have effect within the <a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindowGroup.html"><span class="type">GtkWindowGroup</span></a> 
               containing the <span class="type">GtkWidget</span> which registered the event’s <span class="type">GdkWindow</span>. 
               If this <span class="type">GtkWidget</span> is a child of the grab widget, the event is 
               propagated to the child — this is the basis for propagating events within modal dialogs.<br>
@@ -143,35 +143,35 @@
               An event is propagated to a widget using <a class="two" href="/content/GTK3/GTK_Core_References/Main_loop.html#gtk_propagate_event"><code class="function">gtk_propagate_event()</code></a>. 
               Propagation differs between event types: key events (<a class="two" href="/content/GDK4/API_Reference/Events.html#GDK_KEY_PRESS"><code class="literal">GDK_KEY_PRESS</code></a>, 
               <a class="two" href="/content/GDK4/API_Reference/Events.html#GDK_KEY_RELEASE"><code class="literal">GDK_KEY_RELEASE</code></a>) 
-              are delivered to the top-level <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html"><span class="type">GtkWindow</span></a>; 
+              are delivered to the top-level <a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html"><span class="type">GtkWindow</span></a>; 
               other events are propagated down and up the widget hierarchy in three phases (see 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GtkPropagationPhase"><span class="type">GtkPropagationPhase</span></a>).<br>
+              <a class="two" href="/content/GTK3/Widgets Objects/Gestures_handling/GtkEventController.html#GtkPropagationPhase"><span class="type">GtkPropagationPhase</span></a>).<br>
               <br>
               For key events, the top-level window’s default <span class="type">“key-press-event”</span> 
               and <span class="type">“key-release-event”</span> signal handlers handle mnemonics and 
-              accelerators first. Other key presses are then passed to <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html#gtk_window_propagate_key_event"><code class="function">gtk_window_propagate_key_event()</code></a> 
-              which propagates the event upwards from the window’s current focus widget (<a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html#gtk_window_get_focus"><code class="function">gtk_window_get_focus()</code></a>) 
+              accelerators first. Other key presses are then passed to <a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html#gtk_window_propagate_key_event"><code class="function">gtk_window_propagate_key_event()</code></a> 
+              which propagates the event upwards from the window’s current focus widget (<a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html#gtk_window_get_focus"><code class="function">gtk_window_get_focus()</code></a>) 
               to the top-level.<br>
               <br>
               For other events, in the first phase (the “capture” phase) the event is delivered to each 
               widget from the top-most (for example, the top-level <span class="type">GtkWindow</span> or 
               grab widget) down to the target <span class="type">GtkWidget</span>. <a class="two" href="#Event_controllers_and_gestures">Gestures</a> 
-              that are attached with <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_CAPTURE"><code class="literal">GTK_PHASE_CAPTURE</code></a> 
+              that are attached with <a class="two" href="/content/GTK3/Widgets Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_CAPTURE"><code class="literal">GTK_PHASE_CAPTURE</code></a> 
               get a chance to react to the event.<br>
               <br>
               After the “capture” phase, the widget that was intended to be the destination of the event 
-              will run gestures attached to it with <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_TARGET"><code class="literal">GTK_PHASE_TARGET</code></a>. 
+              will run gestures attached to it with <a class="two" href="/content/GTK3/Widgets Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_TARGET"><code class="literal">GTK_PHASE_TARGET</code></a>. 
               This is known as the “target” phase, and only happens on that widget.<br>
               <br>
-              Next, the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_event"><span class="type">“event”</span></a> 
-              signal is emitted, then the appropriate signal for the event in question, for example <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_motion_notify_event"><span class="type">“motion-notify-event”</span></a>. 
+              Next, the <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#GtkWidget_event"><span class="type">“event”</span></a> 
+              signal is emitted, then the appropriate signal for the event in question, for example <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#GtkWidget_motion_notify_event"><span class="type">“motion-notify-event”</span></a>. 
               Handling these signals was the primary way to handle input in GTK+ widgets before gestures 
-              were introduced. If the widget is realized, the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_event_after"><span class="type">“event-after”</span></a> 
+              were introduced. If the widget is realized, the <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#GtkWidget_event_after"><span class="type">“event-after”</span></a> 
               signal is emitted. The signals are emitted from the target widget up to the top-level, as 
               part of the “bubble” phase.<br>
               <br>
               The default handlers for the event signals send the event to gestures that are attached with 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_BUBBLE"><code class="literal">GTK_PHASE_BUBBLE</code></a>. 
+              <a class="two" href="/content/GTK3/Widgets Objects/Gestures_handling/GtkEventController.html#GTK_PHASE_BUBBLE"><code class="literal">GTK_PHASE_BUBBLE</code></a>. 
               Therefore, gestures in the “bubble” phase are only used if the widget does not have its own 
               event handlers, or takes care to chain up to the default <span class="type">GtkWidget</span> 
               handlers.<br>
@@ -199,9 +199,9 @@
               corresponding (basic or per-device) event mask for the widget’s <span class="type">GdkWindow</span>, 
               and all child <span class="type">GdkWindows</span>.<br>
               <br>
-              If a widget is windowless (<a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_get_has_window"><code class="function">gtk_widget_get_has_window()</code></a> 
+              If a widget is windowless (<a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_get_has_window"><code class="function">gtk_widget_get_has_window()</code></a> 
               returns <code class="literal">FALSE</code>) and an application wants to receive custom events 
-              on it, it must be placed inside a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Miscellaneous/GtkEventBox.html"><span class="type">GtkEventBox</span></a> 
+              on it, it must be placed inside a <a class="two" href="/content/GTK3/Widgets Objects/Miscellaneous/GtkEventBox.html"><span class="type">GtkEventBox</span></a> 
               to receive the events, and an appropriate event mask must be set on the box. When implementing 
               a widget, use a <code class="literal">GDK_INPUT_ONLY</code> <span class="type">GdkWindow</span> 
               to receive the events instead.<br>
@@ -213,11 +213,11 @@
               basic event mask.<br>
               <br>
               This means that widgets must add to the event mask for each event type they expect to 
-              receive, using <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_events"><code class="function">gtk_widget_set_events()</code></a> 
-              or <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_events"><code class="function">gtk_widget_add_events()</code></a> 
-              to preserve the existing mask. Widgets which are aware of floating devices should use <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_device_events"><code class="function">gtk_widget_set_device_events()</code></a> 
-              or <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_device_events"><code class="function">gtk_widget_add_device_events()</code></a>, 
-              and must explicitly enable the device using <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_device_enabled"><code class="function">gtk_widget_set_device_enabled()</code></a>. 
+              receive, using <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_events"><code class="function">gtk_widget_set_events()</code></a> 
+              or <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_events"><code class="function">gtk_widget_add_events()</code></a> 
+              to preserve the existing mask. Widgets which are aware of floating devices should use <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_device_events"><code class="function">gtk_widget_set_device_events()</code></a> 
+              or <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_device_events"><code class="function">gtk_widget_add_device_events()</code></a>, 
+              and must explicitly enable the device using <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_device_enabled"><code class="function">gtk_widget_set_device_enabled()</code></a>. 
               See the <span class="type">GdkDeviceManager</span> documentation for more information.<br>
               <br>
               All standard widgets set the event mask for all events they expect to receive, and it is not 
@@ -242,7 +242,7 @@
               granting a “pointer emulating” hint to one of the currently interacting touch sequences, 
               which will be reported on every <span class="type">GdkEventTouch</span> event from that 
               sequence. By default, if a widget didn't request touch events by setting <a class="two" href="/content/GDK4/API_Reference/Events.html#GDK_TOUCH_MASK"><code class="literal">GDK_TOUCH_MASK</code></a> 
-              on its event mask and didn't override <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#GtkWidget_touch_event"><span class="type">“touch-event”</span></a>, 
+              on its event mask and didn't override <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#GtkWidget_touch_event"><span class="type">“touch-event”</span></a>, 
               GTK+ will transform these “pointer emulating” events into semantically similar <span class="type">GdkEventButton</span> 
               and <span class="type">GdkEventMotion</span> events. Depending on <a class="two" href="/content/GDK4/API_Reference/Events.html#GDK_TOUCH_MASK"><code class="literal">GDK_TOUCH_MASK</code></a> 
               being in the event mask or not, non-pointer-emulating sequences could still trigger gestures 

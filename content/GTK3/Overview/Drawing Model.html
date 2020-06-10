@@ -89,7 +89,7 @@
               windowing system:  if the user drags a window over another one, the windowing system will 
               tell the underlying window that it needs to repaint itself. The drawing cycle can also be 
               initiated when a widget itself decides that it needs to update its display. For example, 
-              when the user types a character in a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Numeric_Text_Entry/GtkEntry.html"><code class="classname">GtkEntry</code></a> 
+              when the user types a character in a <a class="two" href="/content/GTK3/Widgets Objects/Numeric_Text_Entry/GtkEntry.html"><code class="classname">GtkEntry</code></a> 
               widget, the entry asks GTK+ to queue a redraw operation for itself.<br>
               <br>
               The windowing system generates events for native windows. The GDK interface to the windowing 
@@ -159,14 +159,14 @@
       <div class="generic-box-main2">
           <p>
               <ul>
-                  <li>If you are doing an animation, you can use <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_tick_callback"><code class="function">gtk_widget_add_tick_callback()</code></a> 
+                  <li>If you are doing an animation, you can use <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_add_tick_callback"><code class="function">gtk_widget_add_tick_callback()</code></a> 
                       which will cause a regular beating of the clock with a callback in the Update phase 
                       until you stop the tick.</li>
                   <li>If some state changes that causes the size of your widget to change you call 
-                      <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_queue_resize"><code class="function">gtk_widget_queue_resize()</code></a> 
+                      <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_queue_resize"><code class="function">gtk_widget_queue_resize()</code></a> 
                       which will request a Layout phase and mark your widget as needing relayout.</li>
                   <li>If some state changes so you need to redraw some area of your widget you use the 
-                      normal <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_queue_draw"><code class="function">gtk_widget_queue_draw()</code></a> 
+                      normal <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_queue_draw"><code class="function">gtk_widget_queue_draw()</code></a> 
                       set of functions. These will request a Paint phase and mark the region as needing redraw.</li>
               </ul>
           </p>
@@ -226,9 +226,9 @@
               problematic (they break the rendering pipeline).<br>
               <br>
               Since the above causes some overhead, we introduce a caching mechanism. Containers that 
-              scroll a lot (<a class="two" href="/content/GTK3/GTK_Widgets_Objects/Miscellaneous/GtkViewport.html">GtkViewport</a>, 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Multiline_Text/GtkTextView.html">GtkTextView</a>, 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/TLI_Grid_Widgets/GtkTreeView.html">GtkTreeView</a>, 
+              scroll a lot (<a class="two" href="/content/GTK3/Widgets Objects/Miscellaneous/GtkViewport.html">GtkViewport</a>, 
+              <a class="two" href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextView.html">GtkTextView</a>, 
+              <a class="two" href="/content/GTK3/Widgets Objects/TLI_Grid_Widgets/GtkTreeView.html">GtkTreeView</a>, 
               etc) allocate an offscreen image during 
               scrolling and render their children to it (which is possible since drawing is fully hierarchical). 
               The offscreen image is a bit larger than the visible area, so most of the time when scrolling 
@@ -280,7 +280,7 @@
               to worry about creating their own temporary drawing buffers or about calling those functions.<br>
               <br>
               However, some widgets may prefer to disable this kind of automatic double buffering and do 
-              things on their own. To do this, call the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_double_buffered"><code class="function">gtk_widget_set_double_buffered()</code></a> 
+              things on their own. To do this, call the <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_double_buffered"><code class="function">gtk_widget_set_double_buffered()</code></a> 
               function in your widget's constructor. Double buffering can only be turned off for widgets 
               that have a native window.
           </p>
@@ -323,14 +323,14 @@
       <div class="generic-box-main2">
           <p>
               Generally, applications use the pre-defined widgets in GTK+ and they do not draw extra things 
-              on top of them (the exception being <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Miscellaneous/GtkDrawingArea.html"><code class="classname">GtkDrawingArea</code></a>). 
+              on top of them (the exception being <a class="two" href="/content/GTK3/Widgets Objects/Miscellaneous/GtkDrawingArea.html"><code class="classname">GtkDrawingArea</code></a>). 
               However, applications may sometimes find it convenient to draw directly on certain widgets 
               like toplevel windows or event boxes. When this is the case, GTK+ needs to be told not to 
               overwrite your drawing afterwards, when the window gets to drawing its default contents.<br>
               <br>
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html"><code class="classname">GtkWindow</code></a> 
-              and <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Miscellaneous/GtkEventBox.html"><code class="classname">GtkEventBox</code></a> 
-              are the two widgets that allow turning off drawing of default contents by calling <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_app_paintable"><code class="function">gtk_widget_set_app_paintable()</code></a>. 
+              <a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html"><code class="classname">GtkWindow</code></a> 
+              and <a class="two" href="/content/GTK3/Widgets Objects/Miscellaneous/GtkEventBox.html"><code class="classname">GtkEventBox</code></a> 
+              are the two widgets that allow turning off drawing of default contents by calling <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_set_app_paintable"><code class="function">gtk_widget_set_app_paintable()</code></a>. 
               If you call this function, they will not draw their contents and let you do it instead.<br>
               <br>
               Since the #GtkWidget::draw signal runs user-connected handlers <span class="emphasis"><em>before</em></span> 
@@ -346,7 +346,7 @@
                   <span class="emphasis"><em>your drawing will be overwritten</em></span>. An app paintable 
                   widget will not draw its default contents however and preserve your drawing instead.</li>
                   <li>The draw handler for the parent class gets run. Since both <code class="classname">GtkWindow</code> 
-                  and <code class="classname">GtkEventBox</code> are descendants of <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkContainer"><code class="classname">GtkContainer</code></a>, 
+                  and <code class="classname">GtkEventBox</code> are descendants of <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkContainer"><code class="classname">GtkContainer</code></a>, 
                   their no-window children will be asked to draw themselves recursively, as described in 
                   the section called <a class="two" href="#Hierarchical_drawing">“Hierarchical drawing”</a>.</li>
               </ol>

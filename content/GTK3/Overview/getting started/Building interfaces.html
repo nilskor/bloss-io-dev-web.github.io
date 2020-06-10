@@ -14,7 +14,7 @@
                 <br>
                 Thankfully, GTK+ supports the separation of user interface layout from your business logic, 
                 by using UI descriptions in an XML format that can be parsed by the 
-                <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html">GtkBuilder</a> class.</font></h3>
+                <a class="two" href="/content/GTK3/Widgets Objects/Interface_builder/GtkBuilder.html">GtkBuilder</a> class.</font></h3>
     </div>
   </section>
 
@@ -161,17 +161,17 @@ main (int   argc,
           <p>
               Note that GtkBuilder can also be used to construct objects that are not widgets, such as tree models, adjustments, etc. 
               That is the reason the method we use here is called 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html#gtk_builder_get_object"><code class="function">gtk_builder_get_object()</code></a> 
+              <a class="two" href="/content/GTK3/Widgets Objects/Interface_builder/GtkBuilder.html#gtk_builder_get_object"><code class="function">gtk_builder_get_object()</code></a> 
               and returns a GObject* instead of a GtkWidget*.<br>
               <br>
               Normally, you would pass a full path to 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html#gtk_builder_add_from_file"><code class="function">gtk_builder_add_from_file()</code></a> 
+              <a class="two" href="/content/GTK3/Widgets Objects/Interface_builder/GtkBuilder.html#gtk_builder_add_from_file"><code class="function">gtk_builder_add_from_file()</code></a> 
               to make the execution of your program independent of the current directory. 
               A common location to install UI descriptions and similar data is 
               <code class="filename">/usr/share/<em class="replaceable"><code>appname</code></em></code>.<br>
               <br>
               It is also possible to embed the UI description in the source code as a string and use 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html#gtk_builder_add_from_string"><code class="function">gtk_builder_add_from_string()</code></a> 
+              <a class="two" href="/content/GTK3/Widgets Objects/Interface_builder/GtkBuilder.html#gtk_builder_add_from_string"><code class="function">gtk_builder_add_from_string()</code></a> 
               to load it. But keeping the UI description in a separate file has several advantages: 
               It is then possible to make minor adjustments to the UI without recompiling your program, 
               and, more importantly, graphical UI editors such as <a class="two" href="http://glade.gnome.org">glade</a> 

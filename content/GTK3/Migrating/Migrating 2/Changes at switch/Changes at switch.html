@@ -14,23 +14,23 @@
     <div class="toc-container">
         <p class="toc-title"><font color="#2e3440">Contents</font><font color="#2e3440">[<a id="toggle" href="#" onclick="toggleTOC()">hide</a>]</font></p>
         <ul id="toc" style="display: initial">
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Replace_size"><font color="#2e3440">1</font> Replace size_request by get_preferred_width/height</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Replace_GdkRegion"><font color="#2e3440">2</font> Replace GdkRegion by cairo_region_t</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Replace_GdkPixmap"><font color="#2e3440">3</font> Replace GdkPixmap by cairo surfaces</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Replace_GdkColormap"><font color="#2e3440">4</font> Replace GdkColormap by GdkVisual</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#GdkDrawable"><font color="#2e3440">5</font> GdkDrawable is gone</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Event_filtering"><font color="#2e3440">6</font> Event filtering</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Backend"><font color="#2e3440">7</font> Backend-specific code</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#GtkPlug_GtkSocket"><font color="#2e3440">8</font> GtkPlug and GtkSocket</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#GtkWidget"><font color="#2e3440">9</font> The GtkWidget::draw signal</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#GtkProgressBar"><font color="#2e3440">10</font> GtkProgressBar orientation</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#expand_fill_flags"><font color="#2e3440">11</font> Check your expand and fill flags</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Scrolling_changes"><font color="#2e3440">12</font> Scrolling changes</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#GtkObject"><font color="#2e3440">13</font> GtkObject is gone</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#GtkEntryCompletion"><font color="#2e3440">14</font> GtkEntryCompletion signal parameters</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Resize_grips"><font color="#2e3440">15</font> Resize grips</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#mixed_linkage"><font color="#2e3440">16</font> Prevent mixed linkage</a></li>
-            <li><a href="/content/GTK3/Migrating_GTK/Migrating_2/Changes_at_switch#Install_modules"><font color="#2e3440">17</font> Install GTK+ modules in the right place</a></li>
+            <li><a href="#bkmkReplacesize"><font color="#2e3440">1</font> Replace size_request by get_preferred_width/height</a></li>
+            <li><a href="#bkmkReplaceGdkRegion"><font color="#2e3440">2</font> Replace GdkRegion by cairo_region_t</a></li>
+            <li><a href="#bkmkReplaceGdkPixmap"><font color="#2e3440">3</font> Replace GdkPixmap by cairo surfaces</a></li>
+            <li><a href="#bkmkReplaceGdkColormap"><font color="#2e3440">4</font> Replace GdkColormap by GdkVisual</a></li>
+            <li><a href="#bkmkGdkDrawable"><font color="#2e3440">5</font> GdkDrawable is gone</a></li>
+            <li><a href="#bkmkEventfiltering"><font color="#2e3440">6</font> Event filtering</a></li>
+            <li><a href="#bkmkBackend"><font color="#2e3440">7</font> Backend-specific code</a></li>
+            <li><a href="#bkmkGtkPlugGtkSocket"><font color="#2e3440">8</font> GtkPlug and GtkSocket</a></li>
+            <li><a href="#bkmkGtkWidget"><font color="#2e3440">9</font> The GtkWidget::draw signal</a></li>
+            <li><a href="#bkmkGtkProgressBar"><font color="#2e3440">10</font> GtkProgressBar orientation</a></li>
+            <li><a href="#bkmkexpandfillflags"><font color="#2e3440">11</font> Check your expand and fill flags</a></li>
+            <li><a href="#bkmkScrollingchanges"><font color="#2e3440">12</font> Scrolling changes</a></li>
+            <li><a href="#bkmkGtkObject"><font color="#2e3440">13</font> GtkObject is gone</a></li>
+            <li><a href="#bkmkGtkEntryCompletion"><font color="#2e3440">14</font> GtkEntryCompletion signal parameters</a></li>
+            <li><a href="#bkmkResizegrips"><font color="#2e3440">15</font> Resize grips</a></li>
+            <li><a href="#bkmkmixedlinkage"><font color="#2e3440">16</font> Prevent mixed linkage</a></li>
+            <li><a href="#bkmkInstallmodules"><font color="#2e3440">17</font> Install GTK+ modules in the right place</a></li>
         </ul>
     </div>
   </section>

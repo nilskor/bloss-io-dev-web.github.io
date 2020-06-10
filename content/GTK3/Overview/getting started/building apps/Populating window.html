@@ -9,7 +9,7 @@
         <h1><font color="#2e3440">Populating the window</font></h1>
     </div>
     <div class="generic-box-toct">
-        <h3><font color="#2e3440">In this step, we use a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html"><span class="type">GtkBuilder</span></a> 
+        <h3><font color="#2e3440">In this step, we use a <a class="two" href="/content/GTK3/Widgets Objects/Interface_builder/GtkBuilder.html"><span class="type">GtkBuilder</span></a> 
                 template to associate a <span class="type">GtkBuilder</span> ui file with our application window class.</font></h3>
     </div>
   </section>
@@ -36,9 +36,9 @@
   <article class="article-main">
       <div class="generic-box-main2">
           <p>
-              Our simple ui file puts a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkHeaderBar.html"><span class="type">GtkHeaderBar</span></a> 
-              on top of a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStack.html"><span class="type">GtkStack</span></a> 
-              widget. The header bar contains a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Layout_Containers/GtkStackSwitcher.html"><span class="type">GtkStackSwitcher</span></a>
+              Our simple ui file puts a <a class="two" href="/content/GTK3/Widgets Objects/Layout_Containers/GtkHeaderBar.html"><span class="type">GtkHeaderBar</span></a> 
+              on top of a <a class="two" href="/content/GTK3/Widgets Objects/Layout_Containers/GtkStack.html"><span class="type">GtkStack</span></a> 
+              widget. The header bar contains a <a class="two" href="/content/GTK3/Widgets Objects/Layout_Containers/GtkStackSwitcher.html"><span class="type">GtkStackSwitcher</span></a>
               , which is a standalone widget to show a row of 'tabs' for the pages of a <span class="type">GtkStack</span>.
           </p>
       </div>
@@ -78,10 +78,10 @@
       </div>
       <div class="generic-box-main2">
           <p>
-              To make use of this file in our application, we revisit our <a class="two" href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkAppWindow.html"><span class="type">GtkApplicationWindow</span></a> 
-              subclass, and call <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_class_set_template_from_resource"><code class="function">gtk_widget_class_set_template_from_resource()</code></a> 
+              To make use of this file in our application, we revisit our <a class="two" href="/content/GTK3/Widgets Objects/App_support/GtkAppWindow.html"><span class="type">GtkApplicationWindow</span></a> 
+              subclass, and call <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_class_set_template_from_resource"><code class="function">gtk_widget_class_set_template_from_resource()</code></a> 
               from the class init function to set the ui file as template for this class. We also add a call to 
-              <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Abstract_Base/GtkWidget.html#gtk_widget_init_template"><code class="function">gtk_widget_init_template()</code></a> 
+              <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_init_template"><code class="function">gtk_widget_init_template()</code></a> 
               in the instance init function to instantiate the template for each instance of our class.
           </p>
       </div>

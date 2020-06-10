@@ -72,8 +72,8 @@
                 manages a list of toplevel windows whose life-cycle is automatically tied to the life-cycle of your 
                 application.<br>
                 <br>
-                While GtkApplication works fine with plain <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html#GtkWindow"><span class="type">GtkWindows</span></a>, 
-                it is recommended to use it together with <a class="two" href="/content/GTK3/GTK_Widgets_Objects/App_support/GtkAppWindow.html"><span class="type">GtkApplicationWindow</span></a>.<br>
+                While GtkApplication works fine with plain <a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html#GtkWindow"><span class="type">GtkWindows</span></a>, 
+                it is recommended to use it together with <a class="two" href="/content/GTK3/Widgets Objects/App_support/GtkAppWindow.html"><span class="type">GtkApplicationWindow</span></a>.<br>
                 <br>
                 When GDK threads are enabled, GtkApplication will acquire the GDK lock when invoking actions that 
                 arrive from other processes. The GDK lock is not touched for local action invocations. In order to have 
@@ -88,7 +88,7 @@
       </div>
       <div class="generic-box-main3">
             <p>
-                <span class="type">GtkApplication</span> will automatically load menus from the <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Interface_builder/GtkBuilder.html"><span class="type">GtkBuilder</span></a> 
+                <span class="type">GtkApplication</span> will automatically load menus from the <a class="two" href="/content/GTK3/Widgets Objects/Interface_builder/GtkBuilder.html"><span class="type">GtkBuilder</span></a> 
                 resource located at "gtk/menus.ui", relative to the application's resource base path (see <code class="function">g_application_set_resource_base_path()</code>). 
                 The menu with the ID "app-menu" is taken as the application's app menu and the menu with the ID 
                 "menubar" is taken as the application's menubar. Additional menus (most interesting submenus) can be 
@@ -108,7 +108,7 @@
                 easily store its icons as resources. See <a class="two" href="/content/GTK3/Theming_GTK/GtkIconTheme.html#gtk_icon_theme_add_resource_path"><code class="function">gtk_icon_theme_add_resource_path()</code></a> 
                 for more information.<br>
                 <br>
-                If there is a resource located at "gtk/help-overlay.ui" which defines a <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Shortcuts_Overview/GtkShortcutsWindow.html"><span class="type">GtkShortcutsWindow</span></a> 
+                If there is a resource located at "gtk/help-overlay.ui" which defines a <a class="two" href="/content/GTK3/Widgets Objects/Shortcuts_Overview/GtkShortcutsWindow.html"><span class="type">GtkShortcutsWindow</span></a> 
                 with ID "help_overlay" then GtkApplication associates an instance of this shortcuts window with each 
                 GtkApplicationWindow and sets up keyboard accelerators (Control-F1 and Control-?) to open it. To create 
                 a menu item that displays the shortcuts window, associate the item with the action win.show-help-overlay.
@@ -329,7 +329,7 @@
             <p>
                <a class="two" href="https://en.wikipedia.org/wiki/Void_type">void</a>, 
                <a class="two" href="/content/GLib/GLib_Data_Types/Doubly_Linked_Lists.html#GList">GList</a>, 
-               <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html">GtkWindow</a>, 
+               <a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html">GtkWindow</a>, 
                <a class="two" href="/content/GLib/GLib_Fundamentals/Basic_Types.html#guint">guint</a>, 
                <a class="two" href="/content/GLib/GLib_Fundamentals/Basic_Types.html#gboolean">gboolean</a>, 
                <a class="two" href="/content/GIO/API_Reference/App_Support/GMenuModel.html">GMenuModel</a>, 
@@ -383,7 +383,7 @@
       </div>
       <div class="generic-box-main3">
             <p>
-               <a class="two" href="/content/GTK3/GTK_Widgets_Objects/Windows/GtkWindow.html">GtkWindow</a>, 
+               <a class="two" href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html">GtkWindow</a>, 
                <a class="two" href="/content/GIO/API_Reference/App_Support/GMenuModel.html">GMenuModel</a>, 
                <a class="two" href="/content/GLib/GLib_Fundamentals/Basic_Types.html#gboolean">gboolean</a>. 
             </p>
