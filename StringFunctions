@@ -26,6 +26,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE     #
 # SOFTWARE.                                                                         #
 #                                                                                   #
+# Version block:                                                                    #
+#                                                                                   #
+#     ver.1.0.0       - 04.Jun.2020 - Initial release                               #
+#     ver.1.0.1       - 12.Jun.2020 - Rewrite of Find() function for -b support     #
+#                                                                                   #
 #-----------------------------------------------------------------------------------#
 
 # Will exit script if we would use an uninitialised variable:
@@ -49,6 +54,8 @@ IFS=$'\n\t'
 declare -ri  TRUE=1          # g - global scope; r - read-only; i - integer; x - exportable
 declare -ri FALSE=0
 
+declare -ri _DEBUGGING=$FALSE
+
 declare  BLACK='\033[0;30m'
 declare    RED='\033[0;31m'     
 declare  GREEN='\033[0;32m'
@@ -68,7 +75,7 @@ declare  WHITE='\033[1;37m'
 declare     NC='\033[0m'         # No Color
 
 declare -a  theArgs=()          # a - indexed array
-declare -a htmlLines=()
+#declare -a htmlLines=()
 
 
 #----------------------------------------------------------
@@ -102,13 +109,12 @@ function echo()
 function log()
 {
     fmt=%s end=\\n IFS=" "
-    redirector=$FALSE
 
     while [ $# -gt 1 ]
     do
         case "$1" in
 
-            [!-]*|-*[!nea]*) break ;;
+            [!-]*|-*[!ne]*) break ;;
 
             *ne*|*en*) fmt=%b end= ;;
 
@@ -116,18 +122,11 @@ function log()
 
             *e*) fmt=%b ;;
 
-            *a*) redirector=$TRUE ;;
-
         esac
         shift
     done
 
-    if [[ $redirector -eq $FALSE ]]
-    then
-        printf "$fmt$end" "$*" > ./logging
-    else
-        printf "$fmt$end" "$*" >> ./logging
-    fi
+    printf "$fmt$end" "$*" >> ./logging
     setIFS
 }
 
@@ -156,9 +155,9 @@ function  unsetIFS(){ IFS= ;       }
 # Read Here-Docs either directly or forced with '-hd'
 #----------------------------------------------------------
 #
-function readInput()                # bash
+function _deprecated_readInput()                # bash
 {
-    setIFS
+    setIFS                          # https://stackoverflow.com/a/28786207/7791211
     while read -r line
     do
         if [[ "$line" == "EOF" ]]
@@ -627,127 +626,143 @@ function _Length()                  # bash wc gawk
 
 function _Find()                    # bash grep -P head         # alias InStr
 {
-    # <SIGNATURE>: (0)_Find (1)_result (2)searchPattern (3)someStringToSearch (4?)options
+    # <SIGNATURE>: (1)_result (2)searchPattern (3)someStringToSearch (?4)options
     # <RETURN>   : (0)<T>Integer or (0)<T>String
-    # <OPTIONS>  : (0) -hd (1) -ims
+    # <OPTIONS>  : (?4) -scmb
     # <BACKEND>  : bash, grep -P, head
     # <TEMPLATE> : _Find _theResult "searchPattern" "someStringToSearch"
 
-    # small pre-processor to remove '-hd' from the argument list.
-    local -i n=0
-    for arg in $@
-    do
-        let "n+=1"
-        if [[ $arg == "-hd" ]]
-        then
-            set -- "${@:1:n-1}" "${@:n+1}" # remove n'th positional argument - stackoverflow.com/a/23656370
-        fi
-    done
+    [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: Function Arguments for '_Find()' are:\n\n $@. \n\n Number of arguments: $#."
 
-    # main part of the function
+    local -n _returnResult=$1
 
-    local -i _ret_regexStringFind=0
-    local -i result=0
-    local stringToBeSearched=""
+    local stringToBeSearched=''
+    local thePattern=''
+    local grepFoundIt=''
+
     local -i getStringInsteadOfPosition=$FALSE
-    local -i doMultiLineSearch=$FALSE
     local doCaseInsensitive='-i'
+    local -i doMultiLineSearch=$FALSE
+    local -i getPositionAndString=$FALSE
 
-    # START: main part of the function
-    if [[ $# -ge 3 ]] || [[ $# -eq 2 && ${#htmlLines[@]} -gt 0 ]]
-    then
-        
-        # START - determine what the searched string will be
-        if [[ $# -ge 3 ]] && [[ -f $3  ]]
-        then
-                stringToBeSearched="$(< $3)"
-        
-        elif [[ $# -ge 3 ]]
-        then
-                stringToBeSearched="${3} ${htmlLines[@]}"
-        
-        elif [[ $# -eq 2 ]] && [[ ${#htmlLines[@]} -gt 0 ]]
-        then
-                stringToBeSearched="${htmlLines[@]}"
-        fi
-        # END of searchedString
-
-        # START - set the booleans for the optionals
-        if [[ ! -z ${4:-} ]] && [[ $(_sc Find '([-][im]*[s]{1,}[im]*\b)' ${4:-}) -gt 0 ]]
-        then
-            getStringInsteadOfPosition=$TRUE
-        fi
-
-        if [[ ! -z ${4:-} ]] && [[ $(_sc Find '([-][is]*[m]{1,}[is]*\b)' ${4:-}) -gt 0 ]]
-        then
-            doMultiLineSearch=$TRUE
-        fi
-
-        if [[ ! -z ${4:-} ]] && [[ $(_sc Find '([-][sm]*[i]{1,}[sm]*\b)' ${4:-}) -gt 0 ]]
-        then
-            doCaseInsensitive=''
-        fi
-        # END setting the booleans
-
-        thePattern="$2"
-
-        if [[ $doMultiLineSearch -eq $FALSE ]]
-        then
-            foundIt=`grep -Po $doCaseInsensitive -m1 "$thePattern" <<< "$stringToBeSearched" | head -n 1` || foundIt=""
-        else
-            exec 3>&2
-            exec 2> /dev/null
-            foundIt=$(grep -Pazob $doCaseInsensitive -m1 "(?s)$thePattern" <<< "$stringToBeSearched" | head -zn 1) || foundIt=""
-            exec 2>&3
-            bytePosition=${foundIt%%:*}                     # %% - remove after;      from the ':'; * - everything else
-            foundIt=${foundIt#*:}                           #  # - remove before; ahead of the ':'; * - everything in front of the ':''
-            #log -e ":string:\n\n$foundIt\n\n:bytePos:\n\n$bytePosition"
-            
-        fi
-    
-        if [[ ${#foundIt} -gt 0 ]] && [[ $doMultiLineSearch -eq $FALSE ]]
-        then
-            searchString="$foundIt"
-            rest=${stringToBeSearched#*$searchString}
-            result="$(( ${#stringToBeSearched} - ${#rest} - ${#searchString} + 1 ))"
-
-        elif [[ ${#foundIt} -gt 0 ]] && [[ $doMultiLineSearch -eq $TRUE ]]
-        then
-            result=$bytePosition
-
-        elif [[ ${#foundIt} -eq 0 ]] && [[ $doMultiLineSearch -eq $FALSE ]]
-        then
-            result=0
-        fi
-
-        if [[ $getStringInsteadOfPosition -eq $FALSE ]]
-        then
-            printf -v _ret_regexStringFind %q $result
-            eval "$1=\${_ret_regexStringFind}"
-        else
-            eval "$1=\${foundIt}"
-        fi
-    
-    # END: of the main part
+    #---------------------------------------------------
     # START - echo out the Help section
-    elif [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
+    #---------------------------------------------------
+    if [[ $# -eq 1 || "${2:-}" == "-?" || "${2:-}" == "--help" || "${2:-}" == "-h" ]]
     then
+            echo -e "\n The command syntax is: Find searchPattern someStringToSearch \n"
+            echo -e " POSIX Extended Regular Expressions are allowed in 'searchPattern'"
+            echo -e " Find returns a number greater than 0 if successful."
+            echo -e " Find assumes the first character occupies position #1\n"
+            echo -e " If the switch '-s' is added as the last parameter, then the string is"
+            echo -e " returned, rather than the position.\n"
 
-        echo -e "\n The command syntax is: Find searchPattern someStringToSearch \n"
-        echo -e " POSIX Extended Regular Expressions are allowed in 'searchPattern'"
-        echo -e " Find returns a number greater than 0 if successful."
-        echo -e " Find assumes the first character occupies position #1\n"
-        echo -e " If the switch '-s' is added as the last parameter, then the string is"
-        echo -e " returned, rather than the position.\n"
-        
-    else
+            return 0
 
-        local _result
-        echo -e "\n Error - missing arguments."
-        eval "_Find _result --help"
+    elif [[ $# -gt 1 ]] && [[ $# -lt 3 ]]
+    then
+            local _
+            echo -e "\n Error - missing arguments."
+            eval "_Find _ --help"
+
+    #---------------------------------------------------
+    # END   - echo out the Help section
+    # START - capture the string and any options 
+    #---------------------------------------------------
+    elif [[ $# -ge 3 ]]
+    then
+            # START - determine what the searched string will be
+            #---------------------------------------------------
+            if [[ -f $3  ]]
+            then
+                    [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: _Find()'s string of interest is this file: $3. \n"
+                    stringToBeSearched="$(< $3)"
+            else
+                    [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: _Find()'s string of interest is just plain. It is: \n\n ${3}"
+                    stringToBeSearched="${3}"
+            fi
+            #---------------------------------------------------
+            # END   - determine what the searched string will be
+
+            # START - set the booleans for the optionals
+            #---------------------------------------------------
+            if [[ -n ${4:-} ]]
+            then
+                    [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: _Find() has been sent some option(s)\n"
+
+                    local _option_StringNotPosition
+                    _Find _option_StringNotPosition '[-][cmb]*[s]{1,1}[cmb]*\b' "${4:-}"
+                    if [[ $_option_StringNotPosition -eq $TRUE ]] ; then getStringInsteadOfPosition=$TRUE ; fi
+                    
+                    local _option_CaseSensitive
+                    _Find _option_CaseSensitive '[-][smb]*[c]{1,1}[smb]*\b' "${4:-}"
+                    if [[ $_option_CaseSensitive -eq $TRUE ]] ; then doCaseInsensitive='' ; fi
+
+                    local _option_Multiline
+                    _Find _option_Multiline '[-][scb]*[m]{1,1}[scb]*\b' "${4:-}"
+                    if [[ $_option_Multiline -eq $TRUE ]] ; then doMultiLineSearch=$TRUE ; fi
+
+                    local _option_PositionAndString
+                    _Find _option_PositionAndString '[-][scm]*[b]{1,1}[scm]*\b' "${4:-}"
+                    if [[ $_option_PositionAndString -eq $TRUE ]] ; then getPositionAndString=$TRUE ; fi
+            fi
+            #---------------------------------------------------
+            # END setting the booleans
 
     fi
-    # END of help section
+    #---------------------------------------------------
+    # END   - capture the string and any options 
+    #---------------------------------------------------
+    
+    thePattern="$2"
+
+
+    #---------------------------------------------------
+    # START - the PCRE grep routines
+    #---------------------------------------------------
+    if [[ $doMultiLineSearch -eq $FALSE ]]
+    then
+            grepFoundIt=$(grep -Pob $doCaseInsensitive -m1 "$thePattern" <<< "$stringToBeSearched" | head -n 1) || foundIt=""
+    else
+            exec 3>&2
+            exec 2> /dev/null
+            grepFoundIt=$(grep -Pazob $doCaseInsensitive -m1 "(?s)$thePattern" <<< "$stringToBeSearched" | head -zn 1) || foundIt=""
+            exec 2>&3
+    fi
+    #---------------------------------------------------
+    # END   - the PCRE grep routines
+    #---------------------------------------------------
+
+    # if grep found something ..
+    #---------------------------------------------------
+    if [[ ${#grepFoundIt} -gt 0 ]]
+    then
+            local -i _result=$(( ${grepFoundIt%%:*} + 1 ))      # %% - remove after;      from the ':'; * - everything else
+            grepFoundIt="${grepFoundIt#*:}"                     #  # - remove before; ahead of the ':'; * - everything in front of the ':''
+
+    # if it didn't
+    #---------------------------------------------------
+    elif [[ ${#grepFoundIt} -eq 0 ]]
+    then
+            local _result=0
+    fi
+
+    # if we want the string rather than the byte position ..
+    #-------------------------------------------------------
+    if [[ $getStringInsteadOfPosition -eq $FALSE ]]
+    then
+            _returnResult=$_result
+    else
+            _returnResult=$grepFoundIt
+    fi
+
+    # if we want both position and string ..
+    #---------------------------------------------------
+    if [[ $getPositionAndString -eq $TRUE ]]
+    then
+            #_returnResult=$_result$'\n'$grepFoundIt
+            _returnResult=($_result "$grepFoundIt")
+    fi
 
 }
 
@@ -849,9 +864,11 @@ function _FindAll()                 # bash grep -P
 
         elif [[ ${#foundIt} -gt 0 ]] && [[ $doMultiLineSearch -eq $TRUE ]]
         then
+            
             log -e "$foundIt"
             keepLooping=$TRUE
             nextChunk="$foundIt"
+
             while [[ $keepLooping -eq $TRUE ]]
             do
                 iPos=0
@@ -860,6 +877,7 @@ function _FindAll()                 # bash grep -P
                 nextChunk=${nextChunk#*:}
                 iPos=$(_sc Find '([[:digit:]]+:{1})' "$nextChunk")
                 item=$(_sc Substring "$nextChunk" 1 $(( iPos - 1 )))
+                
                 if [[ $iPos -gt 0 ]]
                 then
                     nextChunk=${nextChunk#*$item}
@@ -867,6 +885,7 @@ function _FindAll()                 # bash grep -P
                     item="$nextChunk"
                     keepLooping=$FALSE 
                 fi
+                
                 ArrayOfStrings[$bytePosition]="$item"
                 
             done
@@ -1575,9 +1594,10 @@ StringClass()
 
     Find()
     (
-        local _result
-        _Find _result "$@"
-        [ ! -z "${_result:-}" ] && echo -e "$_result"
+        [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: Inside 'Find' wrapper call"
+        local _result__Find
+        _Find _result__Find "$@"
+        [ -n "${_result__Find:-}" ] && echo -e "${_result__Find[@]}"
     )
 
     InStr() # Pseudonym / Alias for Find
@@ -1692,8 +1712,13 @@ _sc()(StringClass "$@")
 # Process the "real" command line that called this script
 #--------------------------------------------------------
 #
+
+[ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: Command Line is: $@.\n\n Number of command-line arguments: $#."
+
 if [[ -t 0 ]]      # input comes only from the string on the command line - no redirection.
 then
+
+    [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: Command Line Input Type is type 0 (no redirection recognised)."
 
     if [[ $# -gt 0 ]]
     then
@@ -1706,22 +1731,35 @@ then
 
         theArgs=("$@")
 
-        for arg in "${theArgs[@]}"
-        do
-            if [[ $arg == "-hd" ]]
-            then
-                readInput # read more input into the htmlLines array
-            fi
-        done
+        #for arg in "${theArgs[@]}"
+        #do
+        #    if [[ $arg == "-hd" ]]
+        #    then
+        #        readInput # read more input into the htmlLines array
+        #    fi
+        #done
 
     fi
 
 else               # input comes from redirection.
 
-    theArgs=("$@")
-    readInput  # read more input into the htmlLines array
+    [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: Command Line Input Type is redirection.\n"
+
+    #theArgs=("$@")
+    #readInput  # read more input into the htmlLines array
+    echo -e " The StringFunctions library is deliberately not supporting"
+    echo -e " redirected input for the time being. Strings on the command"
+    echo -e " line and those found in files are supported."
+    echo -e ""
+    echo -e " Eg. don't use <someFile or <<Here-doc or <<<Here-string\n"
+
+    exit
 
 fi
+
+[ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: Arguments passed into 'StringFunctions' are:\n" && declare -p theArgs
+
+#[ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: The redirection array (htmlLines) contains:\n '${htmlLines:-}' \n"
 
 #----------------------------------------------------------
 # Then, send all known command line data into StringClass()
@@ -1729,6 +1767,8 @@ fi
 #
 if [[ ${#theArgs[@]} -gt 0 ]]
 then
+
+    [ $_DEBUGGING -eq $TRUE ] && echo -e "\n:DEBUG: Call 'StringClass' with:\n\n ${theArgs[@]}"
 
     StringClass "${theArgs[@]}"
 

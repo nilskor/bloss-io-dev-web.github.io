@@ -23,8 +23,6 @@ source ./StringFunctions
 
 #set -vx
 
-echo -e ""
-
 declare -a test1=()
 declare -A test2=()
 declare someCrap
@@ -34,22 +32,32 @@ string that needs cöunting'
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
-echo -e "              isNumber test (not yet implemented)                                                             "
+echo -e "              isNumber test                                                          "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
-printf %f -1e32 &>/dev/null && echo "-1e32 is a number" || echo "-1e32 is not a number \n"
+_IsNumber someCrap -1e32
+echo -e "IsNumber returned $someCrap for -1e32.        (1 is True, 0 is False)."
+
+_IsNumber someCrap 'FreddoFrog'
+echo -e "IsNumber returned $someCrap for 'FreddoFrog'. (1 is True, 0 is False)."
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Array Type tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
+echo -e "declare -a test1=()"
 declare -p test1 2>/dev/null | grep -q '^declare \-a' && echo "test1 is an indexed array" || echo "test1 is not an indexed array"
 
+echo -e "\ndeclare -A test2=()"
 declare -p test2 2>/dev/null | grep -q '^declare \-A' && echo "test2 is an associative array" || echo "test2 is not an associative array"
 
-declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data is not an array"
+echo -e "\ndeclare data='some
+dummy extrå long
+string that needs cöunting'"
+declare -p data 2>/dev/null | grep -q '^declare \-[aA]' && echo "data is an array" || echo "data  is not an array"
 
+echo -e ""
 declare -p test1 2>/dev/null | grep -q '^declare \-[aA]' && echo "test1 is an array type" || echo "test1 is not an array type"
 
 
@@ -63,15 +71,23 @@ echo -e "Byte count is: $someCrap, for the string: $data \n"
 
 _CountBytes someCrap index.html
 
-echo -e "Byte count for index.html is: $someCrap \n"
+echo -e "Byte count for index.html is: $someCrap \n\n"
+
+_Length someCrap "$data"
+
+echo -e "String length of '$data' is: $someCrap \n"
 
 _CountChars someCrap "$data"
 
-echo -e "Char count is: $someCrap, for the string: $data \n"
+echo -e "Char count is: $someCrap, for the string: $data \n\n"
+
+_Length someCrap index.html
+
+echo -e "String length of 'index.html' is: $someCrap \n"
 
 _CountChars someCrap index.html
 
-echo -e "Char count for index.html is: $someCrap \n"
+echo -e "Char count for index.html is: $someCrap \n\n"
 
 _CountLines someCrap "$data"
 
@@ -79,7 +95,7 @@ echo -e "Line count is: $someCrap, for the string: $data \n"
 
 _CountLines someCrap index.html
 
-echo -e "Line count for index.html is: $someCrap \n"
+echo -e "Line count for index.html is: $someCrap \n\n"
 
 _CountWords someCrap "$data"
 
@@ -87,7 +103,7 @@ echo -e "Word count is: $someCrap, for the string: $data \n"
 
 _CountWords someCrap index.html
 
-echo -e "Word count for index.html is: $someCrap \n"
+echo -e "Word count for index.html is: $someCrap \n\n"
 
 _Length someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
 
@@ -95,17 +111,12 @@ echo -e "String length for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n"
 
 _CountChars someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs"
 
-echo -e "Char count for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n\nCharCount with --explain: (note the trailing LF Line Feed - Char '0x0a')\n"
+echo -e "Char count for 'fred sdfsfds fsfdf vsdfs dfvsdfs' is: $someCrap \n"
+
+echo -e "\nCharCount with --explain: (note the trailing LF Line Feed - Char '0x0a')\n"
 
 _CountChars someCrap "fred sdfsfds fsfdf vsdfs dfvsdfs" '--explain'
-
-_Length someCrap "$data"
-
-echo -e "\n\nString length of '$data' is: $someCrap \n"
-
-_Length someCrap index.html
-
-echo -e "String length of 'index.html' is: $someCrap \n"
+echo -e ""
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
@@ -128,6 +139,36 @@ someLink='<a name="GTK_Tools" class="two" href="/content/GTK3/GTK_Tools.html">GT
 echo -e "someLink: $someLink"
 _Find someCrap '(?<=\>)(.+)(?=\<)' "$someLink" '-s'
 echo -e "\nTrying to find '(?<=\>)(.+)(?=\<)' in '\$someLink' returned: $someCrap \n"
+
+_Find someCrap '<p>.*?</p>' GTK3test.html
+echo -e "Multine-line search in GTK3test.html (no options), '<p>.*?</p>' found:\n$someCrap\n"
+
+_Find someCrap '<div>.*?</div>' GTK3test.html
+echo -e "Multine-line search in GTK3test.html (no options), '<div>.*?</div>' found:\n$someCrap\n"
+
+declare -a someCrap2=()
+_Find someCrap2 '<p>.*?</p>' GTK3test.html -mb
+echo -e "Multine-line search in GTK3test.html (options -mb), '<p>.*?</p>' found ${#someCrap2[@]} elements:"
+
+for iSC2 in "${someCrap2[@]}"
+do
+    echo -e "\nItem:\n\n$iSC2"
+done
+echo -e ""
+
+
+_Find someCrap '<p>.*?</p>' GTK3test.html -scm
+echo -e "Multine-line search in GTK3test.html (options -scm), '<p>.*?</p>' found:\n$someCrap\n"
+
+
+_Find someCrap2 '<P>.*?</P>' GTK3test.html -scmb
+echo -e "Multine-line search in GTK3test.html (options -scmb), '<P>.*?</P>' found ${#someCrap2[@]} elements:"
+
+for iSC3 in "${someCrap2[@]}"
+do
+    echo -e "\nItem:\n\n$iSC3"
+done
+echo -e ""
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
@@ -189,17 +230,17 @@ eval "$someCrap"
 echo -e " refText: \"${ArrayOfStrings[@]}\" ; contains ${#ArrayOfStrings[@]} element(s).\n"
 
 _Length someLength "${ArrayOfStrings[@]}"
-_SubString someCrap "${ArrayOfStrings[@]}" 1 "( $someLength - 2 )"
+_Substring someCrap "${ArrayOfStrings[@]}" 1 "( $someLength - 2 )"
 
 echo -e " $someCrap \n"
 
-StringClass SubString "${ArrayOfStrings[@]}" 1 $(( $(StringClass Length "${ArrayOfStrings[@]}") - 2 ))
+StringClass Substring "${ArrayOfStrings[@]}" 1 $(( $(StringClass Length "${ArrayOfStrings[@]}") - 2 ))
 echo ""
 
-_SubString someCrap "FreddoFrogIsYummyChocolate" 13 5
+_Substring someCrap "FreddoFrogIsYummyChocolate" 13 5
 echo -e " From the string 'FreddoFrogIsYummyChocolate', position 13, length 5 gives: $someCrap \n"
 
-                                                                          #char 64 is the LF
+                                                                          #char position # 64 is the LF
 choccy='FreddoFrog IsYummyChocolate FreddoFrog IsYummyChocolate. Freddo
     Frog IsYummyChocolate FreddoFrog IsYummyChocolate.'
 _FindAll someCrap 'Yummy' "$choccy"
