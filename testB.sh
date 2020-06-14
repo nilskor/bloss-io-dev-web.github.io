@@ -245,10 +245,14 @@ choccy='FreddoFrog IsYummyChocolate FreddoFrog IsYummyChocolate. Freddo
     Frog IsYummyChocolate FreddoFrog IsYummyChocolate.'
 _FindAll someCrap 'Yummy' "$choccy"
 eval "$someCrap"
-echo -e " FindAll 'Yummy' in 'FreddoFrog IsYummyChocolate FreddoFrog IsYummyChocolate.' \n"
+echo -e "\n FindAll 'Yummy' in '$choccy' \n"
 #echo -e "Array: \"${ArrayOfStrings[@]}\" ; contains ${#ArrayOfStrings[@]} element(s).\n"
-echo -e " $someCrap"
+echo -e " $someCrap\n"
 
+_FindAll someCrap 'Yummy' "$choccy" '-m'
+eval "$someCrap"
+echo -e "\n FindAll 'Yummy' in '$choccy' -m \n"
+echo -e " $someCrap"
 
 echo -e "\n ----------------------------------------------------------------------------------"
 echo -e "              Trim tests                                                             "

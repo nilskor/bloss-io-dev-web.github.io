@@ -19,14 +19,6 @@ source ./StringFunctions
 # The default is to split on spaces, tabs and newlines $' \n\t'
 #IFS=$'\n\t'
 
-# Set variables:
-#declare -ri  TRUE=0          # g - global scope; r - read-only; i - integer; x - exportable
-#declare -ri FALSE=1
-
-declare RED='\033[1;31m'     # actually a light Red to be exact :)
-declare GREEN='\033[0;32m'
-declare NC='\033[0m'         # No Color
-
 declare theseFiles="Abstract Base.html"
 declare theIndexFile="index.html"
 
