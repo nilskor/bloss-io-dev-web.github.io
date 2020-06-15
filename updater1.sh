@@ -118,7 +118,7 @@ function step3()             # "Step #3 - work with each html file"
 
     if [[ $step3_Echoed -eq $FALSE ]]
     then
-        echo -e "Step #3 - look through each html file"
+        echo -e "\nStep #3 - look through each html file"
         step3_Echoed=$TRUE
     fi
 
@@ -182,7 +182,7 @@ function step3()             # "Step #3 - work with each html file"
                 echo -e " $_ret_newLink\n"
                 echo -e " $_oldLink\n"
             fi
-
+            echo ""
             #echo -e "$_ret_newLink"
             #echo -e ":\n  old: $_oldLink\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"
                     
@@ -207,11 +207,11 @@ function step3a()            # "Step #3a - create the unique file name index loo
     local _ret_PossibleLookupName=""
     local foundName=""
 
-    _Find _ret_PossibleLookupName '((?<=/)|(?<=#))([A-Za-z0-9_]*)(?="><)' "$3" '-s'
+    _Find _ret_PossibleLookupName '((?<=/)|(?<=#))([A-Za-z0-9._]*)(?="><)' "$3" '-s'
 
     foundName="$_ret_PossibleLookupName"
 
-    #echo -e "\n $foundName"
+    #echo -e "\nSTEP3 - $foundName"
 
     if [[ -n $foundName ]]
     then
