@@ -43,7 +43,7 @@ declare -i step3b_Echoed=$FALSE
 
 declare theWholeIndexFile=""
 
-declare -ir DO_NOT_WRITE=$FALSE
+declare -ir DO_NOT_WRITE=$TRUE
 
 function   setIFS(){ IFS=$'\n\t'; }
 function unsetIFS(){ IFS= ;       }
@@ -104,10 +104,10 @@ function step2()             # "Step #2 - process the array of files"
     do
         if [[ "$file" != "./index.html" ]]
         then
-            #echo -e "the Do loop"
-            step4 "$file"
-            step3 "$file"
-
+                #echo -e "the Do loop"
+                step4 "$file" # mainly bookmark stuff
+                step3 "$file" # mainly updating links to suit the hybrid SPA web site
+                #step5 "$file" # mainly updating TOC items
         fi
     done
 
@@ -320,6 +320,50 @@ function step4()             # "Step #4 - update the bookmarks"
 
     fi
 
+}
+
+function step5()
+{
+    local _arrayOfTOCitems=""
+    local -A arrayOfOldTOCitems=()
+
+    _FindAll _arrayOfTOCitems '(?<=<li>).*[ ]class="toggle".*(?=</li>)' "$@"
+
+    # START - rename the array and re-animate it
+    _FindReplace _arrayOfTOCitems 'ArrayOfStrings' 'arrayOfOldTOCitems' "$_arrayOfTOCitems"
+    eval "$_arrayOfTOCitems"
+    # END - arrayOfOldTOCitems[]
+
+    local toWriteOrNot=''
+    if [[ $DO_NOT_WRITE -eq $FALSE ]]
+    then
+        toWriteOrNot='-w'
+    fi
+
+    if [[ ${#arrayOfOldTOCitems[@]} -gt 0 ]]
+    then
+            echo -e "\n==================================================================================================="
+            echo -e " Step #5 - checking the TOC items in this file: $@"
+            echo -e "==================================================================================================="
+            for index in ${!arrayOfOldTOCitems[@]}
+            do
+                    local _oldTOCitem="${arrayOfOldTOCitems[$index]}"
+                    #-----------------------------------------------------------------------------------------
+                    echo -e "\n$_oldTOCitem"
+                    _Find _q46_fc '<font color="#2e3440">.*?</font>' "$_oldTOCitem" -s
+                    #echo -e "$_q46_fc"
+                    _FindReplace _newTOCitem "$_q46_fc" '' "$_oldTOCitem"
+                    _FindReplace _newTOCitem 'class="toggle" ' '' "$_newTOCitem"
+                    _Find _k88_ip '>' "$_newTOCitem"
+                    _Insert _newTOCitem "$_q46_fc" "$_newTOCitem" $(( _k88_ip + 1 ))
+                    echo -e "$_newTOCitem"
+                    _FindReplace _tmp971 "$_oldTOCitem" "$_newTOCitem" "$@" $toWriteOrNot
+
+                    #-----------------------------------------------------------------------------------------
+            done
+    else
+            : # echo -e "\n ${PINK}Step 5, found nothing in $@ ${NC}\n" 
+    fi
 }
 
 main
