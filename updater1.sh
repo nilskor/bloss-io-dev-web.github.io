@@ -43,7 +43,7 @@ declare -i step3b_Echoed=$FALSE
 
 declare theWholeIndexFile=""
 
-declare -ir DO_NOT_WRITE=$TRUE
+declare -ir DO_NOT_WRITE=$FALSE
 
 function   setIFS(){ IFS=$'\n\t'; }
 function unsetIFS(){ IFS= ;       }
@@ -105,9 +105,10 @@ function step2()             # "Step #2 - process the array of files"
         if [[ "$file" != "./index.html" ]]
         then
                 #echo -e "the Do loop"
-                step4 "$file" # mainly bookmark stuff
-                step3 "$file" # mainly updating links to suit the hybrid SPA web site
+                #step4 "$file" # mainly bookmark stuff
+                #step3 "$file" # mainly updating links to suit the hybrid SPA web site
                 #step5 "$file" # mainly updating TOC items
+                step6 "$file" # mainly deleting opening html stuff to make them injectable & compliant.
         fi
     done
 
@@ -364,6 +365,30 @@ function step5()
     else
             : # echo -e "\n ${PINK}Step 5, found nothing in $@ ${NC}\n" 
     fi
+}
+
+function step6()
+{
+
+    local toWriteOrNot=''
+    if [[ $DO_NOT_WRITE -eq $FALSE ]]
+    then
+        toWriteOrNot='-w'
+    fi
+
+    declare -a _g67_head=()
+    _Find _g67_head '<!DOCTYPE html>.*?(?=<!-- article header "section-header" -->)' "$@" -mb
+
+    if [[ ${_g67_head[0]} -gt 0 ]]
+    then
+            echo -e "\n==================================================================================================="
+            echo -e " Step #5 - checking the DOCTYPE <head> in this file: $@"
+            echo -e "==================================================================================================="
+            echo -e "${_g67_head[1]}"
+
+            _regexFindReplace _k54_fr '<!DOCTYPE html>.*?(?=<!-- article header "section-header" -->)' '' "$@" $toWriteOrNot
+    fi
+
 }
 
 main

@@ -172,7 +172,7 @@ echo -e ""
 
 
 echo -e "\n ----------------------------------------------------------------------------------"
-echo -e "              Find and Replace tests                                                             "
+echo -e "              'Find+Replace' tests                                                             "
 echo -e " ---------------------------------------------------------------------------------- \n"
 
 _FindReplace someCrap html FROG testFile.html -aw
