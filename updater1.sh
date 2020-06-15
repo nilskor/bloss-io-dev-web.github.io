@@ -19,7 +19,7 @@ source ./StringFunctions
 # The default is to split on spaces, tabs and newlines $' \n\t'
 #IFS=$'\n\t'
 
-declare theseFiles="Abstract Base.html"
+declare theseFiles="*.html"
 declare theIndexFile="index.html"
 
 # <h3><a href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget"><font color="#2e3440">
@@ -43,7 +43,7 @@ declare -i step3b_Echoed=$FALSE
 
 declare theWholeIndexFile=""
 
-declare -ir DO_NOT_WRITE=$TRUE
+declare -ir DO_NOT_WRITE=$FALSE
 
 function   setIFS(){ IFS=$'\n\t'; }
 function unsetIFS(){ IFS= ;       }
@@ -124,9 +124,10 @@ function step3()             # "Step #3 - work with each html file"
 
     local _theStringFindResults=""
     local -A arrayOfOldLinks=()
-                                                                            
-    _FindAll _theStringFindResults "$oldLinkPattern" "$@"               # where $@ is the incoming file.
-                                                                        # then rename the ArrayOfStrings..
+
+    # _FindAll _theStringFindResults "$oldLinkPattern" "$@" -m    
+    _FindAll _theStringFindResults '<a[ ]href="/content/GTK3/.*?</a>' "$@" '-m'          # where $@ is the incoming file.
+                                                                                        # then rename the ArrayOfStrings..
 
     _FindReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
     eval "$_theStringFindResults"                                       # unravel the return result into 'arrayOfOldLinks', 
@@ -161,7 +162,11 @@ function step3()             # "Step #3 - work with each html file"
 
             _Insert _ret_newLinkWithID "id='bkmk$_ret_IndexLookup' " "$_ret_newLink" 4
             
-            _Find _ret_oldLinkText '(?<=\>)(.+)(?=\<)' "$_oldLink" '-s'
+            _Find _ret_oldLinkText '(?<=\>).*?(?=\<)' "$_oldLink" '-sm'
+
+            _ret_oldLinkText=$(_sc LTrim $_ret_oldLinkText)
+
+            #_sc CountChars $_ret_oldLinkText '--explain'
 
             _ret_newLink=""
             _FindReplace _ret_newLink ');"></a>' ");\">$_ret_oldLinkText</a>" "$_ret_newLinkWithID"
@@ -173,7 +178,9 @@ function step3()             # "Step #3 - work with each html file"
                 _FindReplace _temp1 "$_oldLink" "$_ret_newLink" "$@" $toWriteOrNot
 
             else
-                echo -e "\n New link is shorter than the old link"
+                echo -e "\n New link is shorter than the old link:\n"
+                echo -e " $_ret_newLink\n"
+                echo -e " $_oldLink\n"
             fi
 
             #echo -e "$_ret_newLink"
@@ -258,6 +265,7 @@ function step4()             # "Step #4 - update the bookmarks"
     # _FindAll _arrayOfBookmarks '(?<=<h.><a\s).*name="[[:alnum:]_{1,}]*"' "$@"
 
     _FindAll _arrayOfBookmarks '(?<=<li><a href="#).*(?="><)' "$@"
+    #_FindAll _arrayOfBookmarks '(?<=<li>)(?:.*?)(<a href="#).*(?="><)' "$@"
 
     _FindReplace _arrayOfBookmarks 'ArrayOfStrings' 'arrayOfOldBookmarks' "$_arrayOfBookmarks"
     eval "$_arrayOfBookmarks"

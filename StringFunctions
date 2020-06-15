@@ -1449,7 +1449,7 @@ function _wsTrim()                  # StringClass (perl -pe)
 
     local _ret_wsTrim=""
     local _duplicateWSPattern='\s{2,}'            # these are single quoted,
-    local _fullStops='\b\s+[.]'                  # to stop bash from interpreting
+    local _fullStops='\b\s+[.]'                   # to stop bash from interpreting
     local -i doSingle=$FALSE
 
     if [[ $# -ge 2 ]] || [[ $# -eq 1 && ${#htmlLines[@]} -gt 0 ]]
