@@ -19,7 +19,7 @@ source ./StringFunctions
 # The default is to split on spaces, tabs and newlines $' \n\t'
 #IFS=$'\n\t'
 
-declare theseFiles="*.html"
+declare theseFiles="Widget Gallery.html"
 declare theIndexFile="index.html"
 
 # <h3><a href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget"><font color="#2e3440">
@@ -105,10 +105,10 @@ function step2()             # "Step #2 - process the array of files"
         if [[ "$file" != "./index.html" ]]
         then
                 #echo -e "the Do loop"
-                #step4 "$file" # mainly bookmark stuff
-                #step3 "$file" # mainly updating links to suit the hybrid SPA web site
+                step4 "$file" # mainly bookmark stuff
+                step3 "$file" # mainly updating links to suit the hybrid SPA web site
                 #step5 "$file" # mainly updating TOC items
-                step6 "$file" # mainly deleting opening html stuff to make them injectable & compliant.
+                #step6 "$file" # mainly deleting opening html stuff to make them injectable & compliant.
         fi
     done
 
@@ -127,7 +127,7 @@ function step3()             # "Step #3 - work with each html file"
     local -A arrayOfOldLinks=()
 
     # _FindAll _theStringFindResults "$oldLinkPattern" "$@" -m    
-    _FindAll _theStringFindResults '<a[ ]href="/content/GTK3/.*?</a>' "$@" '-m'          # where $@ is the incoming file.
+    _FindAll _theStringFindResults '<a ([[:graph:] ])*?href="/content/GTK3/.*?</a>' "$@" '-m'          # where $@ is the incoming file.
                                                                                         # then rename the ArrayOfStrings..
 
     _FindReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
@@ -158,15 +158,19 @@ function step3()             # "Step #3 - work with each html file"
             
             _Trim _ret_trimmedFullString $_ret_FullString
             _wsTrim _ret_newLink "$_ret_trimmedFullString"
+
+            echo -e "The link that needs replacing:\n$_oldLink"
             
             #_old_dont_use_#_FindReplace _ret_newLinkWithBookmark "$_ret_IndexLookup" "bkmk$_ret_IndexLookup" $_ret_newLink
 
             _Insert _ret_newLinkWithID "id='bkmk$_ret_IndexLookup' " "$_ret_newLink" 4
             
-            _Find _ret_oldLinkText '(?<=\>).*?(?=\<)' "$_oldLink" '-sm'
+            _Find _ret_oldLinkText '(?<=\s)<img src=".*?">' "$_oldLink" '-sm'
 
             _ret_oldLinkText=$(_sc LTrim $_ret_oldLinkText)
 
+            echo -e "$_ret_oldLinkText"
+            
             #_sc CountChars $_ret_oldLinkText '--explain'
 
             _ret_newLink=""
@@ -208,22 +212,22 @@ function step3a()            # "Step #3a - create the unique file name index loo
     local _ret_PossibleLookupName=""
     local foundName=""
 
-    _Find _ret_PossibleLookupName '((?<=/)|(?<=#))([A-Za-z0-9._]*)(?="><)' "$3" '-s'
+    _Find _ret_PossibleLookupName '((?<=/)|(?<=#))([A-Za-z0-9._]*)(?=">)' "$3" '-s'
 
     foundName="$_ret_PossibleLookupName"
 
-    #echo -e "\nSTEP3 - $foundName"
+    echo -e "\nSTEP3 - $foundName\n"
 
     if [[ -n $foundName ]]
     then
-        foundName=${foundName//_}     # remove underscores           # collapse the file name down to a #Reference
-        foundName=${foundName// }     # remove spaces
-        foundName=${foundName//-}     # remove hyphens
-        foundName=${foundName//.html} # remove '.html'
-        
-        #echo -e "$(step3b "$foundName")"    # return the result_3b back to step 3
-        _result3b="$(step3b "$foundName")"
-        eval "$1=\${_result3b}; $2=\${foundName}"  # return the result_3b back to step 3, as well as the index lookup
+            foundName=${foundName//_}     # remove underscores           # collapse the file name down to a #Reference
+            foundName=${foundName// }     # remove spaces
+            foundName=${foundName//-}     # remove hyphens
+            foundName=${foundName//.html} # remove '.html'
+            
+            _result3b="$(step3b "$foundName")"
+            echo -e "Found a new link:\n$(step3b "$foundName")\n"    # return the result_3b back to step 3
+            eval "$1=\${_result3b}; $2=\${foundName}"  # return the result_3b back to step 3, as well as the index lookup
     fi
 
 }
@@ -237,7 +241,7 @@ function step3b()            # "Step #3b - find the index lookup inside $theInde
         step3b_Echoed=$TRUE
     fi
 
-    foundLine=`grep -E "#$@" <<< "$theWholeIndexFile"` || foundLine=""
+    foundLine=`grep -E "#$@'" <<< "$theWholeIndexFile"` || foundLine=""
 
     echo -e "$foundLine"    # return the results from step3b back to 3a
 }

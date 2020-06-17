@@ -18,7 +18,7 @@
 
 :root
 {
-      background-color   : rgba(0, 255, 255, 1.0);       /* WebIDE: only used for layout guidance      */
+      background-color   : rgba(255, 255, 255, 1.0);       /* WebIDE: only used for layout guidance      */
     --navBarHeight       : 50px;
     --navBarPanelTimeout : 400ms;
     --navBarBgColor      : rgba(0,0,0,1);
@@ -28,13 +28,14 @@
     --viewportFactor     : 45vh;
     --heroImage          : url("/assets/choc-van-yum.jpg");
     --footerHeight       : 60px;
+    --theme-font         : 'Noto Sans', sans-serif;
 }
 
 *
 {
     /*border          : 1px dashed lightgrey;          /* WebIDE: only used for showing invisibles ¶ */
     /*background-color: rgba(135, 206, 255, 0.65);     /* WebIDE: only used for layout guidance      */
-    font-family: Noto, sans;
+    font-family: var(--theme-font);
 }
 
 /** FrameWork Policy------------ START ---------------
@@ -210,7 +211,7 @@ body
 {
     height          : var(--navBarHeight);
     line-height     : var(--navBarHeight);
-    font            : 15px/var(--navBarHeight) Noto, sans;
+    font            : 15px/var(--navBarHeight) var(--theme-font);
 }
 
 
@@ -265,7 +266,7 @@ body
 {
     height          : calc( var(--subNavbarHeight) / 2 );
     line-height     : calc( var(--subNavbarHeight) / 2 );
-    font            : 15px/calc( var(--subNavbarHeight) / 2 ) Noto, sans;
+    font            : 15px/calc( var(--subNavbarHeight) / 2 ) var(--theme-font);
 }
 /** grid-area key/value pairs
  * where gaSN is: grid-area Sub-Navigation
@@ -332,7 +333,7 @@ body
 {
     height          : var(--subNavbarHeight);
     line-height     : var(--subNavbarHeight);
-    font            : 15px/var(--subNavbarHeight) Noto, sans;
+    font            : 15px/var(--subNavbarHeight) var(--theme-font);
 }
 
 .doco *
@@ -421,6 +422,6 @@ body
     padding-left : 20px;
     height       : var(--footerHeight);
     line-height  : var(--footerHeight);
-    font         : 15px/var(--footerHeight) Noto, sans;
+    font         : 15px/var(--footerHeight) var(--theme-font);
     color        : black;
 }

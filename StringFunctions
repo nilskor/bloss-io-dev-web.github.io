@@ -1902,3 +1902,30 @@ function FunctionTemplate()
 #  []      # defines character classes
 #
 #  [^]     # negates characters
+#
+#  (.*\n)  # match one or more lines with or without content
+#
+#  .*?     # keep the match to the shortest possible
+#
+#  \d      # match a decimal
+#  \D      # everything other than a decimal
+#
+#  \h      # any horizontal white space character
+#  \H      # any character that is not a horizontal white space character
+#
+#  \s      # any white space character
+#  \S      # any character that is not a white space character
+#
+#  \v      # any vertical white space character
+#  \V      # any character that is not a vertical white space character
+#
+#  \w      # any "word" character
+#  \W      # any "non-word" character
+#
+#  \b      # matches at a word boundary
+#  \B      # matches when not at a word boundary
+#
+#  \A      # matches at the start of the subject
+#  \Z      # matches at the end of the subject, also matches before a newline at the end of the subject
+#  \z      # matches only at the end of the subject
+#  \G      # matches at the first matching position in the subject
