@@ -22,7 +22,7 @@
         <!-- alternate templates -->
         <!-- link rel="stylesheet" href="/foo/css/templates.css" -->
         <!-- links/tables/code blocks -->
-        <link rel="stylesheet" href="/css/manuals.css">
+        <!-- link rel="stylesheet" href="/css/manuals.css" -->
         <!-- font-family: 'Noto Sans', sans-serif; -->
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
         <!-- secondary navbar special character -->
@@ -450,7 +450,7 @@
             <a href='#Awk'                  onclick="injectContentInto( 'injectHere',  '/content/Awk.html'             , 'Awk'              );"></a>
             <a href='#PrimeNumberRegex'     onclick="injectContentInto( 'injectHere',  '/content/PrimeNumberRegex.html', 'PrimeNumberRegex' );"></a>
 
-            <a href='#GTK3test'             onclick="injectContentInto( 'injectHere',  '/GTK3test.html', 'GTK3test' );"></a>
+            <a href='#GTK3test#bkmkAnnotationGlossary'             onclick="injectContentInto( 'injectHere',  '/GTK3test.html#bkmkAnnotationGlossary', 'GTK3test' );"></a>
 
         </div>
 
@@ -513,17 +513,16 @@
 
         </div>
 
-        <!-- scripts -->
+        <!-- START: scripts -->
         <script>
 
             'use strict';
 
-            window.addEventListener( 'popstate',                (event) => { parseURL();       } );
-            window.addEventListener( 'DOMContentLoaded',        (event) => { injectContentInto( 'injectHere', '/content/index.html' );
-                                                                      window.location.hash = "#index";
-                                                                           });
-            window.addEventListener( 'resize',                  (event) => { logPrimaryWidth() } );
-            document.documentElement.addEventListener( 'click', (event) => { documentOnclick(event) } );
+            window.addEventListener( 'popstate',                (event) => { parseURL(event);       } );
+            window.addEventListener( 'DOMContentLoaded',        (event) => { preventIndexReload(event) } );
+
+            window.addEventListener( 'resize',                  (event) => { logPrimaryWidth()         } );
+            document.documentElement.addEventListener( 'click', (event) => { documentOnclick(event)    } );
 
             parseURL()
             logPrimaryWidth()
@@ -550,6 +549,7 @@
             /** END:   parallax 'magicNumber' code ------------------------------------------- */
 
         </script>
+        <!-- END: scripts -->
 
     </body>
 

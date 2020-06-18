@@ -19,7 +19,7 @@ source ./StringFunctions
 # The default is to split on spaces, tabs and newlines $' \n\t'
 #IFS=$'\n\t'
 
-declare theseFiles="Widget Gallery.html"
+declare theseFiles="*.html"
 declare theIndexFile="index.html"
 
 # <h3><a href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget"><font color="#2e3440">
@@ -105,10 +105,11 @@ function step2()             # "Step #2 - process the array of files"
         if [[ "$file" != "./index.html" ]]
         then
                 #echo -e "the Do loop"
-                step4 "$file" # mainly bookmark stuff
-                step3 "$file" # mainly updating links to suit the hybrid SPA web site
+                #step4 "$file" # mainly bookmark stuff
+                #step3 "$file" # mainly updating links to suit the hybrid SPA web site
                 #step5 "$file" # mainly updating TOC items
-                #step6 "$file" # mainly deleting opening html stuff to make them injectable & compliant.
+                #step6 "$file" # mainly deleting the opening html stuff to make them injectable & compliant.
+                step7 "$file" # mainly deleting <font> tags from new injectable links.
         fi
     done
 
@@ -127,7 +128,7 @@ function step3()             # "Step #3 - work with each html file"
     local -A arrayOfOldLinks=()
 
     # _FindAll _theStringFindResults "$oldLinkPattern" "$@" -m    
-    _FindAll _theStringFindResults '<a ([[:graph:] ])*?href="/content/GTK3/.*?</a>' "$@" '-m'          # where $@ is the incoming file.
+    _FindAll _theStringFindResults '<h3><a .*?injectHere.*?</font></a></h3>' "$@" '-m'                    # where $@ is the incoming file.
                                                                                         # then rename the ArrayOfStrings..
 
     _FindReplace _theStringFindResults 'ArrayOfStrings' 'arrayOfOldLinks' "$_theStringFindResults"
@@ -285,7 +286,7 @@ function step4()             # "Step #4 - update the bookmarks"
     if [[ ${#arrayOfOldBookmarks[@]} -gt 0 ]]
     then
         echo -e "\n==================================================================================================="
-        echo -e " Step #4 - checking the bookmarks in this file: $@"
+        echo -e " Step #4 - checking the bookmarks in this file: $@ (${#arrayOfOldBookmarks[@]})"
         echo -e "==================================================================================================="
         for index in ${!arrayOfOldBookmarks[@]}
         do
@@ -327,7 +328,7 @@ function step4()             # "Step #4 - update the bookmarks"
 
 }
 
-function step5()
+function step5()             # mainly updating TOC items
 {
     local _arrayOfTOCitems=""
     local -A arrayOfOldTOCitems=()
@@ -371,7 +372,7 @@ function step5()
     fi
 }
 
-function step6()
+function step6()             # mainly deleting the opening html stuff to make them injectable & compliant.
 {
 
     local toWriteOrNot=''
@@ -386,7 +387,7 @@ function step6()
     if [[ ${_g67_head[0]} -gt 0 ]]
     then
             echo -e "\n==================================================================================================="
-            echo -e " Step #5 - checking the DOCTYPE <head> in this file: $@"
+            echo -e " Step #6 - checking the DOCTYPE <head> in this file: $@"
             echo -e "==================================================================================================="
             echo -e "${_g67_head[1]}"
 
@@ -394,5 +395,47 @@ function step6()
     fi
 
 }
+
+function step7()             # mainly deleting <font> tags from new injectable links.
+{
+
+    local toWriteOrNot=''
+    if [[ $DO_NOT_WRITE -eq $FALSE ]]
+    then
+        toWriteOrNot='-w'
+    fi
+
+    local _arrayOfFontTags=""
+    local -A _arrayOfOldFontTags=()
+    _FindAll _arrayOfFontTags '<h3><a .*?injectHere.*?</font></a></h3>' "$@" -m
+    # START - rename the array and re-animate it
+    _FindReplace _arrayOfFontTags 'ArrayOfStrings' '_arrayOfOldFontTags' "$_arrayOfFontTags"
+    eval "$_arrayOfFontTags"
+    # END - _arrayOfOldFontTags[]
+
+    if [[ ${#_arrayOfOldFontTags[@]} -gt 0 ]]
+    then
+            echo -e "\n==================================================================================================="
+            echo -e " Step #7 - checking for <font> in <a> links in this file: $@   (${#_arrayOfOldFontTags[@]})"
+            echo -e "===================================================================================================\n"
+            for index in ${!_arrayOfOldFontTags[@]}
+            do
+                    local _oldFontTagitem="${_arrayOfOldFontTags[$index]}"
+                    #-----------------------------------------------------------------------------------------
+                    #echo -e "\n$_oldFontTagitem"
+                    _Find _v91_ft '<font color="#2e3440">.*?</font>' "$_oldFontTagitem" -s
+                    #echo -e "$_v91_ft"
+                    _FindReplace _newFontTagitem '<font color="#2e3440">' '' "$_oldFontTagitem"
+                    _FindReplace _newFontTagitem '</font>' '' "$_newFontTagitem"
+                    echo -e "$_newFontTagitem"
+                    _FindReplace _v91_ft "$_oldFontTagitem" "$_newFontTagitem" "$@" $toWriteOrNot
+                    #-----------------------------------------------------------------------------------------
+            done
+    else
+            : # echo -e "\n ${PINK}Step 5, found nothing in $@ ${NC}\n" 
+    fi
+
+}
+
 
 main

@@ -110,10 +110,10 @@ main (int    argc,
               <br>
               When creating a GtkApplication you need to pick an application identifier (a name) and input to <code class="function">gtk_application_new()</code> 
               as a parameter. For this example <code class="varname">org.gtk.example</code> is used but for choosing an identifier for your application see 
-              <a class="two" href="https://wiki.gnome.org/HowDoI/ChooseApplicationID">this guide</a>. Lastly <code class="function">gtk_application_new()</code> 
+              <a target="_blank" href="https://wiki.gnome.org/HowDoI/ChooseApplicationID">this guide</a>. Lastly <code class="function">gtk_application_new()</code> 
               takes a GApplicationFlags as input for your application, if your application would have special needs.<br>
               <br>
-              Next the <a class="two" href="https://wiki.gnome.org/HowDoI/ChooseApplicationID">activate signal</a> 
+              Next the <a target="_blank" href="https://wiki.gnome.org/HowDoI/ChooseApplicationID">activate signal</a> 
               is connected to the <code class="function">activate()</code> function above the <code class="function">main()</code> functions. 
               The <code class="varname">activate</code> signal will be sent when your application is launched with 
               <code class="function">g_application_run()</code> on the line below. The <code class="function">gtk_application_run()</code> 
@@ -135,7 +135,7 @@ main (int    argc,
               pointer, we need to cast it to GtkWindow*. But instead of casting <code class="varname">window</code> via (<code class="varname">GtkWindow*</code>), 
               <code class="varname">window</code> can be cast using the macro <code class="varname"><code class="function">GTK_WINDOW()</code></code>. 
               <code class="varname"><code class="function">GTK_WINDOW()</code></code> will check if the pointer is an instance of the GtkWindow class, before casting, and emit a warning if the check fails. 
-              More information about this convention can be found <a class="two" href="https://developer.gnome.org/gobject/stable/gtype-conventions.html">here</a>.<br>
+              More information about this convention can be found <a target="_blank" href="https://developer.gnome.org/gobject/stable/gtype-conventions.html">here</a>.<br>
               <br>
               Finally the window size is set using gtk_window_set_default_size and the window is then shown by GTK via 
               <a class="two" href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget.html#gtk_widget_show_all"><code class="function">gtk_widget_show_all()</code></a>.<br>
@@ -263,7 +263,7 @@ main (int    argc,
               the whole GTK window is destroyed. In contrast if a normal <code class="function">g_signal_connect()</code>  
               were used to connect the "clicked" signal with <code class="function">gtk_widget_destroy()</code></a>, 
               then the <code class="varname">button</code> itself would have been destroyed, not the window. 
-              More information about creating buttons can be found <a class="two" href="https://wiki.gnome.org/HowDoI/Buttons">here</a>.
+              More information about creating buttons can be found <a target="_blank" href="https://wiki.gnome.org/HowDoI/Buttons">here</a>.
           </p>
       </div>
       <div class="generic-box-space">

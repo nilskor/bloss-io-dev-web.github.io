@@ -37,8 +37,18 @@ const NAVBAR_PANEL_TIMEOUT = 500; // ms - just in case we can't read the CSS fil
   * @param  {null} null - takes no arguments
   * @return {null} returns nothing
   */
-function parseURL()
+function parseURL(event)
 {
+    /*
+     * console.log(`(event)window.location.href is: ${window.location.href}.`)
+     * console.log(`(event)window.location.hash is: ${window.location.hash}.`)
+     * if ( event != null )
+     * {
+     *     console.log(`(event)event.target.hash is: ${event.target.hash}.`)
+     *     console.log(`event.state is: ${JSON.stringify(event)}.`)
+     * }
+     */
+
     if ( window.location.hash !== "" )
     {
         let whatToFind = `[href="${window.location.hash}"]`
@@ -190,11 +200,37 @@ function logPrimaryWidth()
     }
 }
 
+
 /** A routing function for this event */
 function documentOnclick(event)
 {
     hideMenuPanels(event)
 }
+
+
+ /** 
+  * @function preventIndexReload
+  * @description
+  * When a page 'reload/refresh' has been made by the person, then
+  * check first if we're sitting on a valid page somewhere in the
+  * web-site. If so, do not go back to the index.html.
+  * @param  {null} null - takes no arguments
+  * @return {null} returns nothing
+  */
+function preventIndexReload(event)
+{
+    // console.log(`(DOMcontentLoaded)window.location.hash is: ${window.location.hash}`);
+    if ( window.location.hash !== "#index" && window.location.hash != null )
+    {
+        return
+    }
+    else
+    {
+        injectContentInto( 'injectHere', '/content/index.html' );
+        window.location.hash = "#index";
+    }
+}
+
 
 
 //#region - COMPONENTS ==================================================================
