@@ -244,7 +244,11 @@ a:visited
 #gtk3-doco     > div
 {
     /* flex_jc_SA_ai_C */
-    display: flex; justify-content: space-around; align-items: center;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    flex-wrap: wrap;
+    line-height: 1rem;
 }
 .aNavBar       > a,
 #subNavigation > a,
@@ -355,8 +359,8 @@ a:visited
 .gaSN_col4   { grid-area: col4;    }
 .gridContainer.slicedAs_SubNav
 {
-    grid-template-columns: 1fr 1fr 1fr 1fr; 
-    grid-template-rows   : 1fr 1fr;
+    grid-template-columns: auto auto auto auto; 
+    grid-template-rows   : auto auto;
     grid-template-areas  :
         'snTitle snTitle snTitle snTitle'
          'col1    col2    col3    col4';
