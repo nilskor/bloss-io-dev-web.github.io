@@ -3483,7 +3483,7 @@ let pages =
             injector: "injectHere",
             description: "page386 description.",
             innerHTML: "RegEx"
-        },
+        },/*
     page386: {
             name: "Awk",
             sourceURL: "./content/Awk.html",
@@ -3492,7 +3492,7 @@ let pages =
             injector: "injectHere",
             description: "page387 description.",
             innerHTML: "Awk"
-        },
+        },*/
     page387: {
             name: "PrimeNumberRegex",
             sourceURL: "./content/PrimeNumberRegex.html",

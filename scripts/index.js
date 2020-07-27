@@ -3,7 +3,7 @@
 
 const ViewportFactor = 45
 
-const _DEBUG = true
+const _DEBUG = false
 const oDebug = 
 {
     loadPage: "loadPage()",
@@ -190,7 +190,8 @@ function loadPage( thisPage, toPushStateOrNot = true )
                     if (link.dataset)
                         if (link.dataset.id)
                             if (localStorage.getItem(link.dataset.id))
-                                link.style.color = "purple"
+                                if (!link.dataset.nocolor)
+                                    link.style.color = "purple"
             }
             //set the state of the Table of Contents toggle
             if ( pages[thisPage].tocToggle ) toggleTOC( pages[thisPage].tocToggle )

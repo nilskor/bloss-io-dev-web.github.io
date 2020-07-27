@@ -23,7 +23,7 @@
     --navBarPanelTimeout : 400ms;
     --navBarBgColor      : rgba(0,0,0,1);
     --navBarTextColor    : rgba(255,255,255,1);
-    --navBarPanelBgColor : lightgrey;
+    --navBarPanelBgColor : #4d90fe; /* .paleBlue in colours.css */
     --subNavbarHeight    : 100px;
     --viewportFactor     : 45vh;
     --heroImage          : url("/assets/choc-van-yum.jpg");
@@ -113,9 +113,10 @@ h3 > a[href^="#"]         { color: blue;    text-decoration: none; }
 h3 > a[href^="#"]:visited { color: #551A8B; text-decoration: none; }
 h3 > a[href^="#"]:hover   { text-decoration: underline; }
 
+/*
 a
 {
-    color: rgb(18, 118, 180);     /* codeBlue */
+    color: rgb(18, 118, 180);     /* codeBlue 
     text-decoration: underline;
 }
 a:hover, [data-forcedClick]:hover
@@ -126,7 +127,7 @@ a:visited
 {
     color: purple;
 }
-
+*/
 
 /* grid-based layout container           */
 .gridContainer
@@ -324,16 +325,25 @@ a:visited
  * Used to hold any sub-menus under the navigation bar
  */
 /** An instance of the Slider menu container */
-#subNavigation *
+#subNavigation div
 {
     background-color : var( --navBarPanelBgColor ); /* */
-    border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+    color: white;
+    /*border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
 }
-#subNavigation > a
+#subNavigation a
 {
     height          : calc( var(--subNavbarHeight) / 2 );
     line-height     : calc( var(--subNavbarHeight) / 2 );
     font            : 15px/calc( var(--subNavbarHeight) / 2 ) var(--theme-font);
+}
+#subNavigation a:hover
+{
+    cursor: pointer;
+}
+#subNavigation a:visited
+{
+    color: white!important;
 }
 /** grid-area key/value pairs
  * where gaSN is: grid-area Sub-Navigation
@@ -413,10 +423,10 @@ a:visited
 {
     text-align: left;
 }
-/*
+
 .doco a
 {
-    color: rgb(18, 118, 180);     /* codeBlue 
+    color: rgb(18, 118, 180);     /* codeBlue */
     text-decoration: underline;
 }
 .doco a:hover
@@ -427,7 +437,7 @@ a:visited
 {
     color: purple;
 }
-*/
+
 
 /** The main splash content =======================================================================
  * the so-called Hero image or text

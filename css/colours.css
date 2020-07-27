@@ -1,9 +1,10 @@
 
-.bBlack  { background-color: black; color: white; }
-.bWhite  { background-color: white; }
-.bCyan   { background-color: paleturquoise; }
-.bYellow { background-color: palegoldenrod; }
-.bGreen  { background-color: palegreen;     }
+.bBlack    { background-color: black; color: white; }
+.bWhite    { background-color: white; }
+.bCyan     { background-color: paleturquoise; }
+.bYellow   { background-color: palegoldenrod; }
+.bGreen    { background-color: palegreen;     }
+.bPaleBlue { background-color: #4d90fe; }
 
 .codeBlue { color: rgb(18, 118, 180); }
 .codeGrey { color: grey}
