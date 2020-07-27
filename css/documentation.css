@@ -144,6 +144,7 @@ var { font-style: normal; font-weight: 700; color: rgb(18, 118, 180); }
     overflow-wrap: normal;
     word-wrap: normal;
     word-break: normal;
+    white-space: nowrap;
 }
 .code.codeScrollFunc
 {
