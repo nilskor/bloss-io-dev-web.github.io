@@ -139,6 +139,9 @@ var { font-style: normal; font-weight: 700; color: rgb(18, 118, 180); }
     overflow    : auto; 
     width       : calc(((var(--docoWidth) - 4663) / -45.8) * 1vw); 
     white-space: pre;
+    overflow-wrap: normal;
+    word-wrap: normal;
+    word-break: normal;
 }
 .code.codeScrollFunc
 {
