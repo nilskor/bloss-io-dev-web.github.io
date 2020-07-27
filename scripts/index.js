@@ -214,6 +214,10 @@ function loadPage( thisPage, toPushStateOrNot = true )
                     )
                 }
             }
+            else if ( thisPage  && toPushStateOrNot )
+            {
+                window.scrollTo(0,0)
+            }
             // reset the trigger callback to nothing
             xhrTrigger.callback = null
             // delete the trigger from the collection
@@ -227,7 +231,7 @@ function loadPage( thisPage, toPushStateOrNot = true )
         // if someone has asked for new page content, let's lose the menu slider.
         hideMenuPanels(newEvent) 
         // A new page, so let's go to the top.
-        window.scrollTo(0,0)
+        //window.scrollTo(0,0)
     }
 }
 
