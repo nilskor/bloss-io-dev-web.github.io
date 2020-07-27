@@ -137,6 +137,7 @@ var { font-style: normal; font-weight: 700; color: rgb(18, 118, 180); }
 .codeScrollFunc
 {
     -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
     overflow    : auto; 
     width       : calc(((var(--docoWidth) - 4663) / -45.8) * 1vw); 
     white-space: pre;
