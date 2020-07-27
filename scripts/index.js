@@ -3,7 +3,7 @@
 
 const ViewportFactor = 45
 
-const _DEBUG = false
+const _DEBUG = true
 const oDebug = 
 {
     loadPage: "loadPage()",
@@ -165,14 +165,6 @@ function loadPage( thisPage, toPushStateOrNot = true )
 
     xhrTriggerCollection.clear()
 
-    if ( document.getElementById('overlay') )
-    {
-        //console.log(`show the curtain ..`)
-        document.getElementById('overlay').style.setProperty('transition','unset')
-        document.getElementById('overlay').style.setProperty('z-index','6')
-        document.getElementById('overlay').style.setProperty('opacity','1')
-    }
-
     if ( currentPage )
         if ( currentPage.pageIndexNumber )
         {
@@ -189,6 +181,7 @@ function loadPage( thisPage, toPushStateOrNot = true )
         xhrTrigger.callback = function() // # 1 - color the visited links.
         {
             if (_DEBUG) console.log( oDebug.loadPageTriggerCallback )
+            // color the links ..
             let links = document.getElementsByTagName('a')
             for ( let i = 0; i < links.length; i++ )
             {   
@@ -214,22 +207,7 @@ function loadPage( thisPage, toPushStateOrNot = true )
                         {
                             let _temp618 = function()
                             {
-                                //console.log(`called from _test`)
-                                if ( document.getElementById('overlay') ) {
-                                    document.getElementById('overlay').style.setProperty('opacity','0') }
                                 window.scroll( {left: 0, top: sessionStorage.getItem( thisPage ), behavior: "auto" } )
-                                if ( document.getElementById('overlay') )
-                                {
-                                    setTimeout( function()
-                                        {
-                                            let _temp736 = function()
-                                            {
-                                                //console.log(`called from _test2`)
-                                                document.getElementById('overlay').style.setProperty('z-index','-999')
-                                            }
-                                            call_after_DOM_updated( _temp736 )
-                                        }, 1)
-                                }
                             }
                             call_after_DOM_updated( _temp618 )
                         },100
@@ -441,7 +419,7 @@ function _onClick( event )
         }
     }
 
-    console.log( Math.max(document.body.scrollTop, document.documentElement.scrollTop) )
+    //console.log( Math.max(document.body.scrollTop, document.documentElement.scrollTop) )
 
 }
 
