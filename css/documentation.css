@@ -143,7 +143,7 @@ var { font-style: normal; font-weight: 700; color: rgb(18, 118, 180); }
     white-space: pre;
     overflow-wrap: normal;
     word-wrap: normal;
-    word-break: normal;
+    word-break: keep-all;
     white-space: nowrap;
 }
 .code.codeScrollFunc
