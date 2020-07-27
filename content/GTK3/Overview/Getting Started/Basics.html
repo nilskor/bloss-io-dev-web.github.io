@@ -1,0 +1,265 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">Basics</h1>
+                </div>
+
+                <div>
+                    <div>
+                    To begin our introduction to GTK, we'll start with a simple signal-based Gtk application. 
+                    This example program will create an empty 200×200 pixel window.</h3>
+            </div>
+
+        </section>
+
+        <hr class="thin"><br>
+
+        <!-- article body "article-main" -->
+        <article class="article-main">
+
+            <div class="flexbox fCenter">
+                <img src="/content/GTK3/Overview/Getting%20Started/Basics_window.png"></img>
+            </div>
+            <div>
+                <br>
+                Create a new file with the following content, and then name it <code class="filename">"example-0.c"</code>
+            </div>
+
+            <div class="code" style="white-space: pre;">
+    #include &lt;gtk/gtk.h&gt;
+
+    /* activate is a callback function */
+    static void
+    activate( GtkApplication* app, gpointer user_data )
+    {
+        GtkWidget *window;
+
+        window = gtk_application_window_new( app );
+        gtk_window_set_title( GTK_WINDOW( window ), "Window" );
+        gtk_window_set_default_size( GTK_WINDOW( window ), 200, 200 );
+        gtk_widget_show_all( window );
+    }
+
+    int
+    main( int argc, char **argv )
+    {
+        GtkApplication *app;
+        int status;
+
+        app = gtk_application_new( "org.gtk.example", G_APPLICATION_FLAGS_NONE );
+        g_signal_connect( app, "activate", G_CALLBACK( activate ), NULL );
+        status = g_application_run( G_APPLICATION( app ), argc, argv );
+        g_object_unref( app );
+
+        return status;
+    }
+            </div>
+
+            <div>
+                You can compile the program above with GCC using:
+            </div>
+
+            <div>
+                <span class="code">gcc `pkg-config --cflags gtk+-3.0` -o example-0 example-0.c `pkg-config --libs gtk+-3.0`</span>
+            </div>
+
+            <div class="generic-box-center">
+                <div class="note">
+                    For more information on how to compile a GTK application, please refer to the 
+                    <a data-id="page376">Compiling GTK Applications</a> section in this reference.
+                </div>
+            </div>
+            
+            <div>
+                
+                    All GTK applications will, of course, include <code class="filename">gtk/gtk.h</code>
+                    , which declares functions, types and macros required by GTK applications.<br>
+                
+            </div>
+            
+            <div class="generic-box-center">
+                <div class="warning">
+                    Even if GTK installs multiple header files, only the top-level 
+                    <code class="filename">gtk/gtk.h</code> header can be directly included by third party code. 
+                    The compiler will abort with an error if any other header is included directly.
+                </div>
+            </div>
+            
+            <div>
+                
+                    In a GTK application, the purpose of the <b>main</b> function is to create a <a data-id="page184">GtkApplication</a>
+                     object and run it. In this example, a GtkApplication pointer named <b>app</b> is called and then initialized using 
+                    [TODO-proper bookmark link]<b><a data-id="page184">gtk_application_new</a></b>.
+                    <br>
+                    <br>
+                    When creating a GtkApplication, you need to pick an application identifier (a name), and then input that to 
+                    <b>gtk_application_new</b> as a parameter. For this example, <b>"org.gtk.example"</b> is used, but for choosing 
+                    an identifier for your application, see 
+                    <a class="external" target="_blank" href="https://wiki.gnome.org/HowDoI/ChooseApplicationID">this guide</a>. 
+                    Lastly, <b><code class="function">gtk_application_new</code></b> takes a GApplicationFlags as input for your application 
+                    (this is done if your application has any custom requirements that you may want to program in).<br>
+                    <br>
+                    Next, the 
+                    <a class="external" target="_blank" href="https://developer.gnome.org/gio/stable/GApplication.html#GApplication-activate">activate signal</a> 
+                    is connected to the <b>activate</b> function (located just above the <b>main</b> function). 
+                    The <b>activate</b> signal will be sent when your application is launched from the <b>g_application_run</b> (on the 
+                    line below). The <b>gtk_application_run</b> also takes as arguments the pointers to the command line arguments counter 
+                    and string array; this allows GTK to parse specific command line arguments that control the behavior of GTK itself. 
+                    The parsed arguments will be removed from the array, leaving the unrecognized ones for your application to parse (if
+                    you so choose).<br>
+                    <br>
+                    Within <b>g_application_run</b>, the <b>activate</b> signal is sent and the program flow then proceeds into the 
+                    <b>activate</b> function of the application. Inside the activate function we want to construct our GTK window, 
+                    so that a window is shown when the application is launched. The call to [TODO-proper bookmark link] 
+                    <a data-id="page182">gtk_application_window_new</a> will create a new <a data-id="page82">GtkWindow</a> and store 
+                    it inside the <b>window</b> pointer. The window will have a frame, a title bar, and window controls depending 
+                    on the platform (Operating System).<br>
+                    <br>
+                    A window title is set using [TODO-proper bookmark link]<a data-id="page82">gtk_window_set_title</a>. This function 
+                    takes a GtkWindow* pointer and a string as input. As the 'window' pointer is a <a data-id="page92">GtkWidget</a> 
+                    pointer, we need to cast it to GtkWindow*. But instead of casting 'window' via (GtkWindow*), 'window' can be cast 
+                    using the macro function <b>GTK_WINDOW</b>. 
+                    Macro function 'GTK_WINDOW' will check if the pointer is an instance of the GtkWindow class before casting, and emit 
+                    a warning if the check fails. More information about this convention can be found [TODO]
+                    <a class="external" target="_blank" href="https://developer.gnome.org/gobject/stable/gtype-conventions.html">here</a>.<br>
+                    <br>
+                    Finally the window size is set using <b>gtk_window_set_default_size</b> and the window is finally shown using 
+                    [TODO-proper bookmark link]<a data-id="page92">gtk_widget_show_all</a>.<br>
+                    <br>
+                    When you exit the window, for example by clicking the X, the <b>g_application_run</b> in the main loop returns 
+                    with a number which is saved inside an integer named "status". Afterwards, the <b>GtkApplication</b> object is 
+                    freed from memory with <b>g_object_unref</b>. Finally, the status integer is returned and the application exits.<br>
+                    <br>
+                    While the program is running, GTK is constantly receiving events in the background. These are typically input 
+                    events caused by the person interacting with your program, but also things like messages from the window manager, 
+                    timers or other applications. GTK processes these and as a result, signals may be emitted into your widgets (into
+                    your application). Connecting handlers for these signals is how you normally make your program do something in 
+                    response to user input.<br>
+                    <br>
+                    The following example is slightly more complex, and tries to showcase some of the capabilities of GTK.<br>
+                    <br>
+                    In the long tradition of programming languages and libraries, it is called 
+                    <b><span class="emphasis"><em>'Hello, World'</em></span></b>.<br>
+                    <br>
+                    <img src="/content/GTK3/Overview/Getting Started/hello-world.png"></img><br>
+                    <br>
+                
+            </div>
+            <div>
+                
+                    <span style= "font-size: 1.17em; font-weight: 700;">Example 1. Hello World in GTK</span><br>
+                
+            </div>
+            <div>
+                
+                    Create a new file with the following content named example-1.c
+                
+            </div>
+            <div class="code" style="white-space: pre;">
+    #include &lt;gtk/gtk.h&gt;
+
+    static void
+    print_hello( GtkWidget *widget, gpointer data )
+    {
+        g_print( "Hello World\n" );
+    }
+
+    static void
+    activate( GtkApplication *app, gpointer user_data )
+    {
+        GtkWidget *window;
+        GtkWidget *button;
+        GtkWidget *button_box;
+
+        window = gtk_application_window_new( app );
+        gtk_window_set_title( GTK_WINDOW( window ), "Window" );
+        gtk_window_set_default_size( GTK_WINDOW( window ), 200, 200 );
+
+        button_box = gtk_button_box_new( GTK_ORIENTATION_HORIZONTAL );
+        gtk_container_add( GTK_CONTAINER( window ), button_box );
+
+        button = gtk_button_new_with_label( "Hello World" );
+        g_signal_connect( button, "clicked", G_CALLBACK( print_hello ), NULL );
+        g_signal_connect_swapped( button, "clicked", G_CALLBACK( gtk_widget_destroy ), window );
+        gtk_container_add( GTK_CONTAINER( button_box ), button );
+
+        gtk_widget_show_all( window );
+    }
+
+    int
+    main( int argc, char **argv )
+    {
+        GtkApplication *app;
+        int status;
+
+        app = gtk_application_new( "org.gtk.example", G_APPLICATION_FLAGS_NONE );
+        g_signal_connect( app, "activate", G_CALLBACK( activate ), NULL );
+        status = g_application_run( G_APPLICATION( app ), argc, argv );
+        g_object_unref( app );
+
+        return status;
+    }
+            </div> 
+
+            <div>
+                You can compile the program above with GCC using:
+            </div>
+
+            <div>
+                <span class="code">gcc `pkg-config --cflags gtk+-3.0` -o example-1 example-1.c `pkg-config --libs gtk+-3.0`</span>
+            </div>
+            
+            <div>
+                
+                    As seen above, example-1.c builds further upon example-0.c by adding a button to our window, with the 
+                    label "Hello World". Two new GtkWidget pointers (variables) are declared to accomplish this, <b>'button'</b> and 
+                    <b>'button_box'</b>. The 'button_box' variable is created to store a <a data-id="page142">GtkButtonBox</a>,
+                    which is GTK's way of controlling the size and layout of buttons. The GtkButtonBox is created and assigned 
+                    using [TODO]<a data-id="page142">gtk_button_box_new</a>, which takes a [TODO]<a data-id="page10">GtkOrientation</a> 
+                    enum (enumeration) as a parameter. The buttons which this box will contain can either be stored horizontally or vertically, 
+                    but this does not matter in this particular case, as we are dealing with only one button. After initializing 
+                    button_box with horizontal orientation, the code adds the button_box widget to the window widget using 
+                    [TODO]<a data-id="page94">gtk_container_add</a>.<br>
+                    <br>
+                    Next, the <b>button</b> variable is initialized in a similar manner. [TODO]<a data-id="page73">Gtk_button_new_with_label</a> 
+                    is called which returns a <b>GtkButton</b> object to be stored inside the variable 'button'. Afterwards, 'button' 
+                    is added to our <b>button_box</b>.<br>
+                    <br>
+                    Using <b>g_signal_connect</b>, the button is connected to a function in our app called <b>print_hello</b>, 
+                    so that when the button is clicked, GTK will call this function. As the 'print_hello' function does not use any data 
+                    as input, NULL is passed to it. 'print_hello' calls <b>g_print</b> with the string <i>"Hello World"</i>, 
+                    which will print 'Hello World' in a terminal if the GTK application was started from there.<br>
+                    <br>
+                    After connecting <b>print_hello</b>, another signal is connected to the "clicked" state of the button using 
+                    <b>g_signal_connect_swapped</b>. This functions is similar to a <b>g_signal_connect</b>, with the difference 
+                    being in how the callback function is treated. <b>g_signal_connect_swapped</b> allows you to specify what the 
+                    callback function should take as parameter, by letting you pass it as data. In this case, the function being 
+                    'called back' is [TODO]<a data-id="page92">gtk_widget_destroy</a> and the 'window' pointer variable is passed 
+                    to it. This has the effect that when the button is clicked, the whole GTK window is destroyed. In contrast, 
+                    if a normal <b>g_signal_connect</b> were used to connect the "clicked" signal with <b>gtk_widget_destroy</b>, 
+                    then the button itself would have been destroyed, not the window.<br>
+                    <br>
+                    More information about creating buttons can be found 
+                    <a class="external" target="_blank" href="https://wiki.gnome.org/HowDoI/Buttons">here</a>.
+                    <br>
+                    <br>
+                    <br>
+                
+            </div>
+
+        </article>
+ 
+    </div>
+
+    <div></div>
+
+</div>

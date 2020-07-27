@@ -1,0 +1,13 @@
+
+.bBlack  { background-color: black; color: white; }
+.bWhite  { background-color: white; }
+.bCyan   { background-color: paleturquoise; }
+.bYellow { background-color: palegoldenrod; }
+.bGreen  { background-color: palegreen;     }
+
+.codeBlue { color: rgb(18, 118, 180); }
+.codeGrey { color: grey}
+
+.codeBlueOnBlack { color: rgb(28, 148, 255); }
+
+.tOrange{ color: orange; }

@@ -1,0 +1,88 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">GTKApplication Class</h1>
+                </div>
+
+                <div class="pageDesc">
+                    <div>GtkApplication is a class that handles many important aspects of a GTK application in a 
+                        convenient fashion, without enforcing a one-size-fits-all application model. While the class 
+                        works fine with plain GtkWindows, it is recommended to use it together with GtkApplicationWindow.
+                        <div class="paraSpace_10">&nbsp;</div>
+
+                        Currently it handles initialization, application uniqueness, session management, provides some 
+                        basic scripting functionality with desktop shell integration (by exporting actions and menus), 
+                        and manages a list of top-level windows whose life-cycle is automatically tied to the life-cycle 
+                        of your application.
+                        <div class="paraSpace_10">&nbsp;</div>
+                        
+                        When GDK threads are enabled, GtkApplication will acquire a GDK lock when invoking actions that 
+                        arrive from other processes. The GDK lock is not touched for local action invocations. In order 
+                        to have actions invoked in a predictable context, it is therefore recommended that the GDK lock 
+                        be held while invoking actions locally with 
+                        <span class="codeBlue">'g_action_group_activate_action()'</span>. The same applies to actions 
+                        associated with GtkApplicationWindow and to the “activate” and “open” GApplication methods.
+                    </div>
+                    <br><br>
+                </div>
+
+                <div class="pageToC">
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+                            <ol id="toc" style="display: inline-block;">
+                                <li><a href="#bkmkGtkApplication">GtkApplication</a></li>
+                                <li><a href="#bkmkGtkApplicationWindow">GtkApplicationWindow</a></li>
+                                <li><a href="#bkmkGtkActionable">GtkActionable</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <article class="article-main"><!-- article body "article-main" -->
+
+            <h2>Index</h2>
+
+            <h3><a id='bkmkGtkApplication' data-id='page184'>GtkApplication</a></h3>
+            <div>
+                GtkApplication is a class that handles many important aspects of a GTK application 
+                in a convenient fashion, without enforcing a one-size-fits-all application model.
+            </div>
+
+            <h3><a id='bkmkGtkApplicationWindow' data-id='page182'>GtkApplicationWindow</a></h3>
+            <div>
+                GtkWindow subclass with GtkApplication support.
+            </div>
+
+            <h3><a id='bkmkGtkActionable' data-id='page183'>GtkActionable</a></h3>
+            <div>
+                An interface for widgets that can be associated with actions.
+            </div>
+
+        </article>
+
+        <br>
+        <br>
+        <br>
+ 
+    </div>
+
+    <div></div>
+
+</div>

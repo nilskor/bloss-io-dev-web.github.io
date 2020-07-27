@@ -1,0 +1,129 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">Getting Started with GTK</h1>
+                </div>
+
+                <div>
+                    <div>
+                        GTK is a <a class="external" target="_blank" href="https://en.wikipedia.org/wiki/Widget_toolkit">widget toolkit</a>. 
+                        Each user interface created by GTK consists of widgets. 
+                        This is implemented in C using GObject, an object-oriented framework for C.
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+                            <ol id="toc" style="display: inline-block;">
+                                <li><a href="#bkmkBasics">Basics</a></li>
+                                <li><a href="#bkmkPackingWidgetsinaLayout">Packing</a></li>
+                                <li><a href="#bkmkBuildingUserInterfaces">Building user interfaces</a></li>
+                                <li><a href="#bkmkBuildingapps">Building applications</a></li>
+                                <li><a href="#bkmkCustomDrawing">Custom Drawing</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <article class="article-main"><!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-main">
+          <h2>Summary</h2>
+      </div>
+      <div>
+            
+                Widgets are organized in a hierachy. The window widget is the main container. The user interface 
+                is then built by adding buttons, drop-down menus, input fields, and other widgets to the window. 
+                If you are creating complex user interfaces it is recommended to use <a data-id='page237'>GtkBuilder</a> 
+                and its GTK-specific markup description language, instead of assembling the user interface (UI) manually. 
+                You can also use a visual user interface editor 
+                (for example <a class="external" target="_blank" href="https://glade.gnome.org/" target="_blank">Glade</a>).<br>
+                <br>
+                GTK is event-driven. The toolkit listens for events such as clicks on a button, 
+                and passes those events on to your application to handle.<br>
+                <br>
+                This chapter contains some tutorial information to get you started with GTK programming. 
+                It assumes that you have installed GTK, its dependencies, and a C compiler ready for use. 
+                (If you need to build the GTK library itself first, then refer to the 
+                <a data-id="page376">Compiling GTK Applications</a> section in this reference.
+            
+      </div>
+      <div class="generic-box-main">
+          <h2>Index</h2>
+      </div>
+      <div>
+          <h3><a id='bkmkBasics' data-id='page352'>Basics</a></h3>
+      </div>
+      <div>
+            To begin our introduction to GTK, we'll start with a simple signal-based Gtk application. 
+                This program will create an empty 200 × 200 pixel window.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkPackingWidgetsinaLayout' data-id='page354'>Packing Widgets in a Layout</a></h3>
+      </div>
+      <div>
+            When creating an application, you'll want to put more than one widget inside a window. 
+                When you want to put more than one widget into a window, it becomes important to control 
+                how each widget is positioned and sized. This is where packing comes in.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkBuildingUserInterfaces' data-id='page355'>Building User Interfaces</a></h3>
+      </div>
+      <div>
+            
+                When construcing a more complicated user interface, with dozens or hundreds of widgets, doing all 
+                the setup work in C code is cumbersome, and making changes becomes more difficult and prone to errors.
+                To assist with this, GTK supports the separation of user interface layout from your business logic, 
+                by using UI descriptions in an XML format that can then be parsed by the GtkBuilder class.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkBuildingapps' data-id='page345'>Building applications</a></h3>
+      </div>
+      <div>
+            
+                A typical application consists of numerous files. GTK includes application support that is built 
+                on top of <b>GApplication</b>.<br><br>
+                In this tutorial we'll build a simple application by starting from scratch, adding more and more pieces over time.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkCustomDrawing' data-id='page351'>Custom Drawing</a></h3>
+      </div>
+      <div>
+          Many widgets, like buttons, do all their drawing themselves. 
+              You just tell them the label you want to see, and they figure out what font to use, 
+              draw the button outline and focus rectangle, etc. 
+              Sometimes, it is necessary to do some custom drawing. In that case, a 
+              <a data-id="page194">GtkDrawingArea</a> 
+              might be the right widget to use. 
+              It offers a canvas on which you can draw by connecting to the [TODO-proper bookmark link] <a data-id="page92">draw</a> signal.
+            
+      </div>
+  </article>
+
+ 
+    </div>
+    <div></div>
+
+</div>

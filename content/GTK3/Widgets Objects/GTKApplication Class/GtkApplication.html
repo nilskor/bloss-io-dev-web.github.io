@@ -1,0 +1,471 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">GtkApplication</h1>
+                </div>
+
+                <div class="pageDesc">
+                    <div>Application class. GtkApplication is a class that handles many important aspects of a GTK 
+                        application in a convenient fashion, without enforcing a one-size-fits-all application model.
+                    </div>
+                </div>
+
+                <div class="pageToC">
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+                            <ol id="toc" style="display: inline-block;">
+                                <li><a href="#bkmkDescription">Description</a></li>
+                                <li><a href="#bkmkSummary">Summary</a>
+                                <ol class="layered">
+                                    <li><a href="#bkmkFunctions">Functions</a></li>
+                                    <li><a href="#bkmkProperties">Properties</a></li>
+                                    <li><a href="#bkmkSignals">Signals</a></li>
+                                    <li><a href="#bkmkTypesValues">Types and Values</a></li>
+                                    <li><a href="#bkmkObjectHierarchy">Object Hierarchy</a></li>
+                                    <li><a href="#bkmkImplementedInterfaces">Implemented Interfaces</a></li>
+                                    <li><a href="#bkmkIncludes">Includes</a></li>
+                                </ol>
+                                </li>
+                                <li><a href="#bkmkDetails">Details</a>
+                                <ol class="layered">
+                                    <li><a href="#bkmkFunctionsDetails">Functions</a></li>
+                                    <li><a href="#bkmkPropertyDetails">Property</a></li>
+                                    <li><a href="#bkmkSignalDetails">Signals</a></li>
+                                    <li><a href="#bkmkTypesValuesDetails">Types and Values</a></li>
+                                </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <article class="article-main"><!-- article body "article-main" -->
+
+            <h2 class="h2"><a id="bkmkDescription"></a>Description</h2>
+            <div>
+                GtkApplication is a class that handles many important aspects of a GTK+ application in a convenient 
+                fashion, without enforcing a one-size-fits-all application model.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                Currently, GtkApplication handles GTK+ initialization, application uniqueness, session management, 
+                provides some basic scriptability and desktop shell integration by exporting actions and menus and 
+                manages a list of toplevel windows whose life-cycle is automatically tied to the life-cycle of your 
+                application.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                While GtkApplication works fine with plain 
+                <a href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html#GtkWindow">
+                <span class="type">GtkWindows</span></a>, it is recommended to use it together with 
+                <a href="/content/GTK3/Widgets Objects/App_support/GtkAppWindow.html">
+                <span class="type">GtkApplicationWindow</span></a>.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                When GDK threads are enabled, GtkApplication will acquire the GDK lock when invoking actions that 
+                arrive from other processes. The GDK lock is not touched for local action invocations. In order to have 
+                actions invoked in a predictable context it is therefore recommended that the GDK lock be held while 
+                invoking actions locally with 'g_action_group_activate_action()'. The same applies to actions associated 
+                with <span class="type">GtkApplicationWindow</span> and to the 'activate' and 'open' 
+                <span class="type">GApplication</span> methods.
+            </div>
+
+            <h4 class="h4">Automatic resources</h4>
+            <div>
+                <span class="type">GtkApplication</span> will automatically load menus from the 
+                <a href="/content/GTK3/Widgets Objects/Interface_builder/GtkBuilder.html">
+                <span class="type">GtkBuilder</span></a> resource located at "gtk/menus.ui", relative to the 
+                application's resource base path (see 'g_application_set_resource_base_path()'). The menu with the ID 
+                "app-menu" is taken as the application's app menu, and the menu with the ID "menubar" is taken as the 
+                application's menubar. Additional menus (eg. submenus) can be named and accessed via 
+                <a href="#gtk_app_get_menu_by_id">'gtk_application_get_menu_by_id()'</a> which allows for dynamic 
+                population of a part of the menu structure.
+                <div class="paraSpace_10">&nbsp;</div>
+                
+                If the resources 'gtk/menus-appmenu.ui' or 'gtk/menus-traditional.ui' are present, then these files will 
+                be used in preference, depending on the value of <a href="#gtk_app_prefers_app_menu">
+                'gtk_application_prefers_app_menu()'</a>. If the resource 'gtk/menus-common.ui' is present, it will be 
+                loaded as well. This is useful for storing items that are referenced from both 'gtk/menus-appmenu.ui' 
+                and "gtk/menus-traditional.ui".
+                <div class="paraSpace_10">&nbsp;</div>
+                
+                It is also possible to provide the menus manually using <a href="#gtk_app_set_app_menu">
+                'gtk_application_set_app_menu()'</a> and <a href="#gtk_app_set_menubar">
+                'gtk_application_set_menubar()'</a>.
+                <div class="paraSpace_10">&nbsp;</div>
+                
+                <span class="type">GtkApplication</span> will also automatically setup an icon search path for the 
+                default icon theme by appending "icons" to the resource base path. This allows your application to 
+                easily store its icons as resources. See 
+                <a href="/content/GTK3/Theming_GTK/GtkIconTheme.html#gtk_icon_theme_add_resource_path">
+                'gtk_icon_theme_add_resource_path()'</a> for more information.
+                <div class="paraSpace_10">&nbsp;</div>
+                
+                If there is a resource located at 'gtk/help-overlay.ui' which defines a 
+                <a href="/content/GTK3/Widgets Objects/Shortcuts_Overview/GtkShortcutsWindow.html">GtkShortcutsWindow</a> 
+                with ID "help_overlay", then GtkApplication associates an instance of this shortcuts window with each 
+                GtkApplicationWindow, and sets up keyboard accelerators (Control-F1 and Control-?) to open it. To create 
+                a menu item that displays the shortcuts window, associate the item with the action win.show-help-overlay.  
+                <div class="paraSpace_25">&nbsp;</div>
+            </div>
+      
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+            <h2 class="h2"><a id="bkmkFunctions"></a>Functions</h2>
+
+            <h3 class="h3">Creating</h3>
+
+            <div class="informaltable">
+                <table class="informaltable" width="100%" border="0">
+                    <colgroup>
+                        <col width="150px" class="functions_return">
+                        <col class="functions_name">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td class="function_type">
+                            <span class="returnvalue">GtkApplication</span> *
+                        </td>
+                        <td class="function_name">
+                            <a href="#gtk_app_new">gtk_application_new</a> <span class="c_punctuation">()</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="function_type">
+                            <span class="returnvalue">void</span>
+                        </td>
+                        <td class="function_name">
+                            <a href="#gtk_app_add_window">gtk_application_add_window</a> <span class="c_punctuation">()</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="function_type">
+                            <span class="returnvalue">void</span>
+                        </td>
+                        <td class="function_name">
+                            <a href="#gtk_appl_remove_window">gtk_application_remove_window</a> <span class="c_punctuation">()</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="function_type">
+                            <span class="returnvalue">GList</span> *
+                        </td>
+                        <td class="function_name">
+                            <a href="#gtk_app_get_windows">gtk_application_get_windows</a> <span class="c_punctuation">()</span>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">GtkWindow</span> *
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_get_window_by_id">gtk_application_get_window_by_id</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">GtkWindow</span> *
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_get_active_window">gtk_application_get_active_window</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">guint</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_inhibit">gtk_application_inhibit</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">void</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_uninhibit">gtk_application_uninhibit</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">gboolean</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_is_inhibited">gtk_application_is_inhibited</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">gboolean</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_prefers_app_menu">gtk_application_prefers_app_menu</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">GMenuModel</span> *
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_get_app_menu">gtk_application_get_app_menu</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">void</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_set_app_menu">gtk_application_set_app_menu</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">GMenuModel</span> *
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_get_menubar">gtk_application_get_menubar</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">void</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_set_menubar">gtk_application_set_menubar</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">GMenu</span> *
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_get_menu_by_id">gtk_application_get_menu_by_id</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">void</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_add_accelerator">gtk_application_add_accelerator</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">void</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_remove_accelerator">gtk_application_remove_accelerator</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">gchar</span> **
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_list_action_descriptions">gtk_application_list_action_descriptions</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">gchar</span> **
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_get_accels_for_action">gtk_application_get_accels_for_action</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">void</span>
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_set_accels_for_action">gtk_application_set_accels_for_action</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="function_type">
+                    <span class="returnvalue">gchar</span> **
+                    </td>
+                    <td class="function_name">
+                    <a href="#gtk_app_get_actions_for_accel">gtk_application_get_actions_for_accel</a> <span class="c_punctuation">()</span>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h4 class="h4">See Also</h4>
+            <div>
+               <a class="external" target="_blank" href="https://en.wikipedia.org/wiki/Void_type">void</a>, 
+               <a href="/content/GLib/GLib_Data_Types/Doubly_Linked_Lists.html#GList">GList</a>, 
+               <a href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html">GtkWindow</a>, 
+               <a href="/content/GLib/GLib_Fundamentals/Basic_Types.html#guint">guint</a>, 
+               <a href="/content/GLib/GLib_Fundamentals/Basic_Types.html#gboolean">gboolean</a>, 
+               <a href="/content/GIO/API_Reference/App_Support/GMenuModel.html">GMenuModel</a>, 
+               <a href="/content/GIO/API_Reference/App_Support/GMenu.html">GMenu</a>, 
+               <a href="/content/GLib/GLib_Fundamentals/Basic_Types.html#gchar">gchar</a>.
+            </div>
+
+            <h3 class="h3"><a id="bkmkProperties"></a>Properties</h3>
+      
+            <div class="informaltable">
+                <table class="informaltable" width="100%" border="0">
+                    <colgroup>
+                    <col width="150vw" class="property_type">
+                    <col class="property_name">
+                    <col class="property_flags">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                    <td class="property_type">
+                    <span class="type">GtkWindow</span> *</td>
+                    <td class="property_name"><a href="#active_window">active-window</a></td>
+                    <td class="property_flags">Read</td>
+                    </tr>
+                    <tr>
+                    <td class="property_type">
+                    <span class="type">GMenuModel</span> *</td>
+                    <td class="property_name"><a href="#app_menu" title="The “app-menu” property">app-menu</a></td>
+                    <td class="property_flags">Read / Write</td>
+                    </tr>
+                    <tr>
+                    <td class="property_type">
+                    <span class="type">GMenuModel</span> *</td>
+                    <td class="property_name"><a href="#menubar" title="The “menubar” property">menubar</a></td>
+                    <td class="property_flags">Read / Write</td>
+                    </tr>
+                    <tr>
+                    <td class="property_type"><span class="type">gboolean</span></td>
+                    <td class="property_name"><a href="#register_session" title="The “register-session” property">register-session</a></td>
+                    <td class="property_flags">Read / Write</td>
+                    </tr>
+                    <tr>
+                    <td class="property_type"><span class="type">gboolean</span></td>
+                    <td class="property_name"><a href="#screensaver_active" title="The “screensaver-active” property">screensaver-active</a></td>
+                    <td class="property_flags">Read</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+      
+            <h4 class="h4">See Also</h4>
+            <div>
+               <a href="/content/GTK3/Widgets Objects/Windows/GtkWindow.html">GtkWindow</a>, 
+               <a href="/content/GIO/API_Reference/App_Support/GMenuModel.html">GMenuModel</a>, 
+               <a href="/content/GLib/GLib_Fundamentals/Basic_Types.html#gboolean">gboolean</a>.   
+            </div>
+
+            <h3 class="h3"><a id="bkmkSignals"></a>Signals</h3>
+            <div class="informaltable">
+                <table class="informaltable" width="100%" border="0">
+                    <colgroup>
+                    <col width="150vw" text-align="left" class="signal_type">
+                    <col class="signal_name">
+                    <col class="signal_flags">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                    <td class="signal_type"><span class="returnvalue">void</span></td>
+                    <td class="signal_name"><a href="#query_end">query-end</a></td>
+                    <td class="signal_flags">Run First</td>
+                    </tr>
+                    <tr>
+                    <td class="signal_type"><span class="returnvalue">void</span></td>
+                    <td class="signal_name"><a href="#window-added">window-added</a></td>
+                    <td class="signal_flags">Run First</td>
+                    </tr>
+                    <tr>
+                    <td class="signal_type"><span class="returnvalue">void</span></td>
+                    <td class="signal_name"><a href="#window-removed">window-removed</a></td>
+                    <td class="signal_flags">Run First</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 class="h4">See Also</h4>
+            <div>
+               <a class="external" target="_blank" href="https://en.wikipedia.org/wiki/Void_type">void</a>.
+            </div>
+
+            <h3 class="h3"><a id="bkmkTypesValues"></a>Types and Values</h3>
+
+            <h3 class="h3"><a id="bkmkObjectHierarchy"></a>Object Hierarchy</h3>
+
+            <h3 class="h3"><a id="bkmkImplementedInterfaces"></a>Implemented Interfaces</h3>
+
+            <h3 class="h3"><a id="bkmkIncludes"></a>Includes</h3>
+
+            <h2 class="h2"><a id="bkmkDetails"></a>Details</h2>
+
+            <h3 class="h3"><a id="bkmkFunctionsDetails"></a>Functions</h3>
+
+            <h3 class="h3"><a id="bkmkPropertyDetails"></a>Property</h3>
+
+            <h3 class="h3"><a id="bkmkSignals"></a>Signals</h3>
+
+            <h3 class="h3"><a id="bkmkTypesValuesDetails"></a>Types and Values</h3>
+            <div>
+                Lorem ipsum dolor sit amet, 
+                    consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                    Eget egestas purus viverra accumsan in nisl nisi. 
+                    Pellentesque sit amet porttitor eget dolor morbi non. 
+                    Sit amet justo donec enim diam vulputate ut pharetra. 
+                    Leo a diam sollicitudin tempor. 
+                    Diam donec adipiscing tristique risus nec feugiat in. 
+                    Ornare arcu odio ut sem nulla. 
+                    Diam vulputate ut pharetra sit amet aliquam id diam. 
+                    Diam vel quam elementum pulvinar etiam non quam.
+            </div>
+
+            <h4 class="h4">A simple application</h4>
+            <div>
+               <a class="external" target="_blank" href="https://git.gnome.org/browse/gtk+/tree/examples/bp/bloatpad.c">A simple example</a>.
+               <br><br>
+
+               GtkApplication optionally registers with a session manager of the users session (if you set the <a href="#register_session"><span class="type">“register-session”</span></a> 
+               property) and offers various functionality related to the session life-cycle.<br>
+               <br>
+               An application can block various ways to end the session with the <a href="#gtk_app_inhibit"><code class="function">gtk_application_inhibit()</code></a> 
+               function. Typical use cases for this kind of inhibiting are long-running, uninterruptible operations, such 
+               as burning a CD or performing a disk backup. The session manager may not honor the inhibitor, but it can be 
+               expected to inform the user about the negative consequences of ending the session while inhibitors are present.
+            </div>
+      
+            <h4 class="h4">See Also</h4>
+            <div>
+                <a class="external" target="_blank" href="https://wiki.gnome.org/HowDoI/GtkApplication">
+                    How Do I?: Using GtkApplication</a><br>
+                <a class="external" target="_blank" href="https://developer.gnome.org/gtk3/stable/gtk-getting-started.html#id-1.2.3.3">
+                    Getting Started with GTK+: Basics</a>
+            </div>
+
+
+        </article>
+
+        <br>
+        <br>
+        <br>
+ 
+    </div>
+
+    <div></div>
+
+</div>

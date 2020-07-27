@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="./scripts/index.js"></script>
+
+        <script src="./scripts/prism.js"></script>
+        <link rel="stylesheet" href="./css/prism-coy.css">
+
+        <style>
+
+            :root
+            {
+                background-color   : rgba(255, 255, 255, 1.0);       /* WebIDE: only used for layout guidance      */
+                --navBarHeight       : 50px;
+                --navBarPanelTimeout : 400ms;
+                --navBarBgColor      : rgba(0,0,0,1);
+                --navBarTextColor    : rgba(255,255,255,1);
+                --navBarPanelBgColor : lightgrey;
+                --subNavbarHeight    : 100px;
+                --viewportFactor     : 45vh;
+                --heroImage          : url("/assets/choc-van-yum.jpg");
+                --footerHeight       : 60px;
+                --theme-font         : 'Noto Sans', sans-serif;
+            }
+
+            *
+            {
+                /*border          : 1px dashed lightgrey;          /* WebIDE: only used for showing invisibles ¶ */
+                /*background-color: rgba(135, 206, 255, 0.65);     /* WebIDE: only used for layout guidance      */
+                font-family: var(--theme-font);
+                word-wrap: break-word;
+            }
+
+            .h1 { font-size: calc( 1.5em + 2vw ); }
+            .h2 { font-size: calc( 1.0em + 2vw ); }
+            .h3 { font-size: calc( 0.9em + 1vw ); }
+            .labelFunction { font-size: calc( 0.9em + 1vw ); }
+
+            .codeBlue { color: rgb(18, 118, 180); }
+            .codeGrey { color: grey}
+
+            .bold { font-weight: 700; }
+            .underline { text-decoration: underline; }
+            .footNote { font-size: x-small; }
+
+            var { font-style: normal; font-weight: 700; color: rgb(18, 118, 180); }
+
+            .tab { margin: 0 0 0 2.5em; }
+            .border { border: 1px solid rgb(211, 211, 211); }
+            .code { border: 1px solid rgb(211, 211, 211); background-color: #F7F8F8; padding: calc( 3px + 2vw); }
+            .separate { border: 0 solid rgb(211, 211, 211); border-width: 1px 0 0 0;}
+
+            .gridContainer                  { display : grid; }
+            .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 10fr 1fr; }
+
+            .codeScroll { overflow: auto; width: calc(85vw); }
+
+            .preClose { margin-bottom: 0em; }
+
+            ul.liDash
+            {
+                position: relative;
+                list-style: none;
+                margin-left: 0;
+                padding-left: 1.2em;
+            }
+            ul.liDash > li:before
+            {
+                content: "-";
+                position: absolute;
+                left: 0;
+            }
+
+            @media screen and (max-width: 320px) /* iPhone 5/SE */
+            {
+                .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 40fr 1fr; }
+                .code { padding: 3px; }
+                .tab { margin: 0 0 0 0.8em; }
+                * { word-break: break-word; }
+                ul { padding-left: 20px; }
+            }
+            @media screen and (min-width: 375px) /* iPhone 6/7/8 */
+            {
+                .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 30fr 1fr; }
+                .code { padding: 5px; }
+                .tab { margin: 0 0 0 1.5em; }
+                * { word-break: break-word; }
+                ul { padding-left: 25px; }
+            }
+            @media screen and (min-width: 414px) /* iPhone 6+/7+/8+ */
+            {
+                .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 20fr 1fr; }
+                * { word-break: break-word; }
+                ul { padding-left: 30px; }
+            }
+            @media screen and (min-width: 568px) /* iPhone 5/SE Landscape */
+            {
+                .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 17fr 1fr; }
+                * { word-break: break-word; }
+                ul { padding-left: 30px; }
+            }
+            @media screen and (min-width: 768px) /* iPad */
+            {
+                .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 15fr 1fr; }
+                ul { padding-left: 35px; }
+            }
+            @media screen and (min-width: 1440px) /* laptop/desktop */
+            {
+                .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 8fr 1fr; }
+                ul { padding-left: 40px; }
+            }
+            @media screen and (min-width: 1920px) /* 1920x1080 */
+            {
+                .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 3fr 1fr; }
+                ul { padding-left: 40px; }
+            }
+
+            </style>
+
+    </head>
+
+    <body>
+
+        <div class="gridContainer slicedAs_3c_responsive">
+
+            <div></div>
+
+            <div>
+
+                <div class="h1">GtkBuilder Object</div>
+
+                <br>
+
+                <div>GtkBuilder — Builds an interface from an XML UI definition.</div>
+
+                <br>
+
+                <div class="h2">Functions</div>
+
+                <div>
+                    <ul class="liDash">
+                        <li><var>(*GtkBuilderConnectFunc)()</var></li>
+                        <li><var>gtk_builder_new()</var></li>
+                        <li><var>gtk_builder_new_from_file()</var></li>
+                        <li><var>gtk_builder_new_from_resource()</var></li>
+                        <li><var>gtk_builder_new_from_string()</var></li>
+                        <li><var>gtk_builder_add_callback_symbol()</var></li>
+                        <li><var>gtk_builder_add_callback_symbols()</var></li>
+                        <li><var>gtk_builder_lookup_callback_symbol ()</var></li>
+                        <li><var>gtk_builder_add_from_file ()</var></li>
+                        <li><var>gtk_builder_add_from_resource ()</var></li>
+                        <li><var>gtk_builder_add_from_string ()</var></li>
+                        <li><var>gtk_builder_add_objects_from_file ()</var></li>
+                        <li><var>gtk_builder_add_objects_from_string ()</var></li>
+                        <li><var>gtk_builder_add_objects_from_resource ()</var></li>
+                        <li><var>gtk_builder_extend_with_template ()</var></li>
+                        <li><var>gtk_builder_get_object ()</var></li>
+                        <li><var>gtk_builder_get_objects ()</var></li>
+                        <li><var>gtk_builder_expose_object ()</var></li>
+                        <li><var>gtk_builder_connect_signals ()</var></li>
+                        <li><var>gtk_builder_connect_signals_full ()</var></li>
+                        <li><var>gtk_builder_get_translation_domain ()</var></li>
+                        <li><var>gtk_builder_set_translation_domain ()</var></li>
+                        <li><var>gtk_builder_get_application ()</var></li>
+                        <li><var>gtk_builder_set_application ()</var></li>
+                        <li><var>gtk_builder_get_type_from_name ()</var></li>
+                        <li><var>gtk_builder_value_from_string ()</var></li>
+                        <li><var>gtk_builder_value_from_string_type ()</var></li>
+                        <li><var>GTK_BUILDER_WARN_INVALID_CHILD_TYPE ()</var></li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <div class="h2">Properties</div>
+
+                <div>
+                    <ul class="liDash">
+                        <li><var>translation-domain</var></li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <br>
+                <div class="separate">&nbsp;</div><!-- separator -->
+                <br>
+
+                <div class="h2">Description</div>
+                <br>
+                
+                A <b>GtkBuilder</b> is an auxiliary object that reads textual descriptions of a user interface and instantiates 
+                the described objects. To create a GtkBuilder from a user interface description, call:
+                <ul style="font-weight: bold;">
+                    <li>gtk_builder_new_from_file,</li>
+                    <li>gtk_builder_new_from_resource <span style="font-weight: normal;">or</span></li>
+                    <li>gtk_builder_new_from_string.</li>
+                </ul> 
+                In the (unusual) case that you want to add user interface descriptions from multiple sources to the same 
+                GtkBuilder you can call <b>gtk_builder_new</b> to get an empty builder and populate it with (multiple) calls to:
+                <ul style="font-weight: bold;">
+                    <li>gtk_builder_add_from_file,</li>
+                    <li>gtk_builder_add_from_resource <span style="font-weight: normal;">or</span></li>
+                    <li>gtk_builder_add_from_string.</li>
+                </ul> 
+                
+                A GtkBuilder holds a reference to all objects that it has constructed and drops these references when it 
+                is finalized. This finalization can cause the destruction of non-widget objects or widgets which are not 
+                contained in a top-level window. For top-level windows constructed by a builder, it is the responsibility 
+                of the person to call <b>gtk_widget_destroy</b> to get rid of them (as well as any widgets they may contain).
+                <br><br>
+                The functions <b>gtk_builder_get_object</b> and <b>gtk_builder_get_objects</b> can be used to access the widgets 
+                in the interface by the names assigned to them inside the UI description. Top-level windows returned by 
+                these functions will stay around until the person explicitly destroys them with <b>gtk_widget_destroy</b>. Other 
+                widgets will either be part of a larger hierarchy constructed by the builder (in which case you should 
+                not have to worry about their lifecycle), or without a parent, in which case they have to be added to 
+                some container to make use of them. Non-widget objects need to be reference counted with <b>g_object_ref</b> 
+                to keep them beyond the lifespan of the builder.
+                <br><br>
+                The function <b>xgtk_builder_connect_signals</b> and variants thereof can be used to connect handlers to the 
+                named signals in the description.<br>
+                
+                <h2>GtkBuilder UI Definitions</h2>
+                
+                GtkBuilder parses textual descriptions of user interfaces which are specified in an XML format which can 
+                be roughly described by the <a data-id="page388">RELAX NG schema</a>. These descriptions are commonly 
+                referred to as “GtkBuilder UI definitions” or just “UI definitions” if the context is clear. Do not confuse 
+                GtkBuilder UI Definitions with GtkUIManager UI Definitions, which are more limited in scope. It is common 
+                to use .ui as the filename extension for files containing GtkBuilder UI definitions.
+                
+                <h4><a data-id="page388">RELAX NG Schema (Compact Syntax)</a></h4>
+                
+                The toplevel element is &lt;interface&gt;. It optionally takes a “domain” attribute, which will make the builder 
+                look for translated strings using <b>dgettext</b> in the domain specified. This can also be done by calling 
+                <b>gtk_builder_set_translation_domain</b> on the builder. Objects are described by &lt;object&gt; elements, which can 
+                contain &lt;property&gt; elements to set properties, &lt;signal&gt; elements which connect signals to handlers, and 
+                &lt;child&gt; elements, which describe child objects (most often widgets inside a container, but also e.g. 
+                actions in an action group, or columns in a tree model). A &lt;child&gt; element contains an &lt;object&gt; element 
+                which describes the child object. The target toolkit version(s) are described by &lt;requires&gt; elements, 
+                the “lib” attribute specifies the widget library in question (currently the only supported value is “gtk+”) and 
+                the “version” attribute specifies the target version in the form “&lt;major&gt;.&lt;minor&gt;”. The builder will 
+                error out if the version requirements are not met.<br><br>
+                
+                Typically, the specific kind of object represented by an &lt;object&gt; element is specified by the “class” attribute. 
+                If the type has not been loaded yet, GTK tries to find the get_type() function from the class name by applying 
+                heuristics. This works in most cases, but if necessary, it is possible to specify the name of the get_type() 
+                function explictly with the "type-func" attribute. As a special case, GtkBuilder allows to use an object that 
+                has been constructed by a <b>GtkUIManager</b> in another part of the UI definition by specifying the id of the 
+                GtkUIManager in the “constructor” attribute and the name of the object in the “id” attribute.<br><br>
+                
+                Objects may be given a name with the “id” attribute, which allows the application to retrieve them from the 
+                builder with <b>gtk_builder_get_object</b>. An id is also necessary to use the object as property value in other 
+                parts of the UI definition. GTK reserves ids starting and ending with ___ (3 underscores) for its own purposes.<br><br>
+                
+                Setting properties of objects is pretty straightforward with the &lt;property&gt; element: the “name” attribute specifies 
+                the name of the property, and the content of the element specifies the value. If the “translatable” attribute 
+                is set to a true value, GTK uses <b>gettext</b> (or <b>dgettext</b> if the builder has a translation domain set) to find 
+                a translation for the value. This happens before the value is parsed, so it can be used for properties of any 
+                type, but it is probably most useful for string properties. It is also possible to specify a context to 
+                disambiguate short strings, and comments which may help the translators.<br><br>
+                
+                GtkBuilder can parse textual representations for the most common property types: characters, strings, integers, 
+                floating-point numbers, booleans (strings like “TRUE”, “t”, “yes”, “y”, “1” are interpreted as TRUE, strings 
+                like “FALSE”, “f”, “no”, “n”, “0” are interpreted as FALSE), enumerations (can be specified by their name, nickname 
+                or integer value), flags (can be specified by their name, nickname, integer value, optionally combined with “|”, 
+                e.g. “GTK_VISIBLE|GTK_REALIZED”) and colors (in a format understood by <b>gdk_rgba_parse</b>).<br><br>
+                
+                <b>GVariants</b> can be specified in the format understood by <b>g_variant_parse</b>, and pixbufs can be specified as a 
+                filename of an image file to load.<br><br>
+                
+                Objects can be referred to by their name and by default refer to objects declared in the local xml fragment and 
+                objects exposed via <b>gtk_builder_expose_object</b>. In general, GtkBuilder allows forward references to 
+                objects — declared in the local xml; an object doesn’t have to be constructed before it can be referred to. 
+                The exception to this rule is that an object has to be constructed before it can be used as the value of a 
+                construct-only property.<br><br>
+                
+                It is also possible to bind a property value to another object's property value using the attributes "bind-source" 
+                to specify the source object of the binding, "bind-property" to specify the source property and optionally 
+                "bind-flags" to specify the binding flags. Internally builder implements this using GBinding objects. For more 
+                information see the function <b>g_object_bind_property</b>.<br><br>
+                
+                Signal handlers are set up with the &lt;signal&gt; element. The “name” attribute specifies the name of the signal, and 
+                the “handler” attribute specifies the function to connect to the signal. By default, GTK tries to find the 
+                handler using <b>g_module_symbol</b>, but this can be changed by passing a custom <b>GtkBuilderConnectFunc</b> to 
+                <b>gtk_builder_connect_signals_full</b>. The remaining attributes, “after”, “swapped” and “object”, have the same 
+                meaning as the corresponding parameters of the <b>g_signal_connect_object</b> or <b>g_signal_connect_data</b> functions. 
+                A “last_modification_time” attribute is also allowed, but it does not have a meaning to the builder.<br><br>
+                
+                Sometimes it is necessary to refer to widgets which have implicitly been constructed by GTK as part of a 
+                composite widget, to set properties on them or to add further children (e.g. the vbox of a <b>GtkDialog</b>). This 
+                can be achieved by setting the “internal-child” property of the &lt;child&gt; element to a true value. Note that 
+                GtkBuilder still requires an &lt;object&gt; element for the internal child, even if it has already been constructed.<br><br>
+                
+                A number of widgets have different places where a child can be added (e.g. tabs vs. page content in notebooks). 
+                This can be reflected in a UI definition by specifying the “type” attribute on a &lt;child&gt; The possible values 
+                for the “type” attribute are described in the sections describing the widget-specific portions of UI definitions.
+                
+                <br>
+                <br>
+                <br>
+                <div class="separate">&nbsp;</div><!-- next function -->
+                
+
+                <div class="h2">Functions</div>
+                <br>
+
+                <div class="h3 underline codeGrey">Creating</div>
+
+                <br>
+                <br><!-- first function -->
+
+                <div class="labelFunction codeBlue bold">GtkBuilderConnectFunc()</div>
+        
+                <div class="code">
+                    <code>
+                        void<br>
+                        (*GtkBuilderConnectFunc)<br>
+                        (<br>
+                        <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                        <p class="tab">GObject *<var>object</var>,</p>
+                        <p class="tab">const gchar *<var>signal_name</var>,</p>
+                        <p class="tab">const gchar *<var>handler_name</var>,</p>
+                        <p class="tab">GObject *<var>connect_object</var>,</p>
+                        <p class="tab">GConnectFlags <var>flags</var>,</p>
+                        <p class="tab">gpointer <var>user_data</var></p>
+                        )<br>
+                        /* a test of a comment */<br>
+                        int fred = 32;<br>
+                        char freddo = 'some chocolate';<br>
+                    </code>
+                </div>
+
+                <br>
+
+                <div>
+                    This is the signature of a function used to connect signals. It is used by the gtk_builder_connect_signals 
+                    and gtk_builder_connect_signals_full methods. It is mainly intended for interpreted 
+                    language bindings, but could be useful where the programmer wants more control over the 
+                    signal connection process. Note that this function can only be called once, subsequent 
+                    calls will do nothing.
+                </div>
+                
+                <br>
+
+                <div>
+
+                    <p class="h3 codeGrey underline">Parameters</p>
+                    
+                    <p><var>builder</var>        - A GtkBuilder object</p>
+                    <p><var>object</var>         - A GObject to connect a signal to</p>
+                    <p><var>signal_name</var>    - The name of the signal</p>
+                    <p><var>handler_name</var>   - The name of the handler</p>
+                    <p><var>connect_object</var> - A GObject; or g_signal_connect_object; or null</p>
+                    <p><var>flags</var>          - The GConnectFlags to use (if any)</p>
+                    <p><var>user_data</var>      - User data (if any)</p>
+
+                </div>
+
+                <div>
+
+                    <p class="h3 codeGrey underline">Returns</p>
+                    
+                    <p>Nothing (void)</p>
+                    <p class="footNote codeGrey">Available since: 2.12</p>
+
+                </div>
+
+                <br>
+                <div class="separate">&nbsp;</div><!-- next function -->
+                <br>
+
+                <div class="labelFunction codeBlue bold">GtkBuilderConnectFunc()</div>
+        
+                <div class="code">
+                    <code>
+                        void<br>
+                        (*GtkBuilderConnectFunc)<br>
+                        (<br>
+                        <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                        <p class="tab">GObject *<var>object</var>,</p>
+                        <p class="tab">const gchar *<var>signal_name</var>,</p>
+                        <p class="tab">const gchar *<var>handler_name</var>,</p>
+                        <p class="tab">GObject *<var>connect_object</var>,</p>
+                        <p class="tab">GConnectFlags <var>flags</var>,</p>
+                        <p class="tab">gpointer <var>user_data</var></p>
+                        )<br>
+                        /* a test of a comment */<br>
+                        int fred = 32;<br>
+                        char freddo = 'some chocolate';<br>
+                    </code>
+                </div>
+
+                <br>
+
+                <div>
+                    This is the signature of a function used to connect signals. It is used by the gtk_builder_connect_signals 
+                    and gtk_builder_connect_signals_full methods. It is mainly intended for interpreted 
+                    language bindings, but could be useful where the programmer wants more control over the 
+                    signal connection process. Note that this function can only be called once, subsequent 
+                    calls will do nothing.
+                </div>
+                
+                <br>
+
+                <div>
+
+                    <p class="h3 codeGrey underline">Parameters</p>
+                    
+                    <p><var>builder</var>        - A GtkBuilder object</p>
+                    <p><var>object</var>         - A GObject to connect a signal to</p>
+                    <p><var>signal_name</var>    - The name of the signal</p>
+                    <p><var>handler_name</var>   - The name of the handler</p>
+                    <p><var>connect_object</var> - A GObject; or g_signal_connect_object; or null</p>
+                    <p><var>flags</var>          - The GConnectFlags to use (if any)</p>
+                    <p><var>user_data</var>      - User data (if any)</p>
+
+                </div>
+
+                <div>
+
+                    <p class="h3 codeGrey underline">Returns</p>
+                    
+                    <p><var>boolean</var> - True or False</p>
+                    <p class="footNote codeGrey">Available since: 2.12</p>
+
+                </div>
+
+                <br>
+                <div class="separate">&nbsp;</div><!-- next function -->
+                <br>
+
+        <!-- functionName ================================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">functionName()
+                <span id="bkmkfunctionName">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">functionSignature<var>filename</var> )</div>
+            or
+            <div class="code">
+                <code>
+                    returnType<br>
+                    functionName<br>
+                    (<br>
+                    <p class="tab">type<var>someVarName</var>,</p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Description
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>someVarName</var> - The_description_of_this_varName</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>whatEver</p>
+                
+                <p class="footNote codeGrey">Available since: forever</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!--  ================================================================================= -->
+        
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">some_page_title_here</h1>
+                </div>
+
+                <div class="pageDesc">
+                    <div>
+                        The_big_block_text_that_describes_what_this_page_is_all_about
+                    </div>
+                </div>
+
+                <div class="pageToC">
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+                            <ol id="toc" style="display: inline-block;">
+                                <li><a href="#bkmkSomebookmark_here">The_name_of_page_section_you_want_to_go_to</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+                <div class="labelFunction codeBlue bold">GtkBuilderError Enumeration</div>
+
+                <br>
+
+                <div>
+                    Error codes that identify various errors that can occur while using GtkBuilder.
+                </div>
+                    
+                <p class="h3 codeGrey underline">Members</p>
+                
+                <div class="codeScroll border">
+                    <ol>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_DUPLICATE_ID</code></pre>
+                            <ul class="liDash"><li>An object id occurred twice</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_ATTRIBUTE</code></pre>
+                            <ul class="liDash"><li>GtkBuilder found an attribute that it doesn’t understand</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_ID</code></pre>
+                            <ul class="liDash"><li>An object id is unknown</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_PROPERTY</code></pre>
+                            <ul class="liDash"><li>The specified property is unknown for the object class</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_SIGNAL</code></pre>
+                            <ul class="liDash"><li>The specified signal is unknown for the object class</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_TAG</code></pre>
+                            <ul class="liDash"><li>GtkBuilder found a tag that it doesn’t understand</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_TYPE_FUNCTION</code></pre>
+                            <ul class="liDash"><li>A type function attribute didn’t name a function that returns a GType</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_VALUE</code></pre>
+                            <ul class="liDash"><li>GtkBuilder couldn’t parse some attribute value</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_MISSING_ATTRIBUTE</code></pre>
+                            <ul class="liDash"><li>An attribute that is required by GtkBuilder was missing</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_MISSING_PROPERTY_VALUE</code></pre>
+                            <ul class="liDash"><li>A required property value was missing</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_OBJECT_TYPE_REFUSED</code></pre>
+                            <ul class="liDash"><li>The object type is either of the same type or a type derived via XML extend</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_TEMPLATE_MISMATCH</code></pre>
+                            <ul class="liDash"><li>The wrong type was specified in a composite class’s template XML</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_UNHANDLED_TAG</code></pre>
+                            <ul class="liDash"><li>The input contained a tag that GtkBuilder can’t handle</li></ul>
+                        </li>
+                        <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_VERSION_MISMATCH</code></pre>
+                            <ul class="liDash"><li>The input file requires a newer version of GTK</li></ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <br>
+                <br>
+                <div class="separate">&nbsp;</div><!--  -->
+                <br>
+
+                <div class="h2">Types and Values</div>
+
+                <div>
+                    <ul class="liDash">
+                        <li>GObject</li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <div class="h2">Object Hierarchy</div>
+
+                <div>
+                    <ul class="liDash">
+                        <li>GObject</li>
+                        <ul class="liDash">
+                            <li>GtkBuilder</li>
+                        </ul>
+                    </ul>
+                </div>
+
+                <br>
+
+
+
+
+            </div>
+
+            <div></div>
+
+        </div>
+
+        <script>
+            window.addEventListener( 'resize', (event) => { logPrimaryWidth ( event ) } )
+        </script>
+
+    </body>
+
+</html>

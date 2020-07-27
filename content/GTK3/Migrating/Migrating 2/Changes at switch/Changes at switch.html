@@ -1,0 +1,371 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">Changes that need to be done at the time of the switch</h1>
+                </div>
+
+                <div>
+                    <div>Brief explanation about Changes that need to be done at the time of the switch goes here (1 sentence).</div>
+                </div>
+
+                <div>
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+        <ol id="toc" style="display: inline-block;">
+            <li><a href="#bkmkReplacesize">Replace size_request by get_preferred_width/height</a></li>
+            <li><a href="#bkmkReplaceGdkRegion">Replace GdkRegion by cairo_region_t</a></li>
+            <li><a href="#bkmkReplaceGdkPixmap">Replace GdkPixmap by cairo surfaces</a></li>
+            <li><a href="#bkmkReplaceGdkColormap">Replace GdkColormap by GdkVisual</a></li>
+            <li><a href="#bkmkGdkDrawable">GdkDrawable is gone</a></li>
+            <li><a href="#bkmkEventfiltering">Event filtering</a></li>
+            <li><a href="#bkmkBackend">Backend-specific code</a></li>
+            <li><a href="#bkmkGtkPlugGtkSocket">GtkPlug and GtkSocket</a></li>
+            <li><a href="#bkmkGtkWidget">The GtkWidget::draw signal</a></li>
+            <li><a href="#bkmkGtkProgressBar">GtkProgressBar orientation</a></li>
+            <li><a href="#bkmkexpandfillflags">Check your expand and fill flags</a></li>
+            <li><a href="#bkmkScrollingchanges">Scrolling changes</a></li>
+            <li><a href="#bkmkGtkObject">GtkObject is gone</a></li>
+            <li><a href="#bkmkGtkEntryCompletion">GtkEntryCompletion signal parameters</a></li>
+            <li><a href="#bkmkResizegrips">Resize grips</a></li>
+            <li><a href="#bkmkmixedlinkage">Prevent mixed linkage</a></li>
+            <li><a href="#bkmkInstallmodules">Install GTK+ modules in the right place</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <article class="article-main"><!-- article body "article-main" -->
+  <article class="article-main">
+      <div class="generic-box-main">
+          <h2>Index</h2>
+      </div>
+      <div>
+          <h3><a id='bkmkReplacesize' data-id='page314'>Replace size_request by get_preferred_width/height</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkReplaceGdkRegion' data-id='page307'>Replace GdkRegion by cairo_region_t</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkReplaceGdkPixmap' data-id='page323'>Replace GdkPixmap by cairo surfaces</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkReplaceGdkColormap' data-id='page324'>Replace GdkColormap by GdkVisual</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkGdkDrawable' data-id='page310'>GdkDrawable is gone</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkEventfiltering' data-id='page311'>Event filtering</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkBackend' data-id='page308'>Backend-specific code</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkGtkPlugGtkSocket' data-id='page318'>GtkPlug and GtkSocket</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkGtkWidget' data-id='page18'>The GtkWidget::draw signal</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkGtkProgressBar' data-id='page42'>GtkProgressBar orientation</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkexpandfillflags' data-id='page312'>Check your expand and fill flags</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkScrollingchanges' data-id='page313'>Scrolling changes</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkGtkObject' data-id='page315'>GtkObject is gone</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkGtkEntryCompletion' data-id='page210'>GtkEntryCompletion signal parameters</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkResizegrips' data-id='page320'>Resize grips</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkmixedlinkage' data-id='page319'>Prevent mixed linkage</a></h3>
+      </div>
+      <div>
+            Lorem ipsum dolor sit amet, 
+               consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+                Eget egestas purus viverra accumsan in nisl nisi. 
+                Pellentesque sit amet porttitor eget dolor morbi non. 
+                Sit amet justo donec enim diam vulputate ut pharetra. 
+                Leo a diam sollicitudin tempor. 
+                Diam donec adipiscing tristique risus nec feugiat in. 
+                Ornare arcu odio ut sem nulla. 
+                Diam vulputate ut pharetra sit amet aliquam id diam. 
+                Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+      <div>
+          <h3><a id='bkmkInstallmodules' data-id='page317'>Install GTK+ modules in the right place</a></h3>
+      </div>
+      <div>
+          Lorem ipsum dolor sit amet, 
+             consectetur adipiscing elit, 
+             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+             Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. 
+             Eget egestas purus viverra accumsan in nisl nisi. 
+             Pellentesque sit amet porttitor eget dolor morbi non. 
+             Sit amet justo donec enim diam vulputate ut pharetra. 
+             Leo a diam sollicitudin tempor. 
+             Diam donec adipiscing tristique risus nec feugiat in. 
+             Ornare arcu odio ut sem nulla. 
+             Diam vulputate ut pharetra sit amet aliquam id diam. 
+             Diam vel quam elementum pulvinar etiam non quam.
+            
+      </div>
+  </article>
+
+ 
+    </div>
+    <div></div>
+
+</div>

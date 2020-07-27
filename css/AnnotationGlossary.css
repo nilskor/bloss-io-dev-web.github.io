@@ -1,0 +1,25 @@
+:root
+{
+    --allow_none           : " [allow-none] NULL is OK, both for passing and for returning";
+    --array                : " [array] Parameter points to an array of items";
+    --closure              : " [closure] This parameter is a 'user_data', for callbacks; many bindings can pass NULL here";
+    --constructor          : " [constructor] This symbol is a constructor, not a static method";
+    --element_type         : " [element-type] defining the element type of containers and arrays";
+    --in                   : " [in] Parameter for input. Default is [transfer none]";
+    --inout                : " [inout] Parameter for input and for returning results. Default is [transfer full]";
+    --method               : " [method] This is a method";
+    --not_nullable         : " [not nullable] NULL must not be passed as the value in, out, in-out or as a return value";
+    --nullable             : " [nullable] NULL may be passed as the value in, out, in-out; or as a return value";
+    --optional             : " [optional] NULL may be passed instead of a pointer to a location";
+    --out                  : " [out] Parameter for returning results. Default is [transfer full]";
+    --out_caller_allocates : " [out caller-allocates] Out parameter, where caller must allocate storage";
+    --rename_to            : " [rename-to] Rename the original symbol's name to SYMBOL";
+    --scope_async          : " [scope async] The callback is valid until first called";
+    --scope_call           : " [scope call] The callback is only valid during the call to the method";
+    --skip                 : " [skip] Exposed in C code; not necessarily available in other languages";
+    --transfer_container   : " [transfer container] Free data container after the code is done";
+    --transfer_full        : " [transfer full] Free data after the code is done";
+    --transfer_none        : " [transfer none] Do not free the data after the code is done";
+    --type                 : " [type] Override the parsed C type with given type";
+    --virtual              : " [virtual] This is the invoker for a virtual method";
+}

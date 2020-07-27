@@ -1,0 +1,674 @@
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+    <div>
+        <br>
+
+        <u><b>AWK/GAWK</b></u>
+
+        Awk
+        is a Linux/Unix text-processing language.
+
+        It is said to be a data-driven scripting language consisting of a set of
+        actions to be taken against streams of textual data – either run
+        directly on files or used as part of a pipeline – for the purposes
+        of extracting or transforming text, such as producing formatted
+        reports.
+
+        As such, awk/gawk are often used to process files either directly on the
+        command line or more commonly through a script file. Unix-like
+        operating systems have the ability to run these scripts with
+        different interpreters/processors. For example, in Linux it is very
+        common to find a Command Shell as the interpreter, giving rise to the
+        “command line” i.e. you interact with the Command Shell one line
+        at a time using a keyboard. A common shell is the BOURNE Shell, and
+        as is typical for Linux environments, the quirky name is ‘Bourne
+        Again Shell’ or BASh or simply bash for short.
+
+        In Unix-like environments, a script file is denoted by the special first
+        line that must be present:
+
+        <p style="margin-left: 12.51mm; margin-bottom: 0mm; line-height: 100%">
+        <font face="Noto Mono"><span style="background: #dddddd">#!/bin/bash</span>	
+        - the so-called shebang line for shell scripts.
+
+        The really important bit is the #! , whereas the <i>/bin/bash</i><span>
+        could be any valid command line tool that presents as a scripting
+        language. bash is one of these tools, as is awk or gawk.</span>
+
+        <span>To create a script file using gawk as the interpreter under bloss OS, use:</span>
+
+        <p style="margin-left: 12.51mm; margin-bottom: 0mm; line-height: 100%">
+        <span style="background: #dddddd">#!/usr/bin/gawk -f</span>
+
+        This means the rest of the contents of this script file
+        must now be valid awk or gawk syntax, and the -f is there to make
+        sure the script starts itself correctly. For example:
+
+        If you write an awk script and save it in the‘<span style="background: #dddddd">test.awk</span>’ file,
+        make the script file executable by issuing
+        <span style="background: #dddddd">chmod 755 test.awk</span>, and then run 
+        the file on the command line with ‘<span style="background: #dddddd">./test.awk</span>’ , what 
+        actually happens by the interpreter is this:
+        <span style="background: #dddddd">awk -f test.awk</span>
+        
+
+        Without the -f on the shebang line, the script will fail.
+
+        <font color="#1834ce"><span>Main Index link</span></font>
+
+        <u><b>Quick Summary of Gawk language functions</b></u>
+
+        <br>
+
+        <b>String Functions:</b>
+
+        <br>
+
+        <table width="100%" cellpadding="4" cellspacing="0">
+            <col width="21*"/>
+
+            <col width="105*"/>
+
+            <col width="129*"/>
+
+            <tr>
+                <td width="8%" height="auto" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.97mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <code><font face="Noto Mono">asort</code>
+                </td>
+                <td width="41%" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.97mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <code><font face="Noto Mono">asort(</code><var><font face="Noto Mono">source</var><font face="Noto Mono">
+                    [<code><font face="Noto Mono">,</code><font face="Noto Mono">
+                    <var><font face="Noto Mono">dest</var><font face="Noto Mono">
+                    [<code><font face="Noto Mono">,</code><font face="Noto Mono">
+                    <var><font face="Noto Mono">how</var><font face="Noto Mono">
+                    ] ]<code><font face="Noto Mono">)</code>
+                </td>
+                <td rowspan="2" width="51%" valign="top" style="border: 1px solid #000000; padding: 0.97mm">
+                    <font face="Noto Mono">Both
+                    functions return the number of elements in the array source.
+                    <font face="Noto Mono">For
+                    asort(), gawk sorts the values of source and replaces the indices
+                    of the sorted values of source with sequential integers starting
+                    with one. If the optional array dest is specified, then source is
+                    duplicated into dest. dest is then sorted, leaving the indices of
+                    source unchanged.
+                    <font face="Noto Mono">When
+                    comparing strings, IGNORECASE affects the sorting. If the source
+                    array contains subarrays as values, they will come last, after all
+                    scalar values. Subarrays are not recursively sorted. The asorti()
+                    function works similarly to asort(); however, the indices are
+                    sorted, instead of the values.
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <code><font face="Noto Mono">asort</code><code><font face="Noto Mono">i</code>
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <code><font face="Noto Mono">asort</code><code><font face="Noto Mono">i</code><code><font face="Noto Mono">(</code><var><font face="Noto Mono">source</var><font face="Noto Mono">
+                    [<code><font face="Noto Mono">,</code><font face="Noto Mono">
+                    <var><font face="Noto Mono">dest</var><font face="Noto Mono">
+                    [<code><font face="Noto Mono">,</code><font face="Noto Mono">
+                    <var><font face="Noto Mono">how</var><font face="Noto Mono">
+                    ] ]<code><font face="Noto Mono">)</code>
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">gensub
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">gensub(regexp,
+                    replacement, how [, target])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Search
+                    the target string target for matches of the regular expression
+                    regexp. If how is a string beginning with ‘g’ or ‘G’
+                    (short for “global”), then replace all matches of regexp with
+                    replacement. Otherwise, treat how as a number indicating which
+                    match of regexp to replace. Treat numeric values less than one as
+                    if they were one. If no target is supplied, use $0. Return the
+                    modified string as the result of the function. The original target
+                    string is not changed.
+                    <br>
+
+                    
+                    <font face="Noto Mono">gensub()
+                    is a general substitution function. Its purpose is to provide more
+                    features than the standard sub() and gsub() functions.
+                    <br>
+
+                    
+                    <font face="Noto Mono">gensub()
+                    provides an additional feature that is not available in sub() or
+                    gsub(): the ability to specify components of a regexp in the
+                    replacement text. This is done by using parentheses in the regexp
+                    to mark the components and then specifying ‘\N’ in the
+                    replacement text, where N is a digit from 1 to 9. 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">gsub
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">gsub(regexp,
+                    replacement [, target])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Search
+                    target for all of the longest, leftmost, nonoverlapping matching
+                    substrings it can find and replace them with replacement. The ‘g’
+                    in gsub() stands for “global,” which means replace everywhere.
+                    
+                    
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">index
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">index(in,
+                    find)
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Search
+                    the string in for the first occurrence of the string find, and
+                    return the position in characters where that occurrence begins in
+                    the string in.
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">length
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">length([string])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the number of characters in string. If string is a number, the
+                    length of the digit string representing that number is returned.
+                    For example, length(&quot;abcde&quot;) is five. By contrast,
+                    length(15 * 35) works out to three. In this example, 15 * 35 =
+                    525, and 525 is then converted to the string &quot;525&quot;,
+                    which has three characters.
+                    <br>
+
+                    
+                    <font face="Noto Mono">If
+                    no argument is supplied, length() returns the length of $0.
+                    <font face="Noto Mono">If
+                    length() is called with a variable that has not been used, gawk
+                    forces the variable to be a scalar. Other implementations of awk
+                    leave the variable without a type.
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">match
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">match(string,
+                    regexp [, array])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Search
+                    string for the longest, leftmost substring matched by the regular
+                    expression regexp and return the character position (index) at
+                    which that substring begins (one, if it starts at the beginning of
+                    string). If no match is found, return zero.
+                    <br>
+
+                    
+                    <font face="Noto Mono">The
+                    regexp argument may be either a regexp constant (/…/) or a
+                    string constant (&quot;…&quot;). In the latter case, the string
+                    is treated as a regexp to be matched. See section Using Dynamic
+                    Regexps for a discussion of the difference between the two forms,
+                    and the implications for writing your program correctly.
+                    <br>
+
+                    
+                    <font face="Noto Mono">The
+                    order of the first two arguments is the opposite of most other
+                    string functions that work with regular expressions, such as sub()
+                    and gsub(). It might help to remember that for match(), the order
+                    is the same as for the ‘~’ operator: ‘string ~ regexp’.
+                    <br>
+
+                    
+                    <font face="Noto Mono">The
+                    match() function sets the predefined variable RSTART to the index.
+                    It also sets the predefined variable RLENGTH to the length in
+                    characters of the matched substring. If no match is found, RSTART
+                    is set to zero, and RLENGTH to -1. 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">patsplit
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">patsplit(string,
+                    array [, fieldpat [, seps ] ])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Divide
+                    string into pieces (or “fields”) defined by fieldpat and store
+                    the pieces in array and the separator strings in the seps array.
+                    The first piece is stored in array[1], the second piece in
+                    array[2], and so forth. The third argument, fieldpat, is a regexp
+                    describing the fields in string (just as FPAT is a regexp
+                    describing the fields in input records). It may be either a regexp
+                    constant or a string. If fieldpat is omitted, the value of FPAT is
+                    used. patsplit() returns the number of elements created. seps[i]
+                    is the possibly null separator string after array[i]. The possibly
+                    null leading separator will be in seps[0]. So a non-null string
+                    with n fields will have n+1 separators. A null string will not
+                    have neither fields nor separators.
+                    <br>
+
+                    
+                    <font face="Noto Mono">The
+                    patsplit() function splits strings into pieces in a manner similar
+                    to the way input lines are split into fields using FPAT (see
+                    section Defining Fields by Content).
+                    <br>
+
+                    
+                    <font face="Noto Mono">Before
+                    splitting the string, patsplit() deletes any previously existing
+                    elements in the arrays array and seps. 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">split
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">split(string,
+                    array [, fieldsep [, seps ] ])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Divide
+                    string into pieces separated by fieldsep and store the pieces in
+                    array and the separator strings in the seps array. The first piece
+                    is stored in array[1], the second piece in array[2], and so forth.
+                    The string value of the third argument, fieldsep, is a regexp
+                    describing where to split string (much as FS can be a regexp
+                    describing where to split input records). If fieldsep is omitted,
+                    the value of FS is used. split() returns the number of elements
+                    created. seps is a gawk extension, with seps[i] being the
+                    separator string between array[i] and array[i+1]. If fieldsep is a
+                    single space, then any leading whitespace goes into seps[0] and
+                    any trailing whitespace goes into seps[n], where n is the return
+                    value of split() (i.e., the number of elements in array). 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sprintf
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sprintf(format,
+                    expression1, …)
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    (without printing) the string that <code>printf</code> would have
+                    printed out with the same arguments
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">strtonum
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">strtonum(str)
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Examine
+                    str and return its numeric value. If str begins with a leading
+                    ‘0’, strtonum() assumes that str is an octal number. If str
+                    begins with a leading ‘0x’ or ‘0X’, strtonum() assumes
+                    that str is a hexadecimal number.
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sub
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sub(regexp,
+                    replacement [, target])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Search
+                    target, which is treated as a string, for the leftmost, longest
+                    substring matched by the regular expression regexp. Modify the
+                    entire string by replacing the matched text with replacement. The
+                    modified string becomes the new value of target. Return the number
+                    of substitutions made (zero or one).
+                    <br>
+
+                    
+                    <font face="Noto Mono">The
+                    regexp argument may be either a regexp constant (/…/) or a
+                    string constant (&quot;…&quot;). In the latter case, the string
+                    is treated as a regexp to be matched. See section Using Dynamic
+                    Regexps for a discussion of the difference between the two forms,
+                    and the implications for writing your program correctly.
+                    <br>
+
+                    
+                    <font face="Noto Mono">This
+                    function is peculiar because target is not simply used to compute
+                    a value, and not just any expression will do—it must be a
+                    variable, field, or array element so that sub() can store a
+                    modified value there. If this argument is omitted, then the
+                    default is to use and alter $0.
+                    <br>
+
+                    
+                    <font face="Noto Mono">If
+                    the special character ‘<samp>&amp;</samp>’ appears in
+                    <var>replacement</var>, it stands for the precise substring that
+                    was matched by <var>regexp</var>. (If the regexp can match more
+                    than one string, then this precise substring may vary.)
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">substr
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">substr(string,
+                    start [, length ])
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    a length-character-long substring of string, starting at character
+                    number start. The first character of a string is character number
+                    one.48 For example, substr(&quot;washington&quot;, 5, 3) returns
+                    &quot;ing&quot;.
+                    <br>
+
+                    
+                    <font face="Noto Mono">If
+                    length is not present, substr() returns the whole suffix of string
+                    that begins at character number start. For example,
+                    substr(&quot;washington&quot;, 5) returns &quot;ington&quot;. The
+                    whole suffix is also returned if length is greater than the number
+                    of characters remaining in the string, counting from character
+                    start.
+                    <br>
+
+                    
+                    <font face="Noto Mono">If
+                    start is less than one, substr() treats it as if it was one.
+                    (POSIX doesn’t specify what to do in this case: BWK awk acts
+                    this way, and therefore gawk does too.) If start is greater than
+                    the number of characters in the string, substr() returns the null
+                    string. Similarly, if length is present but less than or equal to
+                    zero, the null string is returned.
+                    <br>
+
+                    
+                    <font face="Noto Mono">The
+                    string returned by substr() cannot be assigned eg. substr(string,
+                    3, 3) = &quot;CDE&quot;
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">tolower
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">tolower(string)
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    a copy of string, with each uppercase character in the string
+                    replaced with its corresponding lowercase character. Nonalphabetic
+                    characters are left unchanged. For example, tolower(&quot;MiXeD
+                    cAsE 123&quot;) returns &quot;mixed case 123&quot;. 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">toupper
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">toupper(string)
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    a copy of string, with each lowercase character in the string
+                    replaced with its corresponding uppercase character. Nonalphabetic
+                    characters are left unchanged. For example, toupper(&quot;MiXeD
+                    cAsE 123&quot;) returns &quot;MIXED CASE 123&quot;. 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td width="8%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">*
+                </td>
+                <td width="41%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">Matching
+                    the Null String
+                </td>
+                <td width="51%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">In
+                    awk, the ‘*’ operator can match the null string. This is
+                    particularly important for the sub(), gsub(), and gensub()
+                    functions. For example:
+                    <br>
+
+                    
+                    <font face="Noto Mono">$
+                    echo abc | awk '{ gsub(/m*/, &quot;X&quot;); print }'
+                    <font face="Noto Mono">-|
+                    XaXbXcX
+                    <br>
+
+                    
+                    <font face="Noto Mono">Although
+                    this makes a certain amount of sense, it can be surprising. 
+                    
+                </td>
+            </tr>
+        </table>
+
+
+        <p style="margin-bottom: 0mm; line-height: 100%; text-decoration: none">
+        <b><span>Numeric
+        Functions:</span></b>
+
+        <table width="100%" cellpadding="4" cellspacing="0">
+            <col width="25*"/>
+
+            <col width="34*"/>
+
+            <col width="197*"/>
+
+            <tr>
+                <td width="10%" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.97mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">atan2
+                </td>
+                <td width="13%" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.97mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">atan2(y,
+                    x)
+                </td>
+                <td width="77%" valign="top" style="border: 1px solid #000000; padding: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the arctangent of <code><var>y</var></code><code> / </code><code><var>x</var></code>
+                    in radians. You can use ‘<samp>pi = atan2(0, -1)</samp>’ to
+                    retrieve the value of <i>pi</i>
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">cos
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">cos(x)
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the cosine of x, with x in radians.
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">exp
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">exp(x)
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the exponential of x (e ^ x) or report an error if x is out of
+                    range. The range of values x can have depends on your machine’s
+                    floating-point representation.
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">int
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">int(x)
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the nearest integer to x, located between x and zero and truncated
+                    toward zero. For example, int(3) is 3, int(3.9) is 3, int(-3.9) is
+                    -3, and int(-3) is -3 as well.
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">log
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">log(x)
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the natural logarithm of x, if x is positive; otherwise, return
+                    NaN (“not a number”) on IEEE 754 systems. Additionally, gawk
+                    prints a warning message when x is negative.
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">rand
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">rand()
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    a random number. The values of rand() are uniformly distributed
+                    between zero and one. The value could be zero but is never one.
+                    <font face="Noto Mono">CAUTION:
+                    In most awk implementations, including gawk, rand() starts
+                    generating numbers from the same starting number, or seed, each
+                    time you run awk. Thus, a program generates the same results each
+                    time you run it. The numbers are random within one awk run but
+                    predictable from run to run. This is convenient for debugging, but
+                    if you want a program to do different things each time it is used,
+                    you must change the seed to a value that is different in each run.
+                    To do this, use srand().
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sin
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sin(x)
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the sine of x, with x in radians
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sqrt
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">sqrt(x)
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Return
+                    the positive square root of x. gawk prints a warning message if x
+                    is negative. Thus, sqrt(4) is 2.
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">srand
+                </td>
+                <td width="13%" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0mm">
+                    <font face="Noto Mono">srand([x])
+                </td>
+                <td width="77%" valign="top" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0mm; padding-bottom: 0.97mm; padding-left: 0.97mm; padding-right: 0.97mm">
+                    <font face="Noto Mono">Set
+                    the starting point, or seed, for generating random numbers to the
+                    value x.
+                    <br>
+
+                    
+                    <font face="Noto Mono">Each
+                    seed value leads to a particular sequence of random numbers. Thus,
+                    if the seed is set to the same value a second time, the same
+                    sequence of random numbers is produced again.
+                    <br>
+
+                    
+                    <font face="Noto Mono">CAUTION:
+                    Different awk implementations use different random-number
+                    generators internally. Don’t expect the same awk program to
+                    produce the same series of random numbers when executed by
+                    different versions of awk. 
+                    
+                    <br>
+
+                    
+                    <font face="Noto Mono">If
+                    the argument x is omitted, as in ‘srand()’, then the current
+                    date and time of day are used for a seed. This is the way to get
+                    random numbers that are truly unpredictable.
+                    <br>
+
+                    
+                    <font face="Noto Mono">The
+                    return value of srand() is the previous seed. This makes it easy
+                    to keep track of the seeds in case you need to consistently
+                    reproduce sequences of random numbers.
+                    <br>
+
+                    
+                    <font face="Noto Mono">POSIX
+                    does not specify the initial seed; it differs among awk
+                    implementations. 
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div></div>
+
+</div>

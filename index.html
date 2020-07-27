@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>bloss.io</title>
+
+        <base href="/">
+        
+        <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/colours.css">
+        <link rel="stylesheet" href="/css/parallax.css">
+        <link rel="stylesheet" href="/css/navbar-items.css">
+        <link rel="stylesheet" href="/css/footer-items.css">
+        <link rel="stylesheet" href="/css/documentation.css">
+        <link rel="stylesheet" href="/css/AnnotationGlossary.css">
+        <!-- <link rel="stylesheet" href="/css/manuals.css"> -->
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- <link rel="icon"          href="favicon.ico" type="image/x-icon"> -->
+        <link rel="shortcut icon" href="/assets/bloss-leaf-color.svg" type="image/x-icon">
+
+        <script src="./scripts/index.js"></script>
+        <script src="./scripts/pages.js"></script>
+        <script src="./scripts/PanelSliderComponent.js"></script>
+
+    </head>
+
+    <body>
+
+        <!-- the navigation bar or navBar for short -->
+        <div class="gridContainer slicedAs_6c111111 aNavBar">
+
+            <div class="flexbox fSpaceAround" href="#index" onclick="injectContentInto( 'injectHere',  '/content/index.html' );">
+                <div class="flexbox middle fCenter">
+                    <img src="/assets/bloss-leaf-color.svg" width="32px" height="32px" />
+                </div>
+            </div>
+            <a href="https://osdn.net/projects/bloss-os/storage/fennec/" target="_blank" id="nbi-1"></a>
+            <button onclick="panelSlider( 'subNavigation', 'child' )"    id="btn-subNavigation"></button>
+            <a href="https://github.com/nilskor/Fennec-Issues"           target="_blank" id="nbi-3"></a>
+            <a href="https://osdn.net/projects/bloss-os/ticket/"         target="_blank" id="nbi-4"></a>
+            <button onclick="panelSlider( 'searchBar', 'child' )"        id="btn-searchBar"></button>
+
+        </div>
+
+        <!-- search bar hiding under the navbar -->
+        <div id="searchBar" class="navbarChildPanel">
+            <script async src="https://cse.google.com/cse.js?cx=012236734533661406954:nb5nz5ytptm"></script>
+            <div class="gcse-search"></div>
+        </div>
+
+        <!-- sub-navigation bar -->
+        <div id="subNavigation" class="gridContainer slicedAs_SubNav navbarChildPanel">
+            <div class="gaSN_top">Index of manuals</div>
+            <!--
+                <div class="gaSN_col1" onclick="panelSlider( 'ATK'  , 'grandChild' )"> ATK </div>
+                <div class="gaSN_col2" onclick="panelSlider( 'GDK'  , 'grandChild' )"> GDK </div>
+                <div class="gaSN_col3" onclick="panelSlider( 'GIO'  , 'grandChild' )"> GIO </div>
+            -->
+            <div class="gaSN_col1"><a data-id="page384"> GTK Documentation </a></div>
+            <div class="gaSN_col2" onclick="localStorage.clear();">localStorage.clear()</div>
+            <div class="gaSN_col3">TBD</div>
+            <div class="gaSN_col4">TBD</div>
+        </div>
+
+        <!-- menus belonging to the sub-navbar - child-childpanel -->
+        <div id="ATK"   class="grandchildPanel"> menu panel for css doco   </div>
+        <div id="GDK"   class="gridContainer slicedAs_3c111 grandchildPanel">
+            <div class="g-textBox middle gCenter"> menu panel for MDN doco </div>
+            <div class="g-textBox middle gCenter"> menu panel for MDN doco </div>
+            <div class="g-textBox middle gCenter">menu panel for MDN doco</div>
+        </div>
+        <div id="GIO"   class="grandchildPanel"> menu panel for bloss doco </div>
+        <div id="GTK3"  class="gridContainer slicedAs_3c111 grandchildPanel">
+            <div> menu panel for gtk3 doco </div>
+            <div> menu panel for gtk3 doco </div>
+            <div> menu panel for gtk3 doco </div>
+        </div>
+        
+        <!-- you can't touch this .. -->
+        <div id="injectHere" class="injectorPageWrap"></div>
+
+        <!-- the footer -->
+        <div id="footer" class="gridContainer slicedAs_5c21111 footer">
+
+            <div class="g-textBox middle" id="fti-1" class="footer-item" style="word-break: normal; line-height: 1rem;"></div>
+            <div class="f-textBox middle fLeft"><i class="fa fa-envelope"></i>     <a id="fti-2" href="https://www.bloss.io/contact.html"></a></div>
+            <div class="f-textBox middle fLeft"><i class="fa fa-id-card"></i>      <a id="fti-3" href="https://www.bloss.io/bloss_os.html"></a></div>
+            <div class="f-textBox middle fLeft"><i class="fa fa-balance-scale"></i><a id="fti-4" href="https://www.bloss.io/legal.html"></a></div>
+            <div class="f-textBox middle fLeft"><i class="fa fa-shield"></i>       <a id="fti-5" href="https://www.bloss.io/privacy_policy.html"></a></div>
+
+        </div>
+
+        <script>
+
+            'use strict';
+
+            let bookmarkClicked = false
+            let currentPage     = null
+            let xhrTriggerCollection = new Map()
+
+            //captureAllEvents()
+
+            window.addEventListener( 'DOMContentLoaded', (event) => { _onDOMContentLoaded( event ) } )
+            window.addEventListener( 'click',            (event) => { _onClick           ( event ) } )
+            window.addEventListener( 'hashchange',       (event) => { _onHashChange      ( event ) } )
+            window.addEventListener( 'popstate',         (event) => { _onPopState        ( event ) } )
+            window.addEventListener( 'resize',           (event) => { logPrimaryWidth    ( event ) } )
+
+            document.documentElement.addEventListener( 'click', (event) => { hideMenuPanels(event) } )
+
+            logPrimaryWidth()
+
+            document.body.className += ' jsAvailable'
+            
+            /** START: parallax 'magicNumber' code ------------------------------------------- */
+            let last_known_y_position = 0;
+            let ticking = false;
+            function doUpdate( scroll_pos )
+            {
+                document.body.style.setProperty
+                (
+                    "--magicNumber", ( document.body.scrollTop || document.documentElement.scrollTop )
+                );
+            }
+            window.addEventListener( 'scroll', () =>
+                {
+                    last_known_y_position = window.scrollY;
+                    if ( !ticking )
+                    {
+                        window.requestAnimationFrame( ()=> { doUpdate( last_known_y_position ); ticking = false; } );
+                        ticking = true;
+                    }
+                });
+            /** END:   parallax 'magicNumber' code ------------------------------------------- */
+
+        </script>
+
+    </body>
+
+</html>
+
+<!--
+
+    Page navigation via buttons and links only creates a click event
+    Page navigation via buttons and links fires the loadPage function
+    Page navigation via buttons and links creates a history.pushState
+
+    Reloading only generates a DOMContentLoaded event, but we force a fake hashchange
+
+    Back/Forward button generates both a popstate and a hashchange event
+
+    Native anchor bookmarks generate a click, 
+                                       popstate and a 
+                                       hashchange event
+
+-->

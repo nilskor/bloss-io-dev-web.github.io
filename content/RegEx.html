@@ -1,0 +1,89 @@
+
+Regular Expressions
+
+RegEx
+
+Regular Expressions are a way of manipulating text eg. search and replace a word
+
+They are always written as follows:
+
+    /pattern/options
+
+Constructing the pattern can be simple or very complex.
+Whilst constructing the pattern, parts of it may be referred to as a token.
+
+The pattern follows a set of rules and uses some well known characters to perform different tasks.
+
+For example, in programming, the character * means - match anything you can.
+
+Confusingly, some of the RegEx characters have double meanings.
+
+In Regex, the following special characters are important for making patterns:
+
+    . - match any single character, except a line break
+    * - repeat from zero or more times
+    + - repeat from one  or more times
+    ? - match the preceding token, zero or one time.
+        colou?r would find color and colour
+        the letter 'u' just happens to be the token in this example.
+
+    ^ - match the start of something (string, line, paragraph)
+    $ - match the end of something
+
+   [] - used for grouping
+        [A-Z]  is all uppercase alphabet letters
+        [^A-Z] here, ^ means negated eg. finds all lowercase letters
+        [aeiou] find all vowels
+   () - also used for grouping, but more as a complete string
+        eg. (ha)+ as in (haha) or (ha)h!
+
+    \w - find blocks of characters eg. a word for example
+    \W - the opposite of \w, so finds whitespace, commas etc.
+
+    \d - find a numeral or digit
+    \D - the opposite of \d
+
+    \s - find whitespace
+    \S - the opposite of \s
+
+    \b - where the token is on a word boundary (end)
+         s\b would find shell(s) but not shell
+    \B - the opposite of \b
+         s\B would find (s)hell or (s)ea(s)hells
+    
+    \ - used to escape a character and make it literal
+        \. would let you find the period or full-stop character
+
+(?=ABC) - positive lookahead
+          eg. \d(?=px) would find 2px but not 3pt
+(?!ABC) - negative lookahead, the opposite of positive
+          eg. \d(?!px) would find 3pt but not 2px
+          
+  {x,y} - used for creating a min-max range
+          eg. b\w{2,3} would find bee and beer but not be 
+
+Options:
+
+    i - ignore case
+    g - global search
+    m - multi-line
+    u - unicode
+
+
+
+Example: in HTML, find everything preceding a word:    "<!-- article header"
+
+    [A-Za-z0-9_," \W]+(?=<!-- article header)
+
+         in HTML, find everything after a word:        "<!-- optional secondary"
+
+    (<!-- optional secondary)[A-Za-z0-9_," \W]+
+
+
+=====================================================================================
+
+sed example:
+
+echo abcdef_filename.html_12345 | sed -r 's/.*[_](.*)[_].*/\1/'
+
+will print filename.html

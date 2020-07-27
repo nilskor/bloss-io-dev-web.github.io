@@ -1,0 +1,924 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">GtkBuildable Object</h1>
+                </div>
+
+                <div class="pageDesc">
+                    
+                    <div>
+                        GtkBuildable - An interface for objects that can be built with GtkBuilder.
+                    </div>
+
+                    <h2 class="h2">Functions<span id="bkmkFunctions">&nbsp;</span></h2>
+                    <div>
+                        <h4 class="h4  codeGrey">Creating</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_buildable_construct_child">gtk_buildable_construct_child()</a></li>
+                        </ul>
+                        <h4 class="h4  codeGrey">Adding</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_buildable_add_child">gtk_buildable_add_child()</a></li>
+                        </ul>
+                        <h4 class="h4  codeGrey">Getting</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_buildable_get_internal_child">gtk_buildable_get_internal_child()</a></li>
+                            <li><a href="#bkmkGtk_buildable_get_name">gtk_buildable_get_name()</a></li>
+                        </ul>
+                        <h4 class="h4  codeGrey">Setting</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_buildable_set_buildable_property">gtk_buildable_set_buildable_property()</a></li>
+                            <li><a href="#bkmkGtk_buildable_set_name">gtk_buildable_set_name()</a></li>
+                        </ul>
+                        <h4 class="h4  codeGrey">Parsing</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_buildable_custom_tag_start">gtk_buildable_custom_tag_start()</a></li>
+                            <li><a href="#bkmkGtk_buildable_custom_tag_end">gtk_buildable_custom_tag_end()</a></li>
+                            <li><a href="#bkmkGtk_buildable_custom_finished">gtk_buildable_custom_finished()</a></li>
+                            <li><a href="#bkmkGtk_buildable_parser_finished">gtk_buildable_parser_finished()</a></li>
+                        </ul>
+                    </div>
+            
+                </div>
+
+                <div class="pageToC">
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+                            <ol id="toc" style="display: inline-block;">
+                                <li><a href="#bkmkFunctions">Functions</a></li>
+                                <li><a href="#bkmkDescription">Description</a></li>
+                                <li><a href="#bkmkFunctionDetails">Function Details</a></li>
+                                <li><a href="#bkmkTypesValues">Types and Values</a></li>
+                                <li><a href="#bkmkObjectHierarchy">Object Hierarchy</a></li>
+                                <li><a href="#bkmkPrerequisites">Prerequisites</a></li>
+                                <li><a href="#bkmkKnownImplementations">Known Implementations</a></li>
+                                <li><a href="#bkmkIncludes">Includes</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="paraSpace_25">&nbsp;</div>
+
+        <div class="separate">&nbsp;</div><!-- separator -->
+        
+        <section><!-- Description -->
+
+            <h2 class="h2">Description<span id="bkmkDescription">&nbsp;</span></h2>
+
+            <b>GtkBuildable</b> allows objects to extend and customize their deserialization from <b>GtkBuilder UI 
+            descriptions</b>. The interface includes methods for setting names and properties of objects, parsing custom 
+            tags and constructing child objects.
+            <div class="paraSpace_10">&nbsp;</div>
+
+            The GtkBuildable interface is implemented by all widgets, and many of the non-widget objects that are 
+            provided by GTK. The main consumer of this interface is <b>GtkBuilder</b>. There should be very little need 
+            for applications to call any of these functions directly. An object only needs to implement this interface 
+            if it needs to extend the GtkBuilder format, or run any extra routines at deserialization time.
+            <div class="paraSpace_25">&nbsp;</div>
+
+        </section>
+
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <h2 class="h2">Function Details<span id="bkmkFunctionDetails">&nbsp;</span></h2>
+
+        <h3 class="h3 underline codeGrey">Creating</h3>
+
+        <!-- gtk_buildable_construct_child ========================================================================= -->
+        <div>
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_construct_child()
+                <span id="bkmkGtk_buildable_construct_child">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    GObject *<br>
+                    gtk_buildable_construct_child<br>
+                    ( <br>
+                    <p class="tab">GtkBuildable *<var>buildable</var>,</p>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>name</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Constructs a child of a <var>buildable</var> object with the name <var>name</var>. <b>GtkBuilder</b> 
+                calls this function if a 'constructor' has been specified in the UI definition.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - GtkBuilder used to construct this object</p>
+                <p><var>name</var> - The name of child object to construct</p>
+
+            </div>
+            
+            <div>
+                
+                <h4 class="h4 codeGrey underline">Returns</h4>
+
+                <p>The constructed child object</p>
+
+                <p class="AG codeGrey"><span class="AG-transfer_full"></span>[transfer full]</p>
+
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h3 class="h3 underline codeGrey">Adding</h3>
+
+        <!-- gtk_buildable_add_child =============================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_add_child()
+                <span id="bkmkGtk_buildable_add_child">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_buildable_add_child<br>
+                    (<br>
+                    <p class="tab">GtkBuildable *<var>buildable</var>,</p>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GObject *<var>child</var>,</p>
+                    <p class="tab">const gchar *<var>type</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Adds a child to a <var>buildable</var> object. <var>type</var> is an optional string describing how the 
+                child should be added.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>child</var> - The child object to add</p>
+                <p><var>type</var> - The type of child; or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+
+                <p class="AG codeGrey"><span class="AG-allow_none"></span>[allow-none]</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h3 class="h3 underline codeGrey">Getting</h3>
+
+        <!-- gtk_buildable_get_internal_child ====================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_get_internal_child()
+                <span id="bkmkGtk_buildable_get_internal_child">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    GObject *<br>
+                    gtk_buildable_get_internal_child<br>
+                    (<br>
+                    <p class="tab">GtkBuildable *<var>buildable</var>,</p>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>childname</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Get the internal child called <var>childname</var> of the <var>buildable</var> object.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>childname</var> - The name of the child object to get</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>The internal child of the buildable object</p>
+
+                <p class="AG codeGrey"><span class="AG-transfer_none"></span>[transfer none]</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_buildable_get_name ================================================================================ -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_get_name()
+                <span id="bkmkGtk_buildable_get_name">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">const gchar * gtk_buildable_get_name( GtkBuildable *<var>buildable</var> )</div>
+
+            <div>
+                Gets the name of the <var>buildable</var> object. <b>GtkBuilder</b> sets the name based on the 
+                <b>"GtkBuilder UI definition"</b> used to construct the <var>buildable</var>.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>The name that was previously set.</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h3 class="h3 underline codeGrey">Setting</h3>
+
+        <!-- gtk_buildable_set_buildable_property ================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_set_buildable_property()
+                <span id="bkmkGtk_buildable_set_buildable_property">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_buildable_set_buildable_property<br>
+                    (<br>
+                    <p class="tab">GtkBuildable *<var>buildable</var>,</p>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>name</var>,</p>
+                    <p class="tab">const GValue *<var>value</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Sets the property name <var>name</var> to <var>value</var> on the <var>buildable</var> object.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>name</var> - The name of the property</p>
+                <p><var>value</var> - The new value to set</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_buildable_set_name ================================================================================ -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_set_name()
+                <span id="bkmkGtk_buildable_set_name">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">void gtk_buildable_set_name( GtkBuildable *<var>buildable</var>, const gchar *<var>name</var> )</div>
+
+            <div>
+                Sets the name of the buildable object.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>name</var> - The new name to set</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h3 class="h3 underline codeGrey">Parsing</h3>
+
+        <!-- gtk_buildable_custom_tag_start ======================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_custom_tag_start()
+                <span id="bkmkGtk_buildable_custom_tag_start">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    gboolean<br>
+                    gtk_buildable_custom_tag_start<br>
+                    (<br>
+                    <p class="tab">GtkBuildable *<var>buildable</var>,</p>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GObject *<var>child</var>,</p>
+                    <p class="tab">const gchar *<var>tagname</var>,</p>
+                    <p class="tab">GMarkupParser *<var>parser</var>,</p>
+                    <p class="tab">gpointer *<var>data</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                This function is called for each unknown element under &lt;child&gt;.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - The GtkBuilder used to construct this object</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>child</var> - The child object; or NULL for non-child tags</p>
+                <p><var>tagname</var> - The name of the tag</p>
+                <p class="AG"><span class="AG-out"></span><var>parser</var> - A GMarkupParser to fill in</p>
+                <p class="AG"><span class="AG-out"></span><var>data</var> - The location of user data that will be passed in to parser functions</p>
+                <div class="AG codeGrey"><span class="AG-transfer_full"></span>[transfer full]</div>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>TRUE if an object has a custom implementation, FALSE if it doesn't</p>
+
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_buildable_custom_tag_end ========================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_custom_tag_end()
+                <span id="bkmkGtk_buildable_custom_tag_end">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_buildable_custom_tag_end<br>
+                    (<br>
+                    <p class="tab">GtkBuildable *<var>buildable</var>,</p>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GObject *<var>child</var>,</p>
+                    <p class="tab">const gchar *<var>tagname</var>,</p>
+                    <p class="tab">gpointer *<var>data</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                This is called at the end of each custom element handled by the <var>buildable</var>.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - The GtkBuilder used to construct this object</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>child</var> - The child object; or NULL for non-child tags</p>
+                <p><var>tagname</var> - The name of the tag</p>
+                <p><var>data</var> - The location of user data that will be passed in to parser functions</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_buildable_custom_finished ========================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_custom_finished()
+                <span id="bkmkGtk_buildable_custom_finished">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_buildable_custom_finished<br>
+                    (<br>
+                    <p class="tab">GtkBuildable *<var>buildable</var>,</p>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GObject *<var>child</var>,</p>
+                    <p class="tab">const gchar *<var>tagname</var>,</p>
+                    <p class="tab">gpointer <var>data</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                This is similar to <b>gtk_buildable_parser_finished</b>, but is called once for each custom tag handled 
+                by the <var>buildable</var> object.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>child</var> - The child object; or NULL for non-child tags</p>
+                <p><var>tagname</var> - The name of the tag</p>
+                <p><var>data</var> - The user data created in <b>custom_tag_start</b></p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_buildable_parser_finished ========================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_buildable_parser_finished()
+                <span id="bkmkGtk_buildable_parser_finished">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">void gtk_buildable_parser_finished( GtkBuildable *<var>buildable</var>, GtkBuilder *<var>builder</var> )</div>
+
+            <div>
+                Called when the <var>builder</var> finishes parsing a <b>"GtkBuilder UI definition"</b>. Note that this 
+                function will be called once every time that:
+                <ul class="liDash bold">
+                    <li>gtk_builder_add_from_file<span style="font-weight: normal;">,</span></li>
+                    <li>gtk_builder_add_from_resource<span style="font-weight: normal;"> or</span></li>
+                    <li>gtk_builder_add_from_string</li> 
+                </ul>
+                is called on a builder object.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>buildable</var> - A GtkBuildable object</p>
+                <p><var>builder</var> - A GtkBuilder object</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h2 class="h2">Types and Values<span id="bkmkTypesValues">&nbsp;</span></h2>
+        
+        <!-- GtkBuildable Type  -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">GtkBuildable<span id="bkmkGtkBuildableType">&nbsp;</span></h4>
+
+            <div class="code codeScrollFunc">typedef struct _GtkBuildable GtkBuildable</div>
+            
+        </div>
+
+        <div class="paraSpace_15">&nbsp;</div>
+
+        <!-- GtkBuildableIface Struct -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">struct GtkBuildableIface
+                <span id="bkmkGtkBuildableIfaceStruct">&nbsp;</span>
+            </h4>
+
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc mono">struct GtkBuildableIface
+{
+<span class="tab mono">GTypeInterface <var>g_iface</var>;</span>
+
+<span class="tab mono"><span class="comment">/* virtual table */</span></span>
+
+<span class="tab mono">void          (* set_name)               (GtkBuildable  *buildable, const gchar *name);</span>
+<span class="tab mono">const gchar * (* get_name)               (GtkBuildable  *buildable);</span>
+<span class="tab mono">void          (* add_child)              (GtkBuildable  *buildable, GtkBuilder *builder, GObject *child, const gchar *type);</span>
+<span class="tab mono">void          (* set_buildable_property) (GtkBuildable  *buildable, GtkBuilder *builder, const gchar *name, const GValue *value);</span>
+<span class="tab mono">GObject *     (* construct_child)        (GtkBuildable  *buildable, GtkBuilder *builder, const gchar *name);</span>
+<span class="tab mono">gboolean      (* custom_tag_start)       (GtkBuildable  *buildable, GtkBuilder *builder, GObject *child, const gchar *tagname, GMarkupParser *parser, gpointer *data);</span>
+<span class="tab mono">void          (* custom_tag_end)         (GtkBuildable  *buildable, GtkBuilder *builder, GObject *child, const gchar *tagname, gpointer *data);</span>
+<span class="tab mono">void          (* custom_finished)        (GtkBuildable  *buildable, GtkBuilder *builder, GObject *child, const gchar *tagname, gpointer data);</span>
+<span class="tab mono">void          (* parser_finished)        (GtkBuildable  *buildable, GtkBuilder *builder);</span>
+<span class="tab mono">GObject *     (* get_internal_child)     (GtkBuildable  *buildable, GtkBuilder *builder, const gchar *childname);</span>
+}</div>
+            
+            <div>
+                The <b>GtkBuildableIface</b> interface contains method that are necessary to allow <b>GtkBuilder</b> to 
+                construct an object from a <b>GtkBuilder UI</b> definition.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                Note: the order of the <b>struct</b> members shown here is how the GTK/Gnome developers have 
+                documented the structure. It is not recommended to deviate from this struct unless you have tested your
+                code thoroughly.
+            </div>
+
+            <div class="paraSpace_10">&nbsp;</div>
+
+            <h4 class="h4 codeGrey underline">Members</h4>
+
+            <div class="codeScroll border notTOC">
+                <ol>
+                    <li><pre class="preClose codeBlue"><code>set_name</code></pre>
+                        <ul class="liDash"><li>Stores the 'name' attribute given in the GtkBuilder UI definition. 
+                            <b>GtkWidget</b> stores the name as object data. Implement this method if your object has 
+                            some notion of “name” and it makes sense to map the XML 'name' attribute to it.</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>get_name</code></pre>
+                        <ul class="liDash"><li>The getter corresponding to <var>set_name</var>. Use this if you implement 
+                            <b>set_name</b>.</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>add_child</code></pre>
+                        <ul class="liDash"><li>Adds a child. The <var>type</var> parameter can be used to differentiate 
+                            the kind of child. For example: <b>GtkContainer</b> implements this to add add a child widget 
+                            to the container; <b>GtkNotebook</b> uses <var>type</var> to distinguish between page labels 
+                            (of type 'page-label') and other child objects.</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>set_buildable_property</code></pre>
+                        <ul class="liDash"><li>Sets a property of a buildable object. It is normally not necessary to 
+                            implement this, <b>g_object_set_property</b> is used by default. For example: <b>GtkWindow</b> 
+                            implements this to delay showing itself (i.e. setting the <b>“visible”</b> property) until 
+                            the whole interface is created.</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>construct_child</code></pre>
+                        <ul class="liDash"><li>Constructs a child of a buildable object that has been specified as a 
+                            'constructor' in the UI definition. For example: <b>GtkUIManager</b> implements this to 
+                            reference a widget created in a &lt;ui&gt; tag which is outside of the normal GtkBuilder UI 
+                            definition hierarchy. A reference to the constructed object is returned and is then owned by 
+                            the caller.</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>custom_tag_start</code></pre>
+                        <ul class="liDash"><li>Implement this if the buildable object needs to parse content below 
+                            &lt;child&gt;. To handle an element, the implementation must fill in the <var>parser</var> 
+                            and <var>user_data</var> and return TRUE. For example: <b>GtkWidget</b> implements this to 
+                            parse keyboard accelerators specified in &lt;accelerator&gt; elements. <b>GtkContainer</b> 
+                            implements it to map properties defined via &lt;packing&gt; elements to child properties. 
+                            Note that <var>user_data</var> must be freed in <b>custom_tag_end</b> or 
+                            <b>custom_finished</b>.</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>custom_tag_end</code></pre>
+                        <ul class="liDash"><li>Called for the end tag of each custom element that is handled by the 
+                            buildable object (see <b>custom_tag_start</b>).</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>custom_finished</code></pre>
+                        <ul class="liDash"><li>Called for each custom tag handled by the buildable object when the 
+                            builder finishes parsing (see <b>custom_tag_start</b>).</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>parser_finished</code></pre>
+                        <ul class="liDash"><li>Called when a builder finishes the parsing of a UI definition. It is 
+                            normally not necessary to implement this, unless you need to perform special cleanup actions. 
+                            For example: <b>GtkWindow</b> sets the <b>'visible'</b> property using this.</li></ul>
+                    </li>
+                    <li><pre class="preClose codeBlue"><code>get_internal_child</code></pre>
+                        <ul class="liDash"><li>Returns an internal child of a buildable object. For example: 
+                            <b>GtkDialog</b> implements this to give access to its <b>vbox</b>, making it possible to 
+                            add children to the vbox in a UI definition. Implement this if the buildable object has 
+                            internal children that may need to be accessed from a UI definition.</li></ul>
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+
+        <!-- Object Hierarchy -->
+        <h2 class="h2">Object Hierarchy<span id="bkmkObjectHierarchy">&nbsp;</span></h2>
+
+        <div class="code codeScrollFunc">GInterface<br>   - GtkBuildable</div>
+
+        <!-- Prerequisites -->
+        <h2 class="h2">Prerequisites<span id="bkmkPrerequisites">&nbsp;</span></h2>
+
+        GtkBuildable requires GObject.
+
+        <!-- Known Implementations -->
+        <h2 class="h2">Known Implementations<span id="bkmkKnownImplementations">&nbsp;</span></h2>
+
+        GtkBuildable is implemented by:
+        
+        <div class="paraSpace_15">&nbsp;</div>
+
+        <!--
+            Unfortunately these codeScroll boxes must be not be reformatted to 
+            look pretty in the code, otherwise the line breaks will show up.
+        -->
+        <div class="code codeScrollFunc mono"><div class="gridContainer slicedAs_4c1111"><div>GtkAboutDialog
+GtkAccelLabel
+GtkAction
+GtkActionBar
+GtkActionGroup
+GtkAlignment
+GtkAppChooserButton
+GtkAppChooserDialog
+GtkAppChooserWidget
+GtkApplicationWindow
+GtkArrow, 
+GtkAspectFrame
+GtkAssistant
+GtkBin
+GtkBox
+GtkButton
+GtkButtonBox
+GtkCalendar
+GtkCellArea
+GtkCellAreaBox
+GtkCellView
+GtkCheckButton
+GtkCheckMenuItem
+GtkColorButton
+GtkColorChooserDialog
+GtkColorChooserWidget
+GtkColorSelection
+GtkColorSelectionDialog
+GtkComboBox
+GtkComboBoxText
+GtkContainer
+GtkDialog
+GtkDrawingArea
+GtkEntry
+GtkEntryCompletion
+GtkEventBox
+GtkExpander
+GtkFileChooserButton
+GtkFileChooserDialog</div>
+                <div>GtkFileChooserWidget
+GtkFileFilter
+GtkFixed
+GtkFlowBox
+GtkFlowBoxChild
+GtkFontButton
+GtkFontChooserDialog
+GtkFontChooserWidget
+GtkFontSelection
+GtkFontSelectionDialog
+GtkFrame
+GtkGLArea
+GtkGrid
+GtkHBox
+GtkHButtonBox
+GtkHPaned
+GtkHSV
+GtkHScale
+GtkHScrollbar
+GtkHSeparator
+GtkHandleBox
+GtkHeaderBar
+GtkIconFactory
+GtkIconView
+GtkImage
+GtkImageMenuItem
+GtkInfoBar
+GtkInvisible
+GtkLabel
+GtkLayout
+GtkLevelBar
+GtkLinkButton
+GtkListBox
+GtkListBoxRow
+GtkListStore
+GtkLockButton
+GtkMenu
+GtkMenuBar
+GtkMenuButton</div>
+                <div>GtkMenuItem
+GtkMenuShell
+GtkMenuToolButton
+GtkMessageDialog
+GtkMisc
+GtkModelButton
+GtkNotebook
+GtkOffscreenWindow
+GtkOverlay
+GtkPageSetupUnixDialog
+GtkPaned
+GtkPlacesSidebar
+GtkPlug
+GtkPopover
+GtkPopoverMenu
+GtkPrintUnixDialog
+GtkProgressBar
+GtkRadioAction
+GtkRadioButton
+GtkRadioMenuItem
+GtkRadioToolButton
+GtkRange
+GtkRecentAction
+GtkRecentChooserDialog
+GtkRecentChooserMenu
+GtkRecentChooserWidget
+GtkRecentFilter
+GtkRevealer
+GtkScale
+GtkScaleButton
+GtkScrollbar
+GtkScrolledWindow
+GtkSearchBar
+GtkSearchEntry
+GtkSeparator
+GtkSeparatorMenuItem
+GtkSeparatorToolItem
+GtkShortcutsGroup
+GtkShortcutsSection</div>
+                <div>GtkShortcutsShortcut
+GtkShortcutsWindow
+GtkSizeGroup
+GtkSocket
+GtkSpinButton
+GtkSpinner
+GtkStack
+GtkStackSidebar
+GtkStackSwitcher
+GtkStatusbar
+GtkSwitch
+GtkTable
+GtkTearoffMenuItem
+GtkTextTagTable
+GtkTextView
+GtkToggleAction
+GtkToggleButton
+GtkToggleToolButton
+GtkToolButton
+GtkToolItem
+GtkToolItemGroup
+GtkToolPalette
+GtkToolbar
+GtkTreeStore
+GtkTreeView
+GtkTreeViewColumn
+GtkUIManager
+GtkVBox
+GtkVButtonBox
+GtkVPaned
+GtkVScale
+GtkVScrollbar
+GtkVSeparator
+GtkViewport
+GtkVolumeButton
+GtkWidget 
+GtkWindow</div></div></div>
+        
+        <!-- Includes -->
+        <h2 class="h2">Includes<span id="bkmkIncludes">&nbsp;</span></h2>
+
+        <div class="code codeScrollFunc">#include &lt;gtk/gtk.h&gt;</div>
+
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+    <div></div>
+
+</div>

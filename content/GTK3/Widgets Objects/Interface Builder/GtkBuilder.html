@@ -1,0 +1,1892 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">GtkBuilder Object</h1>
+                </div>
+
+                <div class="pageDesc">
+
+                    <div>
+                        GtkBuilder — Builds an interface from an XML UI definition.
+                    </div>
+
+                    <h2 class="h2">Functions<span id="bkmkFunctions">&nbsp;</span></h2>
+
+                    <div>
+                        <h4 class="h4  codeGrey">Creating</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_builder_new">gtk_builder_new()</a></li>
+                            <li><a href="#bkmkGtk_builder_new_from_file">gtk_builder_new_from_file()</a></li>
+                            <li><a href="#bkmkGtk_builder_new_from_resource">gtk_builder_new_from_resource()</a></li>
+                            <li><a href="#bkmkGtk_builder_new_from_string">gtk_builder_new_from_string()</a></li>
+                        </ul>
+                        <h4 class="h4  codeGrey">Adding</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_builder_add_from_file">gtk_builder_add_from_file()</a></li>
+                            <li><a href="#bkmkGtk_builder_add_from_resource">gtk_builder_add_from_resource()</a></li>
+                            <li><a href="#bkmkGtk_builder_add_from_string">gtk_builder_add_from_string()</a></li>
+                            <li><a href="#bkmkGtk_builder_add_objects_from_file">gtk_builder_add_objects_from_file()</a></li>
+                            <li><a href="#bkmkGtk_builder_add_objects_from_resource">gtk_builder_add_objects_from_resource()</a></li>
+                            <li><a href="#bkmkGtk_builder_add_objects_from_string">gtk_builder_add_objects_from_string()</a></li>
+                            <li><a href="#bkmkGtk_builder_extend_with_template">gtk_builder_extend_with_template()</a></li>
+                            <li><a href="#bkmkGtk_builder_expose_object">gtk_builder_expose_object()</a></li>
+                            <li><a href="#bkmkGtk_builder_add_callback_symbol">gtk_builder_add_callback_symbol()</a></li>
+                            <li><a href="#bkmkGtk_builder_add_callback_symbols">gtk_builder_add_callback_symbols()</a></li>
+                            <li><a href="#bkmkGtkBuilderConnectFunc">(*GtkBuilderConnectFunc)()</a></li>
+                            <li><a href="#bkmkGtk_builder_connect_signals">gtk_builder_connect_signals()</a></li>
+                            <li><a href="#bkmkGtk_builder_connect_signals_full">gtk_builder_connect_signals_full()</a></li>
+                        </ul>
+                        <h4 class="h4  codeGrey">Getting</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_builder_get_object">gtk_builder_get_object()</a></li>
+                            <li><a href="#bkmkGtk_builder_get_objects">gtk_builder_get_objects()</a></li>
+                            <li><a href="#bkmkGtk_builder_get_application">gtk_builder_get_application()</a></li>
+                            <li><a href="#bkmkGtk_builder_get_translation_domain">gtk_builder_get_translation_domain()</a></li>
+                            <li><a href="#bkmkGtk_builder_get_type_from_name">gtk_builder_get_type_from_name()</a></li>
+                            <li><a href="#bkmkGtk_builder_lookup_callback_symbol">gtk_builder_lookup_callback_symbol()</a></li>
+                            <li><a href="#bkmkGtk_builder_value_from_string">gtk_builder_value_from_string()</a></li>
+                            <li><a href="#bkmkGtk_builder_value_from_string_type">gtk_builder_value_from_string_type()</a></li>
+                        </ul>
+                        <h4 class="h4  codeGrey">Setting</h4>
+                        <ul class="liDash bold">
+                            <li><a href="#bkmkGtk_builder_set_application">gtk_builder_set_application()</a></li>
+                            <li><a href="#bkmkGtk_builder_set_translation_domain">gtk_builder_set_translation_domain()</a></li>
+                            <li><a href="#bkmkGTK_BUILDER_WARN_INVALID_CHILD_TYPE">GTK_BUILDER_WARN_INVALID_CHILD_TYPE()</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="pageToC">
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+                            <ol id="toc" style="display: inline-block;">
+                                <li><a href="#bkmkFunctions">Functions</a></li>
+                                <li><a href="#bkmkProperties">Properties</a></li>
+                                <li><a href="#bkmkDescription">Description</a></li>
+                                <li><a href="#bkmkFunctionDetails">Function Details</a></li>
+                                <li><a href="#bkmkTypesValues">Types and Values</a></li>
+                                <li><a href="#bkmkEnumerations">Enumerations</a></li>
+                                <li><a href="#bkmkErrorTypes">Error Types</a></li>
+                                <li><a href="#bkmkPropertyDetails">Property Details</a></li>
+                                <li><a href="#bkmkObjectHierarchy">Object Hierarchy</a></li>
+                                <li><a href="#bkmkIncludes">Includes</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <h2 class="h2">Properties<span id="bkmkProperties">&nbsp;</span></h2>
+        <div>
+            <ul class="liDash bold">
+                <li><a href="#bkmkTranslationDomainProp">translation-domain</a></li>
+            </ul>
+        </div>
+        <div class="paraSpace_25">&nbsp;</div>
+
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <section><!-- Description -->
+
+            <h2 class="h2">Description<span id="bkmkDescription">&nbsp;</span></h2>
+            
+            A <b>GtkBuilder</b> is an auxiliary object that reads textual descriptions of a user interface and 
+            instantiates the described objects. To create a GtkBuilder from a user interface description, call:
+            <ul class="liDash bold">
+                <li>gtk_builder_new_from_file<span style="font-weight: normal;">,</span></li>
+                <li>gtk_builder_new_from_resource<span style="font-weight: normal;"> or</span></li>
+                <li>gtk_builder_new_from_string<span style="font-weight: normal;">.</span></li>
+            </ul> 
+            <div class="paraSpace_10">&nbsp;</div>
+
+            In the (unusual) case that you want to add user interface descriptions from multiple sources to the same 
+            GtkBuilder object, you can call <b>gtk_builder_new</b> to get an empty <var>builder</var>, and then populate 
+            it with multiple calls to any of:
+            <ul class="liDash bold"">
+                <li>gtk_builder_add_from_file<span style="font-weight: normal;">,</span></li>
+                <li>gtk_builder_add_from_resource<span style="font-weight: normal;"> or</span></li>
+                <li>gtk_builder_add_from_string<span style="font-weight: normal;">.</span></li>
+            </ul> 
+            
+            A GtkBuilder holds a reference to all objects that it has constructed and drops these references when it is 
+            finalized. This finalization can cause the destruction of non-widget objects or widgets which are not 
+            contained in a top-level window.<br>
+            For top-level windows constructed by a builder, it is the responsibility of the person to call 
+            <b>gtk_widget_destroy</b> to remove them (as well as any widgets they may contain).
+            <div class="paraSpace_10">&nbsp;</div>
+
+            The functions <b>gtk_builder_get_object</b> and <b>gtk_builder_get_objects</b> can be used to access the 
+            widgets in the interface - by the names assigned to them from inside the UI description. Top-level windows 
+            returned by these functions will remain until the person explicitly destroys them with 
+            <b>gtk_widget_destroy</b>. Other widgets will either be part of a larger hierarchy constructed by the builder 
+            (in which case you should not have to worry about their lifecycle), or they will have no parent, in which 
+            case they will need to be added to some container to make use of them. Non-widget objects need to be reference 
+            counted with <b>g_object_ref</b> to keep them beyond the lifespan of the builder.
+            <div class="paraSpace_10">&nbsp;</div>
+
+            The function <b>gtk_builder_connect_signals</b> and variants thereof can be used to connect handlers to 
+            the named signals in the description.
+            <div class="paraSpace_15">&nbsp;</div>
+            
+
+            <h2 class="h2">GtkBuilder UI Definitions</h2>
+            <div class="paraSpace_15">&nbsp;</div>
+            
+            GtkBuilder parses textual descriptions of user interfaces which are specified in an XML format which can be 
+            roughly described by the <a data-id="page388">RELAX NG schema</a>. These descriptions are commonly referred 
+            to as “GtkBuilder UI definitions” or just “UI definitions” if the context is clear. Do not confuse GtkBuilder 
+            UI Definitions with GtkUIManager UI Definitions, which are more limited in scope. It is common to use .ui as 
+            the filename extension for files containing GtkBuilder UI definitions.
+            <div class="paraSpace_15">&nbsp;</div>
+
+            <h4 class="h4">
+                <a data-id="page388">RELAX NG Schema (Compact Syntax)</a>
+            </h4>
+            <div class="paraSpace_15">&nbsp;</div>
+            
+            The top-level element is &lt;interface&gt;. It optionally takes a 'domain' attribute, which will make the 
+            builder look for translated strings using <b>dgettext</b> in the domain specified. This can also be done by 
+            calling <b>gtk_builder_set_translation_domain</b> on the builder. Objects are described by &lt;object&gt; 
+            elements, which can contain &lt;property&gt; elements to set properties, &lt;signal&gt; elements which 
+            connect signals to handlers, and &lt;child&gt; elements, which describe child objects (most often widgets 
+            inside a container, but may also be - actions in an action group, or columns in a tree model for example). 
+            A &lt;child&gt; element contains an &lt;object&gt; element which describes the child object. The target 
+            toolkit version(s) are described by &lt;requires&gt; elements, the 'lib' attribute specifies the widget 
+            library in question (currently the only supported value is “gtk+”) and the 'version' attribute specifies the 
+            target version in the form “&lt;major&gt;.&lt;minor&gt;”. The builder will generate an error if the version 
+            requirements are not met.
+            <div class="paraSpace_10">&nbsp;</div>
+            
+            Typically, the specific kind of object represented by an &lt;object&gt; element is specified by the 'class' 
+            attribute. If the type has not been loaded yet, GTK tries to find the correct <b>get_type</b> function to use
+            from the class name by applying heuristics. This works in most cases, but if necessary, it is possible to 
+            specify the name of the get_type function explictly with the "type-func" attribute (see the schema under 
+            'object'). As a special case, GtkBuilder allows the use of an object that has been constructed by a 
+            <b>GtkUIManager</b> in another part of the UI definition, by specifying the 'id' of the GtkUIManager in the 
+            'constructor' attribute, and the 'name' of the object in the 'id' attribute.
+            <div class="paraSpace_10">&nbsp;</div>
+
+            Objects may be given a name with the 'id' attribute, which allows the application to retrieve them from the 
+            builder with <b>gtk_builder_get_object</b>. An 'id' is also necessary to use the object as a property value 
+            in other parts of the UI definition. GTK reserves 'ids' starting and ending with ___ (3 underscores) for its 
+            own purposes.
+            <div class="paraSpace_10">&nbsp;</div>
+
+            Setting properties of objects is pretty straightforward with the &lt;property&gt; element: the 'name' 
+            attribute specifies the name of the property, and the content of the element specifies the value. If the 
+            'translatable' attribute is set to a true value, GTK uses <b>gettext</b> (or <b>dgettext</b> if the builder 
+            has a translation domain set) to find a translation for the value. This happens before the value is parsed, 
+            so it can be used for properties of any type, but it is probably most useful for string properties. It is 
+            also possible to specify a context to disambiguate short strings, and comments which may help the translators.
+            <div class="paraSpace_10">&nbsp;</div>
+            
+            GtkBuilder can parse textual representations for the most common property types: characters, strings, integers, 
+            floating-point numbers, booleans (strings like 'TRUE', 't', 'yes', 'y', '1' are interpreted as TRUE, strings 
+            like 'FALSE', 'f', 'no', 'n', '0' are interpreted as FALSE), enumerations (can be specified by their name, 
+            nickname or integer value), flags (can be specified by their name, nickname, integer value, optionally 
+            combined with “|”, eg. 'GTK_VISIBLE|GTK_REALIZED') and colors in a format understood by <b>gdk_rgba_parse</b>.
+            <div class="paraSpace_10">&nbsp;</div>
+
+            <b>GVariants</b> can be specified in the format understood by <b>g_variant_parse</b>, and pixbufs can be 
+            specified as a filename of an image to load.
+            <div class="paraSpace_10">&nbsp;</div>
+
+            Objects can be referred to by their name and by default refer to objects declared in the local xml fragment 
+            and objects exposed via <b>gtk_builder_expose_object</b>. In general, GtkBuilder allows forward references 
+            to objects declared in the local xml; an object doesn’t have to be constructed before it can be referred 
+            to. The exception to this rule is that an object has to be constructed before it can be used as the value of 
+            a construct-only property.
+            <div class="paraSpace_10">&nbsp;</div>
+
+            It is also possible to bind a property value to another object's property value. Do this by using the 
+            attributes "bind-source" to specify the source object of the binding, "bind-property" to specify the source 
+            property and optionally "bind-flags" to specify the binding flags. Internally builder implements this using 
+            GBinding objects. For more information, see the function <b>g_object_bind_property</b>.
+            <div class="paraSpace_10">&nbsp;</div>
+            
+            Signal handlers are set up with the &lt;signal&gt; element. The 'name' attribute specifies the name of the 
+            signal, and the 'handler' attribute specifies the function to connect to the signal. By default, GTK tries 
+            to find the handler using <b>g_module_symbol</b>, but this can be changed by passing a custom 
+            <b>GtkBuilderConnectFunc</b> to <b>gtk_builder_connect_signals_full</b>. The remaining attributes, 'after', 
+            'swapped' and 'object', have the same meaning as the corresponding parameters of the 
+            <b>g_signal_connect_object</b> or <b>g_signal_connect_data</b> functions. A 'last_modification_time' attribute 
+            is also allowed, but it does not have a meaning to the builder.
+            <div class="paraSpace_10">&nbsp;</div>
+            
+            Sometimes it is necessary to refer to widgets which have implicitly been constructed by GTK as part of a 
+            composite widget, to set properties on them or to add further children (e.g. the vbox of a <b>GtkDialog</b>). 
+            This can be achieved by setting the 'internal-child' property of the &lt;child&gt; element to a true value. 
+            Note that GtkBuilder still requires an &lt;object&gt; element for the internal child, even if it has already 
+            been constructed.
+            <div class="paraSpace_10">&nbsp;</div>
+            
+            A number of widgets have different places where a child can be added (e.g. tabs vs. page content in notebooks). 
+            This can be reflected in a UI definition by specifying the 'type' attribute on a &lt;child&gt;. The possible 
+            values for the 'type' attribute are described in the sections describing the widget-specific portions of UI 
+            definitions.
+            <div class="paraSpace_10">&nbsp;</div>
+
+
+            <h4 class="h4">An example GtkBuilder UI Definition</h4>
+
+            <div class="codeScroll border">
+    &lt;interface&gt;
+        &lt;object class="GtkDialog" id="dialog1"&gt;
+        &lt;child internal-child="vbox"&gt;
+            &lt;object class="GtkBox" id="vbox1"&gt;
+            &lt;property name="border-width"&gt;10&lt;/property&gt;
+            &lt;child internal-child="action_area"&gt;
+                &lt;object class="GtkButtonBox" id="hbuttonbox1"&gt;
+                &lt;property name="border-width"&gt;20&lt;/property&gt;
+                &lt;child&gt;
+                    &lt;object class="GtkButton" id="ok_button"&gt;
+                    &lt;property name="label"&gt;gtk-ok&lt;/property&gt;
+                    &lt;property name="use-stock"&gt;TRUE&lt;/property&gt;
+                    &lt;signal name="clicked" handler="ok_button_clicked"/&gt;
+                    &lt;/object&gt;
+                &lt;/child&gt;
+                &lt;/object&gt;
+            &lt;/child&gt;
+            &lt;/object&gt;
+        &lt;/child&gt;
+        &lt;/object&gt;
+    &lt;/interface&gt;
+            </div><br>
+
+            Beyond this general structure, several object classes define their own XML DTD fragments for filling in the 
+            ANY placeholders in the <a data-id="page388">Schema DTD mentioned above</a>. Note that a custom element in a 
+            &lt;child&gt; element gets parsed by the custom tag handler of the parent object, while a custom element in 
+            an &lt;object&gt; element gets parsed by the custom tag handler of the object.
+            <div class="paraSpace_10">&nbsp;</div>
+            
+            These XML fragments are explained in the documentation of the respective objects.
+            <div class="paraSpace_10">&nbsp;</div>
+            
+            Additionally (since 3.10), a special &lt;template&gt; tag has been added to the format allowing one to define 
+            the class components for a widget. See the GtkWidget documentation for details.
+            <div class="paraSpace_25">&nbsp;</div>
+
+        </section>
+
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <h2 class="h2">Function Details
+            <span id="bkmkFunctionDetails">&nbsp;</span>
+        </h2>
+
+        <h3 class="h3 underline codeGrey">Creating</h3>
+        
+        <!-- gtk_builder_new ======================================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_new()
+                <span id="bkmkGtk_builder_new">&nbsp;</span>
+            </h4>
+
+            <div class="code codeScrollFunc">GtkBuilder * gtk_builder_new( void )</div>
+
+            <div>
+                Creates a new empty builder object. This function is only useful if you intend to make multiple calls to:
+                <ul class="liDash">
+                    <li><b>gtk_builder_add_from_file</b>,</li>
+                    <li><b>gtk_builder_add_from_resource</b> or</li>
+                    <li><b>gtk_builder_add_from_string</b></li>
+                </ul> 
+                in order to merge multiple UI descriptions into a single builder.
+                <br>
+                <br>
+                More commonly though:
+                <ul class="liDash">
+                    <li><b>gtk_builder_new_from_file</b>,</li>
+                    <li><b>gtk_builder_new_from_resource</b> or</li>
+                    <li><b>gtk_builder_new_from_string</b></li>
+                </ul>
+                would be used instead.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var></var>Takes no parameters.</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                A new (empty) GtkBuilder object
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_new_from_file ============================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_new_from_file()
+                <span id="bkmkGtk_builder_new_from_file">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">GtkBuilder * gtk_builder_new_from_file( const gchar *<var>filename</var> )</div>
+
+            <div>
+                Builds the GtkBuilder UI definition in the file <var>filename</var>. If there is an error opening the 
+                file or parsing the description, then the program will be aborted.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                You should only ever attempt to parse user interface descriptions that are shipped as part of your 
+                application.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>filename</var> - The filename of the UI description file</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                A GtkBuilder object containing the described interface
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_new_from_resource ========================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_new_from_resource()
+                <span id="bkmkGtk_builder_new_from_resource">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">GtkBuilder * gtk_builder_new_from_resource( const gchar *<var>resource_path</var> )</div>
+
+            <div>
+                Builds the GtkBuilder UI definition located at <var>resource_path</var>. If there is an error locating 
+                the resource or parsing the description, then the program will be aborted.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>resource_path</var> - A GResource resource path</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                A GtkBuilder object containing the described interface
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_new_from_string =========================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_new_from_string()
+                <span id="bkmkGtk_builder_new_from_string">&nbsp;</span>
+            </h4>
+            
+            <div class="code codeScrollFunc">GtkBuilder * gtk_builder_new_from_string( const gchar *<var>string</var>, gssize <var>length</var> )</div>
+
+            <div>
+                Builds the user interface described by <var>string</var> (in the GtkBuilder UI definition format). If 
+                string is NULL-terminated, then <var>length</var> should be -1. If length is not -1, then you must 
+                provide the length of the string. If there is an error parsing the string, then the program will be aborted.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                <b>*Warning note: You should not attempt to parse user interface descriptions from untrusted sources.</b>
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>string</var> - A user interface (XML) description</p>
+                <p><var>length</var> - The length of string , or -1</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A GtkBuilder object containing the interface described by string</p>
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h3 class="h3 underline codeGrey">Adding</h3>
+
+        <!-- gtk_builder_add_from_file ============================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_from_file()
+                <span id="bkmkGtk_builder_add_from_file">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    guint<br>
+                    gtk_builder_add_from_file<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>filename</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Parses a <var>filename</var> containing a GtkBuilder UI definition and merges it with the current 
+                contents of <var>builder</var>. More commonly though, <b>gtk_builder_new_from_file</b> would be used 
+                instead.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If an error occurs, 0 will be returned and <var>error</var> will be assigned a <b>GError</b> from the 
+                GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_FILE_ERROR domain. In such cases where an error is detected, 
+                <b>g_error</b> may be called.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                <b>You should not use this function with untrusted files</b> (eg. files that are not part of your 
+                application). Incorrectly formatted GtkBuilder files can easily crash your program, possibly resulting 
+                in memory leaks.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>filename</var> - The name of the file to parse</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A positive value on success; 0 if an error occurred</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_add_from_resource ========================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_from_resource()
+                <span id="bkmkGtk_builder_add_from_resource">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    guint<br>
+                    gtk_builder_add_from_resource<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>resource_path</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Parses a resource file containing a GtkBuilder UI definition and merges it with the current contents of 
+                <var>builder</var>. More commonly though, <b>gtk_builder_new_from_resource</b> would be used instead.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If an error occurs, 0 will be returned and <var>error</var> will be assigned a <b>GError</b> from the 
+                GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_RESOURCE_ERROR domain. In such cases where an error is detected, 
+                <b>g_error</b> may be called.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>resource_path</var> - The path of the resource file to parse</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A positive value on success; 0 if an error occurred</p>
+                
+                <p class="footNote codeGrey">Available since: 3.4</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+               
+        <!-- gtk_builder_add_from_string =========================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_from_string()
+                <span id="bkmkGtk_builder_add_from_string">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    guint<br>
+                    gtk_builder_add_from_string<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>buffer</var>,</p>
+                    <p class="tab">gsize <var>length</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Parses a string (in <var>buffer</var>), containing a GtkBuilder UI definition and merges it with the 
+                current contents of <var>builder</var>. More commonly though, <b>gtk_builder_new_from_string</b> would 
+                be used instead.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If an error occurs, 0 will be returned and <var>error</var> will be assigned a <b>GError</b> from the 
+                GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_VARIANT_PARSE_ERROR domain. In such cases where an error is 
+                detected, <b>g_error</b> may be called.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>buffer</var> - The string to parse</p>
+                <p><var>length</var> - The length of buffer (may be -1 if the buffer is null terminated)</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or 
+                    NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A positive value on success; 0 if an error occurred</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+        
+        <!-- gtk_builder_add_objects_from_file ===================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_objects_from_file()
+                <span id="bkmkGtk_builder_add_objects_from_file">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    guint<br>
+                    gtk_builder_add_objects_from_file<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>filename</var>,</p>
+                    <p class="tab">gchar **<var>object_ids</var>,</p>
+                    <p class="tab">GError **<var>error</var>,</p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Parses a file containing a GtkBuilder UI definition and merges any objects with the current contents of 
+                <var>builder</var>. If an error occurs, 0 will be returned and <var>error</var> will be assigned a 
+                <b>GError</b> from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_FILE_ERROR domain. In such cases where an 
+                error is detected, <b>g_error</b> may be called.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If you are adding an object that depends on an object that is not its child (for instance a GtkTreeView 
+                that depends on its GtkTreeModel), you have to explicitly list all of them in <var>object_ids</var>.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>filename</var> - The name of the file to parse</p>
+                <p><var>object_ids</var> - Null terminated array of objects to build</p>
+                <p class="AG codeGrey"><span class="AG-array"></span>[array, zero-terminated=1]</p>
+                <p class="AG codeGrey"><span class="AG-element_type"></span>[element-type, utf8]</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A positive value on success; 0 if an error occurred</p>
+                
+                <p class="footNote codeGrey">Available since: 2.14</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_add_objects_from_resource ================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_objects_from_resource()
+                <span id="bkmkGtk_builder_add_objects_from_resource">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    guint<br>
+                    gtk_builder_add_objects_from_resource<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>resource_path</var>,</p>
+                    <p class="tab">gchar **<var>object_ids</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Parses a resource file containing a GtkBuilder UI definition and merges any objects with the current 
+                contents of <var>builder</var>. If an error occurs, 0 will be returned and <var>error</var> will be 
+                assigned a <b>GError</b> from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_RESOURCE_ERROR domain. In such 
+                cases where an error is detected, <b>g_error</b> may be called.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If you are adding an object that depends on an object that is not its child (for instance a GtkTreeView 
+                that depends on its GtkTreeModel), you have to explicitly list all of them in <var>object_ids</var>.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>resource_path</var> - The path of the resource file to parse</p>
+                <p><var>object_ids</var> - Null terminated array of objects to build</p>
+                <p class="AG codeGrey"><span class="AG-array"></span>[array, zero-terminated=1]</p>
+                <p class="AG codeGrey"><span class="AG-element_type"></span>[element-type, utf8]</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A positive value on success; 0 if an error occurred</p>
+                
+                <p class="footNote codeGrey">Available since: 3.4</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_add_objects_from_string =================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_objects_from_string()
+                <span id="bkmkGtk_builder_add_objects_from_string">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    guint<br>
+                    gtk_builder_add_objects_from_string<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>buffer</var>,</p>
+                    <p class="tab">gsize <var>length</var>,</p>
+                    <p class="tab">gchar **<var>object_ids</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Parses a string containing a GtkBuilder UI definition and merges any objects with the current contents 
+                of <var>builder</var>. If an error occurs, 0 will be returned and <var>error</var> will be assigned a 
+                <b>GError</b> from the GTK_BUILDER_ERROR or G_MARKUP_ERROR domain. In such cases where an error is 
+                detected, <b>g_error</b> may be called.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If you are adding an object that depends on an object that is not its child (for instance a GtkTreeView 
+                that depends on its GtkTreeModel), you have to explicitly list all of them in <var>object_ids</var>.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>buffer</var> - The string to parse</p>
+                <p><var>length</var> - The length of buffer (may be -1 if buffer is null terminated)</p>
+                <p><var>object_ids</var> - Null terminated array of objects to build</p> 
+                <p class="AG codeGrey"><span class="AG-array"></span>[array, zero-terminated=1]</p>
+                <p class="AG codeGrey"><span class="AG-element_type"></span>[element-type, utf8]</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A positive value on success; 0 if an error occurred</p>
+                
+                <p class="footNote codeGrey">Available since: 2.14</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_extend_with_template ====================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_extend_with_template()
+                <span id="bkmkGtk_builder_extend_with_template">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    guint<br>
+                    gtk_builder_extend_with_template<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GtkWidget *<var>widget</var>,</p>
+                    <p class="tab">GType <var>template_type</var>,</p>
+                    <p class="tab">const gchar *<var>buffer</var>,</p>
+                    <p class="tab">gsize <var>length</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Main private entry point for building composite container components from template XML. This is exported 
+                purely to let the gtk-builder-tool validate templates; applications should have no need to call this 
+                function.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>widget</var> - The widget that is being extended</p>
+                <p><var>template_type</var> - The type that the template is for</p>
+                <p><var>buffer</var> - The string to parse</p>
+                <p><var>length</var> - The length of buffer (may be -1 if buffer is null terminated)</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A positive value on success; 0 if an error occurred</p>
+                
+                <p class="footNote codeGrey">Available since: -/-</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_expose_object ============================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_expose_object()
+                <span id="bkmkGtk_builder_expose_object">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_builder_expose_object<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>name</var>,</p>
+                    <p class="tab">GObject *<var>object</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Add <var>object</var> to the <var>builder</var> object pool so it can be referenced just like any other 
+                object built by builder.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>name</var> - The name of the object exposed to the builder</p>
+                <p><var>object</var> - The object to expose</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 3.8</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_add_callback_symbol ======================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_callback_symbol()
+                <span id="bkmkGtk_builder_add_callback_symbol">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_builder_add_callback_symbol<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>callback_name</var>,</p>
+                    <p class="tab">GCallback <var>callback_symbol</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Adds the <var>callback_symbol</var> to the scope of <var>builder</var> under the given 
+                <var>callback_name</var>. Using this function overrides the behaviour of <b>gtk_builder_connect_signals</b> 
+                for any callback symbols that are added. Using this method allows for better encapsulation, as it does 
+                not require that callback symbols be declared in the global namespace.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>callback_name</var> - The name of the callback, as expected in the XML</p>
+                <p class="AG"><span class="AG-scope_async"></span><var>callback_symbol</var> - The callback pointer</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_add_callback_symbols ====================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_add_callback_symbols()
+                <span id="bkmkGtk_builder_add_callback_symbols">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_builder_add_callback_symbols<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>first_callback_name</var>,</p>
+                    <p class="tab">GCallback <var>first_callback_symbol</var>,</p>
+                    <p class="tab">...</p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                A convenience function to add many callbacks at one time, instead of calling 
+                <b>gtk_builder_add_callback_symbol</b> for each individual symbol.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>first_callback_name</var> - The name of the callback, as expected in the XML</p>
+                <p class="AG"><span class="AG-scope_async"></span>
+                   <var>first_callback_symbol</var> - The callback pointer</p>
+                <p><var>. . .</var>&nbsp;&nbsp; - &nbsp;&nbsp;An optional, additional list of callback name/symbol pairs, 
+                                      terminated with a NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- GtkBuilderConnectFunc ================================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">GtkBuilderConnectFunc()
+                <span id="bkmkGtkBuilderConnectFunc">&nbsp;</span>
+            </h4>
+
+            <div class="code">
+                <code>
+                    void<br>
+                    (*GtkBuilderConnectFunc)<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GObject *<var>object</var>,</p>
+                    <p class="tab">const gchar *<var>signal_name</var>,</p>
+                    <p class="tab">const gchar *<var>handler_name</var>,</p>
+                    <p class="tab">GObject *<var>connect_object</var>,</p>
+                    <p class="tab">GConnectFlags <var>flags</var>,</p>
+                    <p class="tab">gpointer <var>user_data</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                This is the signature of a function used to connect signals. It is used by the 
+                <b>gtk_builder_connect_signals</b> and <b>gtk_builder_connect_signals_full</b> methods. It is mainly 
+                intended for interpreted language bindings, but could be useful where the programmer wants more control 
+                over the signal connection process.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                Note that this function should only be called once, subsequent calls will do nothing.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var>        - A GtkBuilder object</p>
+                <p><var>object</var>         - A GObject to connect a signal to</p>
+                <p><var>signal_name</var>    - The name of the signal</p>
+                <p><var>handler_name</var>   - The name of the handler</p>
+                <p class="AG"><span class="AG-nullable"></span>
+                   <var>connect_object</var> - A GObject; or g_signal_connect_object; or null</p>
+                <p><var>flags</var>          - The GConnectFlags to use (if any)</p>
+                <p><var>user_data</var>      - User data (if any)</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                Nothing (void)
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_connect_signals =========================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_connect_signals()
+                <span id="bkmkGtk_builder_connect_signals">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">void gtk_builder_connect_signals( GtkBuilder *<var>builder</var>, gpointer <var>user_data</var> )</div>
+
+            <div>
+                This method is a simpler variation of <b>gtk_builder_connect_signals_full</b>. It uses symbols explicitly 
+                added to <var>builder</var> with prior calls to <b>gtk_builder_add_callback_symbol</b>. In the case that 
+                symbols are not explicitly added, it uses <b>GModule</b>’s introspective features (by opening the module 
+                NULL) to look at the application’s symbol table. From here it tries to match the signal handler names 
+                given in the interface description, with symbols in the application and then connect those signals.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                Note that this function should only be called once, subsequent calls will do nothing.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                Note also, that unless <b>gtk_builder_add_callback_symbol</b> is called for all signal callbacks which 
+                are referenced by the loaded XML, this function will require GModule to be supported on the platform. If 
+                you rely on GModule support to perform callback lookups in the symbol table, the following details 
+                should be observed:
+
+                <ul class="liDash">
+                    <li>when compiling applications for Windows, you must declare signal callbacks with G_MODULE_EXPORT, 
+                        or they will not be put in the symbol table</li>
+                    <li>on Linux and Unices, this is not necessary; applications should instead be compiled with the 
+                        <span class="mono">-Wl,--export-dynamic</span> CFLAGS, and 
+                        linked against gmodule-export-2.0
+                </ul>
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>user_data</var> - The user data to pass back with all the signals</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_connect_signals_full ====================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_connect_signals_full()
+                <span id="bkmkGtk_builder_connect_signals_full">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    void<br>
+                    gtk_builder_connect_signals_full<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GtkBuilderConnectFunc <var>func</var>,</p>
+                    <p class="tab">gpointer <var>user_data</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                This function can be thought of as the interpreted language binding version of 
+                <b>gtk_builder_connect_signals</b>, except that it does not require <b>GModule</b> to function.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p class="AG"><span class="AG-scope_call"></span>
+                    <var>func</var> - The function used to connect the signals
+                </p>
+                <p><var>user_data</var> - Arbitrary data that will be passed to the connection function</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h3 class="h3 underline codeGrey">Getting</h3>
+
+        <!-- gtk_builder_get_object ================================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_get_object()
+                <span id="bkmkGtk_builder_get_object">&nbsp;</span>
+            </h4>
+
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->            
+            <div class="code codeScrollFunc">GObject * gtk_builder_get_object( GtkBuilder *<var>builder</var>, const gchar *<var>name</var> )</div>
+
+            <div>
+                Gets the object named '<var>name</var>'. Note that this function does not increment the reference count 
+                of the returned object.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>name</var> - The name of the object to get</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>The object named '<var>name</var>', or NULL if it couldn't be found in the object tree</p>
+                <div class="AG codeGrey"><span class="AG-nullable"></span>[nullable]</div>
+                <div class="AG codeGrey"><span class="AG-transfer_none"></span>[transfer none]</div>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_get_objects =============================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_get_objects()
+                <span id="bkmkGtk_builder_get_objects">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">GSList * gtk_builder_get_objects( GtkBuilder *<var>builder</var> )</div>
+
+            <div>
+                Gets all objects that have been constructed by the <var>builder</var> object. Note that this function 
+                does not increment the reference count of the returned object(s).
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>A newly allocated GSList containing all the objects constructed by the GtkBuilder instance. It should 
+                    be freed by <b>g_slist_free</b> when finished with.</p>
+                <div class="AG codeGrey"><span class="AG-element_type"></span>[element-type GObject]</div>
+                <div class="AG codeGrey"><span class="AG-transfer_container"></span>[transfer container]</div>
+
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_get_application =========================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_get_application()
+                <span id="bkmkGtk_builder_get_application">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">GtkApplication * gtk_builder_get_application( GtkBuilder *<var>builder</var> )</div>
+
+            <div>
+                Gets the <b>GtkApplication</b> associated with the <var>builder</var> object. The GtkApplication is used 
+                for creating action proxies as requested from the XML that the builder is loading. By default, the builder 
+                uses the default application: the one from <b>g_application_get_default</b>. If you want to use another 
+                application for constructing proxies, use <b>gtk_builder_set_application</b>.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>The application being used by the <var>builder</var>, or NULL</p>
+                <div class="AG codeGrey"><span class="AG-nullable"></span>[nullable]</div>
+                <div class="AG codeGrey"><span class="AG-transfer_none"></span>[transfer none]</div>
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_get_translation_domain ==================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_get_translation_domain()
+                <span id="bkmkGtk_builder_get_translation_domain">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">const gchar * gtk_builder_get_translation_domain( GtkBuilder *<var>builder</var> )</div>
+
+            <div>
+                Gets the translation domain of the <var>builder</var> object.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>The translation domain. This string is owned by the builder object and 
+                    <b>must not be modified or freed</b>
+                </p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_get_type_from_name ======================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_get_type_from_name()
+                <span id="bkmkGtk_builder_get_type_from_name">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">GType gtk_builder_get_type_from_name( GtkBuilder *<var>builder</var>, const char *<var>type_name</var> )</div>
+
+            <div>
+                Looks up a type by name, mainly used when implementing the <b>GtkBuildable</b> interface on a type.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>type_name</var> - The type name to lookup</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>The GType found for <var>type_name</var>; or G_TYPE_INVALID if no type was found</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_lookup_callback_symbol ==================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_lookup_callback_symbol()
+                <span id="bkmkGtk_builder_lookup_callback_symbol">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    GCallback<br>
+                    gtk_builder_lookup_callback_symbol<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">const gchar *<var>callback_name</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Fetches a symbol previously added to <var>builder</var> with <b>gtk_builder_add_callback_symbols</b>. 
+                This function is applicable for use in language bindings, or for use-cases involving the customisation of 
+                signal connections using <b>gtk_builder_connect_signals_full</b>.
+                <br>
+                <p class="AG codeGrey"><span class="AG-skip"></span>[skip]</p>
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>callback_name</var> - The name of the callback</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <div class="AG">
+                    <span class="AG-nullable"></span>
+                    The callback symbol in builder for <span class="codeBlue">callback_name</span> , or NULL
+                </div>
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_value_from_string ========================================================================= -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_value_from_string()
+                <span id="bkmkGtk_builder_value_from_string">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    gboolean<br>
+                    gtk_builder_value_from_string<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GParamSpec *<var>pspec</var>,</p>
+                    <p class="tab">const gchar *<var>string</var>,</p>
+                    <p class="tab">GValue *<var>value</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                This function demarshalls a value from a string. This function calls <b>g_value_init</b> on the 
+                <var>value</var> argument, so it need not be initialised beforehand. This function can handle char, 
+                uchar, boolean, int, uint, long, ulong, enum, flags, float, double, string, GdkColor, GdkRGBA and 
+                GtkAdjustment type values. Support for GtkWidget type values is still to come.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If an error occurs, FALSE will be returned and <var>error</var> will be assigned a <b>GError</b> from the 
+                GTK_BUILDER_ERROR domain. In such cases where an error is detected, <b>g_error</b> may be called.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>pspec</var> - The GParamSpec for the property</p>
+                <p><var>string</var> - The string representation of the value</p>
+                <p class="AG"><span class="AG-out"></span><var>value</var> - The GValue to store the result in</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+                <div class="AG codeGrey"><span class="AG-transfer_full"></span>[transfer full]</div>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>TRUE on success</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_value_from_string_type ==================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_value_from_string_type()
+                <span id="bkmkGtk_builder_value_from_string_type">&nbsp;</span>
+            </h4>
+            
+            <div class="code">
+                <code>
+                    gboolean<br>
+                    gtk_builder_value_from_string_type<br>
+                    (<br>
+                    <p class="tab">GtkBuilder *<var>builder</var>,</p>
+                    <p class="tab">GType <var>type</var>,</p>
+                    <p class="tab">const gchar *<var>string</var>,</p>
+                    <p class="tab">GValue *<var>value</var>,</p>
+                    <p class="tab">GError **<var>error</var></p>
+                    )<br>
+                </code>
+            </div>
+
+            <div>
+                Like <b>gtk_builder_value_from_string</b>, this function demarshalls a value from a string, but takes a 
+                GType instead of GParamSpec. This function calls <b>g_value_init</b> on the <var>value</var> argument, 
+                so it need not be initialised beforehand.
+                <div class="paraSpace_10">&nbsp;</div>
+                
+                If an error occurs, FALSE will be returned and <var>error</var> will be assigned a GError from the 
+                GTK_BUILDER_ERROR domain.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>type</var> - The GType of the value</p>
+                <p><var>string</var> - The string representation of the value</p>
+                <p class="AG"><span class="AG-out"></span><var>value</var> - The GValue to store the result in</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>error</var> - Return location for an error, or NULL</p>
+                <div class="AG codeGrey"><span class="AG-transfer_full"></span>[transfer full]</div>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>TRUE on success</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h3 class="h3 underline codeGrey">Setting</h3>
+
+        <!-- gtk_builder_set_application =========================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_set_application()
+                <span id="bkmkGtk_builder_set_application">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">void gtk_builder_set_application( GtkBuilder *<var>builder</var>, GtkApplication *<var>application</var> )</div>
+
+            <div>
+                Sets the application associated with the <var>builder</var> object. You only need this function if there 
+                is more than one GApplication in your process. '<var>application</var>' cannot be passed as a NULL.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p><var>application</var> - A GtkApplication object</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 3.10</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- gtk_builder_set_translation_domain ==================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">gtk_builder_set_translation_domain()
+                <span id="bkmkGtk_builder_set_translation_domain">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">void gtk_builder_set_translation_domain( GtkBuilder *<var>builder</var>, const gchar *<var>domain</var> )</div>
+
+            <div>
+                Sets the translation domain of the builder object.<br>
+                See also “translation-domain”.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>builder</var> - A GtkBuilder object</p>
+                <p class="AG"><span class="AG-allow_none"></span><var>domain</var> - The translation domain or NULL</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>Nothing (void)</p>
+                
+                <p class="footNote codeGrey">Available since: 2.12</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <!-- GTK_BUILDER_WARN_INVALID_CHILD_TYPE =================================================================== -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">GTK_BUILDER_WARN_INVALID_CHILD_TYPE()
+                <span id="bkmkGTK_BUILDER_WARN_INVALID_CHILD_TYPE">&nbsp;</span>
+            </h4>
+            
+            <!--
+                Unfortunately these codeScroll boxes must be not be reformatted to 
+                look pretty in the code, otherwise the line breaks will show up.
+            -->
+            <div class="code codeScrollFunc">#define GTK_BUILDER_WARN_INVALID_CHILD_TYPE( <var>object</var>, <var>type</var> )</div>
+
+            <div>
+                This macro should be used to emit a warning about an unexpected type value in a GtkBuildable 'add_child' 
+                implementation.
+            </div>
+
+            <br>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Parameters</h4>
+                
+                <p><var>object</var> - The GtkBuildable on which the warning ocurred</p>
+                <p><var>type</var> - The unexpected type value</p>
+
+            </div>
+
+            <div>
+
+                <h4 class="h4 codeGrey underline">Returns</h4>
+                
+                <p>-/-</p>
+                
+                <p class="footNote codeGrey">Available since: -/-</p>
+
+            </div>
+
+            <div class="separate">&nbsp;</div><!-- separator -->
+
+        </div>
+
+        <h2 class="h2">Types and Values<span id="bkmkTypesValues">&nbsp;</span></h2>
+        
+        <div class="code codeScrollFunc">GtkBuilder<br>GtkBuilderError<br>GTK_BUILDER_ERROR</div>
+
+        <br>
+
+        <!-- GtkBuilder Type -->
+        <div>
+
+            <h4 class="h4 codeBlue bold funcLabel">GtkBuilder<span id="bkmkGtkBuilderType">&nbsp;</span></h4>
+
+            <div class="code codeScrollFunc">typedef  struct  _GtkBuilder  GtkBuilder</div>
+
+        </div>
+
+        <div class="paraSpace_15">&nbsp;</div>
+
+        <!-- GtkBuilderError Enum -->
+        <h4 class="h4 codeBlue bold">GtkBuilderError Enumeration<span id="bkmkEnumerations">&nbsp;</span></h4>
+
+        Error codes that identify various errors that can occur while using GtkBuilder.
+            
+        <h4 class="h4 codeGrey underline">Members</h4>
+        
+        <div class="codeScroll border notTOC">
+            <ol>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_DUPLICATE_ID</code></pre>
+                    <ul class="liDash"><li>An object id occurred twice</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_ATTRIBUTE</code></pre>
+                    <ul class="liDash"><li>GtkBuilder found an attribute that it doesn’t understand</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_ID</code></pre>
+                    <ul class="liDash"><li>An object id is unknown</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_PROPERTY</code></pre>
+                    <ul class="liDash"><li>The specified property is unknown for the object class</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_SIGNAL</code></pre>
+                    <ul class="liDash"><li>The specified signal is unknown for the object class</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_TAG</code></pre>
+                    <ul class="liDash"><li>GtkBuilder found a tag that it doesn’t understand</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_TYPE_FUNCTION</code></pre>
+                    <ul class="liDash"><li>A type function attribute didn’t name a function that returns a GType</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_INVALID_VALUE</code></pre>
+                    <ul class="liDash"><li>GtkBuilder couldn’t parse some attribute value</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_MISSING_ATTRIBUTE</code></pre>
+                    <ul class="liDash"><li>An attribute that is required by GtkBuilder was missing</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_MISSING_PROPERTY_VALUE</code></pre>
+                    <ul class="liDash"><li>A required property value was missing</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_OBJECT_TYPE_REFUSED</code></pre>
+                    <ul class="liDash"><li>The object type is either of the same type or a type derived via XML extend</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_TEMPLATE_MISMATCH</code></pre>
+                    <ul class="liDash"><li>The wrong type was specified in a composite class’s template XML</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_UNHANDLED_TAG</code></pre>
+                    <ul class="liDash"><li>The input contained a tag that GtkBuilder can’t handle</li></ul>
+                </li>
+                <li><pre class="preClose codeBlue"><code>GTK_BUILDER_ERROR_VERSION_MISMATCH</code></pre>
+                    <ul class="liDash"><li>The input file requires a newer version of GTK</li></ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="paraSpace_15">&nbsp;</div>
+                
+        <!-- GTK_BUILDER_ERROR Type -->
+        <h4 class="h4 codeBlue bold">GTK_BUILDER_ERROR<span id="bkmkErrorTypes">&nbsp;</span></h4>
+
+        <div class="code codeScrollFunc">#define GTK_BUILDER_ERROR( gtk_builder_error_quark() )</div>
+
+        <div class="paraSpace_25">&nbsp;</div>
+
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <!-- Property Details -->
+        <h2 class="h2">Property Details<span id="bkmkPropertyDetails">&nbsp;</span></h2>
+                
+        <!-- Translation-Domain Property -->
+        <h4 class="h4 codeBlue bold">The “translation-domain” property
+            <span id="bkmkPropertyDetails">&nbsp;</span>
+        </h4>
+
+        <div class="code codeScrollFunc">“translation-domain”  gchar  *</div>
+
+        <div>
+            The translation domain is used when translating property values that have been marked as translatable 
+            in interface descriptions. If the translation domain is NULL, GtkBuilder uses <b>gettext</b>, 
+            otherwise <b>g_dgettext</b>.
+        </div>
+
+        <br>
+
+        <div>
+
+            <h4 class="h4 codeGrey underline">Parameters</h4>
+            
+            <p><var>Owner</var> - GtkBuilder</p>
+            <p><var>Flags</var> - Read / Write</p>
+            <p><var>Default value</var> - NULL</p>
+
+        </div>
+
+        <div>
+
+            <p class="footNote codeGrey">Available since: 2.12</p>
+
+        </div>
+
+        <div class="paraSpace_15">&nbsp;</div>
+
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <h2 class="h2">Object Hierarchy<span id="bkmkObjectHierarchy">&nbsp;</span></h2>
+
+        <div class="code codeScrollFunc">GObject<br>   - GtkBuilder</div>
+        
+        <h2 class="h2">Includes<span id="bkmkIncludes">&nbsp;</span></h2>
+
+        <div class="code codeScrollFunc">#include &lt;gtk/gtk.h&gt;</div>
+
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+    <div></div>
+
+</div>

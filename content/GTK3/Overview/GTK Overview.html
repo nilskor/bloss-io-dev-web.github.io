@@ -1,0 +1,221 @@
+
+<div class="gridContainer slicedAs_3c_responsive doco">
+
+    <div></div>
+
+    <div>
+
+        <section class="section-header"><!-- Table of Contents -->
+
+            <div class="gridContainer slicedAs_titleBlock">
+
+                <div class="pageTitle">
+                    <h1 class="h1">GTK Overview</h1>
+                </div>
+
+                <div class="pageDesc">
+                    <div>
+                        GTK is a <a class="external" target="_blank" href="https://en.wikipedia.org/wiki/Widget_toolkit">widget toolkit</a> 
+                        library for creating graphical user interfaces (GUI). Each user interface (UI) is built by adding 
+                        buttons, text labels, input fields, drop down menus, and other 'widgets' to a window. It is also 
+                        a cross-platform development tool that is designed to support many languages via bindings, such 
+                        as Python, Javascript, C++, Rust, Perl, D and many more. It does this by generating a complete 
+                        description of its API as part of its build, called 'GObject Introspection'. This introspection 
+                        data is available both as an XML file and as a binary format, that can then be loaded using a 
+                        shared library.
+                    </div>
+                </div>
+            
+                <div class="pageToC">
+                    <div class="flexbox flexToC">
+                        <div class="toc-container">
+                            <div class="toc-title">Contents&#9
+                                <span id="toggle" class="toc" onclick="toggleTOC()">(<span>hide</span>)</span>
+                            </div>
+                            <ol id="toc" style="display: inline-block;">
+                                <li><a href="#bkmkGettingStarted">Getting Started with GTK</a></li>
+                                <li><a href="#bkmkMailinglists">Mailing lists and bug reports</a></li>
+                                <li><a href="#bkmkCommonQuestions">Common Questions</a></li>
+                                <li><a href="#bkmkDrawingModel">The GTK Drawing Model</a></li>
+                                <li><a href="#bkmkInputEventHandling">The GTK Input and Event Handling Model</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flexbox fCenter">
+                <img width="100%" src="../../../assets/GTK_software_architecture.svg"></img>
+            </div>
+        
+            <div class="attribution">
+                By Shmuel Csaba Otto Traian, 
+                <a   href="https://creativecommons.org/licenses/by-sa/4.0" 
+                    title="Creative Commons Attribution-Share Alike 4.0" 
+                target="_blank">CC BY-SA 4.0</a>
+                , 
+                <a href="https://commons.wikimedia.org/w/index.php?curid=33921004" target="_blank">Link</a>
+            </div>
+
+            <div class="lineHeight_40rem">&nbsp;</div>
+
+        </section>
+        
+        <div class="separate">&nbsp;</div><!-- separator -->
+
+        <article class="article-main"><!-- article body "article-main" -->
+
+            <h2 class="h2">Summary</h2>
+
+            <div>
+                The GTK programming interface is based on Object Orientation; widgets are organized in a hierarchy of 
+                classes—for instance, the window widget is also a specialised container, called a “bin”, that can hold 
+                at most one child widget. A window will be able to use functions that pertain to the widget, the 
+                container, the "bin", and the window classes.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                If you are creating complex user interfaces, it is recommended to describe the structure of your window 
+                using the XML description format, instead of assembling it manually. <a data-id='page237'>GtkBuilder</a> 
+                has this XML description format, and you can also use a visual UI editor that will generate the XML for 
+                you (eg. <a class="external" target="_blank" href="https://glade.gnome.org/">Glade</a>).
+                <div class="paraSpace_10">&nbsp;</div>
+
+                GTK is event-driven. The toolkit listens for events such as a pointer click on a button, or a window 
+                resize, and notifies the widgets in your application.
+                <div class="paraSpace_10">&nbsp;</div>
+
+                GTK is dependent on a number of other libraries, namely:
+                <br>
+            </div>
+
+            <div id="GTKDependencies">
+                <ul class="liDash">
+                    <li>GLib:
+                        <ul class="liNone">
+                            <li>
+                                A general-purpose utility library, not specific to graphical user interfaces. GLib 
+                                provides many useful data types, macros, type conversions, string utilities, file 
+                                utilities, a main loop abstraction, and so on.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>GObject:
+                        <ul class="liNone">
+                            <li>
+                                A library that provides a type system, a collection of fundamental types including an 
+                                object type, a signal system.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>GIO:
+                        <ul class="liNone">
+                            <li>
+                                A modern, easy-to-use VFS API including abstractions for files, drives, volumes, stream 
+                                IO, as well as network programming and DBus communication.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>Cairo:
+                        <ul class="liNone">
+                            <li>
+                                Cairo is a 2D graphics library with support for multiple output devices.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>Pango:
+                        <ul class="liNone">
+                            <li>
+                                Pango is a library for internationalized text handling. It centers around the PangoLayout 
+                                object, representing a paragraph of text. Pango provides the engine for 
+                                <a href="/content/GTK3/Widgets Objects/Multiline_Text/GtkTextView.html">GtkTextView</a>, 
+                                <a href="/content/GTK3/Widgets Objects/Display_Widgets/GtkLabel.html">GtkLabel</a>, 
+                                <a href="/content/GTK3/Widgets Objects/Numeric_Text_Entry/GtkEntry.html">GtkEntry</a>, 
+                                and other widgets that display text.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>ATK:
+                        <ul class="liNone">
+                            <li>
+                                ATK is the Accessibility Toolkit. It provides a set of generic interfaces allowing 
+                                accessibility technologies to interact with a graphical user interface. For example, a 
+                                screen reader uses ATK to discover the text in an interface and read it to blind users.  
+                                GTK widgets have built-in support for accessibility using the ATK framework.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>GdkPixbuf:
+                        <ul class="liNone">
+                            <li>
+                                This is a small library which allows you to create 
+                                <a href="/content/GDK_Pixbuf/API_Reference/GdkPixbuf_Structure.html#GdkPixbuf">GdkPixbuf</a> 
+                                ("pixel buffer") objects from image data or image files. Use a GdkPixbuf in combination 
+                                with <a href="/content/GTK3/Widgets Objects/Display_Widgets/GtkImage.html">GtkImage</a> 
+                                to display images.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>GDK:
+                        <ul class="liNone">
+                            <li>
+                                GDK is the abstraction layer that allows GTK to support multiple windowing systems. GDK 
+                                provides window system facilities on X11, Windows, and OS X.
+                            </li>
+                        </ul>
+                    </li><br>
+                    <li>GTK:
+                        <ul class="liNone">
+                            <li>
+                                The GTK library itself contains widgets, that is, GUI components such as 
+                                <a href="/content/GTK3/Widgets Objects/Buttons_Toggles/GtkButton.html">GtkButton</a> or 
+                                GtkTextView.
+                            </li>
+                        </ul>
+                    </li><br>
+                </ul>
+            </div>
+                        
+            <h2>Index</h2>
+        
+            <h3><a id='bkmkGettingStarted' data-id='page353'>Getting Started with GTK</a></h3>
+            
+            <div>
+                Documentation to help you get started with GTK programming.
+            </div>
+            
+            <h3><a id='bkmkMailinglists' data-id='page359'>Mailing lists and bug reports</a></h3>
+            
+            <div>
+                Getting help with GTK.
+            </div>
+            
+            <h3><a id='bkmkCommonQuestions' data-id='page358'>Common Questions</a></h3>
+            
+            <div>
+                Find answers to common questions in the GTK manual.
+            </div>
+            
+            <h3><a id='bkmkDrawingModel' data-id='page360'>The GTK Drawing Model</a></h3>
+            
+            <div>
+                The GTK drawing model in detail.
+            </div>
+            
+            <h3><a id='bkmkInputEventHandling' data-id='page357'>The GTK Input and Event Handling Model</a></h3>
+            
+            <div>
+                GTK input and event handling in detail.
+            </div>
+
+        </article>
+
+        <br>
+        <br>
+        <br>
+ 
+    </div>
+
+    <div></div>
+
+</div>

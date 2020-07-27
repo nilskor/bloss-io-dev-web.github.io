@@ -1,0 +1,664 @@
+
+/** NOTICE:
+ *
+ * Do NOT pollute or cross-contaminate styles between components on the page.
+ *
+ * Better to have all attributes / properties belonging to an element / component
+ * in one place than scattered or mixed-in or intertwined.
+ *
+ * The 'display' property cannot be animated.
+ *
+ */
+
+/** GLOBALS -------------------------------------------------------------------------------------------------
+ *
+ *  Use the root object to park any global variables. 
+ */
+/** Reminder: The 'display' property cannot be animated. */
+
+:root
+{
+    --background-color   : rgba(255, 255, 255, 1.0);       /* WebIDE: only used for layout guidance      */
+    --navBarHeight       : 50px;
+    --navBarPanelTimeout : 400ms;
+    --navBarBgColor      : rgba(0,0,0,1);
+    --navBarTextColor    : rgba(255,255,255,1);
+    --navBarPanelBgColor : lightgrey;
+    --subNavbarHeight    : 100px;
+    --viewportFactor     : 45vh;
+    --heroImage          : url("/assets/choc-van-yum.jpg");
+    --footerHeight       : 60px;
+    --theme-font         : 'Noto Sans', sans-serif;
+    --docoTextColor      : #2e3440;
+
+}
+
+*
+{
+    /*border          : 1px dashed lightgrey;          /* WebIDE: only used for showing invisibles ¶ */
+    /*background-color: rgba(135, 206, 255, 0.65);     /* WebIDE: only used for layout guidance      */
+    font-family: var(--theme-font);
+    word-wrap: break-word;
+
+    /* Responsive Font Calculation - https://stackoverflow.com/a/40818906/7791211 */
+    --responsive: calc((var(--min-font) * 1px) + (var(--max-font) - var(--min-font)) * ((100vw - 320px) / (1919 - 320))); /* Ranges from 421px to 1199px */
+
+}
+
+/** FrameWork Policy------------ START ---------------
+ *
+ * Refer to: https://jsfiddle.net/hcarleton/1jh1cybc/10/ 
+ *
+ * the following code allows setting an element that is 'positioned: absolute'
+ * to use the 'width: 100%' to be equal to the body width.
+ *
+ * MDN Note: It is often useful to set box-sizing to border-box to layout elements.
+ * This makes dealing with the sizes of elements much easier, and generally 
+ * eliminates a number of pitfalls you can stumble on while laying out your content.
+
+ * On the other hand, when using position: relative or position: absolute, use of 
+ * box-sizing: content-box allows the positioning values to be relative to the
+ * content, and independent of changes to border and padding sizes, which is
+ * sometimes desirable.
+ */
+*, *::before, *::after
+{
+    box-sizing: inherit;
+    position: relative;
+}
+html
+{
+    box-sizing: border-box;
+}
+/** FrameWork Policy------------  END  --------------- */
+
+
+/** LAYERS --------------------------------------------------------------------------------------------------
+ *
+ * All the layers are here: z-indexes
+ * Component information is allowed and likely to be here.
+ */
+
+.aNavBar          { z-index: 9; } /** Component Navigation Bar or NavBar - it has the most right of way.      */
+.navbarChildPanel { z-index: 8; } /** Component PanelSlider                                                   */
+.grandchildPanel  { z-index: 7; } /** Component PanelSlider                                                   */
+#overlay          { z-index: 6; } /** Curtain                                                                 */
+#heroText         { z-index: 5; } /** Hero text                                                               */
+#ht436            { z-index: 5; } /** Hero text                                                               */
+.doParallax       { z-index: 4; } /** Parallax effect applied to elements or components                       */
+
+
+/** PAGE LAYOUT FRAMEWORK ----------------------------------------------------------------------------------- */
+/** Component information is NOT allowed here. */
+
+body
+{
+    margin: 0px;
+    /*height: 2200px;                                     /* ONLY for Testing */
+}
+body
+{
+    /*background-color : rgba(255, 255, 230, 1);     /* WebIDE: this color only for layout guidance  */
+    /*filter           : blur( 3px );                /* WebIDE: for demonstration only               */
+}
+/**
+ *  The body selector also appears in the
+ *  footer component to make it sticky
+ */
+
+.displayNone { display: none; }
+
+/* headers */
+h1                        { font-size: 4em; }
+h3 > a[href^="#"]         { color: blue;    text-decoration: none; }
+h3 > a[href^="#"]:visited { color: #551A8B; text-decoration: none; }
+h3 > a[href^="#"]:hover   { text-decoration: underline; }
+
+a
+{
+    color: rgb(18, 118, 180);     /* codeBlue */
+    text-decoration: underline;
+}
+a:hover, [data-forcedClick]:hover
+{
+    cursor: pointer;
+}
+a:visited
+{
+    color: purple;
+}
+
+
+/* grid-based layout container           */
+.gridContainer
+{
+    display : grid;
+    /*gap     : 5px;                                 /* WebIDE: this gap only for layout guidance     */
+    /*padding : 5px;                                 /* WebIDE: this padding only for layout guidance */
+}
+.gridContainer *
+{
+    /*text-align       : center;                   /* WebIDE: this alignment only for layout guidance  */
+    /*background-color : white;                    /* WebIDE: this color only for layout guidance      */ 
+}
+
+.gridContainer.slicedAs_2c11         { grid-template-columns: auto auto;               }
+.gridContainer.slicedAs_2c12         { grid-template-columns: 1fr 2fr;                 }
+.gridContainer.slicedAs_2c13         { grid-template-columns: 1fr 3fr;                 }
+.gridContainer.slicedAs_2c58         { grid-template-columns: 5fr 8fr;                 }
+.gridContainer.slicedAs_3c111        { grid-template-columns: 1fr 1fr 1fr;             }
+.gridContainer.slicedAs_3c112        { grid-template-columns: 1fr 1fr 2fr;             }
+.gridContainer.slicedAs_3c121        { grid-template-columns: 1fr 2fr 1fr;             }
+.gridContainer.slicedAs_3c131        { grid-template-columns: 1fr 3fr 1fr;             }
+.gridContainer.slicedAs_3c151        { grid-template-columns: 1fr 5fr 1fr;             }
+.gridContainer.slicedAs_4c1111       { grid-template-columns: 1fr 1fr 1fr 1fr;         }
+.gridContainer.slicedAs_5c11111      { grid-template-columns: 1fr 1fr 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_5c21111      { grid-template-columns: 2fr 1fr 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_6c111111     { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; }
+
+.gridContainer.slicedAs_3c111x3r111   { grid-template-columns: 1fr 1fr 1fr; 
+                                        grid-template-rows   : 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_3c141x3r181   { grid-template-columns: 1fr 4fr 1fr; 
+                                        grid-template-rows   : 1fr 8fr 1fr;     }
+.gridContainer.slicedAs_3c141x3r11001 { grid-template-columns: 1fr 4fr 1fr; 
+                                        grid-template-rows   : 1fr 100fr 1fr;   }
+.gridContainer.slicedAs_4c1111x3r111  { grid-template-columns: 1fr 1fr 1fr 1fr; 
+                                        grid-template-rows   : 1fr 1fr 1fr;     }
+.gridContainer.slicedAs_3c131x3r1453  { grid-template-columns: 1fr 3fr 1fr; 
+                                        grid-template-rows   : 1fr 45fr 3fr;    }
+.gridContainer.slicedAs_3c131x3r1453  { grid-template-columns: 1fr 3fr 1fr; 
+                                        grid-template-rows   : 1fr 45fr 3fr;    }
+
+/* using the linear equation y = mx + b or y = -45.71.x + 4663 */
+.gridContainer.slicedAs_3c_responsive
+{
+    grid-template-columns: calc( ((98 - ((var(--docoWidth) - 4663) / -45.8)) / 2) * 1vw )
+                           calc(((var(--docoWidth) - 4663) / -45.8) * 1vw)
+                           calc( ((98 - ((var(--docoWidth) - 4663) / -45.8)) / 2) * 1vw );
+    grid-template-areas: '. . .';
+}
+/* or 1fr 3fr 1fr */
+@media screen and (min-width: 1920px) /* 1920x1080 */
+{
+    .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 3fr 1fr; }
+}
+
+.gridContainer.slicedAs_3r_hero
+{
+    grid-template-rows: calc( ( 100vh - var(--navBarHeight) ) * 0.10 )
+                        calc( ( 100vh - var(--navBarHeight) ) * 0.45 )
+                        calc( ( 100vh - var(--navBarHeight) ) * 0.45 );
+    grid-template-areas: '. . . . . . . . .';
+}
+
+
+/* flexbox layout container           */
+.flexbox    { display: flex;           }
+/* textbox type - grid or flex        */
+.g-textBox  { display: grid;           }
+.f-textBox  { display: flex;           }
+/* flex top-to-bottom                 */
+.middle     { align-items: center;     }
+.top        { align-items: start;      } /* left  */
+.bottom     { align-items: end;        } /* right */
+.child      { height: 100%;            } /* use this when the textBox is inside a parent <div> etc. */
+/* grid-only left-to-right            */
+.gCenter    { text-align: center;      }
+.gLeft      { text-align: left;        }
+.gRight     { text-align: right;       }
+/* grid top-to-bottom                 */
+.gMiddle    { align-content: center;   }
+.gTop       { align-content: start;    } /* left  */
+.gBottom    { align-content: end;      } /* right */
+/* flex-only left-to-right            */
+.fCenter      { justify-content: center;       }
+.fLeft        { justify-content: flex-start;   }
+.fRight       { justify-content: flex-end;     }
+.fSpaceAround { justify-content: space-around; }
+
+
+/** COMPONENTS ==================================================================================================================
+  * @description
+  * Like Angular, this framework here attempts to separate out the components 
+  * from one another, such that maintenance becomes 'easier'.
+  *
+  * =============================================================================================================================
+  */
+/** Reminder: The 'display' property cannot be animated. */
+
+
+/** Common styling for some components. This is NOT
+ *  recommended as it breaks the Framework Policy guidelines.
+ *
+ *  eg. Components and all of their functionality and styling shall be separated.
+ */
+.aNavBar       > button,
+#subNavigation > button,
+#gtk3-doco     > button
+{
+    width  : 100%;
+    cursor : pointer;
+    border : none;
+}
+#subNavigation > div,
+#gtk3-doco     > div
+{
+    /* flex_jc_SA_ai_C */
+    display: flex; justify-content: space-around; align-items: center;
+}
+.aNavBar       > a,
+#subNavigation > a,
+#gtk3-doco     > a
+{
+    text-align      : center;
+    text-decoration : none;
+    border          : none;
+    outline         : none;
+}
+
+
+/** Component Navigation Bar or NavBar ============================================================
+ * Stuck to the top of the page by virtue of the
+ * 'position: sticky'. Has the highest z-index,
+ * making sure its layer stays on top.
+ */
+/** A Container with only one unique instance */
+ .aNavBar
+{
+    position: sticky;
+    top    : 0px;
+    height : var(--navBarHeight);
+    margin-top: 0px;
+}
+.aNavBar *
+{
+    background-color : var( --navBarBgColor   );
+    color            : var( --navBarTextColor );
+}
+.aNavBar > a
+{
+    height          : var(--navBarHeight);
+    line-height     : var(--navBarHeight);
+    font            : 15px/var(--navBarHeight) var(--theme-font);
+}
+
+
+/** Component NavbarChildPanel Slider =============================================================
+ * 
+ * @method panelSlider
+ * @description
+ * This method has a simple task of toggling a class on and off,     
+ * onto or from the given (passed in) element (thisElementID).      
+ * Additionally, it checks any peers for the same attributes and    
+ * will first "turn them off" before toggling this current element.  
+ * Requirements:                                                         
+ * An element with class="navbarChildPanel" assigned to it.          
+ * Two CSS classes that control the behaviour, namely:               
+ * - navbarChildPanel
+ * - panelShowing                                                    
+ * 
+ * The overall effect is a sliding set of panels, whereby only one   
+ * is showing at any point in time.
+ * @param {String} thisElementID 
+ */
+/** A Container with multiple instances */
+.navbarChildPanel
+{
+    position  : fixed;
+    top       : -135px;
+    height    : var( --subNavbarHeight );
+    width     : var( --navBarWidth );
+    transition: var( --navBarPanelTimeout ) ease-in-out;
+}
+.navbarChildPanel *
+{
+    /*background-color: var( --navBarPanelBgColor ); /* */
+}
+.panelShowing
+{
+    top: var( --navBarHeight );
+}
+
+
+/** subNavigation, an instance of NavbarChildPanel Slider =========================================
+ * 
+ * Used to hold any sub-menus under the navigation bar
+ */
+/** An instance of the Slider menu container */
+#subNavigation *
+{
+    background-color : var( --navBarPanelBgColor ); /* */
+    border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+}
+#subNavigation > a
+{
+    height          : calc( var(--subNavbarHeight) / 2 );
+    line-height     : calc( var(--subNavbarHeight) / 2 );
+    font            : 15px/calc( var(--subNavbarHeight) / 2 ) var(--theme-font);
+}
+/** grid-area key/value pairs
+ * where gaSN is: grid-area Sub-Navigation
+ */
+.gaSN_top    { grid-area: snTitle; }
+.gaSN_col1   { grid-area: col1;    }
+.gaSN_col2   { grid-area: col2;    }
+.gaSN_col3   { grid-area: col3;    }
+.gaSN_col4   { grid-area: col4;    }
+.gridContainer.slicedAs_SubNav
+{
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    grid-template-rows   : 1fr 1fr;
+    grid-template-areas  :
+        'snTitle snTitle snTitle snTitle'
+         'col1    col2    col3    col4';
+}
+
+
+/** Component GrandChildPanel Slider ==============================================================
+ * 
+ * @method panelSlider
+ * @description
+ * This method has a simple task of toggling a class on and off,     
+ * onto or from the given (passed in) element (thisElementID).      
+ * Additionally, it checks any peers for the same attributes and    
+ * will first "turn them off" before toggling this current element.  
+ * Requirements:                                                         
+ * An element with class="grandchildPanel" assigned to it.          
+ * Two CSS classes that control the behaviour, namely:               
+ * - grandchildPanel
+ * - grandchildPanelShowing                                                    
+ * 
+ * The overall effect is a sliding set of panels, whereby only one   
+ * is showing at any point in time.
+ * @param {String} thisElementID 
+ */
+/** A Container with multiple instances */
+.grandchildPanel
+{
+     position  : fixed;
+     top       : -135px;
+     height    : var( --subNavbarHeight );
+     width     : var( --navBarWidth );
+     transition: var( --navBarPanelTimeout ) ease-in-out;
+}
+.grandchildPanelShowing
+{
+     top: calc( var( --navBarHeight ) + var( --subNavbarHeight ) );
+}
+/** gtk3-doco, an instance of GrandChildPanel Slider ==============================================
+ * 
+ * Used to hold the menus for gtk3 documentation
+ */
+/** An instance of the Slider menu container */
+#GTK3 *,
+#GDK *
+{
+    background-color : var( --navBarPanelBgColor ); /* */
+    border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+}
+#GTK3 > a,
+#GDK  > a
+{
+    height          : var(--subNavbarHeight);
+    line-height     : var(--subNavbarHeight);
+    font            : 15px/var(--subNavbarHeight) var(--theme-font);
+}
+
+.doco
+{
+    /*border     : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+    /*text-align : justify; /* */
+    color      : var( --docoTextColor );
+}
+.doco h1
+{
+    text-align: left;
+}
+/*
+.doco a
+{
+    color: rgb(18, 118, 180);     /* codeBlue 
+    text-decoration: underline;
+}
+.doco a:hover
+{
+    cursor: pointer;
+}
+.doco a:visited
+{
+    color: purple;
+}
+*/
+
+/** The main splash content =======================================================================
+ * the so-called Hero image or text
+ */
+.heroImage
+{
+    left    : 0px;
+    width   : 100%;    /* see StaticAncestor code above */
+}
+.heroImage *
+{
+    /*border  : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+}
+/* canvas properties */
+.canvas
+{
+    height: calc( 100vh - var( --navBarHeight ) );
+    box-shadow: 10px 10px 10px 10px #000, 0px 10px 20px 20px black;
+}
+/** grid-area key/value pairs
+ * where gaHI is: grid-area Hero Image
+ */
+.gaHI_top    { grid-area: header; }
+.gaHI_left   { grid-area: left;   }
+.gaHI_middle { grid-area: image;  }
+.gaHI_right  { grid-area: right;  }
+.gaHI_bottom { grid-area: footer; }
+
+.gridContainer.slicedAs_HeroImage
+{
+    grid-template-columns: 1fr 48fr 1fr;
+    grid-template-rows   : calc( 10 * ( var(--viewportFactor) / 45 ) ) var(--viewportFactor) var(--viewportFactor);
+    grid-gap: 10px;
+    grid-template-areas:
+        'header header header'
+        'left   image  right'
+        'footer footer footer';
+}
+#heroImage
+{
+    background-image: var( --heroImage );
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#heroText
+{
+    color: white;
+    --max-font : 110;
+    --min-font : 70;
+    font-size : var(--responsive);
+    font-weight: 700;
+}
+
+
+/** The "text-box" for the main content ===========================================================
+ */
+/*
+ #injectHere
+{
+    color: black;*/
+    /* flex_jc_SA_ai_FS */
+/*    display: flex; justify-content: space-around; align-items: flex-start;    
+}*/
+.injectorPageWrap
+{
+    min-height: 100%;
+    margin-bottom: calc( 0 - var( --footerHeight ) ); 
+}
+.injectorPageWrap:after
+{
+    content: none;
+    display: block;
+}
+
+
+/** The footer ====================================================================================
+ */
+.footer, .injectorPageWrap:after
+{
+    height: var( --footerHeight ); 
+}
+body /* makes the sticky footer work */
+{
+    /* START - sticky footer */
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* END - sticky footer */
+}
+.footer
+{
+    background: lightgrey;
+}
+.footer > div,
+.footer > div > a
+{
+    padding-left : 20px;
+    height       : var(--footerHeight);
+    line-height  : var(--footerHeight);
+    font         : 15px/var(--footerHeight) var(--theme-font);
+    color        : black;
+}
+
+
+/* testing */
+
+.featureLayout
+{
+    
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.featureLayout:nth-child(odd)
+{
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    flex-direction: row-reverse;
+}
+
+.featureLayout__item
+{
+    padding: 1rem;
+}
+
+.featureLayout__item--body
+{
+    -webkit-box-flex: 9999;
+    flex-grow: 9999;
+    flex-basis: 15rem;
+}
+.featureLayout__item--figure
+{
+    min-width: 15rem;
+    max-width: max-content;
+    flex-basis: 15rem;
+    -webkit-box-flex: 9999;
+    flex-grow: 9999;
+}
+
+.featureLayout__item--figure img
+{
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+}
+
+.jsAvailable #overlay
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 1;
+    transition: opacity 90ms;
+}
+
+/** Reference material - CSS Selectors -----------------------------------------------------------------------------------------------------------------
+ *
+ *  Copyright 1999-2020 by Refsnes Data (www.w3schools.com)
+ *  Page from https://www.w3schools.com/cssref/css_selectors.asp
+ *
+ *  Selector 	            Example 	Example description
+ *  ----------------------------------------------------------------------------------------------------------------------------------------------------
+ *
+ *  .class 	                .intro 	                Selects all elements with class="intro"
+ *  .class1.class2 	        .name1.name2 	        Selects all elements with both name1 and name2 set within its class attribute
+ *  .class1 .class2 	    .name1 .name2 	        Selects all elements with name2 that is a descendant of an element with name1
+ *  #id 	                #firstname 	            Selects the element with id="firstname"
+ *  * 	                    * 	                    Selects all elements
+ *  element 	            p 	                    Selects all <p> elements
+ *  element.class 	        p.intro 	            Selects all <p> elements with class="intro"
+ *  element,element 	    div, p 	                Selects all <div> elements and all <p> elements
+ *  element element 	    div p 	                Selects all <p> elements inside <div> elements
+ *  element>element 	    div > p 	            Selects all <p> elements where the parent is a <div> element
+ *  element+element 	    div + p 	            Selects all <p> elements that are placed immediately after <div> elements
+ *  element1~element2 	    p ~ ul 	                Selects every <ul> element that are preceded by a <p> element
+ *  [attribute] 	        [target] 	            Selects all elements with a target attribute
+ *  [attribute=value] 	    [target=_blank] 	    Selects all elements with target="_blank"
+ *  [attribute~=value] 	    [title~=flower] 	    Selects all elements with a title attribute containing the word "flower"
+ *  [attribute|=value] 	    [lang|=en] 	            Selects all elements with a lang attribute value starting with "en"
+ *  [attribute^=value] 	    a[href^="https"] 	    Selects every <a> element whose href attribute value begins with "https"
+ *  [attribute$=value] 	    a[href$=".pdf"] 	    Selects every <a> element whose href attribute value ends with ".pdf"
+ *  [attribute*=value] 	    a[href*="w3schools"] 	Selects every <a> element whose href attribute value contains the substring "w3schools"
+ *  :active 	            a:active 	            Selects the active link
+ *  ::after 	            p::after 	            Insert something after the content of each <p> element
+ *  ::before 	            p::before 	            Insert something before the content of each <p> element
+ *  :checked 	            input:checked 	        Selects every checked <input> element
+ *  :default 	            input:default 	        Selects the default <input> element
+ *  :disabled 	            input:disabled 	        Selects every disabled <input> element
+ *  :empty 	                p:empty 	            Selects every <p> element that has no children (including text nodes)
+ *  :enabled 	            input:enabled 	        Selects every enabled <input> element
+ *  :first-child 	        p:first-child 	        Selects every <p> element that is the first child of its parent
+ *  ::first-letter 	        p::first-letter 	    Selects the first letter of every <p> element
+ *  ::first-line 	        p::first-line 	        Selects the first line of every <p> element
+ *  :first-of-type 	        p:first-of-type 	    Selects every <p> element that is the first <p> element of its parent
+ *  :focus 	                input:focus 	        Selects the input element which has focus
+ *  :hover 	                a:hover 	            Selects links on mouse over
+ *  :in-range 	            input:in-range 	        Selects input elements with a value within a specified range
+ *  :indeterminate 	        input:indeterminate 	Selects input elements that are in an indeterminate state
+ *  :invalid 	            input:invalid 	        Selects all input elements with an invalid value
+ *  :lang(language) 	    p:lang(it) 	            Selects every <p> element with a lang attribute equal to "it" (Italian)
+ *  :last-child 	        p:last-child 	        Selects every <p> element that is the last child of its parent
+ *  :last-of-type 	        p:last-of-type 	        Selects every <p> element that is the last <p> element of its parent
+ *  :link 	                a:link 	                Selects all unvisited links
+ *  :not(selector) 	        :not(p) 	            Selects every element that is not a <p> element
+ *  :nth-child(n) 	        p:nth-child(2) 	        Selects every <p> element that is the second child of its parent
+ *  :nth-last-child(n)      p:nth-last-child(2) 	Selects every <p> element that is the second child of its parent, counting from the last child
+ *  :nth-last-of-type(n) 	p:nth-last-of-type(2) 	Selects every <p> element that is the second <p> element of its parent, counting from the last child
+ *  :nth-of-type(n) 	    p:nth-of-type(2) 	    Selects every <p> element that is the second <p> element of its parent
+ *  :only-of-type 	        p:only-of-type 	        Selects every <p> element that is the only <p> element of its parent
+ *  :only-child 	        p:only-child 	        Selects every <p> element that is the only child of its parent
+ *  :optional 	            input:optional 	        Selects input elements with no "required" attribute
+ *  :out-of-range 	        input:out-of-range 	    Selects input elements with a value outside a specified range
+ *  ::placeholder 	        input::placeholder 	    Selects input elements with the "placeholder" attribute specified
+ *  :read-only 	            input:read-only 	    Selects input elements with the "readonly" attribute specified
+ *  :read-write 	        input:read-write 	    Selects input elements with the "readonly" attribute NOT specified
+ *  :required 	            input:required 	        Selects input elements with the "required" attribute specified
+ *  :root 	                :root 	                Selects the document's root element
+ *  ::selection 	        ::selection 	        Selects the portion of an element that is selected by a user
+ *  :target 	            #news:target 	        Selects the current active #news element (clicked on a URL containing that anchor name)
+ *  :valid 	                input:valid 	        Selects all input elements with a valid value
+ *  :visited 	            a:visited 	            Selects all visited links
+ *
+ */
