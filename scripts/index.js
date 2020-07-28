@@ -211,7 +211,7 @@ function loadPage( thisPage, toPushStateOrNot = true )
                                 window.scroll( {left: 0, top: sessionStorage.getItem( thisPage ), behavior: "auto" } )
                             }
                             call_after_DOM_updated( _temp618 )
-                        },100
+                        },10
                     )
                 }
             }

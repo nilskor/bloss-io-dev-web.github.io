@@ -36,9 +36,14 @@
         <!-- the navigation bar or navBar for short -->
         <div class="gridContainer slicedAs_6c111111 aNavBar">
 
-            <div class="flexbox fSpaceAround" href="#index" onclick="injectContentInto( 'injectHere',  '/content/index.html' );">
+            <div class="flexbox fSpaceAround">
                 <div class="flexbox middle fCenter">
-                    <img src="/assets/bloss-leaf-color.svg" width="32px" height="32px" />
+                    <img data-id="page0" 
+                         src="/assets/bloss-leaf-color.svg" 
+                         width="32px" 
+                         height="32px" 
+                         title="Home page"
+                         class="needsCursor">
                 </div>
             </div>
             <a href="https://osdn.net/projects/bloss-os/storage/fennec/" target="_blank" id="nbi-1"></a>
@@ -59,16 +64,16 @@
 
         <!-- sub-navigation bar -->
         <div id="subNavigation" class="gridContainer slicedAs_SubNav navbarChildPanel">
-            <div class="gaSN_top">Index of manuals</div>
+            <div class="gaSN_top">Index of Manuals (Coming Soon)</div>
             <!--
                 <div class="gaSN_col1" onclick="panelSlider( 'ATK'  , 'grandChild' )"> ATK </div>
                 <div class="gaSN_col2" onclick="panelSlider( 'GDK'  , 'grandChild' )"> GDK </div>
                 <div class="gaSN_col3" onclick="panelSlider( 'GIO'  , 'grandChild' )"> GIO </div>
             -->
             <div class="gaSN_col1"><a data-id="page384" data-noColor="true">GTK Documentation</a></div>
-            <div class="gaSN_col2">TBD</div>
-            <div class="gaSN_col3">TBD</div>
-            <div class="gaSN_col4">TBD</div>
+            <div class="gaSN_col2">GDK</div>
+            <div class="gaSN_col3">GIO</div>
+            <div class="gaSN_col4">ATK</div>
         </div>
 
         <!-- menus belonging to the sub-navbar - child-childpanel -->
