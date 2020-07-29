@@ -16,32 +16,43 @@
  */
 /** Reminder: The 'display' property cannot be animated. */
 
+
 :root
 {
-    --background-color   : rgba(255, 255, 255, 1.0);       /* WebIDE: only used for layout guidance      */
+ 
+ /* --background-color   : rgba(255, 255, 255, 1.0);       /* WebIDE: only used for layout guidance      */
+ 
+ /*   the navigation bar, including PanelSlider component */
     --navBarHeight       : 50px;
-    --navBarPanelTimeout : 400ms;
     --navBarBgColor      : rgba(0,0,0,1);
     --navBarTextColor    : rgba(255,255,255,1);
     --navBarPanelBgColor : #306090; /* .paleBlue in colours.css */
+    --navBarPanelTimeout : 400ms;    
     --subNavbarHeight    : 100px;
+
+ /*   viewportFactor is a made up constant just to help with layout aspect ratios */
     --viewportFactor     : 45vh;
-    --heroImage          : url("/assets/choc-van-yum.jpg");
+
     --footerHeight       : 60px;
     --theme-font         : 'Noto Sans', sans-serif;
+
+ /*   settings for page content */
+    --heroImage          : url("/assets/choc-van-yum.jpg");
     --docoTextColor      : #2e3440;
 
 }
 
+
 *
 {
-    /*border          : 1px dashed lightgrey;          /* WebIDE: only used for showing invisibles ¶ */
-    /*background-color: rgba(135, 206, 255, 0.65);     /* WebIDE: only used for layout guidance      */
-    font-family: var(--theme-font);
-    word-wrap: break-word;
 
-    /* Responsive Font Calculation - https://stackoverflow.com/a/40818906/7791211 */
-    --responsive: calc((var(--min-font) * 1px) + (var(--max-font) - var(--min-font)) * ((100vw - 320px) / (1919 - 320))); /* Ranges from 421px to 1199px */
+ /* border           : 1px dashed lightgrey;          /* WebIDE: only used for showing invisibles ¶ */
+ /* background-color : rgba(135, 206, 255, 0.65);     /* WebIDE: only used for layout guidance      */
+    font-family      : var(--theme-font);
+    word-wrap        : break-word;
+
+ /*   Responsive Font Calculation - https://stackoverflow.com/a/40818906/7791211 */
+    --responsive       : calc((var(--min-font) * 1px) + (var(--max-font) - var(--min-font)) * ((100vw - 320px) / (1919 - 320))); /* Ranges from 421px to 1199px */
 
 }
 
@@ -63,12 +74,12 @@
  */
 *, *::before, *::after
 {
-    box-sizing: inherit;
-    position: relative;
+    box-sizing : inherit;
+    position   : relative;
 }
 html
 {
-    box-sizing: border-box;
+    box-sizing : border-box;
 }
 /** FrameWork Policy------------  END  --------------- */
 
@@ -82,8 +93,7 @@ html
 .aNavBar          { z-index: 9; } /** Component Navigation Bar or NavBar - it has the most right of way.      */
 .navbarChildPanel { z-index: 8; } /** Component PanelSlider                                                   */
 .grandchildPanel  { z-index: 7; } /** Component PanelSlider                                                   */
-
-#heroText         { z-index: 5; } /** Hero text                                                               */
+/* #heroText      { z-index: 5; } /** Hero text                                                               */
 #ht436            { z-index: 5; } /** Hero text                                                               */
 .doParallax       { z-index: 4; } /** Parallax effect applied to elements or components                       */
 
@@ -96,23 +106,43 @@ body
     margin: 0px;
     /*height: 2200px;                                     /* ONLY for Testing */
 }
+/*
 body
 {
     /*background-color : rgba(255, 255, 230, 1);     /* WebIDE: this color only for layout guidance  */
     /*filter           : blur( 3px );                /* WebIDE: for demonstration only               */
+/*
 }
+*/
 /**
- *  The body selector also appears in the
- *  footer component to make it sticky
+ *  The body selector also has settings required to
+ *  make the footer component work, making it sticky
  */
+body /* makes the sticky footer work */
+{
+    /* START - sticky footer */
+        /* min-height         : 100vh; */
+        /* display            : grid; */
+        /* grid-template-rows : auto 1fr auto; */
+    /* END - sticky footer */
+    /* testing */
+    height: 100%; /* Sticky Footer by Ryan Fait http://ryanfait.com/ */
+}
+/* Sticky Footer by Ryan Fait http://ryanfait.com/ */
+.wrapper
+{
+    min-height: 100%;
+    margin: 0 auto -60px; /* the bottom margin is the negative value of the footer's height */
+}
 
-.displayNone { display: none; }
+
+/* .displayNone { display: none; } */
 
 /* headers */
 h1                        { font-size: 4em; }
-h3 > a[href^="#"]         { color: blue;    text-decoration: none; }
-h3 > a[href^="#"]:visited { color: #551A8B; text-decoration: none; }
-h3 > a[href^="#"]:hover   { text-decoration: underline; }
+h3 > a[href^="#"]         { color    : blue;    text-decoration: none;      }
+h3 > a[href^="#"]:hover   {                       text-decoration: underline; }
+h3 > a[href^="#"]:visited { color    : #551A8B; text-decoration: none;      }
 
 /*
 a
@@ -132,18 +162,23 @@ a:visited
 }
 */
 
+
+/** CONTAINER LAYOUT FRAMEWORK DEFINITIONS -------------------------------------------------------------------------- */
+/** Component information is NOT allowed here. */
+
 /* grid-based layout container           */
-.gridContainer
-{
-    display : grid;
-    /*gap     : 5px;                                 /* WebIDE: this gap only for layout guidance     */
-    /*padding : 5px;                                 /* WebIDE: this padding only for layout guidance */
-}
+.gridContainer { display : grid; }
+/*gap     : 5px;                                 /* WebIDE: this gap only for layout guidance     */
+/*padding : 5px;                                 /* WebIDE: this padding only for layout guidance */
+
+/*
 .gridContainer *
 {
     /*text-align       : center;                   /* WebIDE: this alignment only for layout guidance  */
     /*background-color : white;                    /* WebIDE: this color only for layout guidance      */ 
+/*
 }
+*/
 
 .gridContainer.slicedAs_2c11         { grid-template-columns: auto auto;               }
 .gridContainer.slicedAs_2c12         { grid-template-columns: 1fr 2fr;                 }
@@ -158,6 +193,9 @@ a:visited
 .gridContainer.slicedAs_5c11111      { grid-template-columns: 1fr 1fr 1fr 1fr 1fr;     }
 .gridContainer.slicedAs_5c21111      { grid-template-columns: 2fr 1fr 1fr 1fr 1fr;     }
 .gridContainer.slicedAs_6c111111     { grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; }
+
+.gridContainer.slicedAs_3cauto       { grid-template-columns: auto auto auto;           }
+.gridContainer.slicedAs_5cauto       { grid-template-columns: auto auto auto auto auto; }
 
 .gridContainer.slicedAs_3c111x3r111   { grid-template-columns: 1fr 1fr 1fr; 
                                         grid-template-rows   : 1fr 1fr 1fr;     }
@@ -235,16 +273,28 @@ a:visited
  *
  *  eg. Components and all of their functionality and styling shall be separated.
  */
+/*
+#subNavDeveloper  > button,
+#subNavProducts   > button,
+#gcpDocumentation > button,
+#gtk3-doco        > button
+*/
 .aNavBar       > button,
-#subNavigation > button,
-#gtk3-doco     > button
+[id^="subNav"] > button,
+[id^="gcp"]    > button
 {
     width  : 100%;
     cursor : pointer;
     border : none;
 }
-#subNavigation > div,
-#gtk3-doco     > div
+/*
+#subNavDeveloper  > div,
+#subNavProducts   > div,
+#gcpDocumentation > div,
+#gtk3-doco        > div
+*/
+[id^="subNav"] > div,
+[id^="gcp"]    > div
 {
     /* flex_jc_SA_ai_C */
     display: flex; 
@@ -253,13 +303,19 @@ a:visited
     flex-wrap: wrap;
     line-height: 1rem;
 }
+/*
+#subNavDeveloper  > a,
+#subNavProducts   > a,
+#gcpDocumentation > a,
+#gtk3-doco        > a
+*/
 .aNavBar       > a,
-#subNavigation > a,
-#gtk3-doco     > a
+[id^="subNav"] > a,
+[id^="gcp"]    > a
 {
     text-align      : center;
     text-decoration : none;
-    border          : none;
+    /*border          : none;*/ /* removed due to .buttonHighlighter */
     outline         : none;
 }
 
@@ -327,28 +383,52 @@ a:visited
 }
 
 
-/** subNavigation, an instance of NavbarChildPanel Slider =========================================
+/** subNav<*******>, an instance of NavbarChildPanel Slider =========================================
  * 
  * Used to hold any sub-menus under the navigation bar
  */
 /** An instance of the Slider menu container */
-#subNavigation div
+/*
+#subNavDeveloper div,
+#subNavProducts div,
+#gcpDocumentation div,
+*/
+[id^="subNav"] div,
+[id^="gcp"]    div
 {
     background-color : var( --navBarPanelBgColor ); /* */
     color: white;
     /*border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
 }
-#subNavigation a
+/*
+#subNavDeveloper a,
+#subNavProducts a,
+#gcpDocumentation a
+*/
+[id^="subNav"] a,
+[id^="gcp"]    a
 {
     height          : calc( var(--subNavbarHeight) / 2 );
     line-height     : calc( var(--subNavbarHeight) / 2 );
     font            : 16px/calc( var(--subNavbarHeight) / 2 ) var(--theme-font);
 }
-#subNavigation a:hover
+/*
+#subNavDeveloper a:hover,
+#subNavProducts a:hover,
+#gcpDocumentation a:hover
+*/
+[id^="subNav"] a:hover,
+[id^="gcp"]    a:hover
 {
     cursor: pointer;
 }
-#subNavigation a:visited
+/*
+#subNavDeveloper a:visited,
+#subNavProducts a:visited,
+#gcpDocumentation a:visited
+*/
+[id^="subNav"] a:visited,
+[id^="gcp"]    a:visited
 {
     color: white!important;
 }
@@ -363,7 +443,7 @@ a:visited
 .gridContainer.slicedAs_SubNav
 {
     grid-template-columns: auto auto auto auto; 
-    grid-template-rows   : auto auto;
+    grid-template-rows   : 1fr 1fr;
     grid-template-areas  :
         'snTitle snTitle snTitle snTitle'
          'col1    col2    col3    col4';
@@ -393,7 +473,7 @@ a:visited
 {
      position  : fixed;
      top       : -135px;
-     height    : var( --subNavbarHeight );
+     height    : calc( var( --subNavbarHeight ) / 1.8 );
      width     : var( --navBarWidth );
      transition: var( --navBarPanelTimeout ) ease-in-out;
 }
@@ -410,39 +490,14 @@ a:visited
 #GDK *
 {
     background-color : var( --navBarPanelBgColor ); /* */
-    border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+    /*border           : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
 }
 #GTK3 > a,
 #GDK  > a
 {
     height          : var(--subNavbarHeight);
     line-height     : var(--subNavbarHeight);
-    font            : 15px/var(--subNavbarHeight) var(--theme-font);
-}
-
-.doco
-{
-    /*border     : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
-    /*text-align : justify; /* */
-    color      : var( --docoTextColor );
-}
-.doco h1
-{
-    text-align: left;
-}
-
-.doco a
-{
-    color: rgb(18, 118, 180);     /* codeBlue */
-    text-decoration: underline;
-}
-.doco a:hover
-{
-    cursor: pointer;
-}
-.doco a:visited
-{
-    color: purple;
+    font            : 16px/var(--subNavbarHeight) var(--theme-font);
 }
 
 
@@ -490,6 +545,7 @@ a:visited
     background-repeat: no-repeat;
     background-position: center;
 }
+/*
 #heroText
 {
     color: white;
@@ -498,7 +554,7 @@ a:visited
     font-size : var(--responsive);
     font-weight: 700;
 }
-
+*/
 
 /** The "text-box" for the main content ===========================================================
  */
@@ -526,14 +582,6 @@ a:visited
 .footer, .injectorPageWrap:after
 {
     height: var( --footerHeight ); 
-}
-body /* makes the sticky footer work */
-{
-    /* START - sticky footer */
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    /* END - sticky footer */
 }
 .footer
 {
@@ -602,6 +650,35 @@ body /* makes the sticky footer work */
 {
     cursor: pointer;
 }
+
+/* external link icon */
+.external
+{
+    background-image: url('../assets/external_link.png');
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding-right: 13px;
+}
+
+.buttonHighlighter
+{
+    border-bottom: rgb(80, 160, 240);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+}
+
+/** Google's Custom Search */
+.gsc-control-cse
+{
+    background-color: #306090!important;
+    border-color: #306090!important;
+}
+/** Google's Translate */
+.goog-te-combo
+{
+    font-size: 1rem!important;
+}
+
 
 /** Reference material - CSS Selectors -----------------------------------------------------------------------------------------------------------------
  *

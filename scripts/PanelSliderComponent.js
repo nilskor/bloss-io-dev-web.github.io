@@ -19,7 +19,7 @@ const NAVBAR_PANEL_TIMEOUT  = 500; // ms - just in case we can't read the CSS fi
  * @method panelSlider
  * @description
  * This method has a simple task of toggling a class on and off,     
- * onto or from the given (passed in) element (thisElementID).      
+ * on to or from the given (passed in) element (thisElementID).      
  * Additionally, it checks any peers for the same attributes and    
  * will first "turn them off" before toggling this current element.  
  * Requirements:                                                         
@@ -33,7 +33,7 @@ const NAVBAR_PANEL_TIMEOUT  = 500; // ms - just in case we can't read the CSS fi
  * @param {String} thisElementID
  * @param {String} type 'child' or 'grandChild'
  */
-function panelSlider( thisElementID, type )
+function panelSlider( thisElementID, type, caller )
 {
     const panelFlavour = { type: type, className: "", toggleName: "" }
 
@@ -64,6 +64,21 @@ function panelSlider( thisElementID, type )
                     grandchild.classList.remove( 'grandchildPanelShowing' )
                 }
         }
+        // all button highlighting should be managed
+        let buttonHighlights = document.querySelectorAll('a[id^="nbi-"]')
+        for ( let navButton of buttonHighlights )
+        {
+            if ( navButton.classList.contains( 'buttonHighlighter' ) && navButton.id !== caller )
+                navButton.classList.remove( 'buttonHighlighter' )
+        }
+    }
+
+    // all button highlighting should be managed
+    let buttonHighlights = document.querySelectorAll('div[id^="nbc-"]')
+    for ( let navButton of buttonHighlights )
+    {
+        if ( navButton.classList.contains( 'buttonHighlighter' ) && navButton.id !== caller )
+             navButton.classList.remove( 'buttonHighlighter' )
     }
 
     // get a reference to the object
@@ -102,6 +117,15 @@ function panelSlider( thisElementID, type )
     if (mustWait) { setTimeout( () => { thisHTMLElement.classList.toggle( panelFlavour.toggleName ) }, navBarPanelTimeout ); }
     else {
         thisHTMLElement.classList.toggle( panelFlavour.toggleName ) }
+
+    if ( caller )
+    {
+        // get a reference to the object
+        let thisCallingElement = document.getElementById( caller );
+        if ( thisCallingElement )
+            thisCallingElement.classList.toggle('buttonHighlighter')
+    }
+
 }
 
 /** Not to be confused with panelSlider */
@@ -109,13 +133,15 @@ function panelSlider( thisElementID, type )
 function hideMenuPanels( event )
 {
     /** this weeds out the initial page load, which has a fake click "event" */
-    if ( event.target !== 'fake' && event.type !== 'pageload' )
+    /*
+    if ( event.target !== 'fake' && event.type !== 'pageload' && event.type !== 'escapeKey' )
     {
         if ( event.target.parentNode )
         {
             if ( event.target.parentNode.classList.contains('displayNone') && event.target.hash === "#/content/index.html" ) { return }
         }
     }
+    */
 
     if ( event.target )
         if ( event.target.dataset )
@@ -193,5 +219,12 @@ function hideMenuPanels( event )
         }
     }
     
+    // all button highlighting should be managed
+    let buttonHighlights = document.querySelectorAll('a[id^="nbi-"],div[id^="nbc-"]')
+    for ( let navButton of buttonHighlights )
+    {
+        navButton.classList.remove( 'buttonHighlighter' )
+    }
+
 }
 

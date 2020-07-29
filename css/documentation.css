@@ -1,6 +1,32 @@
 
 /* added for basicSPA5 web site */
 
+.doco
+{
+    /*border     : 1px dashed grey;     /* WebIDE: only used for showing invisibles ¶    */
+    /*text-align : justify; /* */
+    color      : var( --docoTextColor );
+}
+.doco h1
+{
+    text-align: left;
+}
+
+.doco a
+{
+    color: rgb(18, 118, 180);     /* codeBlue */
+    text-decoration: underline;
+}
+.doco a:hover
+{
+    cursor: pointer;
+}
+.doco a:visited
+{
+    color: purple;
+}
+
+
 /*
 .h1 { font-size: calc( 1.5em + 2vw ); }
 .h2 { font-size: calc( 1.0em + 2vw ); }
@@ -143,7 +169,7 @@ var { font-style: normal; font-weight: 700; color: rgb(18, 118, 180); }
     white-space: pre;
     overflow-wrap: normal;
     word-wrap: normal;
-    word-break: keep-all;
+    word-break: keep-all; /* need this to be 'keep-all' to fix iOS word wrap issue */
     white-space: nowrap;
 }
 .code.codeScrollFunc

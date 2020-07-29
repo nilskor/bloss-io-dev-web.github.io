@@ -36,6 +36,7 @@ const oDebug =
     _onPopState_noEventState: "_onPopState() Event.state object is null, but we have a page:",
     _onPopState_variables: "_onPopState() variables:",
     _onPopState_allNull: "_onPopState() All objects appear to be null, which means we're probably back at index.html(page0), or should be.",
+    _onKeydown: "_onKeydown()",
 }
 
 function runOnNextEventCycle( runCode )
@@ -391,8 +392,17 @@ function _onClick( event )
     
     bookmarkClicked = false
 
+    let elementOfInterest = event.target
+
+    if ( elementOfInterest.tagName === 'FONT' ) /** chances are good we're in Google translate mode */
+    {
+        if ( elementOfInterest.closest('[data-id]') )
+            elementOfInterest = elementOfInterest.closest('[data-id]')
+    }
+
     // signature for a native, anchor bookmark click ..
-    if ( event.isTrusted && event.target.tagName === 'A' && event.target.hash !== "" && event.target.href !== "" )
+    if ( event.isTrusted               && elementOfInterest.tagName === 'A' && 
+         elementOfInterest.hash !== "" && elementOfInterest.href    !== ""   )
     {
         if (_DEBUG) console.log( oDebug._onClick_GenuineBookmark )
         bookmarkClicked = true
@@ -402,13 +412,13 @@ function _onClick( event )
      * Signature for a normal navigation link click. Let's get its data-id and look it up in the 'pages' JSON-type 
      * object, and then load the page from there.
      */
-    if ( event.target.dataset.id )
+    if ( elementOfInterest.dataset.id )
     {
-        if (_DEBUG) console.log( oDebug._onClick_PageNavigation, event.target.dataset.id )
+        if (_DEBUG) console.log( oDebug._onClick_PageNavigation, elementOfInterest.dataset.id )
 
         let foundValidPage = Object.keys(pages).filter( function(row)
             {
-                return row === `${event.target.dataset.id}`
+                return row === `${elementOfInterest.dataset.id}`
             }
         )
 
@@ -418,7 +428,7 @@ function _onClick( event )
 
             loadPage( foundValidPage[0] )
 
-            localStorage.setItem( event.target.dataset.id, true )
+            localStorage.setItem( elementOfInterest.dataset.id, true )
 
             if (_DEBUG && localStorage.length > 0 ) console.log( oDebug._onClick_localStorage, localStorage.length )
         }
@@ -574,6 +584,18 @@ function _onPopState( event )
         loadPage('page0', false)
     }
 
+}
+
+function _onKeydown( event )
+{
+    if (_DEBUG) console.log( oDebug._onKeydown, `Args: event: `, event )
+
+    if ( event.key === 'Escape' )
+    {
+        let newEvent = new CustomEvent( 'escapeKey', {target: 'fake'} )
+        // if someone has hit the escape key, let's lose the menu slider.
+        hideMenuPanels(newEvent)
+    }
 }
 
 /**

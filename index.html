@@ -33,8 +33,11 @@
 
     <body>
 
+        <!-- testing of wrapper, which makes the footer stick -->
+        <div class="wrapper">
+
         <!-- the navigation bar or navBar for short -->
-        <div class="gridContainer slicedAs_6c111111 aNavBar">
+        <div class="gridContainer slicedAs_5cauto aNavBar">
 
             <div class="flexbox fSpaceAround">
                 <div class="flexbox middle fCenter">
@@ -46,14 +49,70 @@
                          class="needsCursor">
                 </div>
             </div>
-            <a href="https://osdn.net/projects/bloss-os/storage/fennec/" target="_blank" id="nbi-1"></a>
+            <!-- <a href="https://osdn.net/projects/bloss-os/storage/fennec/" target="_blank" id="nbi-1"></a> -->
+            <a onclick="panelSlider( 'subNavProducts', 'child', 'nbi-1' )" id="nbi-1"></a>
             <!-- <button onclick="panelSlider( 'subNavigation', 'child' )"    id="btn-subNavigation"></button> -->
-            <a onclick="panelSlider( 'subNavigation', 'child' )" id="nbi-2"></a>
-            <a href="https://github.com/nilskor/Fennec-Issues"           target="_blank" id="nbi-3"></a>
-            <a href="https://osdn.net/projects/bloss-os/ticket/"         target="_blank" id="nbi-4"></a>
-            <a onclick="panelSlider( 'searchBar', 'child' )" id="nbi-5"></a>
+            <a onclick="panelSlider( 'subNavDeveloper', 'child', 'nbi-2' )" id="nbi-2"></a>
+            <!-- <a href="https://github.com/nilskor/Fennec-Issues"           target="_blank" id="nbi-3"></a> -->
+            <!-- <a href="https://osdn.net/projects/bloss-os/ticket/"         target="_blank" id="nbi-4"></a> -->
+            <a onclick="panelSlider( 'subNavSupport', 'child', 'nbi-4' )" id="nbi-4"></a>
+            <a onclick="panelSlider( 'searchBar', 'child', 'nbi-5' )" id="nbi-5"></a>
             <!-- <button onclick="panelSlider( 'searchBar', 'child' )"        id="btn-searchBar"></button> -->
 
+        </div>
+
+        <!-- sub-navigation bar for products -->
+        <div id="subNavProducts" class="gridContainer slicedAs_SubNav navbarChildPanel">
+            <div class="gaSN_top">Software</div>
+            <!--
+                <div class="gaSN_col1" onclick="panelSlider( 'ATK'  , 'grandChild' )"> ATK </div>
+                <div class="gaSN_col2" onclick="panelSlider( 'GDK'  , 'grandChild' )"> GDK </div>
+                <div class="gaSN_col3" onclick="panelSlider( 'GIO'  , 'grandChild' )"> GIO </div>
+            -->
+            <div class="gaSN_col1">
+                <a href="https://osdn.net/projects/bloss-os/storage/fennec/" 
+                   target="_blank"
+                   class="external" 
+                   data-noColor="true"> bloss OS download 
+                </a>
+            </div>
+            <div class="gaSN_col2"></div>
+            <div class="gaSN_col3"></div>
+            <div class="gaSN_col4"></div>
+        </div>
+
+        <!-- sub-navigation bar for developer -->
+        <div id="subNavDeveloper" class="gridContainer slicedAs_SubNav navbarChildPanel">
+            <div class="gaSN_top">Categories</div>
+            <!--
+                <div class="gaSN_col1" onclick="panelSlider( 'ATK'  , 'grandChild' )"> ATK </div>
+                <div class="gaSN_col2" onclick="panelSlider( 'GDK'  , 'grandChild' )"> GDK </div>
+                <div class="gaSN_col3" onclick="panelSlider( 'GIO'  , 'grandChild' )"> GIO </div>
+            -->
+            <!-- <div class="gaSN_col1"><a data-id="page384" data-noColor="true">GTK Documentation</a></div> -->
+            <div class="gaSN_col1 needsCursor" onclick="panelSlider( 'gcpDocumentation' , 'grandChild', 'nbc-1' )" id="nbc-1"> Documentation </div>
+            <div class="gaSN_col2 needsCursor" onclick="panelSlider( 'gcpGitHub'        , 'grandChild', 'nbc-2' )" id="nbc-2"> GitHub </div>
+            <div class="gaSN_col3"></div>
+            <div class="gaSN_col4"></div>
+        </div>
+
+        <!-- sub-navigation bar for support -->
+        <div id="subNavSupport" class="gridContainer slicedAs_SubNav navbarChildPanel">
+            <div class="gaSN_top">Support Options</div>
+            <!--
+                <div class="gaSN_col1" onclick="panelSlider( 'ATK'  , 'grandChild' )"> ATK </div>
+                <div class="gaSN_col2" onclick="panelSlider( 'GDK'  , 'grandChild' )"> GDK </div>
+                <div class="gaSN_col3" onclick="panelSlider( 'GIO'  , 'grandChild' )"> GIO </div>
+            -->
+            <div class="gaSN_col1">
+                <a href="https://osdn.net/projects/bloss-os/ticket/" 
+                   target="_blank" 
+                   data-noColor="true"
+                   class="external">Create Ticket</a>
+            </div>
+            <div class="gaSN_col2 needsCursor" onclick="panelSlider( 'gcpTranslate', 'grandChild', 'nbc-6' )" id="nbc-6"> Translate </div>
+            <div class="gaSN_col3"></div>
+            <div class="gaSN_col4"></div>
         </div>
 
         <!-- search bar hiding under the navbar -->
@@ -62,28 +121,28 @@
             <div class="gcse-search"></div>
         </div>
 
-        <!-- sub-navigation bar -->
-        <div id="subNavigation" class="gridContainer slicedAs_SubNav navbarChildPanel">
-            <div class="gaSN_top">Index of Manuals (Coming Soon)</div>
-            <!--
-                <div class="gaSN_col1" onclick="panelSlider( 'ATK'  , 'grandChild' )"> ATK </div>
-                <div class="gaSN_col2" onclick="panelSlider( 'GDK'  , 'grandChild' )"> GDK </div>
-                <div class="gaSN_col3" onclick="panelSlider( 'GIO'  , 'grandChild' )"> GIO </div>
-            -->
-            <div class="gaSN_col1"><a data-id="page384" data-noColor="true">GTK Documentation</a></div>
-            <div class="gaSN_col2">GDK</div>
-            <div class="gaSN_col3">GIO</div>
-            <div class="gaSN_col4">ATK</div>
+        <!-- menus belonging to the grandchildpanel(gcp) documentation -->
+        <div id="gcpDocumentation" class="gridContainer slicedAs_3cauto grandchildPanel">
+            <div class="g-textBox middle gCenter needsCursor" data-id="page384" data-noColor="true"> GTK </div>
+            <div class="g-textBox middle gCenter"></div>
+            <div class="g-textBox middle gCenter"></div>
+        </div>
+        <!-- menus belonging to the grandchildpanel(gcp) github -->
+        <div id="gcpGitHub"   class="gridContainer slicedAs_3c111 grandchildPanel">
+            <div class="g-textBox middle gCenter">
+                <a href="https://github.com/nilskor/Fennec-Issues" target="_blank" class="external">Issues</a>
+            </div>
+            <div class="g-textBox middle gCenter"></div>
+            <div class="g-textBox middle gCenter"></div>
+        </div>
+        <!-- menus belonging to the grandchildpanel(gcp) translate -->
+        <div id="gcpTranslate" class="gridContainer slicedAs_3c111 grandchildPanel">
+            <script async src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>  
+            <div></div>
+            <div></div>
+            <div id="google_translate_element"></div>
         </div>
 
-        <!-- menus belonging to the sub-navbar - child-childpanel -->
-        <div id="ATK"   class="grandchildPanel"> menu panel for css doco   </div>
-        <div id="GDK"   class="gridContainer slicedAs_3c111 grandchildPanel">
-            <div class="g-textBox middle gCenter"> menu panel for MDN doco </div>
-            <div class="g-textBox middle gCenter"> menu panel for MDN doco </div>
-            <div class="g-textBox middle gCenter">menu panel for MDN doco</div>
-        </div>
-        <div id="GIO"   class="grandchildPanel"> menu panel for bloss doco </div>
         <div id="GTK3"  class="gridContainer slicedAs_3c111 grandchildPanel">
             <div> menu panel for gtk3 doco </div>
             <div> menu panel for gtk3 doco </div>
@@ -92,6 +151,9 @@
         
         <!-- you can't touch this .. -->
         <div id="injectHere" class="injectorPageWrap"></div>
+
+        <!-- testing of wrapper -->
+        </div>
 
         <!-- the footer -->
         <div id="footer" class="gridContainer slicedAs_5c21111 footer">
@@ -108,9 +170,10 @@
 
             'use strict';
 
-            let bookmarkClicked = false
-            let currentPage     = null
+            let bookmarkClicked      = false
+            let currentPage          = null
             let xhrTriggerCollection = new Map()
+            let documt               = document.documentElement
 
             //captureAllEvents()
 
@@ -119,8 +182,9 @@
             window.addEventListener( 'hashchange',       (event) => { _onHashChange      ( event ) } )
             window.addEventListener( 'popstate',         (event) => { _onPopState        ( event ) } )
             window.addEventListener( 'resize',           (event) => { logPrimaryWidth    ( event ) } )
+            window.addEventListener( 'keydown',          (event) => { _onKeydown         ( event ) } )
 
-            document.documentElement.addEventListener( 'click', (event) => { hideMenuPanels(event) } )
+            documt.addEventListener( 'click',            (event) => { hideMenuPanels     ( event ) } )
 
             logPrimaryWidth()
 
@@ -146,6 +210,11 @@
                     }
                 });
             /** END:   parallax 'magicNumber' code ------------------------------------------- */
+
+            function googleTranslateElementInit()
+            {
+                new google.translate.TranslateElement( { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL }, 'google_translate_element' )  
+            }
 
         </script>
 
