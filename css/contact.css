@@ -1,0 +1,74 @@
+
+
+.contactForm
+{
+    min-height: calc( 100vh - var(--navBarHeight) - ( var(--footerHeight) * 1px ) );
+    /*margin-bottom: -2rem;*/
+}
+
+.contactForm .card
+{
+    width: 80vw;
+    left: var(--contactCardLeft);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    border-radius: 3px;
+    top: var(--contactCardTop);
+}
+
+.col-25, .ta-25 
+{
+    float: left;
+    width: 25%;
+    margin-top: 1rem;
+}
+  
+.col-75, .ta-75
+{
+    float: left;
+    width: 75%;
+    margin-top: 1rem;
+}
+.ta-75 { resize: vertical; }
+
+#contactButton
+    {
+        position: absolute;
+    }
+
+@media screen and (max-width: 600px)
+{
+    .col-25, .col-75, input[type=text], textarea, .ta-25, .ta-75
+    {
+      width: 100%;
+      margin-top: 0.6rem;
+    }
+    #contactButton
+    {
+        position: relative;
+    }
+}
+
+.contactForm img
+{
+    /*width: var(--navBarWidth);*/
+    width: 100%;
+}
+
+input.invalid,
+textarea.invalid
+{
+    background-color: rgb(252,232,242);
+    border: medium solid pink;
+}
+input.valid,
+textarea.valid
+{
+    background-color: white;
+    border: medium none initial;
+}
+input.invalid:focus,
+textarea.invalid:focus
+{
+    background-color: white;
+}

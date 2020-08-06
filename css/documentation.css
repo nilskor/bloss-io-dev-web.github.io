@@ -228,7 +228,7 @@ ul.liNone > li:before
 
 @media screen and (max-width: 768px)
 {
-    .gridContainer.slicedAs_2c11 { display: block; }
+    /*.gridContainer.slicedAs_2cauto { display: block; }*/ /* commented out because nothing using it? */
     .flexbox.fRight { justify-content: flex-start; }
 }
 @media screen and (max-width: 568px)
@@ -270,7 +270,7 @@ ul.liNone > li:before
 {
     /* .gridContainer.slicedAs_3c_responsive  { grid-template-columns: 1fr 8fr 1fr; } */
     ul { padding-left: 40px; }
-    .gridContainer.slicedAs_2c11 { display: grid; }
+    /*.gridContainer.slicedAs_2cauto { display: grid; }*/ /* commented out because nothing using it? */
     .flexbox.fRight { justify-content: flex-end; }
 }
 @media screen and (min-width: 1920px) /* 1920x1080 */

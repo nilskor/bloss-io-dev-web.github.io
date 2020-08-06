@@ -1,0 +1,166 @@
+
+<!-- NOTICE OF COPYRIGHT
+
+    Please be aware that Nilskör has obtained licenses from Shutterstock for the images that appear on this page.
+
+    You may NOT copy or use these images.
+
+    To be clear: Image(s) used under license from Shutterstock.com.
+
+-->
+
+<div class="contactForm" style="position: relative;">
+
+    <div><img id="contactImg" src="assets/603853261894-top.jpg"></div>
+
+    <form id="contactForm" >
+
+        <div id="contactCard" class="card" style="z-index: 1; max-width: 1024px;">
+        
+            <div class="bPaleBlue" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
+                <div class="paraSpace_10">&nbsp;</div>
+                <div id="cardTitle" style="text-align: center;">
+                    Untitled - send us a message
+                </div>
+                <div class="paraSpace_10">&nbsp;</div>
+            </div>
+
+            <div class="gridContainer" style="margin: 1rem;">
+
+                <div style="">
+                    <span class="col-25" style="">Your Name</span>
+                    <input name="fName" type="text" class="col-75" style="" placeholder="Alex Jordan">
+                </div>
+
+                <div style="">
+                    <span class="col-25" style="">Your Email</span>
+                    <input name="fEmail" type="text" class="col-75" style="" placeholder="alex@example.com">
+                </div>
+
+                <div style="">
+                    <span class="col-25">Your Company (if applicable)</span>
+                    <input name="fCompany" type="text" class="col-75" placeholder="Jordan's Widget Factory">
+                </div>
+
+                <div style=""><span class="col-25">Subject</span><!-- RFC2822 spec for subject size = 78 chars -->
+                    <input name="fSubject" id="cardSubject" type="text" class="col-75" maxlength="78" 
+                           placeholder="I'm keen to discuss an installation .."
+                           oninput="let szSubject=document.querySelector('#cardSubject').value;
+                                if(szSubject.length>0)
+                                {document.querySelector('#cardTitle').innerHTML=szSubject+' - email to Nilskör'}
+                                else
+                                {document.querySelector('#cardTitle').innerHTML='Untitled - send us a message'}">
+                </div>
+
+            </div>
+
+            <div class="gridContainer" style="margin: 1rem;">
+                
+                <div style="">
+                    <span class="ta-25">Your Message</span>
+                    <textarea name="fMessage" id="contactMsg" class="ta-75" 
+                              placeholder="Hi, we have 10 machines here we'd like to run bloss OS on we were wondering if you could get back to us on how to help with this. Thanks! AJ."></textarea>
+                </div>
+
+                <div class="paraSpace_20">&nbsp;</div>
+
+                <div style="position: relative;">
+                    <div class="col-75" style="margin-top: 0;">
+                        <div style="font: 12px/1rem var(--theme-font); margin-top: 0;" class="codeGrey">
+                            Please do not use this form to solicit products or services.</div>
+                            <div class="paraSpace_05">&nbsp;</div>
+                        <div style="font: 12px/1rem var(--theme-font); margin-top: 0;" class="codeGrey">
+                            Please refer to our Privacy Policy for more information.</div>
+                            <div class="paraSpace_05">&nbsp;</div>
+                            <div id="contactErrorMsg" style="font: 12px/1rem var(--theme-font); margin-top: 0;" class="codeGrey"></div>
+                        </div>
+                    <div class="paraSpace_10 col-75">&nbsp;</div>
+                    <div id="contactButton" class="col-25 gRight" style="top: 0px; margin: 0; display: inline-block;">
+                        <input type="submit" value="Send" style="width: 100%;"></input>
+                    </div>
+                </div>
+
+                <div class="paraSpace_10">&nbsp;</div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <div id="contactThankYou" style="display: none;">
+        <h1 class="h1 gCenter">Thank You.</h1>
+        <p class="gCenter">We'll be in touch shortly.</p>
+    </div>
+
+    <div style="position: absolute; bottom: 0px;">
+        <img src="assets/603853261894-middle.jpg" style="display: block;">
+    </div>
+
+    <div style="height: 65px;"></div>    
+
+</div>
+
+
+<!-- References:
+    <-- https://blog.milanmaharjan.com.np/post/build-a-custom-contact-form-for-your-static-website/ --
+    <-- https://mashe.hawksey.info/2014/07/google-sheets-as-a-database-insert-with-apps-script-using-postget-methods-with-ajax-example/ --
+-->
+
+<!--
+<div style="position: relative; background-color: cornsilk;">
+    
+    <img src="assets/603853261894-top.jpg" style="width: 100vw;">
+
+    Contact us.
+
+    https://script.google.com/macros/s/AKfycbyXd86iJlaOp9-cAx_dO1XBm9kbVrStcKecU2D_C__fo_HzTHk/exec
+
+
+    <main style="position: absolute;"">
+
+        <p>Fill in the form</p>
+        
+        <form name="aQ8i4VGH3ws25">
+
+            <div>
+                <label for="name">Name: </label>
+                <input id="name" name="name" type="text" maxlength="50">
+            </div>
+
+            <div>
+                <label for="email">Email: </label>
+                <input id="email" name="email" type="text" maxlength="200">
+            </div>
+        
+            <div>
+                <label for="comment">Comment: </label>
+                <input id="comment" name="comment" type="text" maxlength="500">
+            </div>
+
+        </form>
+
+    </main>
+
+    <button onclick="aQ8i4VGH3ws25()">test</button>
+
+    <div style="position: absolute; background-color: cornflowerblue; bottom: 0px; left: 0px; right: 0px;">a</div>
+
+</div>
+-->
+<script>
+
+    'use strict';
+    //document.getElementById('injectHere').classList.add('noAfter')
+    document.getElementById('injectHere').pseudoStyle( "after", "height", "0rem;" )
+    //document.querySelectorAllHas('div:has(> img)')
+
+    if (document.getElementById('contactImg'))
+        ro.observe(document.getElementById('contactImg'))
+
+    let inputForm = document.getElementById("contactForm")
+    
+    inputForm.addEventListener( 'keydown', (event) => { contactOnKeydown ( event ) } )
+    inputForm.addEventListener( 'submit',  (event) => { validateForm     ( event ) } )
+    
+ </script>

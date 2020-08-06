@@ -11,4 +11,6 @@
 
 .codeBlueOnBlack { color: rgb(28, 148, 255); }
 
-.tOrange{ color: orange; }
+.tOrange         { color: orange;  }
+.tBusinessBlue   { color: #134568; }
+.tDoco           { color: #2e3440; }

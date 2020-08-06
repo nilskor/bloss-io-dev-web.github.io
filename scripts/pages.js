@@ -3476,31 +3476,31 @@ let pages =
             innerHTML: "GTK3"
         },
     page385: {
-            name: "RegEx",
-            sourceURL: "./content/RegEx.html",
-            hashTag: "#/content/RegEx.html",
-            title: "RegEx",
+            name: "About",
+            sourceURL: "./content/Company/About.html",
+            hashTag: "#/content/Company/About.html",
+            title: "About",
             injector: "injectHere",
-            description: "page386 description.",
-            innerHTML: "RegEx"
-        },/*
+            description: "About Nilskör",
+            innerHTML: "About"
+        },
     page386: {
-            name: "Awk",
-            sourceURL: "./content/Awk.html",
-            hashTag: "#/content/Awk.html",
-            title: "Awk",
+            name: "Contact",
+            sourceURL: "./content/Company/Contact.html",
+            hashTag: "#/content/Company/Contact.html",
+            title: "Contact Us",
             injector: "injectHere",
-            description: "page387 description.",
-            innerHTML: "Awk"
-        },*/
+            description: "Contact page.",
+            innerHTML: "Contact"
+        },
     page387: {
-            name: "PrimeNumberRegex",
-            sourceURL: "./content/PrimeNumberRegex.html",
-            hashTag: "#/content/PrimeNumberRegex.html",
-            title: "PrimeNumberRegex",
+            name: "Legal",
+            sourceURL: "./content/Company/Legal.html",
+            hashTag: "#/content/Company/Legal.html",
+            title: "Legal",
             injector: "injectHere",
-            description: "page388 description.",
-            innerHTML: "PrimeNumberRegex"
+            description: "Legal resources page.",
+            innerHTML: "Legal"
         },
     page388: {
             name: "RELAXNGCompactSyntax",
@@ -3519,6 +3519,24 @@ let pages =
             injector: "injectHere",
             description: "page389 description.",
             innerHTML: "RELAX NG Compact Syntax"
+        },
+    page390: {
+            name: "Privacy",
+            sourceURL: "./content/Company/Privacy.html",
+            hashTag: "#/content/Company/Privacy.html",
+            title: "Privacy",
+            injector: "injectHere",
+            description: "Privacy Policy",
+            innerHTML: "Privacy"
+        },
+    page391: {
+            name: "Acknowledgement",
+            sourceURL: "./content/Company/Acknowledgement.html",
+            hashTag: "#/content/Company/Acknowledgement.html",
+            title: "Acknowledgement",
+            injector: "injectHere",
+            description: "Acknowledging 3rd Parties",
+            innerHTML: "Acknowledgement"
         }
 }
 

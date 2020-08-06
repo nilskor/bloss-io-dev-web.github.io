@@ -80,7 +80,6 @@ function xhrRegisterOnloadCallback(id)
                     status = state
                     if (_DEBUG) console.log( oDebug.xhrRegisterOnloadCallback, ` for xhrTrigger #`, _id )
                     callback.call(status)
-                    
                 }
             }
         }
@@ -113,10 +112,12 @@ function xhrOnLoad( event, pageObject )
         if ( status === 0 || ( status >= 200 && status < 400 ) )
         {
             if (_DEBUG) console.log( oDebug.xhrOnLoadSuccess )
+            //document.getElementById('injectHere').classList.remove('noAfter') // the default, we want ::after in place.
             receivingElement.innerHTML = ''
             receivingElement.style.minHeight = 'auto'
             receivingElement.innerHTML = xhr.responseText     // the most important piece of code in this function
             currentPage = pageObject                          // _onHashChange needs to know this ..
+            if (xhr.responseText.includes('<script>')) { evalJSFromHtml(xhr.responseText) }
             xhrTriggerCollection.forEach( function( value, trigger ) { trigger.status = 'loaded' } )
             if ( pageObject.toPushStateOrNot )
             {
@@ -142,8 +143,8 @@ function xhrAddListeners( xhr, pageObject )
 {
     if (_DEBUG) console.log( oDebug.xhrAddListeners, `Args: xhr: `, xhr, `, pageObject: `, pageObject )
 
-    xhr.addEventListener( 'load' , (event) => { xhrOnLoad( event, pageObject ) } )
-    xhr.addEventListener( 'error', (event) => { xhrOnError( event )            } )
+    xhr.addEventListener( 'load' , (event) => { xhrOnLoad(  event, pageObject ) } )
+    xhr.addEventListener( 'error', (event) => { xhrOnError( event )             } )
 }
 
 function injectContentInto( thisPageObject )
@@ -398,6 +399,20 @@ function _onClick( event )
     {
         if ( elementOfInterest.closest('[data-id]') )
             elementOfInterest = elementOfInterest.closest('[data-id]')
+
+        if ( elementOfInterest == event.target || elementOfInterest == null )
+        {
+            if ( elementOfInterest.closest('[data-forcedclick]') )
+            {
+                if ( elementOfInterest.closest('[data-forcedclick]').attributes.onclick )
+                    if ( elementOfInterest.closest('[data-forcedclick]').attributes.onclick.value )
+                    {
+                        let clickHandler = elementOfInterest.closest('[data-forcedclick]').attributes.onclick.value
+                        if ( clickHandler.includes('panelSlider') )
+                            Function('"use strict"; return (' + clickHandler + ')')();
+                    }
+            }
+        }
     }
 
     // signature for a native, anchor bookmark click ..
@@ -761,6 +776,19 @@ function toggleTOC( forceState = false )
     //console.log( stateObj )
     //console.log( history.state )
     
+}
+
+function evalJSFromHtml(html) 
+{
+    let newElement = document.createElement('div')
+    newElement.innerHTML = html
+    let scripts = newElement.getElementsByTagName("script")
+
+    for ( let i = 0; i < scripts.length; ++i ) 
+    {
+        let script = scripts[i]
+        eval(script.innerHTML)
+    }
 }
 
 //#region objectToString

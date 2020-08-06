@@ -12,6 +12,7 @@
         
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/colours.css">
+        <link rel="stylesheet" href="/css/contact.css">
         <link rel="stylesheet" href="/css/parallax.css">
         <link rel="stylesheet" href="/css/navbar-items.css">
         <link rel="stylesheet" href="/css/footer-items.css">
@@ -28,6 +29,14 @@
         <script src="./scripts/index.js"></script>
         <script src="./scripts/pages.js"></script>
         <script src="./scripts/PanelSliderComponent.js"></script>
+        <script>
+            'use strict';
+            if ( !window.ResizeObserver )
+            {
+                document.write( '<script src="https://polyfill.io/v3/polyfill.min.js?features=ResizeObserver"></scr'+'ipt>' )
+            }
+        </script>
+        <script src="./scripts/contact.js"></script>
 
     </head>
 
@@ -153,17 +162,28 @@
         <div id="injectHere" class="injectorPageWrap"></div>
 
         <!-- testing of wrapper -->
+            <div class="push"></div>
         </div>
 
-        <!-- the footer -->
+        <!-- the footer 
         <div id="footer" class="gridContainer slicedAs_5c21111 footer">
-
             <div class="g-textBox middle" id="fti-1" class="footer-item" style="word-break: normal; line-height: 1rem;"></div>
             <div class="f-textBox middle fLeft"><i class="fa fa-envelope"></i>     <a id="fti-2" href="https://www.bloss.io/contact.html"></a></div>
             <div class="f-textBox middle fLeft"><i class="fa fa-id-card"></i>      <a id="fti-3" href="https://www.bloss.io/bloss_os.html"></a></div>
             <div class="f-textBox middle fLeft"><i class="fa fa-balance-scale"></i><a id="fti-4" href="https://www.bloss.io/legal.html"></a></div>
             <div class="f-textBox middle fLeft"><i class="fa fa-shield"></i>       <a id="fti-5" href="https://www.bloss.io/privacy_policy.html"></a></div>
-
+        </div>
+        -->
+        <div id="footer" class="gridContainer middle footer">
+            <div style="height: 0rem;"></div>
+            <div>Copyright © 2019+ Nilskör. All rights reserved.</div>
+            <div>
+                <span><a data-id="page385" data-noColor="true" class="needsCursor">About</a> |</span> <!-- space -->
+                <span><a data-id="page386" data-noColor="true" class="needsCursor">Contact</a> |</span> <!-- space -->
+                <span><a data-id="page387" data-noColor="true" class="needsCursor">Legal</a> |</span> <!-- space -->
+                <span><a data-id="page390" data-noColor="true" class="needsCursor">Privacy</a></span>
+            </div>    
+            <div style="height: 0rem;"></div>
         </div>
 
         <script>
