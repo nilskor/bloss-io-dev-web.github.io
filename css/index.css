@@ -754,9 +754,11 @@ a:visited
 {
     font-size: 1rem!important;
 }
-.goog-te-banner
+
+/** Legal page*/
+ul[class^="li"].liLegal > li
 {
-    background-color: #000!important;
+    padding-bottom: 1.2rem;
 }
 
 

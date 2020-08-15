@@ -21,8 +21,8 @@ declare gjsJSONprocessor='./scripts/gjs-JSON-processor.js'
 # The default is to split on spaces, tabs and newlines $' \n\t'
 #IFS=$'\n\t'
 
-declare theseFiles="Common Questions.html"
-declare theIndexFile="index.html"
+declare theseFiles="GtkApplication.html"
+#declare theIndexFile="./scripts/pages.js" # obsoleted by the JSON data in pages.js
 
 # <h3><a href="/content/GTK3/Widgets Objects/Abstract_Base/GtkWidget"><font color="#2e3440">
 #     GtkWidget
@@ -34,7 +34,7 @@ declare theIndexFile="index.html"
 #declare oldLinkPattern="^[ ]*<h3><a.+.href=./content/GTK3/.*"      
 #declare oldLinkPattern='<a[ ]name=.+.href=./content/GTK3/.+</a>'
 declare oldLinkPattern='<a[ ]href="/content/GTK3/.*</a>'
-declare hrefPattern="[-0-9A-Za-z_\ \W]+(.html)"                     # The global set of 'pages' in this hybrid SPA are in index.html 
+declare hrefPattern="[-0-9A-Za-z_\ \W]+(.html)"                     # The global set of 'pages' in this hybrid SPA are in pages.js 
                                                                     # as links, and those links have #References made up of the 
                                                                     # file-names (creating uniqueness). Searching for the file-names
                                                                     # is written here as a RegEx.
@@ -43,7 +43,7 @@ declare -i step3_Echoed=$FALSE
 declare -i step3a_Echoed=$FALSE
 declare -i step3b_Echoed=$FALSE
 
-declare theWholeIndexFile=""
+#declare theWholeIndexFile="" # obsoleted by the JSON data in pages.js
 
 declare -ir DO_NOT_WRITE=$TRUE
 
@@ -58,7 +58,7 @@ function main()
 
     setIFS
 
-    theWholeIndexFile="$(< $theIndexFile)"
+    #theWholeIndexFile="$(< $theIndexFile)" # obsoleted by the JSON data in pages.js
 
     step1 _step1Result
 
@@ -108,7 +108,7 @@ function step2()             # "Step #2 - process the array of files"
         then
                 :
                 #echo -e "the Do loop"
-                step4 "$file" # mainly bookmark stuff
+                #step4 "$file" # mainly bookmark stuff
                 step3 "$file" # mainly updating links to suit the hybrid SPA web site
                 #step5 "$file" # mainly updating TOC items
                 #step6 "$file" # mainly deleting the opening html stuff to make them injectable & compliant.
@@ -129,7 +129,7 @@ function step3()             # "Step #3 - work with each html file"
 
     local _theStringFindResults=""
     #  where $@ is the incoming file.
-    _FindAll _theStringFindResults '<a href="/content/(.*?|\n)</a>' "$@"
+    _FindAll _theStringFindResults '<a href="/content/GTK3/(.*?|\n)</a>' "$@" '-m'
 
     # An example of what we're looking for ..
     # <h3><a id="bkmkGTKWidgetsObjects" href='#GTKWidgetsObjects' class="two"  onclick="injectContentInto( 'injectHere',  '/content/GTK3/Widgets Objects/GTK Widgets Objects.html', 'GTK Widgets Objects' );">GTK+ Widgets and Objects</a></h3>
@@ -151,7 +151,7 @@ function step3()             # "Step #3 - work with each html file"
     then
             echo -e "\n==================================================================================================="
             echo -e " Step #3 - checking the injectable links in this file: $@  (${#arrayOfOldLinks[@]})"
-            echo -e "           using ('<h3><a .*?injectContentInto.*?</a></h3>')  "
+            echo -e "           using ('<a href=\"/content/GTK3/(.*?|\\\n)</a>')  "
             echo -e "==================================================================================================="
             
             # for each line of <h3><a href="/content/GTK/someFile.html">
@@ -180,33 +180,34 @@ function step3()             # "Step #3 - work with each html file"
                 echo -e "${DGREY}The link that needs replacing:\n${LGREY}$_oldLink${GREEN}"
                 
                 local _ret_Name854_=""
-                _Find _ret_Name854_ "(?<=\shref=\")(.*?)(?=\"{1,1}>)" "$_oldLink" '-s'
+                _Find _ret_Name854_ '(?<=\/)([A-Za-z0-9_-]*?)(?=\.html)' "$_oldLink" '-sm'
                 echo -e "Found: $_ret_Name854_"
-                _FindReplace _ret_Name613_ '_' ' ' "$_ret_Name854_" '-a'
-                _ret_Name613_=".$_ret_Name613_"
-                echo -e "$_ret_Name613_"
-                local _res_JSON923_="$($gjsJSONprocessor 'sourceURL' "$_ret_Name613_")"
+                #_FindReplace _ret_Name613_ '_' ' ' "$_ret_Name854_" '-a'
+                #_ret_Name613_=".$_ret_Name613_"
+                #echo -e "$_ret_Name613_"
+                local _res_JSON923_="$($gjsJSONprocessor 'name' "$_ret_Name854_")"
                 echo -e "$_res_JSON923_"
 
-                local _ret_newLink=""
-                _regexFindReplace _ret_newLink "\shref=\".*?\"{1,1}" '' "$_oldLink"
-                _regexFindReplace _ret_newLink "(\n{1,}|\s{2,})" '' "$_ret_newLink"
-                _regexFindReplace _ret_newLink "(\n{1,}|\s{2,})" '' "$_ret_newLink"
-                _regexFindReplace _ret_newLink '">' "\" data-id='$_res_JSON923_'>" "$_ret_newLink"
-                echo -e "${LCYAN}$_ret_newLink${NC}\n"
+                #local _ret_newLink=""
+                #_regexFindReplace _ret_newLink "\shref=\".*?\"{1,1}" '' "$_oldLink"
+                #_regexFindReplace _ret_newLink "(\n{1,}|\s{2,})" '' "$_ret_newLink"
+                #_regexFindReplace _ret_newLink "(\n{1,}|\s{2,})" '' "$_ret_newLink"
+                #_regexFindReplace _ret_newLink '">' "\" data-id='$_res_JSON923_'>" "$_ret_newLink"
+                #echo -e "${LCYAN}$_ret_newLink${NC}\n"
 
                 #_Insert _ret_newLinkWithID "id='bkmk$_ret_IndexLookup' " "$_ret_newLink" 4
                 #_Find _ret_oldLinkText '(?<=\s)<img src=".*?">' "$_oldLink" '-sm'
                 #_ret_oldLinkText=$(_sc LTrim $_ret_oldLinkText)
                 #echo -e "$_ret_oldLinkText"
-                if [[ ${#_ret_newLink} -lt ${#_oldLink} ]]
-                then
-                    _FindReplace _temp1 "$_oldLink" "$_ret_newLink" "$@" $toWriteOrNot
-                else
-                    echo -e "\n New link is longer than, or the same as the old link:\n"
+
+                #if [[ ${#_ret_newLink} -lt ${#_oldLink} ]]
+                #then
+                #    _FindReplace _temp1 "$_oldLink" "$_ret_newLink" "$@" $toWriteOrNot
+                #else
+                #    echo -e "\n New link is longer than, or the same as the old link:\n"
                 #    echo -e " $_ret_newLink\n"
                 #    echo -e " $_oldLink\n"
-                fi
+                #fi
                 #echo ""
                 #echo -e "$_ret_newLink"
                 #echo -e ":\n  old: $_oldLink\n  new: $_ret_newLink\n bkmk: $_ret_newLinkWithBookmark\n text: $_ret_oldLinkText\n:"
@@ -251,6 +252,39 @@ function step3a()            # "Step #3a - create the unique file name index loo
     fi
 
 }
+function step3aa()            # "Step #3a - create the unique file name index lookup"
+{
+
+    if [[ $step3a_Echoed -eq $FALSE ]]
+    then
+        #echo -e "\nStep #3a - create the unique file name index lookup"
+        step3a_Echoed=$TRUE
+    fi
+
+    #foundName=`grep -E -i -o "$hrefPattern" <<< "$3"` || foundIt=""
+    local _ret_PossibleLookupName=""
+    local foundName=""
+
+    _Find _ret_PossibleLookupName '((?<=/)|(?<=#))([A-Za-z0-9._]*)(?=">)' "$3" '-s'
+
+    foundName="$_ret_PossibleLookupName"
+
+    echo -e "\nSTEP3 - $foundName\n"
+
+    if [[ -n $foundName ]]
+    then
+            foundName=${foundName//_}     # remove underscores           # collapse the file name down to a #Reference
+            foundName=${foundName// }     # remove spaces
+            foundName=${foundName//-}     # remove hyphens
+            foundName=${foundName//.html} # remove '.html'
+            
+            _result3b="$(step3b "$foundName")"
+            echo -e "Found a new link:\n$(step3b "$foundName")\n"    # return the result_3b back to step 3
+            eval "$1=\${_result3b}; $2=\${foundName}"  # return the result_3b back to step 3, as well as the index lookup
+    fi
+
+}
+
 
 function step3b()            # "Step #3b - find the index lookup inside $theIndexFile and so on .."
 {

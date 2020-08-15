@@ -9,15 +9,15 @@
 
 let pages = 
 {
-    date: '3-July-2020 14:09',
+    date: '09-Aug-2020 12:07',
     page0: {
-            name: "index",              // the source filename sans '.html'
-            sourceURL: "./content/page0.html",    // the important bit - the actual source file
-            hashTag: "#/content/index.html",    // what this page should look like in the address bar
-            title: "index",             // for setting the document title
-            injector: "injectHere",     // the important bit - where to actually inject the content into
-            description: "page0 desc.", // more for documentation than anything else
-            innerHTML: "index"          // may not be useful, just in case we need an alias showing on the page
+        name: "Index",              // the source filename sans '.html'
+        sourceURL: "./content/page0.html",    // the important bit - the actual source file
+        hashTag: "#/content/index.html",    // what this page should look like in the address bar
+        title: "Index",             // for setting the document title
+        injector: "injectHere",     // the important bit - where to actually inject the content into
+        description: "page0 desc.", // more for documentation than anything else
+        innerHTML: "Index"          // may not be useful, just in case we need an alias showing on the page
     },
     page1: {
             name: "AcceleratorGroups",
@@ -1676,7 +1676,7 @@ let pages =
             innerHTML: "GtkApplication"
         },
     page185: {
-            name: "Appsupport",
+            name: "GTKApplication Class",
             sourceURL: "./content/GTK3/Widgets Objects/GTKApplication Class/GTKApplication Class.html",
             hashTag: "#/content/GTK3/Widgets Objects/GTKApplication Class/GTKApplication Class.html",
             title: "GTKApplication Class",
@@ -2145,8 +2145,8 @@ let pages =
         },
     page237: {
             name: "GtkBuilder",
-            sourceURL: "./content/GTK3/Widgets Objects/Interface builder/GtkBuilder.html",
-            hashTag: "#/content/GTK3/Widgets Objects/Interface builder/GtkBuilder.html",
+            sourceURL: "./content/GTK3/Widgets Objects/Interface Builder/GtkBuilder.html",
+            hashTag: "#/content/GTK3/Widgets Objects/Interface Builder/GtkBuilder.html",
             title: "GtkBuilder",
             injector: "injectHere",
             description: "page237 description.",
@@ -2154,8 +2154,8 @@ let pages =
         },
     page238: {
             name: "GtkBuildable",
-            sourceURL: "./content/GTK3/Widgets Objects/Interface builder/GtkBuildable.html",
-            hashTag: "#/content/GTK3/Widgets Objects/Interface builder/GtkBuildable.html",
+            sourceURL: "./content/GTK3/Widgets Objects/Interface Builder/GtkBuildable.html",
+            hashTag: "#/content/GTK3/Widgets Objects/Interface Builder/GtkBuildable.html",
             title: "GtkBuildable",
             injector: "injectHere",
             description: "page238 description.",
@@ -2163,8 +2163,8 @@ let pages =
         },
     page239: {
             name: "Interfacebuilder",
-            sourceURL: "./content/GTK3/Widgets Objects/Interface builder/Interface builder.html",
-            hashTag: "#/content/GTK3/Widgets Objects/Interface builder/Interface builder.html",
+            sourceURL: "./content/GTK3/Widgets Objects/Interface Builder/Interface builder.html",
+            hashTag: "#/content/GTK3/Widgets Objects/Interface Builder/Interface builder.html",
             title: "Interface builder",
             injector: "injectHere",
             description: "page239 description.",
@@ -3197,22 +3197,22 @@ let pages =
             innerHTML: "Getting Started"
         },
     page354: {
-            name: "Packing",
-            sourceURL: "./content/GTK3/Overview/Getting Started/Packing.html",
-            hashTag: "#/content/GTK3/Overview/Getting Started/Packing.html",
-            title: "Packing",
+            name: "PackingWidgetsinaLayout",
+            sourceURL: "./content/GTK3/Overview/Getting Started/Packing Widgets in a Layout.html",
+            hashTag: "#/content/GTK3/Overview/Getting Started/Packing Widgets in a Layout.html",
+            title: "Packing Widgets in a Layout",
             injector: "injectHere",
             description: "page354 description.",
-            innerHTML: "Packing"
+            innerHTML: "Packing Widgets in a Layout"
         },
     page355: {
-            name: "Buildinginterfaces",
-            sourceURL: "./content/GTK3/Overview/Getting Started/Building interfaces.html",
-            hashTag: "#/content/GTK3/Overview/Getting Started/Building interfaces.html",
-            title: "Building interfaces",
+            name: "BuildingUserInterfaces",
+            sourceURL: "./content/GTK3/Overview/Getting Started/Building User Interfaces.html",
+            hashTag: "#/content/GTK3/Overview/Getting Started/Building User Interfaces.html",
+            title: "Building User Interfaces",
             injector: "injectHere",
             description: "page355 description.",
-            innerHTML: "Building interfaces"
+            innerHTML: "Building User Interfaces"
         },
     page356: {
             name: "GTKOverview",
@@ -3259,7 +3259,7 @@ let pages =
             description: "page360 description.",
             innerHTML: "Drawing Model"
         },
-        page361: {
+    page361: {
             name: "GTKQuerySettings",
             sourceURL: "./content/GTK3/Tools/GTK Query Settings.html",
             hashTag: "#/content/GTK3/Tools/GTK Query Settings.html",
@@ -3476,31 +3476,67 @@ let pages =
             innerHTML: "GTK3"
         },
     page385: {
-            name: "RegEx",
-            sourceURL: "./content/RegEx.html",
-            hashTag: "#/content/RegEx.html",
-            title: "RegEx",
+            name: "About",
+            sourceURL: "./content/Company/About.html",
+            hashTag: "#/content/Company/About.html",
+            title: "About",
             injector: "injectHere",
-            description: "page386 description.",
-            innerHTML: "RegEx"
+            description: "About Nilskör",
+            innerHTML: "About"
         },
     page386: {
-            name: "Awk",
-            sourceURL: "./content/Awk.html",
-            hashTag: "#/content/Awk.html",
-            title: "Awk",
+            name: "Contact",
+            sourceURL: "./content/Company/Contact.html",
+            hashTag: "#/content/Company/Contact.html",
+            title: "Contact Us",
             injector: "injectHere",
-            description: "page387 description.",
-            innerHTML: "Awk"
+            description: "Contact page.",
+            innerHTML: "Contact"
         },
     page387: {
-            name: "PrimeNumberRegex",
-            sourceURL: "./content/PrimeNumberRegex.html",
-            hashTag: "#/content/PrimeNumberRegex.html",
-            title: "PrimeNumberRegex",
+            name: "Legal",
+            sourceURL: "./content/Company/Legal.html",
+            hashTag: "#/content/Company/Legal.html",
+            title: "Legal",
+            injector: "injectHere",
+            description: "Legal resources page.",
+            innerHTML: "Legal"
+        },
+    page388: {
+            name: "RELAXNGCompactSyntax",
+            sourceURL: "./content/GTK3/Widgets Objects/Interface Builder/RELAX NG Compact Syntax.html",
+            hashTag: "#/content/GTK3/Widgets Objects/Interface Builder/RELAX NG Compact Syntax.html",
+            title: "RELAX NG Compact Syntax",
             injector: "injectHere",
             description: "page388 description.",
-            innerHTML: "PrimeNumberRegex"
+            innerHTML: "RELAX NG Compact Syntax"
+        },
+    page389: {
+            name: "WikiHiDPI",
+            sourceURL: "./content/wiki/HowDoI/HiDPI.html",
+            hashTag: "#/content/wiki/HowDoI/HiDPI.html",
+            title: "Wiki HiDPI",
+            injector: "injectHere",
+            description: "page389 description.",
+            innerHTML: "RELAX NG Compact Syntax"
+        },
+    page390: {
+            name: "Privacy",
+            sourceURL: "./content/Company/Privacy.html",
+            hashTag: "#/content/Company/Privacy.html",
+            title: "Privacy",
+            injector: "injectHere",
+            description: "Privacy Policy",
+            innerHTML: "Privacy"
+        },
+    page391: {
+            name: "Acknowledgement",
+            sourceURL: "./content/Company/Acknowledgement.html",
+            hashTag: "#/content/Company/Acknowledgement.html",
+            title: "Acknowledgement",
+            injector: "injectHere",
+            description: "Acknowledging 3rd Parties",
+            innerHTML: "Acknowledgement"
         }
 }
 

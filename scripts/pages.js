@@ -6,7 +6,7 @@
  *        of your index.html file, but not mandatory.
  */
 
-// date: '3-July-2020 14:09'
+// date: '09-Aug-2020 12:07'
 
 let pages = 
 {
